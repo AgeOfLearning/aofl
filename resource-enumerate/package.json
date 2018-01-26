@@ -1,0 +1,19 @@
+{
+  "name": "@aofl/resource-enumerate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@aofl/cache-manager": "^1.0.0",
+    "@aofl/server-environment": "^1.0.0"
+  }
+}
