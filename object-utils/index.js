@@ -25,7 +25,7 @@ export const deepAssign = (obj, path, payload) => {
 
     let key = pathParts[0];
     let subPath = pathParts.splice(1);
-    return Object.assign({}, _obj, {
+    return Object.assign({}, obj, {
       [key]: recursiveAssign(subPath, obj[key])
     });
   };
