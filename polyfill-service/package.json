@@ -1,15 +1,14 @@
 {
-  "name": "@aofl/register-callback",
+  "name": "@aofl/polyfill-service",
   "version": "1.0.0-beta.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
-  },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "es6-promise": "^4.2.4"
+  }
 }

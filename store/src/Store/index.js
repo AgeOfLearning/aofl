@@ -1,5 +1,5 @@
-import {deepFreeze} from '../../../object-utils';
-import RegisterCallback from '../../../register-callback';
+import {deepFreeze} from '@aofl/object-utils';
+import {RegisterCallback} from '@aofl/register-callback';
 
 /**
  *
@@ -29,7 +29,7 @@ class Store {
    * @return {Object}
    */
   getState() {
-    return state;
+    return this.state;
   }
 
   /**
@@ -105,7 +105,7 @@ class Store {
   __applyMutations(mutations, state) {
     let nextState = state;
     for (let i = 0; i < mutations.length; i++) {
-      if (typeof this.namespaces[mutation[i].stateAlias] === 'undefined') continue;
+      if (typeof this.namespaces[mutations[i].stateAlias] === 'undefined') continue;
 
       let mutation = mutations[i];
       let ns = this.namespaces[mutation.stateAlias];
@@ -114,7 +114,7 @@ class Store {
         ns.asyncMutations[mutation.mutationId](nextState);
       } else {
         nextState = Object.assign({}, nextState, {
-          [ns.namespace]: ns.mutation[mutation.mutationId](nextState[ns.namespace])
+          [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace])
         });
       }
     }
@@ -144,7 +144,9 @@ class Store {
       [sdo.namespace]: sdo.mutations.init(payload)
     });
 
-    this.addDecorators(sd.decorators);
+    if (Array.isArray(sdo.decorators)) {
+      this.addDecorators(sdo.decorators);
+    }
     this.__execAsyncMutations(this.state, sdo.alias);
   }
 
