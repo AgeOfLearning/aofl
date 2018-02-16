@@ -114,7 +114,7 @@ class Store {
         ns.asyncMutations[mutation.mutationId](nextState);
       } else {
         nextState = Object.assign({}, nextState, {
-          [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace])
+          [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload)
         });
       }
     }

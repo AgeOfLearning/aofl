@@ -8,7 +8,7 @@ class MemoryStorage {
    *
    */
   static clear() {
-    store = {};
+    MemoryStorage.store = {};
   }
 
   /**
@@ -17,8 +17,8 @@ class MemoryStorage {
    * @return {*}
    */
   static getItem(key) {
-    if (store.hasOwnProperty(key)) {
-      return store[key];
+    if (MemoryStorage.store.hasOwnProperty(key)) {
+      return MemoryStorage.store[key];
     }
     return null;
   }
@@ -29,7 +29,7 @@ class MemoryStorage {
    * @param {*} value
    */
   static setItem(key, value) {
-    store[key] = value;
+    MemoryStorage.store[key] = value;
   }
 
   /**
@@ -38,7 +38,7 @@ class MemoryStorage {
    * @param {String} key
    */
   static removeItem(key) {
-    delete store[key];
+    delete MemoryStorage.store[key];
   }
 };
 

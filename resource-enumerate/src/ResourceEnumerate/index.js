@@ -39,9 +39,7 @@ class ResourceEnumerate {
     if (typeof api.invalidateCache === 'function' && api.invalidateCache.call(null)) {
       this.memoryCache.clear();
     }
-
     let re = this.memoryCache.getItem(apiNs);
-
     if (re !== null && this.environment !== EnvironmentTypeEnumerate.DEV) {
       return Promise.resolve(re);
     }
@@ -85,7 +83,7 @@ class ResourceEnumerate {
           }
 
           if (key && typeof data[key] !== 'undefined') {
-            let mapFn = api[environment + 'Replace'];
+            let mapFn = api[envPrefix + 'Replace'];
             let map = {};
             if (typeof mapFn === 'function') {
               map = mapFn();

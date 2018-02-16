@@ -18,7 +18,6 @@ class CacheManager {
    * @param {Number} expire
    */
   constructor(namespace, storageType = CACHE_TYPE_ENUMERATE.MEMORY, expire = 3600000) {
-    this.namespace = namespace;
     this.storage = STORAGE[storageType];
     this.expire = expire;
     this.storedKeys = [];
@@ -57,7 +56,7 @@ class CacheManager {
   getItem(key) {
     let obj = this.storage.getItem(this.getNamespaceKey(key));
     if (obj !== null && obj.hasOwnProperty('t')) {
-      if (this.isExpired()) { // expired
+      if (this.isExpired(key)) { // expired
         this.removeItem(key);
         return null;
       }

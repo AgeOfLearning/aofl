@@ -1,5 +1,5 @@
-import ResourceEnumerate from './src/interpolate';
+import resourceEnumerate from './src/ResourceEnumerate';
 
 export {
-  ResourceEnumerate
+  resourceEnumerate
 };
