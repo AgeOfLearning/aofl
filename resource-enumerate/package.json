@@ -1,6 +1,6 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "ISC",
   "dependencies": {
-    "@aofl/cache-manager": "^1.0.0",
-    "@aofl/server-environment": "^1.0.0"
+    "@aofl/cache-manager": "^1.0.0-beta.3",
+    "@aofl/server-environment": "^1.0.0-beta.1"
   }
 }

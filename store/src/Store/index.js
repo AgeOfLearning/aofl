@@ -38,7 +38,7 @@ class Store {
    */
   addDecorator(decorator) {
     this.decorators.push(decorator);
-    this.commit(this.state);
+    this.commit([], true);
   }
 
   /**
@@ -47,7 +47,7 @@ class Store {
    */
   addDecorators(decorators) {
     this.decorators = this.decorators.concat(decorators);
-    this.commit(this.state);
+    this.commit([], true);
   }
 
   /**
@@ -69,28 +69,22 @@ class Store {
    * @param {*} nextState
    * @param {*} stateAlias
    */
-  __execAsyncMutations(nextState, stateAlias) {
+  __execAsyncMutations(nextState) {
     let ns = this.namespaces;
-
-    if (typeof stateAlias !== 'undefined' && this.namespaces.hasOwnProperty(stateAlias)) {
-      ns = {
-        [stateAlias]: this.namespaces[stateAlias]
-      };
-    }
-
     for (let key in ns) {
       if (!ns.hasOwnProperty(key)) continue;
       for (let mutationId in ns[key].asyncMutations) {
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
           ns[key].asyncMutations[mutationId].method(nextState)
-          .then((payload) => {
+          .then(function(mutationId, stateAlias, payload) {
             this.commit([{
               stateAlias,
               mutationId,
               payload
             }]);
-          });
+          }.bind(this, mutationId, key))
+          .catch(()=>{});
         }
       }
     }
@@ -146,8 +140,9 @@ class Store {
 
     if (Array.isArray(sdo.decorators)) {
       this.addDecorators(sdo.decorators);
+    } else {
+      this.commit([], true);
     }
-    this.__execAsyncMutations(this.state, sdo.alias);
   }
 
   /**
@@ -158,7 +153,7 @@ class Store {
   commit(mutations, forceCommit = false) {
     let nextState = this.__applyMutations(mutations, this.state);
 
-    if (nextState !== this.state) {
+    if (nextState !== this.state || forceCommit) {
       nextState = this.__applyDecorators(nextState);
       this.__execAsyncMutations(nextState);
       this.state = nextState;
@@ -199,7 +194,7 @@ class Store {
       clearTimeout(timeout);
       return new Promise((resolve) => {
         timeout = setTimeout(() => {
-          return later(execSeries).then(resolve);
+          return later(execSeries).then(resolve).catch(()=>{});
         }, wait);
 
         if (execIndex === 0) {

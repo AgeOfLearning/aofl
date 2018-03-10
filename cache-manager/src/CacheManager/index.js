@@ -21,6 +21,7 @@ class CacheManager {
     this.storage = STORAGE[storageType];
     this.expire = expire;
     this.storedKeys = [];
+    this.namespace = namespace;
     this.interval = setInterval(this.removeExpired, expire);
   }
 
@@ -74,7 +75,7 @@ class CacheManager {
     let index = this.storedKeys.indexOf(namespaceKey);
 
     this.storage.removeItem(namespaceKey);
-    this.namespaceKey.splice(index, 1);
+    this.storedKeys.splice(index, 1);
   }
 
   /**

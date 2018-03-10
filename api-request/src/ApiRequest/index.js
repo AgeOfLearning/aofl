@@ -49,17 +49,17 @@ class ApiRequest {
     let cacheKey = url + JSON.stringify(payload);
     let cacheManager = this.getCacheManager(namespace);
     let cacheResponse = cacheManager.getItem(cacheKey);
-
     if (cache && cacheResponse) {
       return cacheResponse;
     }
 
-    return fetch(url, formatter.pack(payload))
+    let requestPromise = fetch(url, formatter.pack(payload))
     .then(formatter.unpack)
     .then((response) => {
-      cacheManager.setItem(cacheKey, response);
       return response;
     });
+    cacheManager.setItem(cacheKey, requestPromise);
+    return requestPromise;
   }
 
   /**
