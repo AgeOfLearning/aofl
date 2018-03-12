@@ -1,0 +1,15 @@
+<dom-module id="aofl-img">
+<link rel="stylesheet" href="./aofl-img.css">
+<template>
+  <template is="dom-if" if="[[viewBox]]">
+    <canvas width$="[[viewBoxWidth]]" height$="[[viewBoxHeight]]"></canvas>
+    <svg id="svg" height$="[[viewBoxHeight]]" width$="[[viewBoxWidth]]">
+      <image id="svg-img" x="0" y="0" height$="[[height]]" width$="[[width]]" />
+    </svg>
+  </template>
+  <template is="dom-if" if="[[!viewBox]]">
+    <img id="img" alt="[[alt]]" height$="[[height]]" width$="[[width]]" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC">
+  </template>
+</template>
+<script src="./aofl-img.js"></script>
+</dom-module>

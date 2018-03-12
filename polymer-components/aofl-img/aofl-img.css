@@ -1,0 +1,26 @@
+:host {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: auto;
+  line-height: 0;
+}
+
+:host svg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+:host canvas {
+  display: block;
+  visibility: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+:host img {
+  background: #ddd;
+}
