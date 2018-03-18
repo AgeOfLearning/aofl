@@ -19,10 +19,13 @@ class CacheManager {
    */
   constructor(namespace, storageType = CACHE_TYPE_ENUMERATE.MEMORY, expire = 3600000) {
     this.storage = STORAGE[storageType];
+    this.storageType = storageType;
     this.expire = expire;
     this.storedKeys = [];
     this.namespace = namespace;
-    this.interval = setInterval(this.removeExpired, expire);
+    if (typeof expire > 0) {
+      this.interval = setInterval(this.removeExpired, expire);
+    }
   }
 
   /**
@@ -31,7 +34,7 @@ class CacheManager {
    * @return {String}
    */
   getNamespaceKey(key) {
-    return this.namespace + '_' + key;
+    return btoa(this.namespace + '_' + key);
   }
 
   /**
@@ -44,6 +47,12 @@ class CacheManager {
       t: Date.now(),
       v: value
     };
+
+    if (this.storageType === CACHE_TYPE_ENUMERATE.LOCAL ||
+    this.storageType === CACHE_TYPE_ENUMERATE.SESSION) {
+      obj = JSON.stringify(obj);
+    }
+
     let namespaceKey = this.getNamespaceKey(key);
     this.storage.setItem(namespaceKey, obj);
     this.storedKeys.push(namespaceKey);
@@ -56,6 +65,12 @@ class CacheManager {
    */
   getItem(key) {
     let obj = this.storage.getItem(this.getNamespaceKey(key));
+
+    if (this.storageType === CACHE_TYPE_ENUMERATE.LOCAL ||
+    this.storageType === CACHE_TYPE_ENUMERATE.SESSION) {
+      obj = JSON.parse(obj);
+    }
+
     if (obj !== null && obj.hasOwnProperty('t')) {
       if (this.isExpired(key)) { // expired
         this.removeItem(key);
@@ -65,6 +80,17 @@ class CacheManager {
     }
 
     return obj;
+  }
+
+  /**
+   * @return {Object}
+   */
+  getCollection() {
+    let collection = {};
+    for (let i = 0; i < this.storedKeys.length; i++) {
+      collection[this.storedKeys[i]] = this.getItem(this.storedKeys[i]);
+    }
+    return collection;
   }
 
   /**
@@ -83,8 +109,9 @@ class CacheManager {
    */
   clear() {
     for (let i = 0; i < this.storedKeys.length; i++) {
-      this.removeItem(this.storedKeys[i]);
+      this.storage.removeItem(this.storedKeys[i]);
     }
+    this.storedKeys = [];
   }
 
   /**
@@ -93,6 +120,10 @@ class CacheManager {
    * @return {Boolean}
    */
   isExpired(key) {
+    if (typeof this.expire !== 'number' || this.expire <= 0) {
+      return false;
+    }
+
     let namespaceKey = this.getNamespaceKey(key);
     let obj = this.storage.getItem(namespaceKey);
 
@@ -120,6 +151,7 @@ class CacheManager {
     clearInterval(this.interval);
     this.namespace = null;
     this.storage = null;
+    this.storageType = null;
     this.expire = null;
     this.storedKeys = null;
     this.interval = null;

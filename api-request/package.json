@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
   },
   "dependencies": {
-    "@aofl/cache-manager": "^1.0.0-beta.3"
+    "@aofl/cache-manager": "^1.0.0-beta.4"
   }
 }

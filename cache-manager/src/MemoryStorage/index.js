@@ -38,6 +38,7 @@ class MemoryStorage {
    * @param {String} key
    */
   static removeItem(key) {
+    MemoryStorage.store[key] = null;
     delete MemoryStorage.store[key];
   }
 };
