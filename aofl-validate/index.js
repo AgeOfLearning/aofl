@@ -1,10 +1,10 @@
 import {isValidEmail} from './src/is-valid-email';
 import {isValidFormat} from './src/is-valid-format';
 import {isRequired} from './src/is-required';
-import AoflValidate from './src/AoflValidate';
+import aoflValidate from './src/AoflValidate';
 
 export {
-  AoflValidate,
+  aoflValidate,
   isValidEmail,
   isValidFormat,
   isRequired
