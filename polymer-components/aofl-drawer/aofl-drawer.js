@@ -16,6 +16,10 @@ class AoflDrawer extends Polymer.Element {
    */
   static get properties() {
     return {
+      animateDrawer: {
+        type: String,
+        value: 'true'
+      },
       open: {
         type: Boolean,
         value: false,
@@ -29,10 +33,19 @@ class AoflDrawer extends Polymer.Element {
    */
   constructor() {
     super();
-    this.addEventListener('animationend', this.__animationEndHandler);
-    this.addEventListener('transitionend', this.__animationEndHandler);
-    this.addEventListener('click', this.__stopPropagation);
     this.cancelOpen = null;
+  }
+
+  /**
+   *
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    if (this.animateDrawer === 'true') {
+      this.addEventListener('animationend', this.__animationEndHandler);
+      this.addEventListener('transitionend', this.__animationEndHandler);
+      this.addEventListener('click', this.__stopPropagation);
+    }
   }
 
   /**
@@ -59,11 +72,28 @@ class AoflDrawer extends Polymer.Element {
       cancel = true;
     };
   }
+
+  /**
+   * @param {Boolean} newVal
+   * @param {Boolean} oldVal
+   */
+  simpleOpen(newVal, oldVal) {
+    if (newVal === true) {
+      this.classList.add('open');
+    } else if (typeof oldVal !== 'undefined') {
+      this.classList.remove('open');
+    }
+  }
+
   /**
    * @param {Boolean} newVal
    * @param {Boolean} oldVal
    */
   __openObserver(newVal, oldVal) {
+    if (this.animateDrawer === 'false') {
+      this.simpleOpen(newVal, oldVal);
+      return;
+    }
     if (newVal === true) {
       this.cancelOpen = this.__startOpeningAnimation(() => {
         this.classList.add('opening');

@@ -52,9 +52,12 @@ class AoflImg extends Polymer.Element {
   connectedCallback() {
     super.connectedCallback();
     this._setSourceBound = this._setSource.bind(this);
-    window.requestAnimationFrame(this._setSourceBound);
     window.addEventListener('scroll', this._setSourceBound);
     window.addEventListener('resize', this._setSourceBound);
+
+    Polymer.Async.animationFrame.run(() => {
+      this._setSource();
+    });
   }
 
   /**
@@ -62,8 +65,8 @@ class AoflImg extends Polymer.Element {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('scroll', this.__setSource);
-    window.removeEventListener('resize', this.__setSource);
+    window.removeEventListener('scroll', this._setSourceBound);
+    window.removeEventListener('resize', this._setSourceBound);
   }
 
   /**
@@ -72,9 +75,11 @@ class AoflImg extends Polymer.Element {
    * @param {*} oldVal
    */
   _viewboxChange(newVal, oldVal) {
-    let svgElement = this.shadowRoot.querySelector('#svg');
-    if (newVal && svgElement) {
-      this._renderSvgElement(svgElement);
+    if (newVal !== oldVal) {
+      let svgElement = this.shadowRoot.querySelector('#svg');
+      if (svgElement) {
+        this._renderSvgElement(svgElement);
+      }
     }
   }
 
@@ -84,9 +89,11 @@ class AoflImg extends Polymer.Element {
    * @param {*} oldVal
    */
   _sourceChange(newVal, oldVal) {
-    let imgElement = this.shadowRoot.querySelector('#img');
-    if (newVal && imgElement && this.elementInViewport()) {
-      this._setSource();
+    if (newVal !== oldVal) {
+      let imgElement = this.shadowRoot.querySelector('#img');
+      if (imgElement && this.elementInViewport()) {
+        this._setSource();
+      }
     }
   }
   /**
@@ -98,16 +105,17 @@ class AoflImg extends Polymer.Element {
     if (this.viewBox && svgElement) {
       this._renderSvgElement(svgElement);
     } else if (imgElement && this.elementInViewport()) {
-      imgElement.setAttribute('src', this.src || this.aoflSrc);
-      if (this.width && this.height) {
-        imgElement.style.width = this.offsetWidth + 'px';
-        imgElement.style.height = (this.offsetWidth * this.height / this.width) + 'px';
+      let src = this.src || this.aoflSrc;
+      if (src !== imgElement.getAttribute('src')) {
+        let imageLoadedHandler = () => {
+          imgElement.style.background = 'rgba(0,0,0,0)';
+          imgElement.style.width = '100%';
+          imgElement.style.height = 'auto';
+          imgElement.removeEventListener('load', imageLoadedHandler);
+        };
+        imgElement.addEventListener('load', imageLoadedHandler);
+        imgElement.setAttribute('src', src);
       }
-      imgElement.addEventListener('load', () => {
-        imgElement.style.width = '100%';
-        imgElement.style.height = 'auto';
-        imgElement.style.background = 'rgba(0,0,0,0)';
-      });
     }
   }
   /**
@@ -121,7 +129,7 @@ class AoflImg extends Polymer.Element {
 
     imageElement.setAttribute('width', this.width);
     imageElement.setAttribute('height', this.height);
-    if (this.elementInViewport()) {
+    if (this.elementInViewport() && imageElement.getAttribute('xlink:href') !== src) {
       imageElement.setAttribute('xlink:href', src);
       imageElement.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', src);
     }
@@ -147,24 +155,11 @@ class AoflImg extends Polymer.Element {
    * @return {Boolean}
    */
   elementInViewport() {
-    let el = this;
-    let top = el.offsetTop;
-    let left = el.offsetLeft;
-    let width = el.offsetWidth;
-    let height = el.offsetHeight;
+    let {top, right, bottom, left} = this.getBoundingClientRect();
+    let vWidth = window.innerWidth || document.documentElement.clientWidth;
+    let vHeight = window.innerHeight || document.documentElement.clientHeight;
 
-    while (el.offsetParent) {
-      el = el.offsetParent;
-      top += el.offsetTop;
-      left += el.offsetLeft;
-    }
-
-    return (
-      top < (window.pageYOffset + window.innerHeight) &&
-      left < (window.pageXOffset + window.innerWidth) &&
-      (top + height) > window.pageYOffset &&
-      (left + width) > window.pageXOffset
-    );
+    return bottom > 0 && right > 0 && left < vWidth && top < vHeight;
   }
 }
 

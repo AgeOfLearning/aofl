@@ -3,7 +3,7 @@
   line-height: 0;
 }
 
-::content aofl-img {
+::slotted(aofl-img) {
   width: 100%;
   height: auto;
 }
