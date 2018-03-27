@@ -31,7 +31,7 @@ class AoflSource extends Polymer.Element {
    */
   constructor() {
     super();
-    if (typeof this.parentNode.matchMedia === 'function') {
+    if (typeof this.parentNode.addSource === 'function') {
       this.parentNode.addSource(this);
     }
   }

@@ -39,16 +39,6 @@ class AoflImg extends Polymer.Element {
   /**
    *
    */
-  constructor() {
-    super();
-    if (typeof this.parentNode.setImg === 'function') {
-      this.parentNode.setImg(this);
-    }
-  }
-
-  /**
-   *
-   */
   connectedCallback() {
     super.connectedCallback();
     this._setSourceBound = this._setSource.bind(this);
@@ -57,6 +47,10 @@ class AoflImg extends Polymer.Element {
 
     Polymer.Async.animationFrame.run(() => {
       this._setSource();
+      let compatibleParent = this._getCompatibleParent();
+      if (compatibleParent) {
+        compatibleParent.setImg(this);
+      }
     });
   }
 
@@ -67,6 +61,40 @@ class AoflImg extends Polymer.Element {
     super.disconnectedCallback();
     window.removeEventListener('scroll', this._setSourceBound);
     window.removeEventListener('resize', this._setSourceBound);
+    this.observer.disconnect();
+  }
+
+  /**
+   * @return {HTMLElement}
+   */
+  _getCompatibleParent() {
+    let elem = this;
+    while (elem && typeof elem.setImg !== 'function') {
+      elem = elem.parentNode;
+    }
+    return elem;
+  }
+
+  /**
+   * @return {Object}
+   */
+  _getAbsoluteParent() {
+    let elems = null;
+    let elem = this.parentNode;
+    while (elem && elem.parentNode) {
+      if (elems !== null && elems.absolute !== null && ['relative', 'absolute', 'fixed'].indexOf(window.getComputedStyle(elem, null).getPropertyValue('position')) > -1) {
+        elems.relative = elem;
+        break;
+      }
+      if (elems === null && window.getComputedStyle(elem, null).getPropertyValue('position') === 'absolute') {
+        elems = {
+          absolute: elem,
+          relative: null
+        };
+      }
+      elem = elem.parentNode;
+    }
+    return elems;
   }
 
   /**
@@ -107,7 +135,9 @@ class AoflImg extends Polymer.Element {
     } else if (imgElement && this.elementInViewport()) {
       let src = this.src || this.aoflSrc;
       if (src !== imgElement.getAttribute('src')) {
-        let imageLoadedHandler = () => {
+        let imageLoadedHandler = (e) => {
+          this.width = e.target.width;
+          this.height = e.target.height;
           imgElement.style.background = 'rgba(0,0,0,0)';
           imgElement.style.width = '100%';
           imgElement.style.height = 'auto';

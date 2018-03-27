@@ -4,6 +4,6 @@
 }
 
 ::slotted(aofl-img) {
-  width: 100%;
+  width: inherit;
   height: auto;
 }

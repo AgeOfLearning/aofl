@@ -1,8 +1,8 @@
 <dom-module id="aofl-img">
 <link rel="stylesheet" href="./aofl-img.css">
 <template>
+  <canvas width$="[[width]]" height$="[[height]]"></canvas>
   <template is="dom-if" if="[[viewBox]]">
-    <canvas width$="[[viewBoxWidth]]" height$="[[viewBoxHeight]]"></canvas>
     <svg id="svg" height$="[[viewBoxHeight]]" width$="[[viewBoxWidth]]">
       <image id="svg-img" x="0" y="0" height$="[[height]]" width$="[[width]]" />
     </svg>
