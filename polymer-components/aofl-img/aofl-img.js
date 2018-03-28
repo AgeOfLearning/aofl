@@ -139,8 +139,6 @@ class AoflImg extends Polymer.Element {
           this.width = e.target.width;
           this.height = e.target.height;
           imgElement.style.background = 'rgba(0,0,0,0)';
-          imgElement.style.width = '100%';
-          imgElement.style.height = 'auto';
           imgElement.removeEventListener('load', imageLoadedHandler);
         };
         imgElement.addEventListener('load', imageLoadedHandler);
