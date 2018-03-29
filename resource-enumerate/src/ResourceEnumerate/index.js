@@ -27,16 +27,17 @@ class ResourceEnumerate {
   /**
    *
    * @param {*} apiNs
+   * @param {Boolean} forceNew
    * @return {Promise}
    */
-  get(apiNs) {
+  get(apiNs, forceNew = false) {
     let api = this.apis[apiNs];
 
     if (typeof api === 'undefined') {
       throw new Error('no such api namespace');
     }
 
-    if (typeof api.invalidateCache === 'function' && api.invalidateCache.call(null)) {
+    if (forceNew || (typeof api.invalidateCache === 'function' && api.invalidateCache.call(null))) {
       this.memoryCache.clear();
     }
     let re = this.memoryCache.getItem(apiNs);
