@@ -46,7 +46,6 @@ export default (superClass) => {
      * @param {String} propertyKey The property key to grab the value with
      */
     $touch(propertyKey) {
-      console.log('touch', this.$v);
       // Clearing out validation values
       this._setDirty(propertyKey);
       // If calling $touch for a specific property.
@@ -73,9 +72,9 @@ export default (superClass) => {
       for (let validatorKey in this.validators[propertyKey]) {
         if (!this.validators[propertyKey].hasOwnProperty(validatorKey)) continue;
         if (this.validators[propertyKey][validatorKey] instanceof Promise) {
-          this._callPromiseValidation(propertyKey, validation, value);
+          this._callPromiseValidation(propertyKey, validatorKey, value);
         } else {
-          this.set(`$v.${propertyKey}.${validatorKey}`, this.validators[propertyKey][validatorKey](value));
+          this.set(`$v.${propertyKey}.${validatorKey}`, this.validators[propertyKey][validatorKey].call(this, value, propertyKey));
         }
       }
     }
@@ -112,7 +111,7 @@ export default (superClass) => {
     _callPromiseValidation(propertyKey, validation, value) {
       this.set('$v.$pending', true);
       this.set(`$v.${propertyKey}.$pending`, true);
-      this.validators[propertyKey][validation](value)
+      this.validators[propertyKey][validation].call(this, value, propertyKey)
         .then((resp) => {
           this.set(`$v.${propertyKey}.${validation}`, true);
         })
@@ -199,7 +198,7 @@ export default (superClass) => {
      *
      * @return {Object} The initial validation state
      */
-    _createInitialValidationState() {
+     _createInitialValidationState() {
       // Sets initial $v validation object.
       let validationState = this._createValidationStateObject();
       // Sets initial property key validation objects for the consuming component.
