@@ -58,7 +58,6 @@ class CacheManager {
       obj = JSON.stringify(obj);
     }
 
-    console.log('###obj', obj);
     let namespaceKey = this.getNamespaceKey(key);
     this.storage.setItem(namespaceKey, obj);
     this.storedKeys.push(namespaceKey);
@@ -71,23 +70,18 @@ class CacheManager {
    */
   getItem(key) {
     let obj = this.storage.getItem(this.getNamespaceKey(key));
-    console.log('obj-------1>', obj);
     if (this.storageType === CACHE_TYPE_ENUMERATE.LOCAL ||
     this.storageType === CACHE_TYPE_ENUMERATE.SESSION) {
       obj = JSON.parse(obj);
     }
-    console.log('obj------>', obj);
     if (obj !== null && obj.hasOwnProperty('t')) {
       if (this.isExpired(key)) { // expired
         this.removeItem(key);
-        console.log('expired??---->>');
         return null;
       }
-      console.log('--->obj.v', obj.v);
       return obj.v;
     }
 
-    console.log('CacheManager#gitItem---->return', obj);
     return obj;
   }
 
@@ -98,7 +92,6 @@ class CacheManager {
     let collection = {};
     for (let i = 0; i < this.storedKeys.length; i++) {
       if (this.isExpired(this.storedKeys[i])) continue;
-      console.log(this.storedKeys[i], this.getItem(this.storedKeys[i]));
       collection[this.storedKeys[i]] = this.getItem(this.storedKeys[i]);
     }
     return collection;
