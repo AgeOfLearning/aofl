@@ -24,8 +24,8 @@ class CacheManager {
     this.expire = expire;
     this.storedKeys = [];
     this.namespace = namespace;
-    if (typeof expire > 0) {
-      this.interval = setInterval(this.removeExpired, expire);
+    if (expire > 0) {
+      this.interval = setInterval(() => this.removeExpired, expire);
     }
   }
 
