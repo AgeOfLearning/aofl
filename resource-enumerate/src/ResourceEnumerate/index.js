@@ -72,6 +72,10 @@ class ResourceEnumerate {
 
     return fetch(path)
     .then((response) => {
+      let contentType = response.headers.get('content-type');
+      if (!contentType || contentType.indexOf('application/json') === -1) {
+        return Promise.resolve();
+      }
       return response.json()
       .then((data) => {
         for (let apiNs in this.apis) {
