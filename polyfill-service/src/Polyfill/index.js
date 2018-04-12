@@ -19,7 +19,13 @@ class Polyfill {
    * @return {Boolean}
    */
   supported(_module) {
-    return window.hasOwnProperty(_module);
+    let modulePath = _module.split('.');
+    let obj = window;
+    for (let i = 0; i < modulePath.length; i++) {
+      if (!obj.hasOwnProperty(modulePath[i])) return false;
+      obj = obj[modulePath[i]];
+    }
+    return true;
   }
 
   /**
