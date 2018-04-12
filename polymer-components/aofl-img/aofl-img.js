@@ -61,7 +61,6 @@ class AoflImg extends Polymer.Element {
     super.disconnectedCallback();
     window.removeEventListener('scroll', this._setSourceBound);
     window.removeEventListener('resize', this._setSourceBound);
-    this.observer.disconnect();
   }
 
   /**
