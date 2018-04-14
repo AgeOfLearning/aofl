@@ -26,16 +26,16 @@ export default (superClass) => {
     /**
      * constructor
      */
-    constructor() {
-      super();
+    constructor(...args) {
+      super(...args);
       this.skipArray = ['$valid', '$dirty', '$pending', '$touch', '$reset'];
     }
 
     /**
      * connectedCallback
      */
-    connectedCallback() {
-      super.connectedCallback();
+    connectedCallback(...args) {
+      super.connectedCallback(...args);
       this.$v = this._createInitialValidationState();
     }
 
