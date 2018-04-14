@@ -37,6 +37,14 @@ class AoflImg extends Polymer.Element {
   }
 
   /**
+   * Creates an instance of AoflImg.
+   * @memberof AoflImg
+   */
+  constructor() {
+    super();
+    this.img = null;
+  }
+  /**
    *
    */
   connectedCallback() {
@@ -46,10 +54,11 @@ class AoflImg extends Polymer.Element {
     window.addEventListener('resize', this._setSourceBound);
 
     Polymer.Async.animationFrame.run(() => {
-      this._setSource();
       let compatibleParent = this._getCompatibleParent();
       if (compatibleParent) {
         compatibleParent.setImg(this);
+      } else {
+        this._setSource();
       }
     });
   }
@@ -133,15 +142,17 @@ class AoflImg extends Polymer.Element {
       this._renderSvgElement(svgElement);
     } else if (imgElement && this.elementInViewport()) {
       let src = this.src || this.aoflSrc;
-      if (src !== imgElement.getAttribute('src')) {
+      if (this.img === null || src !== this.img.src) {
+        this.img = new Image();
         let imageLoadedHandler = (e) => {
           this.width = e.target.width;
           this.height = e.target.height;
           imgElement.style.background = 'rgba(0,0,0,0)';
-          imgElement.removeEventListener('load', imageLoadedHandler);
+          this.img.removeEventListener('load', imageLoadedHandler);
+          imgElement.setAttribute('src', this.img.src);
         };
-        imgElement.addEventListener('load', imageLoadedHandler);
-        imgElement.setAttribute('src', src);
+        this.img.addEventListener('load', imageLoadedHandler);
+        this.img.setAttribute('src', src);
       }
     }
   }

@@ -1,11 +1,12 @@
 import {EnvironmentTypeEnumerate, ServerEnvironment} from '@aofl/server-environment';
 import interpolate from '../interpolate';
 import {CacheManager, CacheTypeEnumerate} from '@aofl/cache-manager';
+import Middleware from '../../../../../js/RequestMiddleware';
 
 /**
  *
  */
-class ResourceEnumerate {
+class ResourceEnumerate extends Middleware {
   /**
    *
    * @param {*} param0
@@ -36,23 +37,32 @@ class ResourceEnumerate {
     if (typeof api === 'undefined') {
       throw new Error('no such api namespace');
     }
-
     if (forceNew || (typeof api.invalidateCache === 'function' && api.invalidateCache.call(null))) {
       this.memoryCache.clear();
     }
     let re = this.memoryCache.getItem(apiNs);
-    if (re !== null && this.environment !== EnvironmentTypeEnumerate.DEV) {
-      return Promise.resolve(re);
+    let request = {
+      apiNs,
+      cached: re !== null
+    };
+
+    let preMw = this.__iterateMiddleware(request, 'pre');
+    let reResp = null;
+
+    if (re !== null) {
+      reResp = preMw.then((response) => Promise.resolve(re));
+    } else {
+      reResp = fetch(api.url, api.requestOptions)
+      .then((response) => {
+        return response.json()
+        .then((data) => {
+          return data;
+        });
+      });
+      this.memoryCache.setItem(apiNs, reResp);
     }
 
-    return fetch(api.url, api.requestOptions)
-    .then((response) => {
-      return response.json()
-      .then((data) => {
-        this.memoryCache.setItem(apiNs, data);
-        return data;
-      });
-    });
+    return reResp.then((response) => this.__iterateMiddleware(request, 'post', response));
   }
 
   /**

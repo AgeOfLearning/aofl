@@ -1,6 +1,6 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@aofl/cache-manager": "^1.0.0-beta.7",
+    "@aofl/middleware": "^1.0.0-beta.1",
     "@aofl/server-environment": "^1.0.0-beta.1"
   }
 }
