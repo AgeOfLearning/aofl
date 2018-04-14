@@ -1,7 +1,7 @@
 import {EnvironmentTypeEnumerate, ServerEnvironment} from '@aofl/server-environment';
 import interpolate from '../interpolate';
 import {CacheManager, CacheTypeEnumerate} from '@aofl/cache-manager';
-import Middleware from '../../../../../js/RequestMiddleware';
+import Middleware from '@aofl/middleware';
 
 /**
  *
