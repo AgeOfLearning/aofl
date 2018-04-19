@@ -196,8 +196,10 @@ class AoflImg extends Polymer.Element {
     let {top, right, bottom, left} = this.getBoundingClientRect();
     let vWidth = window.innerWidth || document.documentElement.clientWidth;
     let vHeight = window.innerHeight || document.documentElement.clientHeight;
+    let wThreshold = vWidth * 0.25;
+    let hThreshold = vHeight * 0.25;
 
-    return bottom > 0 && right > 0 && left < vWidth && top < vHeight;
+    return bottom > -hThreshold && right > -vWidth && left < (vWidth + wThreshold) && top < (vHeight + hThreshold);
   }
 }
 
