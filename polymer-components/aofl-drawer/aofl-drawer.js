@@ -116,7 +116,8 @@ class AoflDrawer extends Polymer.Element {
    */
   __animationEndHandler(e) {
     if (this.classList.contains('opening')) {
-      this.classList.replace('opening', 'open');
+      this.classList.remove('opening');
+      this.classList.add('open');
     } else {
       this.classList.remove('closing');
     }

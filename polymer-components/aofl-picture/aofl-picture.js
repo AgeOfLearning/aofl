@@ -62,9 +62,7 @@ class AoflPicture extends Polymer.Element {
    */
   _mediaQueryListener() {
     let matchedSource = undefined;
-    matchedSource = this.sources.find((item) => {
-      return this._mqFind(item);
-    });
+    matchedSource = this._mqFind(this.sources);
     this._setMediaSrc(matchedSource);
   }
   /**
@@ -95,11 +93,15 @@ class AoflPicture extends Polymer.Element {
   }
 
   /**
-   * @param {*} item
+   * @param {*} sources
    * @return {*}
    */
-  _mqFind(item) {
-    return item.mediaQuery.matches === true;
+  _mqFind(sources = []) {
+    for (let i = 0; i < sources.length; i++) {
+      if (sources[i].mediaQuery.matches === true) {
+        return sources[i];
+      }
+    }
   }
 
   /**
