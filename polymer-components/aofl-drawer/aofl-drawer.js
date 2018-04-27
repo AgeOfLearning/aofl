@@ -44,7 +44,6 @@ class AoflDrawer extends Polymer.Element {
     if (this.animateDrawer === 'true') {
       this.addEventListener('animationend', this.__animationEndHandler);
       this.addEventListener('transitionend', this.__animationEndHandler);
-      this.addEventListener('click', this.__stopPropagation);
     }
   }
 
@@ -125,19 +124,10 @@ class AoflDrawer extends Polymer.Element {
 
   /**
    *
-   * @param {Event} e
-   */
-  __stopPropagation(e) {
-    e.stopPropagation();
-  }
-
-  /**
-   *
    */
   disconnectedCallback() {
     this.removeEventListener('animationend', this.__animationEndHandler);
     this.removeEventListener('transitionend', this.__animationEndHandler);
-    this.removeEventListener('click', this.__stopPropagation);
   }
 }
 
