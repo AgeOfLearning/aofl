@@ -75,7 +75,7 @@ export default (superClass) => {
           this._callPromiseValidation(propertyKey, validatorKey, value);
         } else {
           this.set(`$v.${propertyKey}.${validatorKey}`, this.validators[propertyKey][validatorKey].call(this, value, propertyKey));
-          if (!this.validators[propertyKey][validatorKey].call(this, value, propertyKey)){
+          if (!this.validators[propertyKey][validatorKey].call(this, value, propertyKey)) {
             window.dispathEvent(new CustomEvent('validationError', {detail: `${propertyKey}.${validatorKey}`}));
           }
         }
