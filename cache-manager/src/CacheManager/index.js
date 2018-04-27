@@ -22,11 +22,27 @@ class CacheManager {
     this.storage = STORAGE[storageType];
     this.storageType = storageType;
     this.expire = expire;
-    this.storedKeys = [];
     this.namespace = namespace;
+    this.storedKeys = this.getStoredKeys();
     if (expire > 0) {
       this.interval = setInterval(() => this.removeExpired, expire);
     }
+  }
+
+  /**
+   *
+   * @return {Array}
+   * @memberof CacheManager
+   */
+  getStoredKeys() {
+    let keys = [];
+    for (let key in this.storage) {
+      if (!this.storage.hasOwnProperty(key)) continue;
+      if (key.indexOf(this.namespace) === 0) {
+        keys.push(key);
+      }
+    }
+    return keys;
   }
 
   /**
