@@ -22,7 +22,7 @@ class Polyfill {
     let modulePath = _module.split('.');
     let obj = window;
     for (let i = 0; i < modulePath.length; i++) {
-      if (!obj.hasOwnProperty(modulePath[i])) return false;
+      if (!Object.prototype.hasOwnProperty.call(obj, modulePath[i])) return false;
       obj = obj[modulePath[i]];
     }
     return true;
