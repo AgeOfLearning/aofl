@@ -166,6 +166,21 @@ class Store {
     }
   }
 
+
+  /**
+   *
+   *
+   * @param {*} state
+   * @memberof Store
+   */
+  replaceState(state) {
+    this.state = state;
+    if (this.debug) {
+      this.state = deepFreeze(this.state);
+    }
+    this.cbService.next();
+  }
+
   /**
    *
    * @param {*} fn
