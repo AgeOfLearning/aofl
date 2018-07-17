@@ -1,0 +1,13 @@
+{
+  "name": "@aofl/web-components",
+  "version": "1.0.0-beta.20",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@polymer/lit-element": "^0.5.2"
+  }
+}

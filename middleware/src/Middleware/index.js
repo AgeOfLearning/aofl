@@ -25,7 +25,6 @@ class Middleware {
   use(callback, enforce = 'post') {
     if (typeof callback !== 'function') new Error('callback must be a function');
     if (typeof this.middleware[enforce] === 'undefined') new Error(`Only \'post\' or \'pre\' are supported. ${enforce} enforce type not supported.`);
-
     this.middleware[enforce].push({
       callback,
       enforce
@@ -62,21 +61,15 @@ class Middleware {
     return new Promise((resolve, reject) => {
       let iterator = this.__getMiddlewareIterator(enforce);
       let mw = null;
-      let resp = response;
-      let next = (response) => {
+      let next = (response = null) => {
         mw = iterator.next();
-        resp = response;
         if (mw.done !== true) {
           mw.value.callback(request, response, next);
+        } else {
+          resolve(response);
         }
       };
-
       next(response);
-
-      if (mw.done !== true) {
-        return reject(resp);
-      }
-      return resolve(resp);
     });
   }
 }

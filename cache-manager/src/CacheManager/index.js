@@ -179,6 +179,3 @@ class CacheManager {
 }
 
 export default CacheManager;
-export {
-  CACHE_TYPE_ENUMERATE
-};

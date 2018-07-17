@@ -1,0 +1,14 @@
+a {
+  cursor: pointer;
+}
+
+#brand {
+  text-align: center;
+}
+#brand img {
+  max-width: 300px;
+}
+
+#page-content {
+  padding: 1em;
+}

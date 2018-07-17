@@ -1,9 +1,0 @@
-:host {
-  display: inline-block;
-  line-height: 0;
-}
-
-::slotted(aofl-img) {
-  width: inherit;
-  height: auto;
-}
