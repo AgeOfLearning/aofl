@@ -1,0 +1,123 @@
+const spawn = require('child_process').spawn;
+const path = require('path');
+const fs = require('fs');
+const chalk = require('chalk');
+/**
+ *
+ *
+ * @class Npm
+ */
+class Npm {
+  /**
+   *
+   *
+   * @static
+   * @param {Array} params
+   * @param {Object} [options={}]
+   * @return {Promise}
+   * @memberof Npm
+   */
+  static __run(params = [], options = {}) {
+    return new Promise((resolve, reject) => {
+      console.log(chalk.cyan(`running... npm ${params.join(' ')}\n`));
+      let res = '';
+      const npm = spawn('npm', params, Object.assign({stdio: 'inherit'}, options));
+
+      if (npm.stdout !== null) {
+        npm.stdout.on('data', (data) => {
+          res += data;
+        });
+      }
+
+      npm.on('close', (code) => {
+        if (code === 0) {
+          resolve(res);
+        } else {
+          reject({
+            code,
+            command: 'git',
+            subCommand: params[0]
+          });
+        }
+      });
+    });
+  }
+
+
+  /**
+   *
+   * @static
+   * @param {*} dir
+   * @return {String}
+   * @memberof Npm
+   */
+  static findPackageDir(dir) {
+    let tempDir = '';
+    while (tempDir !== dir) {
+      let packageFile = path.join(dir, 'package.json');
+      try {
+        fs.statSync(packageFile);
+        return dir;
+      } catch (e) {}
+
+      tempDir = dir;
+      dir = path.dirname(dir);
+    }
+
+    return '';
+  }
+
+  /**
+   *
+   * @static
+   * @param {*} moduleNames
+   * @param {string} [type='-D']
+   * @param {*} [options={}]
+   * @return {Promise}
+   * @memberof Npm
+   */
+  static installDependency(moduleNames, type = '-D', options = {}) {
+    if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
+      return Promise.reject(new Error('you need to pass modules to installDependency'));
+    }
+    return Npm.__run(['i', type, ...moduleNames], options);
+  }
+
+  /**
+   *
+   * @static
+   * @param {*} moduleNames
+   * @param {string} [type='-D']
+   * @param {*} [options={}]
+   * @return {Promise}
+   * @memberof Npm
+   */
+  static removeDependency(moduleNames, type = '-D', options = {}) {
+    if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
+      return Promise.reject(new Error('you need to pass modules to removeDependency'));
+    }
+    return Npm.__run(['r', type, ...moduleNames], options);
+  }
+
+
+  /**
+   *
+   * @static
+   * @param {Object} [options={}]
+   * @return {Promise}
+   * @memberof Npm
+   */
+  static install(options = {}) {
+    let packageDir = Npm.findPackageDir(options.cwd || process.env.PWD);
+    let installType = 'i';
+    if (packageDir !== '') {
+      try {
+        fs.statSync(path.join(packageDir, 'package-lock.json'));
+        installType = 'ci';
+      } catch (e) {}
+    }
+    return Npm.__run([installType]);
+  }
+}
+
+module.exports = Npm;
