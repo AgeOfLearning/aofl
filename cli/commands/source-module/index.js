@@ -1,10 +1,10 @@
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
-const moduleRefRegex = /(.+)@(.*)/;
 const Git = require('../../lib/git');
 const Npm = require('../../lib/npm');
 const glob = require('glob');
+const moduleRefRegex = /(.+)@(.*)/;
 /**
  *
  *
@@ -16,12 +16,13 @@ class SourceModule {
    * @param {*} modules
    * @memberof SourceModule
    */
-  constructor(modules = []) {
+  constructor(modules = [], repo) {
     this.cwd = process.cwd();
     this.configPath = path.resolve(this.cwd, 'aofl-sourced.json');
     this.targetPackageJson = require(path.resolve(this.cwd, 'package.json'));
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
+    this.repo = modules.length === 1? repo: undefined;
   }
 
   /**
@@ -49,12 +50,12 @@ class SourceModule {
         return item.name === m.name;
       });
 
-      if (m.repository !== '' && !inConfig) {
+      let repo = this.repo || m.repository;
+      if (repo && repo !== '' && !inConfig) {
         try {
-          let lsRemoteData = await Git.lsRemote(m.repository, false, false, false, '', false, false, false, '', false, [], {stdio: 'pipe'});
+          let lsRemoteData = await Git.lsRemote(repo, false, false, false, '', false, false, false, '', false, [], {stdio: 'pipe'});
           let fullModulePath = path.join(this.cwd, m.localPath);
-
-          await Git.addSubmodule(m.localPath, m.repository);
+          await Git.addSubmodule(m.localPath, repo);
           let ref = Git.filterRef(lsRemoteData, m.ref);
           if (ref.length) {
             await Git.checkout(ref[0][0], {
@@ -73,7 +74,7 @@ class SourceModule {
           console.log(e);
           console.log(chalk.red(`Could not source ${m.name}`));
           if (e.command === 'git' && e.subCommand === 'ls-remote') {
-            console.log(chalk.yellow(`Failed to talk to repo [${m.repository}]`));
+            console.log(chalk.yellow(`Failed to talk to repo [${repo}]`));
             console.log(chalk.yellow(`try`));
             console.log(chalk.yellow(`\t$ aofl source ${m.name} --repo [url]\n`));
           }
