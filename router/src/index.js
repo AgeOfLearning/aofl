@@ -1,4 +1,4 @@
-import pathToRegExp from 'path-to-regexp';
+import pathToRegExp from './path-to-regexp';
 import {Middleware} from '@aofl/middleware';
 
 /**
