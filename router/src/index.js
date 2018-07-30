@@ -8,11 +8,18 @@ import {Middleware} from '@aofl/middleware';
 export default class Router extends Middleware {
   /**
    * @description Loads route config
-   * @param {Object} config
    * @return {void}
    */
-  constructor(config) {
+  constructor() {
     super('Router');
+  }
+
+  /**
+   *
+   * @param {Array} config
+   * @return {void}
+   */
+  init(config) {
     this.middleware = {
       before: [],
       after: [],
@@ -134,6 +141,7 @@ export default class Router extends Middleware {
    * @return {Object}
    */
   addRegexRoutes(routes) {
+    console.log('routes', routes);
     for (let i = 0, j = routes.length; i < j; i++) {
       let keys = [];
       routes[i].path = routes[i].url;
@@ -213,6 +221,7 @@ export default class Router extends Middleware {
    * @return {String}
    */
   removeTrailingSlash(str) {
+    if (str.length === 1) return str;
     if (str[str.length-1] === '/') {
       str = str.substring(0, str.length-1);
     }
@@ -228,7 +237,8 @@ export default class Router extends Middleware {
   matchBestPath(path, routes) {
     let stack = [];
     // remove leading '/' from path
-    path = this.removeTrailingSlash(path);
+    console.log('matching path ', path);
+    //path = this.removeTrailingSlash(path);
     for (let i = 0, j = routes.length; i < j; i++) {
       let route = routes[i];
       route.path = this.removeTrailingSlash(route.path);
@@ -238,6 +248,7 @@ export default class Router extends Middleware {
         stack.push({route, match: null});
         break;
       }
+
       let matchProps = routes[i].regex.exec(path);
       if (matchProps) {
         if (!stack.length) {
