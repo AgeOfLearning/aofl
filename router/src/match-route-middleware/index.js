@@ -55,5 +55,7 @@ export default (request, response, next) => {
   if (matchedRoute !== null) {
     matchedRoute.props = matchedRoute.parse(request.to);
     next(Object.assign({}, response, {matchedRoute}));
+  } else {
+    next(Object.assign({}, response, {matchedRoute: null}));
   }
 };
