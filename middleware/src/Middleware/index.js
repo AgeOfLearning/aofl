@@ -6,11 +6,11 @@
 class Middleware {
   /**
    * Creates an instance of Middleware.
-   * @param {any} namespace
+   * @param {Object} middleware
    * @memberof Middleware
    */
-  constructor(namespace) {
-    this.middleware = {
+  constructor(middleware) {
+    this.middleware = middleware || {
       pre: [],
       post: []
     };
@@ -37,7 +37,7 @@ class Middleware {
    * @return {Iterator}
    * @memberof Middleware
    */
-  __getMiddlewareIterator(enforce = 'post') {
+  getMiddlewareIterator(enforce = 'post') {
     let collection = this.middleware[enforce];
     let nextIndex = 0;
 
@@ -57,9 +57,9 @@ class Middleware {
    * @return {Promise}
    * @memberof Middleware
    */
-  __iterateMiddleware(request, enforce = 'post', response = null) {
+  iterateMiddleware(request, enforce = 'post', response = null) {
     return new Promise((resolve, reject) => {
-      let iterator = this.__getMiddlewareIterator(enforce);
+      let iterator = this.getMiddlewareIterator(enforce);
       let mw = null;
       let next = (response = null) => {
         mw = iterator.next();
