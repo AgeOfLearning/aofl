@@ -15,7 +15,7 @@ const matchBestPath = (path, routes) => {
     route.path = PathUtils.removeTrailingSlash(route.path);
     if (path === route.path) { // exact match
       stack.shift();
-      stack.push({route, match: null});
+      stack.push(route);
       break;
     }
     let matches = route.regex.exec(path);

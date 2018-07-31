@@ -1,51 +1,49 @@
-import Router from '../../src';
-
+import Router from '../../src/Router';
 const config = [
   {
-    url : '/',
+    path: '/',
     resolve: () => import('./pages/home.html'),
-    default: true,
+    default: true
   },
   {
-    url : '/about/bob/:occupation',
+    path: '/about/bob/:occupation',
     resolve: () => import('./pages/bob-occupation.html')
   },
   {
-    url: '/about/:person/:occupation',
+    path: '/about/:person/:occupation',
     resolve: () => import('./pages/occupation.html')
   },
   {
-    url: '/about/:person',
+    path: '/about/:person',
     resolve: () => import('./pages/about.html')
   },
   {
-    url: '/about',
+    path: '/about',
     resolve: () => import('./pages/about.html')
   },
   {
-    url: '/about/bob',
+    path: '/about/bob',
     resolve: () => import('./pages/bob.html')
   },
   {
-    url: '/login',
+    path: '/login',
     resolve: () => import('./pages/login.html')
   },
   {
-    url: '/:foo/:bar',
+    path: '/:foo/:bar',
     resolve: () => import('./pages/foobar.html')
   }
 ];
 
 
-document.onreadystatechange = function documentListener () {
+document.onreadystatechange = function documentListener() {
   if (document.readyState === 'interactive') {
-
-    const router = new Router(config);
-
+    const router = new Router();
+    router.init(config);
     router.navigate('/', true); // load initial route
 
-    let menu = document.getElementsByTagName("nav")[0];
-    let pageContent = document.getElementById("page-content");
+    let menu = document.getElementsByTagName('nav')[0];
+    let pageContent = document.getElementById('page-content');
 
     router.beforeEach((request, response, next) => {
       if (request.to === '/about/bob') {
@@ -69,8 +67,8 @@ document.onreadystatechange = function documentListener () {
       }
       if (/about/.test(response.to)) {
         if (response.matchedRoute.props !== undefined) {
-          let person = document.getElementById("person");
-          let occupation = document.getElementById("occupation");
+          let person = document.getElementById('person');
+          let occupation = document.getElementById('occupation');
           if (person) person.innerText = response.matchedRoute.props.person;
           if (occupation) occupation.innerText = response.matchedRoute.props.occupation;
         }
@@ -78,9 +76,9 @@ document.onreadystatechange = function documentListener () {
       next(response);
     });
 
-    menu.addEventListener('click', evt => {
+    menu.addEventListener('click', (evt) => {
       if (evt.target.localName !== 'a') return;
       router.navigate(evt.target.dataset.path);
     });
   }
-}
+};
