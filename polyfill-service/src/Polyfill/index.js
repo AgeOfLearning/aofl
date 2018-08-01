@@ -1,5 +1,8 @@
-import es6Promise from 'es6-promise';
-es6Promise.polyfill();
+import promiscuous from '../promiscuous';
+
+if (typeof window.Promise === 'undefined') {
+  window.Promise = promiscuous;
+}
 
 /**
  * polyfill service

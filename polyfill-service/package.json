@@ -8,11 +8,10 @@
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "ISC",
-  "dependencies": {
-    "es6-promise": "^4.2.4"
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
-  }
+  },
+  "devDependencies": {}
 }
