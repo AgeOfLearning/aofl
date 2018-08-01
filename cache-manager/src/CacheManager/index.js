@@ -1,6 +1,6 @@
 import CACHE_TYPE_ENUMERATE from '../CacheTypeEnumerate';
 import MemoryStorage from '../MemoryStorage';
-import sha256 from 'crypto-js/sha256';
+import md5 from 'tiny-js-md5';
 
 const STORAGE = {
   [CACHE_TYPE_ENUMERATE.LOCAL]: localStorage,
@@ -55,7 +55,7 @@ class CacheManager {
       return key;
     }
 
-    return this.namespace + '_' + sha256(key);
+    return this.namespace + '_' + md5(key);
   }
 
   /**
