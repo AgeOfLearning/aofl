@@ -2,13 +2,32 @@
  *
  */
 class MemoryStorage {
-  static store = {};
-
   /**
    *
    */
   static clear() {
-    MemoryStorage.store = {};
+    for (let key in MemoryStorage) {
+      if (MemoryStorage.hasOwnProperty(key)) {
+        MemoryStorage.removeItem(key);
+      }
+    }
+  }
+
+  /**
+   *
+   *
+   * @readonly
+   * @static
+   * @memberof MemoryStorage
+   */
+  static get length() {
+    let length = 0;
+    for (let key in MemoryStorage) {
+      if (MemoryStorage.hasOwnProperty(key)) {
+        length++;
+      }
+    }
+    return length;
   }
 
   /**
@@ -17,8 +36,8 @@ class MemoryStorage {
    * @return {*}
    */
   static getItem(key) {
-    if (MemoryStorage.store.hasOwnProperty(key)) {
-      return MemoryStorage.store[key];
+    if (MemoryStorage.hasOwnProperty(key)) {
+      return MemoryStorage[key];
     }
     return null;
   }
@@ -29,7 +48,7 @@ class MemoryStorage {
    * @param {*} value
    */
   static setItem(key, value) {
-    MemoryStorage.store[key] = value;
+    MemoryStorage[key] = value;
   }
 
   /**
@@ -38,8 +57,8 @@ class MemoryStorage {
    * @param {String} key
    */
   static removeItem(key) {
-    MemoryStorage.store[key] = null;
-    delete MemoryStorage.store[key];
+    MemoryStorage[key] = null;
+    delete MemoryStorage[key];
   }
 };
 
