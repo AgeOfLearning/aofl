@@ -21,8 +21,7 @@ class ConcludeModule {
     this.cwd = process.cwd();
     this.all = all;
     this.revert = revert;
-    this.configPath = path.resolve(this.cwd, 'aofl-sourced.json');
-    this.targetPackageJson = require(path.resolve(this.cwd, 'package.json'));
+    this.configPath = path.resolve(this.cwd, 'aofl.json');
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
   }
@@ -41,7 +40,6 @@ class ConcludeModule {
     let concludeModule = async () => {
       let next = gen.next();
       if (next.done) {
-        this.config.modules = this.modules;
         fs.writeFileSync(this.configPath, JSON.stringify(this.config, null, 2), {encoding: 'utf-8'});
         return;
       }
@@ -59,8 +57,8 @@ class ConcludeModule {
         await Npm.removeDependency([m.name], m.type.flag);
         await Git.removeSubmodule(m.localPath);
         await Npm.installDependency([m.name + version], m.type.flag);
-        let index = this.modules.findIndex((item) => item.name === m.name);
-        this.modules.splice(index, 1);
+        let index = this.config.modules.findIndex((item) => item.name === m.name);
+        this.config.modules.splice(index, 1);
       } catch (e) {
         console.log('caught');
         console.log(e);
@@ -81,7 +79,7 @@ class ConcludeModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      console.log(chalk.yellow(`Could not load aofl-sourced.json in ${path.dirname(this.configPath)} a new config file will be generated`));
+      console.log(chalk.yellow(`Could not load aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;
@@ -118,7 +116,6 @@ class ConcludeModule {
    */
   getModulePackage(modulePath, name) {
     let files = glob.sync(path.join(modulePath, '**', 'package.json'));
-    console.log();
     for (let i = 0; i < files.length; i++) {
       try {
         let p = require(path.resolve(files[i]));

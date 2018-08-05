@@ -20,7 +20,7 @@ class MemoryStorage {
    * @static
    * @memberof MemoryStorage
    */
-  static get length() {
+  static get size() {
     let length = 0;
     for (let key in MemoryStorage) {
       if (MemoryStorage.hasOwnProperty(key)) {

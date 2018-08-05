@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "1.0.0-beta.21",
+  "version": "1.0.0-beta.22",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "commander": "^2.16.0",
     "glob": "^7.1.2",
     "mkdirp": "^0.5.1",
+    "multi-glob": "^1.0.1",
     "rimraf": "^2.6.2"
   },
   "devDependencies": {}

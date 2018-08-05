@@ -14,11 +14,12 @@ class SourceModule {
   /**
    * Creates an instance of SourceModule.
    * @param {*} modules
+   * @param {String} repo
    * @memberof SourceModule
    */
   constructor(modules = [], repo) {
     this.cwd = process.cwd();
-    this.configPath = path.resolve(this.cwd, 'aofl-sourced.json');
+    this.configPath = path.resolve(this.cwd, 'aofl.json');
     this.targetPackageJson = require(path.resolve(this.cwd, 'package.json'));
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
@@ -95,7 +96,7 @@ class SourceModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      console.log(chalk.yellow(`Could not load aofl-sourced.json in ${path.dirname(this.configPath)} a new config file will be generated`));
+      console.log(chalk.yellow(`Could not load aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;

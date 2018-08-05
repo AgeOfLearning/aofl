@@ -1,0 +1,32 @@
+{
+  "name": "@aofl/unit-testing-plugin",
+  "version": "1.0.0-beta.22",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
+  },
+  "dependencies": {
+    "@polymer/polymer": "^3.0.5",
+    "@polymer/test-fixture": "^3.0.0-pre.21",
+    "@webcomponents/webcomponentsjs": "^2.0.4",
+    "async": "^1.5.2",
+    "chalk": "^2.4.1",
+    "cleankill": "^2.0.0",
+    "glob": "^7.1.2",
+    "lodash.defaultsdeep": "^4.6.0",
+    "mkdirp": "^0.5.1",
+    "parse-es6-imports": "^1.0.1",
+    "rimraf": "^2.6.2",
+    "wct-browser-legacy": "^1.0.1",
+    "web-component-tester": "^6.7.1",
+    "web-component-tester-istanbul": "^0.10.0",
+    "webpack": "^4.16.5"
+  }
+}
