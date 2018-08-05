@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cache-manager",
-  "version": "1.0.0-beta.20",
+  "version": "1.0.0-beta.21",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "tiny-js-md5": "^1.1.2"
   }

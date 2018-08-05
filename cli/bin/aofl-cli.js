@@ -10,12 +10,14 @@ program
   console.log(`
   Examples:
 
-    aofljs --help
-    aofljs source
+    aofl --help
+    aofl source
 `);
 })
 .command('source <moduleName>', 'Download an npm module into your project')
-.command('conclude <moduleName>', 'conclude module');
+.command('conclude <moduleName>', 'conclude module')
+.command('g [type] [name]', 'scoffold component');
+
 
 program
 .parse(process.argv);
