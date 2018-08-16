@@ -1,18 +1,18 @@
 {
-  "name": "@aofl/web-components",
-  "version": "1.0.0-beta.22",
+  "name": "@aofl/parent-dep-mixin",
+  "version": "1.0.0-beta.23",
   "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
   },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
   "dependencies": {
-    "@aofl/parent-dep-mixin": "file:../parent-dep-mixin",
     "@polymer/lit-element": "^0.5.2"
   }
 }

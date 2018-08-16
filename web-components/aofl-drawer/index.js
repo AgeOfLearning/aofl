@@ -106,7 +106,8 @@ class AoflDrawer extends LitElement {
   openChanged(newVal, oldVal) {
     if (newVal === 'true') {
       this.cancelOpen = this.startOpeningAnimation(() => {
-        this.classList.replace(this.closing, this.opening);
+        this.classList.remove(this.closing);
+        this.classList.add(this.opening);
         this.classList.add(this.trigger);
       });
     } else if (typeof oldVal !== 'undefined') {
@@ -114,7 +115,8 @@ class AoflDrawer extends LitElement {
         this.cancelOpen();
         this.cancelOpen = null;
       }
-      this.classList.replace(this.opening, this.closing);
+      this.classList.remove(this.opening);
+      this.classList.add(this.closing);
       this.classList.add(this.trigger);
       this.classList.add('closing');
     }
@@ -157,10 +159,12 @@ class AoflDrawer extends LitElement {
     this.classList.remove(this.trigger);
     let drawerState = 'open';
     if (this.classList.contains(this.opening)) {
-      this.classList.replace(this.opening, this.closing);
+      this.classList.remove(this.opening);
+      this.classList.add(this.closing);
       drawerState = 'closed';
     } else {
-      this.classList.replace(this.closing, this.opening);
+      this.classList.remove(this.closing);
+      this.classList.add(this.opening);
       this.classList.remove('closing');
     }
     this.dispatchEvent(new CustomEvent('aofl-drawer-change', {

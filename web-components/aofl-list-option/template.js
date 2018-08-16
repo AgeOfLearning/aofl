@@ -6,7 +6,7 @@ export const template = (context) => html`
   display: block;
 }
 </style>
-<div on-click="${() => context._select()}">
+<div on-click="${() => context.select()}">
   <slot></slot>
 </div>
 `;

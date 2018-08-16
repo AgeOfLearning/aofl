@@ -1,5 +1,5 @@
 import {template} from './template';
-import styles from './styles.css';
+// import styles from './styles.css';
 import {html, LitElement} from '@polymer/lit-element';
 
 /**
@@ -20,13 +20,8 @@ class AoflSelectList extends LitElement {
    */
   static get properties() {
     return {
-      disabled: {
-        type: Boolean,
-        value: false
-      },
-      options: {
-        type: Array
-      }
+      disabled: Boolean,
+      options: Array
     };
   }
 
@@ -49,18 +44,21 @@ class AoflSelectList extends LitElement {
   /**
    * Updated selected value and dispatches a custom event with that value
    *
-   * @param {Object} option
+   * @param {String} value
    */
-  updateSelected(option) {
-    this.options.forEach((_option) => _option.removeAttribute('selected'));
-    option.setAttribute('selected', 'true');
-    this.selectedValue = option.value;
-    this.dispatchEvent(new CustomEvent('select-list-change', {
-      composed: true,
-      detail: {
-        selected: option.value
+  updateSelected(value) {
+    let selectedValue = '';
+    for (let i = 0; i < this.options.length; i++) {
+      this.options[i].removeAttribute('selected');
+      if (this.options[i].value === value) {
+        let selected = this.options[i];
+        selected.setAttribute('selected', 'true');
+        selectedValue = selected.value;
       }
-    }));
+    }
+
+    this.selectedValue = selectedValue;
+    this.dispatchEvent(new CustomEvent('change'));
   }
 
   /**
@@ -68,6 +66,9 @@ class AoflSelectList extends LitElement {
    */
   addOption(option) {
     this.options.push(option);
+    if (option.getAttribute('selected') === 'true') {
+      this.updateSelected(option.value);
+    }
   }
 }
 
