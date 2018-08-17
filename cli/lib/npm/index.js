@@ -72,11 +72,12 @@ class Npm {
    * @static
    * @param {*} moduleNames
    * @param {string} [type='-D']
+   * @param {Boolean} force
    * @param {*} [options={}]
    * @return {Promise}
    * @memberof Npm
    */
-  static installDependency(moduleNames, type = '-D', options = {}) {
+  static installDependency(moduleNames, type = '-D', force = false, options = {}) {
     if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
       return Promise.reject(new Error('you need to pass modules to installDependency'));
     }
@@ -88,15 +89,20 @@ class Npm {
    * @static
    * @param {*} moduleNames
    * @param {string} [type='-D']
+   * @param {Boolean} force
    * @param {*} [options={}]
    * @return {Promise}
    * @memberof Npm
    */
-  static removeDependency(moduleNames, type = '-D', options = {}) {
+  static removeDependency(moduleNames, type = '-D', force = false, options = {}) {
     if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
       return Promise.reject(new Error('you need to pass modules to removeDependency'));
     }
-    return Npm.__run(['r', type, ...moduleNames], options);
+    const params = ['r', type, ...moduleNames];
+    if (force) {
+      params.push('-f');
+    }
+    return Npm.__run(params, options);
   }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/unit-testing-plugin",
-  "version": "1.0.0-beta.23",
+  "version": "1.0.0-beta.24",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,19 +14,14 @@
   },
   "dependencies": {
     "@polymer/polymer": "^3.0.5",
-    "@polymer/test-fixture": "^3.0.0-pre.21",
-    "@webcomponents/webcomponentsjs": "^2.0.4",
-    "async": "^1.5.2",
     "chalk": "^2.4.1",
     "cleankill": "^2.0.0",
-    "glob": "^7.1.2",
+    "fast-glob": "^2.2.2",
     "lodash.defaultsdeep": "^4.6.0",
-    "mkdirp": "^0.5.1",
-    "parse-es6-imports": "^1.0.1",
-    "rimraf": "^2.6.2",
+    "tiny-js-md5": "^1.1.2",
     "wct-browser-legacy": "^1.0.1",
-    "wct-istanbul": "^0.14.3",
-    "web-component-tester": "^6.7.1",
+    "web-component-tester": "^6.8.0",
+    "web-component-tester-istanbul": "^0.10.0",
     "webpack": "^4.16.5"
   }
 }

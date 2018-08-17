@@ -11,13 +11,17 @@
 </head>
 
 <body>
-  <div id="test-container"></div>
+
+  <!-- test html -->
+  aoflUnitTesting:html
   <!-- js content -->
   aoflUnitTesting:js
+  <!-- all files -->
+  aoflUnitTesting:allFiles
   <script>
-    console.log('sample', JSON.stringify(WCT.share));
-    console.log('sample', JSON.stringify(window.__coverage__));
-    // console.log('sample', JSON.stringify(gcv));
+    console.log('load-all', JSON.stringify(WCT.share));
+    console.log('load-all', JSON.stringify(window.__coverage__));
+    // console.log('load-all', JSON.stringify(gcv));
     WCT.share.__coverage__ = window.__coverage__ || {};
   </script>
 </body>

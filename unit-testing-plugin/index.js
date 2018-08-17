@@ -1,17 +1,15 @@
-const glob = require('glob');
+const glob = require('fast-glob');
 const path = require('path');
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
+const {spawn} = require('child_process');
 const defaultsDeep = require('lodash.defaultsdeep');
 const fs = require('fs');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const JsonpTemplatePlugin = require('webpack/lib/web/JsonpTemplatePlugin');
-const LoaderTargetPlugin = require('webpack/lib/LoaderTargetPlugin');
-const parseImports = require('parse-es6-imports');
 const {steps} = require('web-component-tester');
 const WctContext = require('web-component-tester/runner/context');
 const {CliReporter} = require('web-component-tester/runner/clireporter');
 const cleankill = require('cleankill');
+const md5 = require('tiny-js-md5');
+const {getChunksMap} = require('./assets-map');
 
 /**
  *
@@ -37,11 +35,12 @@ class UnitTestingPlugin {
    */
   constructor(options = {}) {
     this.options = defaultsDeep(options, {
-      include: '**/*.spec.{html,js}',
+      include: '**/*.js',
       exclude: ['**/node_modules/**'],
       output: 'tests-dest',
-      config: path.join(process.env.PWD, 'wct.conf.json'),
-      clean: true
+      config: path.join(process.env.PWD, '.wctrc.json'),
+      clean: true,
+      scripts: []
     });
     this.options.exclude.push(path.join('**', this.options.output, '**'));
     this.options.output = path.resolve(process.env.PWD, this.options.output);
@@ -54,9 +53,7 @@ class UnitTestingPlugin {
       verbose: false,
       sauce: null,
       plugins: {
-        local: {
-          browsers: ['chrome']
-        },
+        local: null,
         sauce: null,
         istanbul: {
           dir: path.join(process.env.PWD, 'coverage'),
@@ -75,7 +72,10 @@ class UnitTestingPlugin {
     if (this.wctContext.options.output) {
       new CliReporter(this.wctContext, this.wctContext.options.output, this.wctContext.options);
     }
+    this.wctContext.options.suites = [];
     this.firstRun = true;
+    this.watchMode = false;
+    this.createOutputFolder();
   }
 
   /**
@@ -85,28 +85,42 @@ class UnitTestingPlugin {
    * @memberof UnitTestingPlugin
    */
   apply(compiler) {
+    let files = glob.sync(['**/*.spec.js', '**/index.js'], {
+      ignore: this.options.exclude
+    });
+
+    let coverAllEntryPath = this.getCoverAllEntryPath(files.filter((item) => item.indexOf('.spec.js') === -1));
+
+    files.push(coverAllEntryPath);
+    files.forEach((item) => {
+      if (item.indexOf('.spec.js') !== -1) {
+        let entryPath = path.resolve(item);
+        let entryName = UnitTestingPlugin.name + '-' + md5(entryPath);
+        new SingleEntryPlugin(compiler.context, entryPath, entryName).apply(compiler);
+      }
+    });
+
+    compiler.hooks.beforeRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
+      // await this.cleanOutputFolder();
+      // await this.createOutputFolder();
+      cb(null);
+    });
+    compiler.hooks.watchRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
+      this.watchMode = true;
+      cb(null);
+    });
     compiler.hooks.emit.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
       try {
-        await this.cleanOutputFolder();
-        await this.createOutputFolder();
-        const suitePaths = this.getInputSuitePaths();
-        const htmlRegex = /\.html$/;
-        const jsRegex = /\.js$/;
-
-        this.wctContext.options.suites = [];
-        for (let i = 0; i < suitePaths.length; i++) {
-          if (compilation.fileDependencies.has(suitePaths[i])) {
-            compilation.fileDependencies.delete(suitePaths[i]);
-          }
-          compilation.fileDependencies.add(suitePaths[i]);
-          if (htmlRegex.test(suitePaths[i])) {
-            let suite = await this.getHtmlSuite(suitePaths[i], compiler, compilation);
-            this.wctContext.options.suites.push(suite);
-          } else if (jsRegex.test(suitePaths[i])) {
-            let suite = await this.getJsSuite(suitePaths[i], compiler, compilation);
+        const chunksMap = getChunksMap(compilation);
+        let additionalScripts = this.getAdditionalScripts(compilation, chunksMap);
+        for (let key in chunksMap) {
+          if (!chunksMap.hasOwnProperty(key) || key.indexOf(UnitTestingPlugin.name) !== 0) continue;
+          const source = compilation.assets[chunksMap[key]].source();
+          let suite = this.generateSuite(key, source, additionalScripts);
+          if (this.wctContext.options.suites.indexOf(suite) === -1) {
             this.wctContext.options.suites.push(suite);
           }
-        };
+        }
 
         if (this.wctContext.options.suites.length > 0) {
           if (this.firstRun) {
@@ -117,18 +131,21 @@ class UnitTestingPlugin {
             this.firstRun = false;
           }
           await steps.runTests(this.wctContext);
+        } else {
+          console.log(chalk.red('no tests were supplied to wct'));
         }
       } catch (e) {
         compilation.errors.push(e);
       } finally {
-        if (this.options.clean) {
-          await this.cleanOutputFolder();
-        }
-        if (!compiler.options.watch) {
+        if (!this.watchMode) {
+          // if (this.options.clean) {
+            // await this.cleanOutputFolder();
+          // }
           await cleankill.close();
         }
       }
-      cb(null);
+
+      return cb(null);
     });
   }
 
@@ -139,13 +156,16 @@ class UnitTestingPlugin {
    */
   cleanOutputFolder() {
     return new Promise((resolve, reject) => {
-      rimraf(this.options.output, (err) => {
+      let rm = spawn('rm', [
+        '-rf',
+        this.options.output
+      ]);
+
+      rm.on('close', (err) => {
         if (err) {
-          return reject(err);
+          reject(err);
         } else {
-          setTimeout(() => {
-            return resolve();
-          }, 2000);
+          resolve();
         }
       });
     });
@@ -159,65 +179,81 @@ class UnitTestingPlugin {
    */
   createOutputFolder() {
     return new Promise((resolve, reject) => {
-      mkdirp(this.options.output, (err) => {
+      let mkdir = spawn('mkdir', [
+        '-p',
+        '-m',
+        777,
+        this.options.output
+      ]);
+
+      mkdir.on('close', (err) => {
         if (err) {
-          return reject(err);
+          reject(err);
         } else {
-          return resolve();
+          resolve();
         }
       });
     });
   }
 
   /**
-   *
-   *
-   * @return {Array}
-   * @memberof UnitTestingPlugin
-   */
-  getInputSuitePaths() {
-    let suites = glob.sync(this.options.include, {
-      cwd: process.env.PWD,
-      ignore: this.options.exclude
-    });
-    return suites;
-  }
-
-  /**
-   *
-   * @param {String} filePath
-   * @param {Object} compiler
-   * @param {Object} compilation
+   * @param {String[]} files
    * @return {String}
    * @memberof UnitTestingPlugin
    */
-  async getHtmlSuite(filePath, compiler, compilation) {
+  getCoverAllEntryPath(files) {
     const context = this.options.output;
-    const suiteData = this.parseHtmlSuite(filePath);
-    const fileName = suiteData.relativePath.replace(/\//g, '~~');
-    const jsOutputPath = path.resolve(context, fileName.replace(/\.(?!.*\.).*$/, Date.now() + '.js'));
-    const finalOutputPath = path.resolve(this.options.output, fileName);
-    const compiledAssets = await this.copyJsToOutput(jsOutputPath, suiteData.js, compiler, compilation);
+    const filename = 'all-tests';
+    const jsOutputPath = path.resolve(context, md5(filename) + '.spec.js');
+    const content = files.reduce((acc, item) => {
+      acc += `import './${path.relative(path.dirname(jsOutputPath), path.resolve(item))}';\n`;
+      return acc;
+    }, '');
 
+    fs.writeFileSync(jsOutputPath, content, {encoding: 'utf-8'});
+    return jsOutputPath;
+  }
+
+
+  /**
+   * @param {String} name
+   * @param {String} content
+   * @param {String} otherScripts
+   * @return {String}
+   * @memberof UnitTestingPlugin
+   */
+  generateSuite(name, content, otherScripts) {
+    const finalOutputPath = path.resolve(this.options.output, name + '.html');
     let template = fs.readFileSync(path.resolve(__dirname, 'templates', 'sample.html'), 'utf-8');
-
-    let scripts = '';
-    for (let key in compiledAssets) {
-      if (!compiledAssets.hasOwnProperty(key)) continue;
-      scripts += `<script>${compiledAssets[key].source()}</script>`;
-    }
-
     template = template
-    .replace('aoflUnitTesting:wct-browser-legacy', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules/wct-browser-legacy/browser.js')))
-    .replace('aoflUnitTesting:html', suiteData.html);
+    .replace('aoflUnitTesting:wct-browser-legacy', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules/web-component-tester/browser.js')));
 
-    template = this.replaceTemplatePart(template, 'aoflUnitTesting:js', scripts);
+    template = this.replaceTemplatePart(template, 'aoflUnitTesting:js', '<script>\n' + otherScripts + content + '\n</script>');
 
-    rimraf.sync(jsOutputPath);
     fs.writeFileSync(finalOutputPath, template, {encoding: 'utf-8'});
 
     return path.relative(process.env.PWD, finalOutputPath);
   }
+
+
+  /**
+   *
+   * @param {Object} compilation
+   * @param {Object} chunksMap
+   * @return {String}
+   * @memberof UnitTestingPlugin
+   */
+  getAdditionalScripts(compilation, chunksMap) {
+    let scripts = '';
+    for (let i = 0; i < this.options.scripts.length; i++) {
+      if (typeof chunksMap[this.options.scripts[i]] !== 'undefined' &&
+      typeof compilation.assets[chunksMap[this.options.scripts[i]]] !== 'undefined') {
+        scripts += compilation.assets[chunksMap[this.options.scripts[i]]].source() + '\n';
+      }
+    }
+    return scripts;
+  }
+
   /**
    *
    *
@@ -234,152 +270,6 @@ class UnitTestingPlugin {
       i = template.indexOf(match);
     }
     return template;
-  }
-  /**
-   *
-   *
-   * @param {*} _filePath
-   * @return {Object}
-   * @memberof UnitTestingPlugin
-   */
-  parseHtmlSuite(_filePath) {
-    const filePath = path.resolve(_filePath);
-    const suite = {
-      path: filePath,
-      relativePath: path.relative(process.env.PWD, filePath)
-    };
-
-    const content = fs.readFileSync(filePath, 'utf-8');
-    const scriptRegex = /<script[^>]*>((?:.|\s)*?)<\/script>/;
-    const scriptMatches = scriptRegex.exec(content);
-
-    if (scriptMatches !== null) {
-      suite.html = content.substring(0, scriptMatches.index);
-      suite.js = this.jsToRelativeImport(scriptMatches[1], filePath);
-    }
-
-    return suite;
-  }
-
-
-  /**
-   *
-   *
-   * @param {*} _filePath
-   * @param {*} compiler
-   * @param {*} compilation
-   * @return {String}
-   * @memberof UnitTestingPlugin
-   */
-  async getJsSuite(_filePath, compiler, compilation) {
-    const context = this.options.output;
-    const filePath = path.resolve(_filePath);
-    const relativePath = path.relative(process.env.PWD, filePath);
-    const fileName = relativePath.replace(/\//g, '~~');
-    const jsOutputPath = path.resolve(context, fileName.replace(/\.(?!.*\.).*$/, Date.now() + '.js'));
-    const finalOutputPath = path.resolve(this.options.output, fileName);
-    const jsContent = fs.readFileSync(filePath, 'utf-8');
-    const jsContentRelativePaths = this.jsToRelativeImport(jsContent, filePath);
-    fs.writeFileSync(jsOutputPath, jsContentRelativePaths, {encoding: 'utf-8'});
-
-    const compiledAssets = await this.compileJs(compiler, compilation, jsOutputPath, context);
-
-    let content = '';
-    for (let key in compiledAssets) {
-      if (!compiledAssets.hasOwnProperty(key)) continue;
-      content += `${compiledAssets[key].source()}`;
-    }
-
-    fs.writeFileSync(finalOutputPath, content, {encoding: 'utf-8'});
-
-    return path.relative(process.env.PWD, finalOutputPath);
-  }
-
-  /**
-   *
-   *
-   * @param {*} _content
-   * @param {*} filePath
-   * @return {String}
-   * @memberof UnitTestingPlugin
-   */
-  jsToRelativeImport(_content, filePath) {
-    let imports = parseImports(_content);
-    let content = _content;
-    for (let i = 0; i < imports.length; i++) {
-      if (imports[i].fromModule.charAt(0) !== '.') continue;
-      content = content.replace(new RegExp(imports[i].fromModule, 'g'), path.relative(this.options.output, path.resolve(path.dirname(filePath), imports[i].fromModule)));
-    }
-    return content;
-  }
-
-
-  /**
-   *
-   * @param {*} outputPath
-   * @param {*} content
-   * @param {*} compiler
-   * @param {*} compilation
-   * @return {Array}
-   * @memberof UnitTestingPlugin
-   */
-  async copyJsToOutput(outputPath, content, compiler, compilation) {
-    const context = this.options.output;
-    fs.writeFileSync(outputPath, content, {encoding: 'utf-8'});
-    return await this.compileJs(compiler, compilation, outputPath, context);
-  }
-  /**
-   * @param {*} compiler
-   * @param {*} compilation
-   * @param {*} filename
-   * @param {*} context
-   * @return {Promise}
-   * @memberof UnitTestingPlugin
-   */
-  compileJs(compiler, compilation, filename, context) {
-    const outputOptions = {
-      ...compiler.options.output,
-      filename: '[name].js'
-    };
-    const compilerName = UnitTestingPlugin.name + 'Compiler' + ' for ' + filename;
-    const childCompiler = compilation.createChildCompiler(compilerName, outputOptions);
-    childCompiler.context = context;
-    const cachedAssets = Object.assign({}, compilation.assets);
-    new JsonpTemplatePlugin().apply(childCompiler);
-    // new LibraryTemplatePlugin('AOFL_UNIT_PLUGIN_RESULT', 'umd2').apply(childCompiler);
-    new SingleEntryPlugin(childCompiler.context, filename).apply(childCompiler);
-    new LoaderTargetPlugin('web').apply(childCompiler);
-
-    childCompiler.hooks.compilation.tap(UnitTestingPlugin.name, (childCompilation) => {
-      if (childCompilation.cache) {
-        childCompilation.cache[compilerName];
-        if (!childCompilation.cache[compilerName]) {
-          childCompilation.cache[compilerName] = {};
-        }
-        childCompilation.cache = childCompilation.cache[compilerName];
-      }
-    });
-
-    return new Promise((resolve, reject) => {
-      childCompiler.runAsChild((err, entries, childCompilation) => {
-        let compiledAssets = childCompilation.assets;
-        for (let key in childCompilation.assets) {
-          if (!childCompilation.assets.hasOwnProperty(key)) continue;
-          if (typeof cachedAssets[key] === 'undefined') {
-            delete compilation.assets[key];
-          }
-        }
-
-        if (childCompilation && childCompilation.errors && childCompilation.errors.length) {
-          const errorDetails = childCompilation.errors.map((error) => error.message + (error.error ? ':\n' + error.error : '')).join('\n');
-          reject(new Error('Child compilation failed:\n' + errorDetails));
-        } else if (err) {
-          reject(err);
-        } else {
-            return resolve(compiledAssets);
-        }
-      });
-    });
   }
 }
 

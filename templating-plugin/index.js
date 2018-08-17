@@ -5,10 +5,10 @@ const defaultsDeep = require('lodash.defaultsdeep');
 const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SingleEntryPlugin = require('webpack/lib/SingleEntryPlugin');
-const JsonpTemplatePlugin = require('webpack/lib/web/JsonpTemplatePlugin');
 const server = require('./server');
 const preRender = require('./prerender');
 const parseRoute = require('./parse-route');
+const md5 = require('md5');
 
 /**
  *
@@ -52,7 +52,6 @@ class TemplatingPlugin {
       template: this.options.template
     }];
     this.getPartials();
-    this.getRoutes();
   }
 
 
@@ -94,6 +93,7 @@ class TemplatingPlugin {
    * @memberof TemplatingPlugin
    */
   getRoutes() {
+    let assets = [];
     let rotationRegex = /\/routes-([^\/]+?)\//;
     let routesRegex = new RegExp(`/${this.options.mainRoutes}/`);
     let options = {};
@@ -131,7 +131,7 @@ class TemplatingPlugin {
           locale: routeInfo.locale
         };
 
-        this.options.assets.push({
+        assets.push({
           template: routeFile,
           type: partialType,
           outputName: routeInfo.routeOutputName,
@@ -143,6 +143,13 @@ class TemplatingPlugin {
         });
       }
     }
+    for (let i = 0; i < this.options.assets.length; i++) {
+      let asset = this.options.assets[i];
+      if (this.options.assets[i].type !== 'route') {
+        assets.push(asset);
+      }
+    }
+    this.options.assets = assets;
   }
 
 
@@ -152,8 +159,17 @@ class TemplatingPlugin {
    * @param {*} compiler
    * @memberof TemplatingPlugin
    */
-  apply(compiler) {
-    compiler.hooks.emit.tapAsync(TemplatingPlugin.name, async (compilation, cb, a, b, c) => {
+  async apply(compiler) {
+    let routeFileInfo = await this
+    .generateRouteConfig(compiler.options.output.path);
+    new SingleEntryPlugin(compiler.context, routeFileInfo.path, routeFileInfo.name).apply(compiler);
+
+    compiler.hooks.watchRun.tapAsync(TemplatingPlugin.name, async (compiler, cb) => {
+      await this.generateRouteConfig(compiler.options.output.path);
+      cb(null);
+    });
+
+    compiler.hooks.emit.tapAsync(TemplatingPlugin.name, async (compilation, cb) => {
       for (let i = 0; i < compilation.options.plugins.length; i++) {
         if (compilation.options.plugins[i].constructor.name === HtmlWebpackPlugin.name) {
           let templatePath = this.cleanAssetPath(compilation.options.plugins[i].options.template);
@@ -164,13 +180,7 @@ class TemplatingPlugin {
           }
         }
       }
-      // for (let i = 0; i < this.options.assets.length; i++) {
-      //   let route = this.options.assets[i];
-      //   if (route.partialName === 'main') {
-      //     compilation.fileDependencies.add(route.template);
-      //   }
-      // }
-      this.routesConfigOuptputPath = await this.generateRouteConfig(compiler.options.output.path, compilation, compiler);
+
       await this.updateTemplates(compilation, compiler);
       cb(null);
     });
@@ -318,16 +328,14 @@ class TemplatingPlugin {
    *
    *
    * @param {*} outputPath
-   * @param {*} compilation
-   * @param {*} compiler
-   * @param {*} html
    * @return {String}
    * @memberof TemplatingPlugin
    */
-  generateRouteConfig(outputPath, compilation, compiler, html) {
+  generateRouteConfig(outputPath) {
+    this.getRoutes();
     let routesConfigContent = '';
     try {
-      routesConfigContent = fs.readFileSync(path.resolve('routes.config.min.js'));
+      routesConfigContent = fs.readFileSync(path.resolve('routes.config.js'), {encoding: 'utf-8'});
     } catch (e) {}
 
     let routeConfig = this.options.assets.reduce((acc, {type, rotation, routeConfig}) => {
@@ -354,60 +362,17 @@ class TemplatingPlugin {
 
     let routeConfigSource = `window.aofljsConfig = window.aofljsConfig || {};\nwindow.aofljsConfig.routesConfig = ${routeConfigObject};\n`;
 
-    if (routesConfigContent !== routeConfigSource) {
-      fs.writeFileSync(path.resolve('routes.config.js'), routeConfigSource, {encoding: 'utf-8'});
+    const routeConfigName = 'routes.config.js';
+    const routeConfigPath = path.resolve(routeConfigName);
+    if (md5(routesConfigContent) !== md5(routeConfigSource)) {
+      fs.writeFileSync(routeConfigPath, routeConfigSource, {encoding: 'utf-8'});
     }
+    let stats = fs.statSync(routeConfigPath);
 
-    // compilation.assets['routes.config.min.js'] = {
-    //   source: () => routeConfigSource,
-    //   size: () => routeConfigSource.length
-    // };
-    let outputOptions = {
-      ...compiler.options.output,
-      filename: '[name].min.js'
-    };
-
-    let compilerName = 'routesConfigCompiler';
-    const childCompiler = compilation.createChildCompiler(compilerName, outputOptions);
-    childCompiler.context = compiler.context;
-
-    new JsonpTemplatePlugin().apply(childCompiler);
-    new SingleEntryPlugin(childCompiler.context, path.resolve('routes.config.js'), 'routes.config').apply(childCompiler);
-
-    childCompiler.hooks.compilation.tap(TemplatingPlugin.name, (childCompilation) => {
-      childCompilation.chunks = compilation.chunks;
-      if (childCompilation.cache) {
-        if (!childCompilation.cache[compilerName]) {
-          childCompilation.cache[compilerName] = {};
-        }
-        childCompilation.cache = childCompilation.cache[compilerName];
-      }
-    });
-
-    return new Promise((resolve, reject) => {
-      childCompiler.runAsChild((err, entries, childCompilation) => {
-        let routesConfigOutputPath = 'routes.config';
-        for (let i = 0; i < childCompilation.chunks.length; i++) {
-          if (childCompilation.chunks[i].name === 'routes.config') {
-            routesConfigOutputPath = childCompilation.chunks[i].files[0];
-            break;
-          }
-        }
-        for (let dep of childCompilation.fileDependencies) {
-          if (!compilation.fileDependencies.has(dep) && (dep.indexOf('routes.config') === -1)) {
-            compilation.fileDependencies.add(dep);
-          }
-        }
-
-        if (childCompilation && childCompilation.errors && childCompilation.errors.length) {
-          const errorDetails = childCompilation.errors.map((error) => error.message + (error.error ? ':\n' + error.error : '')).join('\n');
-          reject(new Error('Child compilation failed:\n' + errorDetails));
-        } else if (err) {
-          reject(err);
-        } else {
-          return resolve(routesConfigOutputPath);
-        }
-      });
+    return Promise.resolve({
+      name: routeConfigName,
+      path: routeConfigPath,
+      mtimeMs: stats.mtimeMs
     });
   }
 
@@ -446,13 +411,8 @@ class TemplatingPlugin {
     if (typeof compiledRoute === 'undefined' || updatedRoute.rotation !== 'routes' || !this.shouldCreateDynamic(updatedRoute.routeConfig)) { // nothing here
       return assets;
     }
-    let routesConfigPartial = `<script src="${compiler.options.output.publicPath + this.routesConfigOuptputPath}"></script>`;
-    if (this.options.inlineConfig) {
-      routesConfigPartial = '<script>' + compilation.assets[this.routesConfigOuptputPath].source() + '</script>';
-    }
+
     let partialMap = {
-      // [`aoflTemplate:partial:${updatedRoute.partialName}`]: routeSource,
-      ['aoflTemplate:partial:routes']: routesConfigPartial,
       [`aoflTemplate:title`]: updatedRoute.routeConfig.title || '',
       [`aoflTemplate:metaTags`]: updatedRoute.metaTags || '',
       [`aoflTemplate:locale`]: updatedRoute.routeConfig.locale || this.options.locale

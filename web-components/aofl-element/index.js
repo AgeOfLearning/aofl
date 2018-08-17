@@ -36,14 +36,14 @@ class AoflELement extends LitElement {
    * @memberof AoflELement
    */
   _render(template, styles = []) {
-    let s = styles.reduce((acc, item) => {
+    let s = html`<style>\n${styles.reduce((acc, item) => {
       if (item && item.length) {
-        acc.push(html`<style>${String(item)}</style>`);
+        acc += `${String(item)}\n`;
       }
       return acc;
-    }, []);
+    }, '')}\n</style>`;
 
-    return html`${s}${template(this, html)}`;
+    return html`${s} ${template(this, html)}`;
   }
 };
 

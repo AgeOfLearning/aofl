@@ -94,16 +94,8 @@ module.exports = async (url) => {
           return resolve((tagNameWithAttributes(document.body) + replaceChildren(document.body) + closingTag(document.body)));
         }, 500);
       };
-      if (typeof aofljs !== 'undefined') {
-        return getContent();
-      } else {
-        window.addEventListener('message', function listener(e) {
-          if (e.data === 'aoflReady') {
-            window.removeEventListener('message', listener);
-            return getContent();
-          }
-        });
-      }
+
+      return getContent();
     });
   });
   await browser.close();

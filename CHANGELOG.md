@@ -1,5 +1,26 @@
 # aofl-os changelog
 
+## v1.0.0-beta.24 (08-22-2018)
+
+Features:
+
+- cli
+  - added -f to npm commands
+- templating-plugin
+  - removed child compiler from templating plugin
+- unit-testing-plugin
+  - removed hardcoded browser options
+  - refactor unit-testing (removed childcompiler)
+
+Bugfixes:
+
+- rotation
+  - compatiblility with unit-testing
+- AoflElement
+  - fixed css rendering for firefox
+
+---
+
 ## v1.0.0-beta.23
 
 Features:

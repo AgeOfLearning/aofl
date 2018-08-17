@@ -189,7 +189,7 @@ class Rotations {
    */
   async getRoutes() {
     return new Promise((resolve, reject) => {
-      if (aofljsConfig.prerender) { // @todo: find better solution
+      if (window.aofljsConfig && window.aofljsConfig.prerender) { // @todo: find better solution
         return resolve(this.routeConfig.routes);
       }
       const routes = this.uniqueRoutes();

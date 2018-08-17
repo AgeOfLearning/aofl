@@ -1,6 +1,6 @@
 {
   "name": "@aofl/rotations",
-  "version": "1.0.0-beta.23",
+  "version": "1.0.0-beta.24",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "MIT",
   "dependencies": {
-    "@aofl/cache-manager": "^1.0.0-beta.23"
+    "@aofl/cache-manager": "^1.0.0-beta.24"
   }
 }

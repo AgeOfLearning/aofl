@@ -54,9 +54,9 @@ class ConcludeModule {
             version = '@' + updatedPackage.version;
           }
         }
-        await Npm.removeDependency([m.name], m.type.flag);
+        await Npm.removeDependency([m.name], m.type.flag, true);
         await Git.removeSubmodule(m.localPath);
-        await Npm.installDependency([m.name + version], m.type.flag);
+        await Npm.installDependency([m.name + version], m.type.flag, true);
         let index = this.config.modules.findIndex((item) => item.name === m.name);
         this.config.modules.splice(index, 1);
       } catch (e) {

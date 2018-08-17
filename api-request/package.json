@@ -13,6 +13,6 @@
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
   },
   "dependencies": {
-    "@aofl/cache-manager": "^1.0.0-beta.23"
+    "@aofl/cache-manager": "^1.0.0-beta.24"
   }
 }

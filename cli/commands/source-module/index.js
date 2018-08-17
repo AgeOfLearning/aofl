@@ -66,10 +66,10 @@ class SourceModule {
             console.log(chalk.bgYellow.black.underline(`Could not match ref ${m.ref}. Make sure to checkout correct branch/tag in ${m.localPath}`));
           }
 
-          await Npm.removeDependency([m.name], m.type.flag);
+          await Npm.removeDependency([m.name], m.type.flag, true);
           let moduleLocation = this.findModuleLocation(m.name);
 
-          await Npm.installDependency([moduleLocation], m.type.flag);
+          await Npm.installDependency([moduleLocation], m.type.flag, true);
         } catch (e) {
           sourceFailed.push(m.name);
           console.log(e);

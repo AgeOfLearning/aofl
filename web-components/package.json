@@ -1,6 +1,6 @@
 {
   "name": "@aofl/web-components",
-  "version": "1.0.0-beta.23",
+  "version": "1.0.0-beta.24",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +12,7 @@
     "url": "git@gitlab.aofl.com:CoreJS/aofl-os.git"
   },
   "dependencies": {
-    "@aofl/parent-dep-mixin": "^1.0.0-beta.23",
+    "@aofl/parent-dep-mixin": "^1.0.0-beta.24",
     "@polymer/lit-element": "^0.5.2"
   }
 }
