@@ -20,24 +20,10 @@ class AoflListOption extends parentDepMixin(LitElement) {
    */
   static get properties() {
     return {
-      selected: {
-        type: Boolean,
-        value: false
-      },
-      disabled: {
-        type: Boolean,
-        value: false
-      },
+      selected: String,
+      disabled: Boolean,
       value: String
     };
-  }
-
-  /**
-   *
-   */
-  constructor() {
-    super();
-    console.dir(this);
   }
 
   /**
@@ -56,7 +42,7 @@ class AoflListOption extends parentDepMixin(LitElement) {
       this.value = this.value || this.textContent;
       this.listElement = this.findParent('addOption');
       this.listElement.addOption(this);
-      if (this.selected) {
+      if (typeof this.selected !== 'undefined' && this.selected !== 'false') {
         this.select();
       }
     });
