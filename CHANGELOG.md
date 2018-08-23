@@ -1,5 +1,20 @@
 # aofl-os changelog
 
+## v1.0.0-beta.25 (08-23-2018)
+
+Features:
+
+- cli
+  - added aofl init command
+
+Bugfix:
+
+- aofl-list-option
+  - changed selected from boolean to string
+  - fixed checking selected attribute value to match selected|selected=true|selected=false
+
+---
+
 ## v1.0.0-beta.24 (08-22-2018)
 
 Features:

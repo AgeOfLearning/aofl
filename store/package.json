@@ -1,6 +1,6 @@
 {
   "name": "@aofl/store",
-  "version": "1.0.0-beta.24",
+  "version": "1.0.0-beta.25",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "@aofl/object-utils": "^1.0.0-beta.24",
-    "@aofl/register-callback": "^1.0.0-beta.24"
+    "@aofl/object-utils": "^1.0.0-beta.25",
+    "@aofl/register-callback": "^1.0.0-beta.25"
   }
 }
