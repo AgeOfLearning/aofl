@@ -122,7 +122,7 @@ class Npm {
         installType = 'ci';
       } catch (e) {}
     }
-    return Npm.__run([installType]);
+    return Npm.__run([installType], options);
   }
 }
 

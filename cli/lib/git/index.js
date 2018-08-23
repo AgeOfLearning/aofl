@@ -230,6 +230,20 @@ class Git {
   static checkout(ref = 'master', options = {}) {
     return Git.__run(['checkout', ref], options);
   }
+
+  /**
+   *
+   *
+   * @static
+   * @param {*} repo
+   * @param {string} [directory='']
+   * @param {*} [options={}]
+   * @return {Promise}
+   * @memberof Git
+   */
+  static clone(repo, directory = '', options = {}) {
+    return Git.__run(['clone', repo, directory], options);
+  }
 }
 
 module.exports = Git;

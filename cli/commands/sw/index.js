@@ -1,4 +1,4 @@
-const glob = require('multi-glob').glob;
+const glob = require('fast-glob').glob;
 const path = require('path');
 const PathHelper = require('../../lib/path-helper');
 const fs = require('fs');

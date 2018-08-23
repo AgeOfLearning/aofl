@@ -14,6 +14,7 @@ program
     aofl source
 `);
 })
+.command('init <path>', 'Initializes an aofl project')
 .command('source <moduleName>', 'Download an npm module into your project')
 .command('conclude <moduleName>', 'conclude module')
 .command('g [type] [name]', 'scoffold component')
