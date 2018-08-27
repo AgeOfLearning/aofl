@@ -6,26 +6,7 @@ import {LitElement, html} from '@polymer/lit-element';
  * @class AoflELement
  * @extends {LitElement}
  */
-class AoflELement extends LitElement {
-  /**
-   * Creates an instance of AoflELement.
-   *
-   * @memberof AoflELement
-   */
-  constructor() {
-    super();
-  }
-
-  /**
-   *
-   * @readonly
-   * @static
-   * @memberof AoflELement
-   */
-  static get is() {
-    return 'aofl-element';
-  }
-
+class AoflElement extends LitElement {
   /**
    *
    *
@@ -47,4 +28,4 @@ class AoflELement extends LitElement {
   }
 };
 
-export default AoflELement;
+export default AoflElement;
