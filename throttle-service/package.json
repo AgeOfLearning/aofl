@@ -1,0 +1,19 @@
+{
+  "name": "@aofl/throttle-service",
+  "version": "1.0.0-beta.26",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://github.com/AgeOfLearning/aofl#readme"
+}

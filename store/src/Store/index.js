@@ -14,15 +14,19 @@ class Store {
     this.decorators = [];
     this.namespaces = {};
     this.cbService = new RegisterCallback();
+
+    if (debug === true || typeof window.aoflDevtools !== 'undefined') {
+      window.storeInstance = this;
+    }
   }
 
   /**
    *
-   * @param {*} next
+   * @param {Furtion} callback
    * @return {Function}
    */
-  subscribe(next) {
-    return this.cbService.register(next);
+  subscribe(callback) {
+    return this.cbService.register(callback);
   }
 
   /**
@@ -34,20 +38,11 @@ class Store {
 
   /**
    *
-   * @param {*} decorator
-   */
-  addDecorator(decorator) {
-    this.decorators.push(decorator);
-    this.commit([], true);
-  }
-
-  /**
-   *
-   * @param {*} decorators
+   * @param {Array} decorators
    */
   addDecorators(decorators) {
     this.decorators = this.decorators.concat(decorators);
-    this.commit([], true);
+    this.forceCommit();
   }
 
   /**
@@ -56,7 +51,7 @@ class Store {
    * @return {Object}
    * @private
    */
-  __applyDecorators(state) {
+  applyDecorators(state) {
     let nextState = state;
     for (let i = 0; i < this.decorators.length; i++) {
       nextState = this.decorators[i](nextState);
@@ -65,11 +60,10 @@ class Store {
   }
 
   /**
-   *
-   * @param {*} nextState
-   * @param {*} stateAlias
+   * @private
+   * @param {Object} nextState
    */
-  __execAsyncMutations(nextState) {
+  execAsyncMutations(nextState) {
     let ns = this.namespaces;
     for (let key in ns) {
       if (!ns.hasOwnProperty(key)) continue;
@@ -77,9 +71,9 @@ class Store {
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
           ns[key].asyncMutations[mutationId].method(nextState)
-          .then(function(mutationId, stateAlias, payload) {
+          .then(function(mutationId, namespace, payload) {
             this.commit([{
-              stateAlias,
+              namespace,
               mutationId,
               payload
             }]);
@@ -92,17 +86,18 @@ class Store {
 
   /**
    *
-   * @param {*} mutations
-   * @param {*} state
+   * @private
+   * @param {Array} mutations
+   * @param {Object} state
    * @return {Object}
    */
-  __applyMutations(mutations, state) {
+  applyMutations(mutations, state) {
     let nextState = state;
     for (let i = 0; i < mutations.length; i++) {
-      if (typeof this.namespaces[mutations[i].stateAlias] === 'undefined') continue;
+      if (typeof this.namespaces[mutations[i].namespace] === 'undefined') continue;
 
       let mutation = mutations[i];
-      let ns = this.namespaces[mutation.stateAlias];
+      let ns = this.namespaces[mutation.namespace];
 
       if (mutation.async) {
         ns.asyncMutations[mutation.mutationId](nextState);
@@ -118,30 +113,32 @@ class Store {
 
   /**
    *
-   * @param {*} sdo
+   * @param {Object} sdo
    * @param {*} payload
    */
   addState(sdo, payload) {
-    if (this.namespaces.hasOwnProperty(sdo.alias)) return;
+    if (this.namespaces.hasOwnProperty(sdo.namespace)) return;
 
-    this.namespaces[sdo.alias] = {
+    this.namespaces[sdo.namespace] = {
       namespace: sdo.namespace,
       mutations: sdo.mutations,
       asyncMutations: {}
     };
 
     if (sdo.hasOwnProperty('asyncMutations')) {
-      this.namespaces[sdo.alias].asyncMutations = sdo.asyncMutations;
+      this.namespaces[sdo.namespace].asyncMutations = sdo.asyncMutations;
     }
 
-    this.state = Object.assign({}, this.state, {
-      [sdo.namespace]: sdo.mutations.init(payload)
-    });
+    if (typeof this.state[sdo.namespace] === 'undefined') {
+      this.state = Object.assign({}, this.state, {
+        [sdo.namespace]: sdo.mutations.init(payload)
+      });
+    }
 
     if (Array.isArray(sdo.decorators)) {
       this.addDecorators(sdo.decorators);
     } else {
-      this.commit([], true);
+      this.forceCommit();
     }
   }
 
@@ -150,27 +147,32 @@ class Store {
    * @param {*} mutations
    * @param {*} forceCommit
    */
-  commit(mutations, forceCommit = false) {
-    let nextState = this.__applyMutations(mutations, this.state);
+  commit(...mutations) {
+    let nextState = this.applyMutations(mutations, this.state);
 
-    if (nextState !== this.state || forceCommit) {
-      nextState = this.__applyDecorators(nextState);
-      this.__execAsyncMutations(nextState);
-      this.state = nextState;
-
-      if (this.debug) {
-        this.state = deepFreeze(this.state);
-      }
-
-      this.cbService.next();
+    if (nextState !== this.state) {
+      nextState = this.applyDecorators(nextState);
+      this.execAsyncMutations(nextState);
+      this.replaceState(nextState);
     }
+  }
+
+  /**
+   *
+   * @param {*} forceCommit
+   */
+  forceCommit() {
+    let nextState = this.state;
+    nextState = this.applyDecorators(nextState);
+    this.execAsyncMutations(nextState);
+    this.replaceState(nextState);
   }
 
 
   /**
    *
    *
-   * @param {*} state
+   * @param {Object} state
    * @memberof Store
    */
   replaceState(state) {
@@ -179,44 +181,6 @@ class Store {
       this.state = deepFreeze(this.state);
     }
     this.cbService.next();
-  }
-
-  /**
-   *
-   * @param {*} fn
-   * @param {*} wait
-   * @return {Function}
-   */
-  throttledDebounce(fn, wait) {
-    let timeout = null;
-    let execCount = 0;
-    let execSeries = 0;
-
-    return (...args) => {
-      let execIndex = execCount++;
-      let later = (execSeriesIndex) => {
-        timeout = null;
-        if (execIndex === execCount - 1 && execSeriesIndex === execSeries) {
-          execCount = 0;
-          execSeries++;
-          if (execIndex > 0) {
-            return fn(...args);
-          }
-        }
-        return Promise.reject();
-      };
-
-      clearTimeout(timeout);
-      return new Promise((resolve) => {
-        timeout = setTimeout(() => {
-          return later(execSeries).then(resolve).catch(()=>{});
-        }, wait);
-
-        if (execIndex === 0) {
-          return fn(...args).then(resolve);
-        }
-      });
-    };
   }
 }
 

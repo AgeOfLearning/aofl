@@ -1,5 +1,15 @@
 # aofl-os changelog
 
+## v1.0.0-beta.26 ()
+
+Features:
+
+- License and github repo
+- Store
+  - commit takes variadic arguments
+
+---
+
 ## v1.0.0-beta.25 (08-23-2018)
 
 Features:
