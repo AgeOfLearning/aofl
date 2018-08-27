@@ -37,6 +37,10 @@ Features:
 - rotations
   - documentation
   - unit test
+- router
+  - documentation
+  - unit test
+  - export routerInstance
 
 Bugfixes:
 - cache-manager
@@ -45,6 +49,8 @@ Bugfixes:
 - register-callback
   - unsubscribe can only be called once
   - check index exists in removeCb
+- router
+  - Fixes typo for removing popState listener
 
 ---
 

@@ -1,5 +1,7 @@
 import Router from './src/Router';
+import routerInstance from './src/router-instance';
 
 export {
-  Router
+  Router,
+  routerInstance
 };

@@ -9,7 +9,7 @@
 export default (router) => {
   return (request, response, next) => {
     if (request.to !== response.to) {
-      router.navigate(response.to, true, false, true);
+      next(Object.assign({}, response, {redirect: router.navigate(response.to, true, false, true)}));
     } else {
       next(response);
     }

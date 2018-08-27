@@ -25,7 +25,7 @@ const config = merge(devConfig, {
         // '**/register-callback',
         '**/resource-enumerate',
         // '**/rotations',
-        '**/router'
+        '**/router/examples'
         // '**/server-environment',
         // '**/store',
         // '**/throttle-service',

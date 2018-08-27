@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "1.0.0-beta.26",
+  "version": "1.0.0-beta.27",
   "description": "AofL Router",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,6 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "@aofl/middleware": "^1.0.0-beta.26"
+    "@aofl/middleware": "^1.0.0-beta.27"
   }
 }

@@ -4,7 +4,6 @@ import matchRouteMiddleware from '../match-route-middleware';
 import redirectMiddleware from '../redirect-middleware';
 import updateStateMiddleware from '../update-state-middleware';
 
-
 /**
  * @class Router
  * @extends Middleware
@@ -15,12 +14,7 @@ class Router {
    * @return {void}
    */
   constructor() {
-    this.middleware = new Middleware({
-      before: [],
-      after: [],
-      afterEach: [],
-      beforeEach: []
-    });
+    this.middleware = new Middleware('before', 'after', 'afterEach', 'beforeEach');
   }
 
   /**
@@ -86,7 +80,9 @@ class Router {
   async applyMiddlware(request) {
     let beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
     await this.middleware.iterateMiddleware(request, 'afterEach', beforeEachResponse);
-    await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+    let afterResponse = await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+    if (afterResponse.redirect) return afterResponse.redirect;
+    return true;
   }
 
   /**
@@ -110,13 +106,13 @@ class Router {
    * @return {Function}
    */
   listen() {
-    let popuStateHandler = (e) => {
+    let popStateHandler = (e) => {
       e.preventDefault();
       this.navigate(location.pathname, true, true);
     };
-    window.addEventListener('popstate', popuStateHandler);
+    window.addEventListener('popstate', popStateHandler);
     return () => {
-      window.removeEventListener('popuState', popuStateHandler);
+      window.removeEventListener('popstate', popStateHandler);
     };
   }
 
@@ -134,12 +130,13 @@ class Router {
       routes: this.config.routes,
       popped
     };
-
     if (path !== location.pathname || force) {
       if (!isRedirect) {
         await this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request));
       }
-      this.applyMiddlware(request, popped);
+      return await this.applyMiddlware(request, popped);
+    } else {
+      return Promise.reject('Can\'t navigate to current path');
     }
   }
 }

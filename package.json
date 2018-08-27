@@ -71,6 +71,7 @@
     "@aofl/polyfill-service": "file:polyfill-service",
     "@aofl/register-callback": "file:register-callback",
     "@aofl/rotations": "file:rotations",
+    "@aofl/router": "file:router",
     "@aofl/server-environment": "file:server-environment",
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
