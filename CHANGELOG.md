@@ -1,6 +1,6 @@
 # aofl-os changelog
 
-## v1.0.0-beta.26 ()
+## v1.0.0-beta.26 (8-27-2018)
 
 Features:
 
