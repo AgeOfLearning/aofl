@@ -21,7 +21,7 @@ class InitProject {
    * @param {String} base
    * @memberof InitProject
    */
-  constructor(target = '.', repo, base) {
+  constructor(target = '.', repo = repos.default, base) {
     this.target = path.resolve(target);
     this.base = base;
     this.repo = repo;

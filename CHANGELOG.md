@@ -47,6 +47,8 @@ Features:
   - export storeInstance
   - expose storeInstance on window when debug true or aoflDevtools available
   - Support for pending status
+- cli
+  - added default init repo
 
 Bugfixes:
 - cache-manager
