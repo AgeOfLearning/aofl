@@ -1,4 +1,4 @@
-import {CacheManager, CacheTypeEnumerate} from '@aofl/cache-manager';
+import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
 /**
  *
@@ -20,10 +20,10 @@ class Rotations {
    * @param {Object} rotationConditions
    */
   constructor(cacheNamespace, routeConfig, rotationConfig, rotationConditions) {
-    this.routeConfig = routeConfig;
-    this.rotationConfig = rotationConfig;
-    this.rotationConditions = rotationConditions;
-    this.cache = new CacheManager(cacheNamespace, CacheTypeEnumerate.LOCAL, 7776000000); // expires in 90 days
+    this.routeConfig = Object.assign({}, routeConfig);
+    this.rotationConfig = Object.assign({}, rotationConfig);
+    this.rotationConditions = Object.assign({}, rotationConditions);
+    this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, 7776000000); // expires in 90 days
   }
 
   /**
@@ -37,15 +37,24 @@ class Rotations {
 
   /**
    *
+   */
+  clearCache() {
+    this.cache.clear();
+  }
+
+  /**
+   *
    * @param {Object} versions
    * @return {Number}
    */
   getWeightsTotal(versions) {
     let total = 0;
+
     for (let version in versions) {
       if (!versions.hasOwnProperty(version)) continue;
       total += Number(versions[version]);
     }
+
     return total;
   }
 
@@ -73,6 +82,7 @@ class Rotations {
         range
       });
     }
+
     return versionRanges;
   }
 
@@ -86,20 +96,24 @@ class Rotations {
     let rotationIds = [];
     let selectedRotationId = null;
     return new Promise((resolve, reject) => {
-      rotationIds = this.rotationConfig['page_rotations'][route.path] || [];
-      for (let i = 0; i < rotationIds.length; i++) {
-        promises.push(this.qualifies(this.rotationConfig['rotation_id_keyname_map'][rotationIds[i]]));
-      }
-      Promise.all(promises).then((results) => {
-        for (let i = 0; i < results.length; i++) {
-          if (results[i] === true) {
-            // Order of promises is preserved so the promise matches the order of rotationIds
-            selectedRotationId = rotationIds[i];
-            break;
-          }
+      rotationIds = this.rotationConfig['page_rotations'][route.path];
+      if (rotationIds) {
+        for (let i = 0; i < rotationIds.length; i++) {
+          promises.push(this.qualifies(this.rotationConfig['rotation_id_keyname_map'][rotationIds[i]]));
         }
-        resolve(selectedRotationId);
-      });
+        Promise.all(promises).then((results) => {
+          for (let i = 0; i < results.length; i++) {
+            if (results[i] === true) {
+              // Order of promises is preserved so the promise matches the order of rotationIds
+              selectedRotationId = rotationIds[i];
+              break;
+            }
+          }
+          resolve(selectedRotationId);
+        });
+      } else {
+        reject();
+      }
     });
   }
 
@@ -109,11 +123,11 @@ class Rotations {
    * @return {String}
    */
   chooseWeightedVariant(selectedRotationId) {
-    let selectedRotation = '';
+    let selectedRotation;
     let versions = this.createVersionRanges(this.rotationConfig['rotation_versions'][selectedRotationId]);
     let randomVal = Math.round(Math.random()*100);
     for (let i = 0; i < versions.length; i++) {
-      if ((randomVal < versions[i].range) || (i + 1 === versions.length && !selectedRotation)) {
+      if ((randomVal < versions[i].range) || (i + 1 === versions.length)) {
         selectedRotation = versions[i].version;
         break;
       }
@@ -143,11 +157,12 @@ class Rotations {
 
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].path === route.path) {
-        return [
+        routes = [
           ...routes.slice(0, i),
           route,
           ...routes.slice(i + 1)
         ];
+        break;
       }
     }
     return routes;
@@ -173,7 +188,6 @@ class Rotations {
         addRoute(this.routeConfig.routes[i]);
       }
     }
-
     for (let key in this.routeConfig) {
       if (!this.routeConfig.hasOwnProperty(key) || key === 'routes') continue;
       for (let i = 0; i < this.routeConfig[key].length; i++) {
@@ -183,6 +197,7 @@ class Rotations {
     }
     return uniqueRoutes;
   }
+
   /**
    *
    * @return {Promise} resolves to a route configuration Array of route objects
@@ -199,7 +214,6 @@ class Rotations {
       const pushRoutes = (routeConfig=[]) => {
         let next = iterRoutes.next();
         let selectedRotation = '';
-
         if (next.done === true) {
           resolve(routeConfig);
         } else {
@@ -208,12 +222,14 @@ class Rotations {
             selectedRotation = this.cache.getItem(selectedRotationId);
             if (selectedRotation === null) {
               selectedRotation = this.chooseWeightedVariant(selectedRotationId);
-              if (selectedRotation !== '') {
-                this.cache.setItem(selectedRotationId, selectedRotation);
-              }
+              this.cache.setItem(selectedRotationId, selectedRotation);
             }
             routeConfig = this.replaceRoute(routeConfig,
               this.rotationConfig.rotation_version_page_group_version_map[selectedRotation], route);
+            pushRoutes(routeConfig);
+          })
+          .catch((e) => {
+            // no matching rotation, pass on
             pushRoutes(routeConfig);
           });
         }

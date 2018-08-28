@@ -24,7 +24,7 @@ const config = merge(devConfig, {
         // '**/polyfill-service',
         // '**/register-callback',
         '**/resource-enumerate',
-        '**/rotations',
+        // '**/rotations',
         '**/router'
         // '**/server-environment',
         // '**/store',

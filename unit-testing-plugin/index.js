@@ -36,7 +36,7 @@ class UnitTestingPlugin {
   constructor(options = {}) {
     this.options = defaultsDeep(options, {
       include: '**/*.js',
-      exclude: ['**/node_modules'],
+      exclude: ['**/node_modules/**'],
       output: 'tests-dest',
       config: path.join(process.env.PWD, '.wctrc.json'),
       clean: true,
@@ -86,8 +86,7 @@ class UnitTestingPlugin {
    */
   apply(compiler) {
     let files = glob.sync(['**/*.spec.js', '**/index.js'], {
-      ignore: this.options.exclude,
-      follow: false
+      ignore: this.options.exclude
     });
 
     let coverAllEntryPath = this.getCoverAllEntryPath(files.filter((item) => item.indexOf('.spec.js') === -1));

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="aoflTemplate:locale">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    aoflTemplate:metaTags
+    <title>aoflTemplate:title</title>
+    <style id="shared-styles">${require("./css/shared-styles/index.css")}</style>
+    <style>${require("./css/page-styles/index.css")}</style>
+    <script>window.globalStyles = document.getElementById('shared-styles').innerHTML;</script>
+  </head>
+  <body>
+    <route-view></route-view>
+
+    <script>
+      <%= assetsMap['runtime'].source %>
+      if (window.customElements) {
+        eval('<%= assetsMap["custom-elements-es5-adapter"].sourceStr %>');
+      }
+
+      <%= assetsMap['common'].source %>
+      <%= assetsMap['routes.config.js'].source %>
+
+      (function() {
+        document.addEventListener('WebComponentsReady', function componentsReady() {
+          document.removeEventListener('WebComponentsReady', componentsReady, false);
+          <%= assetsMap['aofljs'].source %>
+        }, false);
+      })();
+
+      <%= assetsMap['webcomponents-loader'].source %>
+    </script>
+  </body>
+</html>

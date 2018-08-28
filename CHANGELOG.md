@@ -34,6 +34,9 @@ Features:
   - documentation
   - unit test
   - Updates constructor to take n string args for hook names
+- rotations
+  - documentation
+  - unit test
 
 Bugfixes:
 - cache-manager
