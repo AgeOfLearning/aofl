@@ -1,0 +1,35 @@
+main-header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  width: 100%;
+}
+
+main-header header {
+  background: #2196f3;
+  box-shadow: 0 0.3rem 0.5rem -0.1rem rgba(0, 0, 0, 0.2),
+    0 0.6rem 1rem 0 rgba(0, 0, 0, 0.14), 0 0.1rem 1.8rem 0 rgba(0, 0, 0, 0.12);
+}
+
+main-header header h1 {
+  margin: 0;
+}
+
+main-header nav {
+  display: block;
+  border-bottom: 0.1rem solid #efefef;
+}
+
+main-header link-to {
+  font-size: 1.5rem;
+  margin-right: 3rem;
+}
+
+main-header link-to.active {
+  font-weight: 700;
+}
+
+main-header > :last-child {
+  margin-right: 0;
+}

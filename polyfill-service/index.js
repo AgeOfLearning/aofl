@@ -1,4 +1,4 @@
-import Polyfill from './src/Polyfill';
+import Polyfill from './src/polyfill';
 
 export {
   Polyfill

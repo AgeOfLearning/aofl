@@ -14,6 +14,11 @@ Features:
 - server-environment
   - documentation
   - unit testing
+- polyfill-service
+  - added and refactored webpcomponents loader for dynamic import
+  - documentation
+  - unit testing
+  - Refactored to static class
 
 ---
 

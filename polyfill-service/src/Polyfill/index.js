@@ -1,4 +1,11 @@
-import promiscuous from '../promiscuous';
+/**
+ * Implements Polyfill class which can be used to ployfill missing browser featurs.
+ * @summary polyfill
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+import promiscuous from '../promiscuous-polyfill';
+import webcomponentsLoader from '../webcomponents-loader';
 
 if (typeof window.Promise === 'undefined') {
   window.Promise = promiscuous;
@@ -9,64 +16,57 @@ if (typeof window.Promise === 'undefined') {
  */
 class Polyfill {
   /**
+   * test if property is supported by browser/window.
    *
-   * @param {Array} _polyfills list of polyfills
-   */
-  constructor(_polyfills) {
-    this.polyfills = _polyfills;
-  }
-
-  /**
-   * test if module is supported by browser
-   * @param {String} _module name of module
+   * @param {String} property dot notation path of a nested window property.
    * @return {Boolean}
    */
-  supported(_module) {
-    let modulePath = _module.split('.');
+  static supported(property) {
+    let modulePath = property.split('.');
     let obj = window;
     for (let i = 0; i < modulePath.length; i++) {
-      if (!Object.prototype.hasOwnProperty.call(obj, modulePath[i])) return false;
+      if (typeof obj[modulePath[i]] === 'undefined') return false;
       obj = obj[modulePath[i]];
     }
     return true;
   }
 
   /**
-   * Test if polyfill exists
-   *
-   * @param {String} _module name of polyfill
-   * @return {Boolean}
-   */
-  exists(_module) {
-    return this.polyfills.hasOwnProperty(_module);
-  }
-
-  /**
    * load polyfill
-   * @param {String} _module name of polyfill to load
+   *
+   * @param {String} polyfillId id of polyfill to load
+   * @param {Object} polyfills polyfills config object
    * @return {Promise}
    */
-  load(_module) {
-    if (!this.supported(_module) && this.exists(_module)) {
-      return this.polyfills[_module]();
+  static load(polyfillId, polyfills) {
+    if (!Polyfill.supported(polyfillId) && polyfills.hasOwnProperty(polyfillId)) {
+      return polyfills[polyfillId]();
     }
     return Promise.resolve();
   }
 
   /**
    * load all polyfills
+   *
+   * @param {Object} polyfills polyfills config object
    * @return {Promis}
    */
-  loadAll() {
+  static loadAll(polyfills) {
     let promises = [];
 
-    for (let key in this.polyfills) {
-      if (this.polyfills.hasOwnProperty(key)) {
-        promises.push(this.load(key));
+    for (let key in polyfills) {
+      if (polyfills.hasOwnProperty(key)) {
+        promises.push(Polyfill.load(key));
       }
     }
 
-    return Promise.all(promises);
+    return Promise.all(promises)
+    .then(webcomponentsLoader)
+    .then(() => {
+      document.dispatchEvent(new CustomEvent('WebComponentsReady', {
+        bubbles: true
+      }));
+    });
   }
 };
 
