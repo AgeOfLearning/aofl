@@ -1,5 +1,14 @@
 # aofl-os changelog
 
+
+## v1.0.0-beta.27 (date)
+
+Features:
+- Unit Testing
+
+
+---
+
 ## v1.0.0-beta.26 (8-27-2018)
 
 Features:

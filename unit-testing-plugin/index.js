@@ -36,7 +36,7 @@ class UnitTestingPlugin {
   constructor(options = {}) {
     this.options = defaultsDeep(options, {
       include: '**/*.js',
-      exclude: ['**/node_modules/**'],
+      exclude: ['**/node_modules'],
       output: 'tests-dest',
       config: path.join(process.env.PWD, '.wctrc.json'),
       clean: true,
@@ -86,7 +86,8 @@ class UnitTestingPlugin {
    */
   apply(compiler) {
     let files = glob.sync(['**/*.spec.js', '**/index.js'], {
-      ignore: this.options.exclude
+      ignore: this.options.exclude,
+      follow: false
     });
 
     let coverAllEntryPath = this.getCoverAllEntryPath(files.filter((item) => item.indexOf('.spec.js') === -1));
@@ -205,10 +206,16 @@ class UnitTestingPlugin {
     const context = this.options.output;
     const filename = 'all-tests';
     const jsOutputPath = path.resolve(context, md5(filename) + '.spec.js');
-    const content = files.reduce((acc, item) => {
+    let content = files.reduce((acc, item) => {
       acc += `import './${path.relative(path.dirname(jsOutputPath), path.resolve(item))}';\n`;
       return acc;
     }, '');
+
+    content += `describe('cover all', function() {
+      it('should collect all testable files', function() {
+        expect(true).to.equal(true);
+      });
+    });\n`;
 
     fs.writeFileSync(jsOutputPath, content, {encoding: 'utf-8'});
     return jsOutputPath;
@@ -267,7 +274,7 @@ class UnitTestingPlugin {
     let i = template.indexOf(match);
     while (i > -1) {
       template = template.substring(0, i) + replace + template.substring(i + match.length);
-      i = template.indexOf(match);
+      i = template.indexOf(match, i + replace.length);
     }
     return template;
   }

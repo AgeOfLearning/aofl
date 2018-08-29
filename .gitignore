@@ -1,2 +1,5 @@
-node_modules/
-bower_components/
+**/node_modules
+__build
+coverage
+tests-dest
+docs

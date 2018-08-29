@@ -156,7 +156,7 @@ export default (superClass) => {
         let isPropertyValid = true;
         for (let validationKey in this.$v[propertyKey]) {
           if (this.$v[propertyKey].hasOwnProperty(validationKey) && this.skipArray.indexOf(validationKey) === -1 &&
-          !this.$v[propertyKey][validationKey] ) {
+          !this.$v[propertyKey][validationKey]) {
             isPropertyValid = false;
             break;
           }
