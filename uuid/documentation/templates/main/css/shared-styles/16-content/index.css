@@ -1,0 +1,23 @@
+#content-tabs,
+#page-tabs {
+  display: flex;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #efefef;
+}
+
+#content-tabs aofl-list-option,
+#page-tabs aofl-list-option {
+  margin-right: 2rem;
+  cursor: pointer;
+}
+
+#content-tabs [selected="true"],
+#page-tabs [selected="true"] {
+  font-weight: 700;
+}
+
+#content-tabs aofl-list-option:last-child,
+#page-tabs aofl-list-option:last-child {
+  margin-right: 0;
+}
