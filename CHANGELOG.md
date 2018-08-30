@@ -8,6 +8,9 @@ Features:
 - uuid
   - documentation
   - unit testing
+- object-utils
+  - documentation
+  - unit testing
 
 ---
 
