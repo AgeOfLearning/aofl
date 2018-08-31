@@ -11,6 +11,9 @@ Features:
 - object-utils
   - documentation
   - unit testing
+- server-environment
+  - documentation
+  - unit testing
 
 ---
 
