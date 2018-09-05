@@ -1,6 +1,5 @@
 /**
  *
- *
  * @class Middleware
  */
 class Middleware {
@@ -9,36 +8,36 @@ class Middleware {
    * @param {Object} middleware
    * @memberof Middleware
    */
-  constructor(middleware) {
-    this.middleware = middleware || {
-      pre: [],
-      post: []
-    };
+  constructor(...hooks) {
+    this.middleware = {};
+    for (let i = 0; i < hooks.length; i++) {
+      this.middleware[hooks[i]] = [];
+    }
   }
 
   /**
    *
    * @param {Function} callback
-   * @param {string} [enforce='post|pre']
+   * @param {String} [hook='post|pre']
    * @memberof Middleware
    */
-  use(callback, enforce = 'post') {
-    if (typeof callback !== 'function') new Error('callback must be a function');
-    if (typeof this.middleware[enforce] === 'undefined') new Error(`Only \'post\' or \'pre\' are supported. ${enforce} enforce type not supported.`);
-    this.middleware[enforce].push({
+  use(callback, hook = 'post') {
+    if (typeof callback !== 'function') throw new Error('callback must be a function');
+    if (typeof this.middleware[hook] === 'undefined') throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`);
+    this.middleware[hook].push({
       callback,
-      enforce
+      hook
     });
   }
 
   /**
    *
-   * @param {string} [enforce='post']
+   * @param {String} [hook='post']
    * @return {Iterator}
    * @memberof Middleware
    */
-  getMiddlewareIterator(enforce = 'post') {
-    let collection = this.middleware[enforce];
+  getMiddlewareIterator(hook = 'post') {
+    let collection = this.middleware[hook];
     let nextIndex = 0;
 
     return {
@@ -51,15 +50,16 @@ class Middleware {
   }
 
   /**
+   *
    * @param {*} request
-   * @param {string} [enforce='post']
+   * @param {String} [hook='post']
    * @param {*} response
    * @return {Promise}
    * @memberof Middleware
    */
-  iterateMiddleware(request, enforce = 'post', response = null) {
+  iterateMiddleware(request, hook = 'post', response = null) {
     return new Promise((resolve, reject) => {
-      let iterator = this.getMiddlewareIterator(enforce);
+      let iterator = this.getMiddlewareIterator(hook);
       let mw = null;
       let next = (response = null) => {
         mw = iterator.next();

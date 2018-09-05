@@ -30,6 +30,10 @@ Features:
   - unit test
 - i18n-loader
   - added README.md
+- middleware
+  - documentation
+  - unit test
+  - Updates constructor to take n string args for hook names
 
 Bugfixes:
 - cache-manager
