@@ -1,9 +1,9 @@
-import CacheManager from './src/CacheManager';
-import CacheTypeEnumerate from './src/CacheTypeEnumerate';
-import MemoryStorage from './src/MemoryStorage';
+import CacheManager from './src/cache-manager';
+import {cacheTypeEnumerate} from './src/cache-type-enumerate';
+import MemoryStorage from './src/memory-storage';
 
 export {
   CacheManager,
-  CacheTypeEnumerate,
+  cacheTypeEnumerate,
   MemoryStorage
 };

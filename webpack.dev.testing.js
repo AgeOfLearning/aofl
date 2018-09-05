@@ -23,8 +23,8 @@ const config = merge(devConfig, {
         // '**/parent-dep-mixin',
         // '**/polyfill-service',
         // '**/register-callback',
-        // '**/resource-enumerate',
-        // '**/rotations',
+        '**/resource-enumerate',
+        '**/rotations',
         '**/router'
         // '**/server-environment',
         // '**/store',

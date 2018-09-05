@@ -19,6 +19,14 @@ Features:
   - documentation
   - unit testing
   - Refactored to static class
+- cache-manager
+  - documentation
+  - unit testing
+
+Bugfixes:
+- cache-manager
+  - fixed issue with expired keys
+  - fixed issues with json.parse when storage is not memoryStorage
 
 ---
 
