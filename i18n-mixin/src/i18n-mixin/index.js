@@ -34,14 +34,12 @@ export default dedupingMixin((superClass) => {
     langListener() {
       let observer = new MutationObserver((mutationList) => {
         for (let i = 0; i < mutationList.length; i++) {
-          if (mutationList[i].type === 'attributes') {
-            // Only update if the component does not have a lang attr value
-            if (this.lang === '') {
-              this.__lang = mutationList[i].target.lang;
-              this.requestRender();
-            }
-            break;
+          // Only update if the component does not have a lang attr value
+          if (this.lang === '') {
+            this.__lang = mutationList[i].target.lang;
+            this.requestRender();
           }
+          break;
         }
       });
       observer.observe(document.documentElement, {attributes: true});
@@ -57,7 +55,6 @@ export default dedupingMixin((superClass) => {
      * @return {void}
      */
     attributeChangedCallback(name, oldValue, newValue) {
-      console.log('attribute changed', name, newValue);
       super.attributeChangedCallback(name, oldValue, newValue);
       if (name === 'lang') {
         if (!newValue) {
@@ -126,7 +123,7 @@ export default dedupingMixin((superClass) => {
       if (typeof variants[count] !== 'undefined') {
         return this.__(variants[count], ...contexts);
       } else {
-        return this.__(variants.many, ...contexts);
+        throw new Error('Invalid count variable provided to _n() method', variants);
       }
     }
 

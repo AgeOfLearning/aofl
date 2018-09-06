@@ -25,6 +25,9 @@ Features:
 - register-callback
   - documented
   - unit testing
+- i18n-mixin
+  - documentation
+  - unit test
 
 Bugfixes:
 - cache-manager
