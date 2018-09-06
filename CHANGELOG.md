@@ -22,11 +22,17 @@ Features:
 - cache-manager
   - documentation
   - unit testing
+- register-callback
+  - documented
+  - unit testing
 
 Bugfixes:
 - cache-manager
   - fixed issue with expired keys
   - fixed issues with json.parse when storage is not memoryStorage
+- register-callback
+  - unsubscribe can only be called once
+  - check index exists in removeCb
 
 ---
 
