@@ -41,6 +41,12 @@ Features:
   - documentation
   - unit test
   - export routerInstance
+- store
+  - documentation
+  - unit test
+  - export storeInstance
+  - expose storeInstance on window when debug true or aoflDevtools available
+  - Support for pending status
 
 Bugfixes:
 - cache-manager

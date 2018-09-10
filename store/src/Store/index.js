@@ -1,11 +1,20 @@
+/**
+ * Centralized store implementation
+ *
+ * @summary store
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import {deepFreeze} from '@aofl/object-utils';
 import {RegisterCallback} from '@aofl/register-callback';
 
 /**
- *
+ * Store is a built on the same principles as redux and attempts to simplify some of Redux's
+ * concepts. It also incorporates ideas from other centralized state management implementations.
  */
 class Store {
   /**
+   * Creates an instance of Store.
    * @param {Boolean} debug
    */
   constructor(debug) {
@@ -13,30 +22,68 @@ class Store {
     this.state = {};
     this.decorators = [];
     this.namespaces = {};
-    this.cbService = new RegisterCallback();
+    this.registerCallbackInstance = new RegisterCallback();
+    this.pending = {
+      any: false
+    };
 
     if (debug === true || typeof window.aoflDevtools !== 'undefined') {
+      this.state = deepFreeze(this.state);
       window.storeInstance = this;
     }
   }
 
   /**
+   * subscribe() register the callback function with registerCallbackInstance and returns
+   * the unsubscribe function.
    *
    * @param {Furtion} callback
    * @return {Function}
    */
   subscribe(callback) {
-    return this.cbService.register(callback);
+    return this.registerCallbackInstance.register(callback);
   }
 
   /**
+   * getState() return the current state.
+   *
    * @return {Object}
    */
   getState() {
     return this.state;
   }
 
+
   /**
+   * setPending() updates the pending state of store when an async operation is in process.
+   *
+   * @private
+   * @param {String} namespace
+   * @param {String} mutationId
+   * @param {Boolean} status
+   */
+  setPending(namespace, mutationId, status = true) {
+    this.pending[namespace][mutationId] = status;
+
+    const setPendingAny = (obj, root = false) => {
+      let anyPending = false;
+      for (let key in obj) {
+        if (key === 'any' || !obj.hasOwnProperty(key)) continue;
+        if (obj[key] === true || (root && obj[key].any === true)) {
+          anyPending = true;
+          break;
+        }
+      }
+      obj.any = anyPending;
+    };
+
+    setPendingAny(this.pending[namespace]);
+    setPendingAny(this.pending, true);
+  }
+
+  /**
+   * addDecorators() adds an array decorators to the docorators list and calls forceCommit to
+   * invoke the newly added decorators.
    *
    * @param {Array} decorators
    */
@@ -46,10 +93,12 @@ class Store {
   }
 
   /**
+   * applyDecorators() loops through the decorators array and executes each decorator against the
+   * modified state.
    *
-   * @param {*} state
-   * @return {Object}
    * @private
+   * @param {Object} state
+   * @return {Object}
    */
   applyDecorators(state) {
     let nextState = state;
@@ -60,6 +109,9 @@ class Store {
   }
 
   /**
+   * execAsyncMutations() loops through the asyncMutations and invokes the condition function of
+   * each asyncMutation. It only ivokes the method if the condition evaluates to true.
+   *
    * @private
    * @param {Object} nextState
    */
@@ -70,21 +122,27 @@ class Store {
       for (let mutationId in ns[key].asyncMutations) {
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
+          this.setPending(key, mutationId, true);
           ns[key].asyncMutations[mutationId].method(nextState)
           .then(function(mutationId, namespace, payload) {
-            this.commit([{
+            this.setPending(key, mutationId, false);
+            this.commit({
               namespace,
               mutationId,
               payload
-            }]);
+            });
           }.bind(this, mutationId, key))
-          .catch(()=>{});
+          .finally(()=>{
+            this.setPending(key, mutationId, false);
+          });
         }
       }
     }
   }
 
   /**
+   * applyMutations() loops through the mutations array and executes each mutation funcion against
+   * the subState.
    *
    * @private
    * @param {Array} mutations
@@ -94,30 +152,31 @@ class Store {
   applyMutations(mutations, state) {
     let nextState = state;
     for (let i = 0; i < mutations.length; i++) {
-      if (typeof this.namespaces[mutations[i].namespace] === 'undefined') continue;
+      if (typeof this.namespaces[mutations[i].namespace] === 'undefined') {
+        throw new TypeError(`${mutations[i].namespace} is not a valid namespace`);
+      };
 
       let mutation = mutations[i];
       let ns = this.namespaces[mutation.namespace];
 
-      if (mutation.async) {
-        ns.asyncMutations[mutation.mutationId](nextState);
-      } else {
-        nextState = Object.assign({}, nextState, {
-          [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload)
-        });
-      }
+      nextState = Object.assign({}, nextState, {
+        [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload)
+      });
     }
 
     return nextState;
   }
 
   /**
+   * addState() adds an sdo to the store and invokes the SDO.mutations.init() method to set the
+   * initial state of the sub-state. Additionaly a payload can be supplied to the init funciton
+   * to instantiate the sub-state with a modifed inital state.
    *
    * @param {Object} sdo
    * @param {*} payload
    */
   addState(sdo, payload) {
-    if (this.namespaces.hasOwnProperty(sdo.namespace)) return;
+    if (typeof this.namespaces[sdo.namespace] !== 'undefined') return;
 
     this.namespaces[sdo.namespace] = {
       namespace: sdo.namespace,
@@ -127,13 +186,15 @@ class Store {
 
     if (sdo.hasOwnProperty('asyncMutations')) {
       this.namespaces[sdo.namespace].asyncMutations = sdo.asyncMutations;
+      this.pending[sdo.namespace] = Object.keys(sdo.asyncMutations).reduce((acc, item) => {
+        acc[item] = false;
+        return acc;
+      }, {any: false});
     }
 
-    if (typeof this.state[sdo.namespace] === 'undefined') {
-      this.state = Object.assign({}, this.state, {
-        [sdo.namespace]: sdo.mutations.init(payload)
-      });
-    }
+    this.state = Object.assign({}, this.state, {
+      [sdo.namespace]: sdo.mutations.init(payload)
+    });
 
     if (Array.isArray(sdo.decorators)) {
       this.addDecorators(sdo.decorators);
@@ -143,11 +204,18 @@ class Store {
   }
 
   /**
+   * commit() accepts variadit mutation objects as arguments and applies the mutations agains the
+   * current state to generate the next state of the application.
    *
    * @param {*} mutations
    * @param {*} forceCommit
+   * @throws
    */
   commit(...mutations) {
+    if (mutations.length === 0) {
+      throw new TypeError('Failed to execute \'commit\' on \'Store\': at least 1 argument required, but only 0 present.');
+    }
+
     let nextState = this.applyMutations(mutations, this.state);
 
     if (nextState !== this.state) {
@@ -158,8 +226,8 @@ class Store {
   }
 
   /**
-   *
-   * @param {*} forceCommit
+   * forceCommit() applies decorators and asyncMutations against the current state and executes
+   * subscribed callback functions even if state did not change.
    */
   forceCommit() {
     let nextState = this.state;
@@ -170,17 +238,17 @@ class Store {
 
 
   /**
-   *
+   * replaceState() take a state object, replaces the state property and notifies subscribers.
    *
    * @param {Object} state
-   * @memberof Store
    */
   replaceState(state) {
     this.state = state;
     if (this.debug) {
       this.state = deepFreeze(this.state);
     }
-    this.cbService.next();
+
+    this.registerCallbackInstance.next();
   }
 }
 

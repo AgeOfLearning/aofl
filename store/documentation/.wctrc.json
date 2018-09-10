@@ -1,0 +1,13 @@
+{
+  "clientOptions": {
+    "environmentImports": []
+  },
+  "plugins": {
+    "local": {
+      "browsers": ["chrome"],
+      "browserOptions": {
+        "chrome": ["headless"]
+      }
+    }
+  }
+}
