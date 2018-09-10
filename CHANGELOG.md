@@ -28,6 +28,8 @@ Features:
 - i18n-mixin
   - documentation
   - unit test
+- i18n-loader
+  - added README.md
 
 Bugfixes:
 - cache-manager
