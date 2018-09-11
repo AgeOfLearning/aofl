@@ -10,6 +10,9 @@ Features:
   - documentation
   - unit testing
   - refactored to use api-request
+- map-state-properties-mixin
+  - documentation
+  - unit testing
 
 Bugfixes:
 - api-request

@@ -1,0 +1,40 @@
+:host {
+  padding: 2em;
+}
+aofl-code {
+  background: gold;
+}
+
+.ease2-in {
+  opacity: 0;
+  transition: opacity 250ms ease-in;
+}
+
+.ease2-in.animate {
+  opacity: 1;
+}
+
+.ease2-out {
+  opacity: 1;
+  transition: opacity 250ms ease-out;
+}
+
+.ease2-out.animate {
+  opacity: 0;
+}
+
+
+aofl-drawer {
+  background-color: #f2f2f2;
+  padding: 1em;
+}
+
+button {
+  padding: .75em;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #f2f2f2;
+}
