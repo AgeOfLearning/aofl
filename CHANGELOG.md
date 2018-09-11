@@ -1,7 +1,7 @@
 # aofl-os changelog
 
 
-## v1.0.0-beta.27 (date)
+## v1.0.0-beta.27 (09-11-2018)
 
 Features:
 - Unit Testing
@@ -49,6 +49,24 @@ Features:
   - Support for pending status
 - cli
   - added default init repo
+- api-request
+  - version up
+- dom-scope-loader
+  - version up
+- form-validate
+  - version up
+- map-state-properties-mixin
+  - version up
+- parent-dep-mixin
+  - version up
+- resource-enumerate
+  - version up
+- templating-plugin
+  - version up
+- unit-testing-plugin
+  - version up
+- web-components
+  - version up
 
 Bugfixes:
 - cache-manager

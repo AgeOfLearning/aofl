@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "1.0.0-beta.26",
+  "version": "1.0.0-beta.27",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cache-manager": "^1.0.0-beta.26"
+    "@aofl/cache-manager": "^1.0.0-beta.27"
   }
 }
