@@ -1,0 +1,11 @@
+.link,
+a {
+  color: #2196f3;
+  text-decoration: none;
+}
+.link:focus,
+.link:hover,
+a:focus,
+a:hover {
+  color: #999;
+}

@@ -1,12 +1,12 @@
 import {template} from './template';
-import {html, LitElement} from '@polymer/lit-element';
+import AoflElement from '../aofl-element';
 
 /**
  * @summary AoflDrawer
  * @class AoflDrawer
- * @extends {LitElement}
+ * @extends {AoflElement}
  */
-class AoflDrawer extends LitElement {
+class AoflDrawer extends AoflElement {
   /**
    *
    *
@@ -23,7 +23,7 @@ class AoflDrawer extends LitElement {
    *
    * @readonly
    * @static
-   * @property {Boolean} open - state of drawer
+   * @property {String} open - state of drawer
    * @property {String} trigger - className that triggers animations
    * @property {String} opening - className of opening animation
    * @property {String} closing - className of closing animation
@@ -31,19 +31,11 @@ class AoflDrawer extends LitElement {
    */
   static get properties() {
     return {
-      open: Boolean,
+      open: String,
       trigger: String,
       opening: String,
       closing: String
     };
-  }
-
-  /**
-   * Creates an instance of AoflDrawer.
-   * @memberof AoflDrawer
-   */
-  constructor() {
-    super();
   }
 
   /**
@@ -53,13 +45,12 @@ class AoflDrawer extends LitElement {
    */
   connectedCallback(...args) {
     super.connectedCallback(...args);
-
     // Set defaults
     this.cancelOpen = null;
     this.trigger = this.trigger || 'animate';
 
     // Initialize class to prepare for next animation
-    this.className = this.open ? this.closing : this.opening;
+    this.className = this.open === 'true' ? this.closing : this.opening;
 
     this.addEventListener('animationend', this.animationEndHandler);
     this.addEventListener('transitionend', this.animationEndHandler);
@@ -72,7 +63,7 @@ class AoflDrawer extends LitElement {
    * @memberof AoflDrawer
    */
   _render() {
-    return html`${template()}`;
+    return super._render(template);
   }
 
   /**
@@ -136,9 +127,11 @@ class AoflDrawer extends LitElement {
 
     let testDisplayBlock = () => {
       let display = window.getComputedStyle(this).getPropertyValue('display');
+      /* istanbul ignore next */
       if (display === 'block') {
         callback();
       } else if (!cancel && max-- > 0) {
+        console.log('oh god');
         window.requestAnimationFrame(testDisplayBlock);
       }
     };

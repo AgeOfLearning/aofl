@@ -1,6 +1,4 @@
-import {html} from '@polymer/lit-element';
-
-export const template = () => html`
+export const template = (context, html) => html`
 <style>
 :host {
   display: none;

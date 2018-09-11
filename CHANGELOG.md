@@ -29,6 +29,10 @@ Features:
     - unit testing
     - extends AoflElement instead of LitElement
     - Replaced deprecated parentDepMixin with @aofl/component-utils/findParent
+  - aofl-drawer
+    - documentation
+    - unit testing
+    - extends AoflElement instead of LitElement
 - component-utils
   - documentation
   - unit testing

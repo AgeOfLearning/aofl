@@ -1,15 +1,27 @@
-# Aofl-drawer
-A simple LitElement component that toggles between open and closed.
+# @aofl/drawer
+
+The **`<aofl-drawer>` element** toggles content between an open and closed state. Opening and closing animations are provided as classes to allow for any possible method of toggling content.
 
 ## Attributes
 
-*Required*
-- {Boolean} open - state of drawer
+| Attributes | Type    | Default     | Description                                                  |
+|------------|---------|-------------|--------------------------------------------------------------|
+| open       | String  | `'false'`     | State of content inside drawer                               |
+| trigger    | String  | `'animate'` | Classname used to trigger the opening and closing animations |
+| opening    | String  |             | Classname of the opening animation                           |
+| closing    | String  |             | Classname of the closing animation                           |
 
-*Optional*
-- {String} trigger=animate - className that triggers the start of the animation
-- {String} opening - opening animation className
-- {String} closing - closing animation className
+## Events
+
+| Name                 | Triggered By                | Detail               |
+|----------------------|-----------------------------|----------------------|
+| `aofl-drawer-change` | animationEnd, transitionEnd | `'open'`, `'closed'` |
+
+## Slots
+
+| Name       | Fallback Content | Description                                          |
+| ---------- | ---------------- | ---------------------------------------------------- |
+|            |                  | The content to be displayed when toggling the drawer |
 
 
 ## Defining animation classes
@@ -37,6 +49,4 @@ To animate the drawer 4 css selectors need to be added. Here is an example for a
 }
 ```
 
-## Events
 
-Aofl-drawer dispatches a customEvent 'aofl-drawer-state' after toggling
