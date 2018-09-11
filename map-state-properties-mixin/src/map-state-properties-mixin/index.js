@@ -23,6 +23,7 @@ export default dedupingMixin((superClass) => {
       }
       super.connectedCallback(...args);
     }
+
     /**
      *
      * @param {*} args

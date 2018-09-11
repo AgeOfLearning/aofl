@@ -12,6 +12,7 @@ const config = merge(devConfig, {
         '**/__config',
         '**/cli',
         '**/*-loader/**',
+        '**/*-polyfill/**',
         '**/*-plugin/**',
         '**/api-request',
         // '**/cache-manager',
