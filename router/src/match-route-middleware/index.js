@@ -4,22 +4,27 @@ import PathUtils from '../path-utils';
  * Evaluates and returns the best matching route for the given path
  *
  * @static
- * @param {String} path
+ * @param {String} _path
  * @param {Array} routes
  * @return {Object}
  */
-const matchBestPath = (path, routes) => {
+const matchBestPath = (_path, routes) => {
+  const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
   let stack = [];
   for (let i = 0; i < routes.length; i++) {
     let route = routes[i];
-    route.path = PathUtils.removeTrailingSlash(route.path);
+    route.path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(route.path));
+    console.log('route', JSON.stringify(route), route.regex);
+    console.log('path', path);
     if (path === route.path) { // exact match
       stack.shift();
       stack.push(route);
       break;
     }
     let matches = route.regex.exec(path);
+    console.log('matches', matches);
     if (matches !== null) {
+      console.log(JSON.stringify(stack));
       if (stack.length === 0) {
         stack.push(route);
       } else {

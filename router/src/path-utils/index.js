@@ -11,11 +11,13 @@ class PathUtils {
   /**
    *
    * @static
-   * @param {String} path
+   * @param {String} _path
    * @return {Object}
    * @memberof PathUtils
    */
-  static getRegex(path) {
+  static getRegex(_path) {
+    const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
+    console.log('getRegex', path);
     let regexStr = '';
     let matches = DYNAMIC_PATH_REGEX.exec(path);
     let keys = [];
@@ -58,6 +60,7 @@ class PathUtils {
    */
   static cleanPath(path) {
     const cleanPathMatch = CLEAN_PATH_REGEX.exec(path);
+    /* istanbul ignore next */
     if (cleanPathMatch === null) {
       return new Error('cannot clean invalid path');
     }
@@ -115,6 +118,7 @@ class PathUtils {
   static matchingSegmentsCount(segmentsA, segmentsB) {
     let matches = 0;
     for (let i = 0; i < segmentsA.length && i < segmentsB.length; i++) {
+      /* istanbul ignore else */
       if (segmentsA[i] === segmentsB[i]) {
         matches++;
       } else if (!PathUtils.isDynamicSegment(segmentsA[i]) && !PathUtils.isDynamicSegment(segmentsB[i])) {

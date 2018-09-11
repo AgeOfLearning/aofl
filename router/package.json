@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "1.0.0-beta.27",
+  "version": "1.0.0-beta.27.1",
   "description": "AofL Router",
   "main": "index.js",
   "scripts": {

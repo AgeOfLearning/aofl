@@ -46,6 +46,36 @@ describe('@aofl/router/router', function() {
           'path': '/about'
         },
         {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/:user/title/:title'
+        },
+        {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/:user'
+        },
+        {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/:user/profile'
+        },
+        {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/:user/:title'
+        },
+        {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/:user/profileAfterDynamic'
+        },
+        {
+          'resolve': () => fetch('./routes/about/index.js'),
+          'rotation': 'routes',
+          'path': '/about/team'
+        },
+        {
           'resolve': () => fetch('./routes/login/index.js'),
           'rotation': 'routes',
           'path': '/login'
@@ -56,18 +86,91 @@ describe('@aofl/router/router', function() {
       this.router.init(routeConfig);
     });
 
+    afterEach(function() {
+      this.router = null;
+    });
+
     it('Should match "/home" route and navigate to it', function(done) {
-      this.router.navigate('/home').then(() => {
-        expect(this.historyState.slice(-1)[0]).to.equal('/home');
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/home')
         done();
       });
+      this.router.navigate('/home');
+    });
+
+    it('Should match dynamic "/about/mike" route and navigate to it', function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/:user')
+        done();
+      });
+      this.router.navigate('/about/mike');
+    });
+
+    it('Should match static "/about/team" route and navigate to it event when there is /about/:user',
+    function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/team')
+        done();
+      });
+      this.router.navigate('/about/team');
+    });
+
+    it('Should match static "/about/team?hello=world" route and navigate to it event when there is /about/:user',
+    function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/team')
+        done();
+      });
+      this.router.navigate('/about/team?hello=world');
+    });
+
+    it('Should match nested dynamic "/about/mike/title/programmer" route and navigate to it', function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/:user/title/:title')
+        done();
+      });
+      this.router.navigate('/about/mike/title/programmer');
+    });
+
+    it('Should not match nested dynamic "/about/mike/hobby/programmer" route and navigate to it',
+    function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.be.null;
+        done();
+      });
+      this.router.navigate('/about/mike/hobby/programmer');
+    });
+
+    it('Should match nested dynamic "/about/mike/programmer" route and navigate to it', function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/:user/:title')
+        done();
+      });
+      this.router.navigate('/about/mike/programmer');
+    });
+
+    it('Should match nested dynamic "/about/mike/profile" route and navigate to it', function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/:user/profile')
+        done();
+      });
+      this.router.navigate('/about/mike/profile');
+    });
+
+    it('Should match nested dynamic "/about/mike/profileAfterDynamic" route and navigate to it. The order of the routes in the routes config should not matter', function(done) {
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.have.property('path', '/about/:user/profileAfterDynamic')
+        done();
+      });
+      this.router.navigate('/about/mike/profileAfterDynamic');
     });
 
     it('Should not match "/" route and navigate to it', function(done) {
-      this.router.navigate('/').then(() => {
-        expect(this.historyState).to.have.lengthOf(0);
+      this.router.after((request, response, next) => {
+        expect(response.matchedRoute).to.be.null;
         done();
       });
+      this.router.navigate('/');
     });
 
     it('Should not navigate to same path', function(done) {

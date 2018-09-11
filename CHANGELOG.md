@@ -13,6 +13,9 @@ Features:
 - map-state-properties-mixin
   - documentation
   - unit testing
+- router
+  - improved unit testing coverage
+  - navigate handles ?|# correctly
 
 Bugfixes:
 - api-request
