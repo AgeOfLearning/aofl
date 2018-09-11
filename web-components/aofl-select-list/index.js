@@ -1,27 +1,31 @@
+/**
+ * Implements AoflSelectList
+ *
+ * @summary aofl-select-list
+ * @version 1.0.0
+ * @author Daniel Belisle <daniel.belisle@aofl.com>
+ */
 import {template} from './template';
-// import styles from './styles.css';
-import {html, LitElement} from '@polymer/lit-element';
+import AoflElement from '../aofl-element';
 
 /**
- * @summary AoflSelectList
  * @class AoflSelectList
- * @extends {LitElement}
+ * @extends {AoflElement}
  */
-class AoflSelectList extends LitElement {
+class AoflSelectList extends AoflElement {
   /**
-   *
+   * @readonly
    */
   static get is() {
     return 'aofl-select-list';
   }
 
   /**
-   *
+   * @readonly
    */
   static get properties() {
     return {
-      disabled: Boolean,
-      options: Array
+      disabled: String
     };
   }
 
@@ -31,33 +35,33 @@ class AoflSelectList extends LitElement {
   constructor() {
     super();
     this.options = [];
-    this.selectedValue = '';
+    this.value = '';
   }
 
   /**
    * @return {Object}
    */
   _render() {
-    return html`${template(this)}`;
+    return super._render(template);
   }
 
   /**
    * Updated selected value and dispatches a custom event with that value
    *
-   * @param {String} value
+   * @param {String} newValue
    */
-  updateSelected(value) {
-    let selectedValue = '';
+  updateSelected(newValue) {
+    let value = '';
     for (let i = 0; i < this.options.length; i++) {
       this.options[i].removeAttribute('selected');
-      if (this.options[i].value === value) {
+      if (this.options[i].value === newValue) {
         let selected = this.options[i];
         selected.setAttribute('selected', 'true');
-        selectedValue = selected.value;
+        value = selected.value;
       }
     }
 
-    this.selectedValue = selectedValue;
+    this.value = value;
     this.dispatchEvent(new CustomEvent('change'));
   }
 

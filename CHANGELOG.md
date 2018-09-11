@@ -20,6 +20,10 @@ Features:
   - aofl-element
     - documentation
     - unit testing
+  - aofl-select-list
+    - documentation
+    - unit testing
+    - extends AoflElement instead of LitElement
 
 Bugfixes:
 - api-request

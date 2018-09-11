@@ -52,7 +52,9 @@ class AoflListOption extends parentDepMixin(LitElement) {
    * Update selected value in the parent list
    */
   select() {
-    this.listElement.updateSelected(this.value);
+    if (typeof this.listElement !== 'undefined') {
+      this.listElement.updateSelected(this.value);
+    }
   }
 }
 
