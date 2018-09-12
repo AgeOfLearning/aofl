@@ -27,7 +27,7 @@ class Store {
       any: false
     };
 
-    if (debug === true || typeof window.aoflDevtools !== 'undefined') {
+    if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
       this.state = deepFreeze(this.state);
       window.storeInstance = this;
     }
@@ -68,6 +68,7 @@ class Store {
     const setPendingAny = (obj, root = false) => {
       let anyPending = false;
       for (let key in obj) {
+        /* istanbul ignore next */
         if (key === 'any' || !obj.hasOwnProperty(key)) continue;
         if (obj[key] === true || (root && obj[key].any === true)) {
           anyPending = true;
@@ -118,8 +119,10 @@ class Store {
   execAsyncMutations(nextState) {
     let ns = this.namespaces;
     for (let key in ns) {
+      /* istanbul ignore next  */
       if (!ns.hasOwnProperty(key)) continue;
       for (let mutationId in ns[key].asyncMutations) {
+        /* istanbul ignore next  */
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
           this.setPending(key, mutationId, true);
@@ -218,6 +221,7 @@ class Store {
 
     let nextState = this.applyMutations(mutations, this.state);
 
+    /* istanbul ignore next */
     if (nextState !== this.state) {
       nextState = this.applyDecorators(nextState);
       this.execAsyncMutations(nextState);

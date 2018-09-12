@@ -7,6 +7,7 @@
 import promiscuous from '../promiscuous-polyfill';
 import webcomponentsLoader from '../webcomponents-loader';
 
+/* istanbul ignore next */
 if (typeof window.Promise === 'undefined') {
   window.Promise = promiscuous;
 }
@@ -55,6 +56,7 @@ class Polyfill {
     let promises = [];
 
     for (let key in polyfills) {
+      /* istanbul ignore next */
       if (polyfills.hasOwnProperty(key)) {
         promises.push(Polyfill.load(key));
       }
@@ -62,7 +64,7 @@ class Polyfill {
 
     return Promise.all(promises)
     .then(webcomponentsLoader)
-    .then(() => {
+    .then(/* istanbul ignore next */() => {
       document.dispatchEvent(new CustomEvent('WebComponentsReady', {
         bubbles: true
       }));

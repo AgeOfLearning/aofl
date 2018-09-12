@@ -1,5 +1,1 @@
-import ApiRequest from './src/ApiRequest';
-
-export {
-  ApiRequest
-};
+export {default as ApiRequest} from './src/api-request';

@@ -1,6 +1,19 @@
 # aofl-os changelog
 
 
+## v1.0.0-beta.28 (date)
+Features:
+- api-request
+  - documentation
+  - unit testing
+
+Bugfixes:
+- api-request
+  - getCacheManager() fix issue with returning new cacheManager
+  - changed cache argument to fromCache.
+  - Replaced static class property with a static getter.
+
+---
 ## v1.0.0-beta.27 (09-11-2018)
 
 Features:

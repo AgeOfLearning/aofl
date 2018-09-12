@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 /* eslint-disable */
 /**@license MIT-promiscuous-©Ruben Verborgh*/
 (function (func, obj) {

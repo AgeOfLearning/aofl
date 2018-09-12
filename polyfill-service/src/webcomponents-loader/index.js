@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 /**
  * @license
  * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
@@ -23,6 +24,7 @@ const scripts = {
   }
 };
 
+/* istanbul ignore next */
 const load = () => {
   return new Promise((resolve, reject) => {
     let polyfillsLoaded = false;
@@ -168,4 +170,5 @@ let needsTemplate = (function() {
   });
 };
 
+/* istanbul ignore next */
 export default load;
