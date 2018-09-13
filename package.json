@@ -65,6 +65,7 @@
   "dependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
+    "@aofl/component-utils": "file:component-utils",
     "@aofl/i18n-mixin": "file:i18n-mixin",
     "@aofl/middleware": "file:middleware",
     "@aofl/object-utils": "file:object-utils",

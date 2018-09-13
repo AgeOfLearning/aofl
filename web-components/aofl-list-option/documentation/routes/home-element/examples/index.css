@@ -1,0 +1,5 @@
+aofl-list-option[selected=true] {
+  background: green;
+  color: #fff;
+  cursor: pointer;
+}

@@ -1,13 +1,21 @@
 import {template} from './template';
-import {html, LitElement} from '@polymer/lit-element';
-import {parentDepMixin} from '@aofl/parent-dep-mixin';
+import AoflElement from '../aofl-element';
+import {findParent} from '@aofl/component-utils';
 
 /**
  * @summary AoflListOption
  * @class AoflListOption
- * @extends {LitElement}
+ * @extends {AoflElement}
  */
-class AoflListOption extends parentDepMixin(LitElement) {
+class AoflListOption extends AoflElement {
+  /**
+   * Creates an instance of AoflListOption.
+   */
+  constructor() {
+    super();
+    this.clickCallback = () => this.select();
+  }
+
   /**
    *
    */
@@ -30,7 +38,7 @@ class AoflListOption extends parentDepMixin(LitElement) {
    * @return {Object}
    */
   _render() {
-    return html`${template(this)}`;
+    return super._render(template);
   }
 
   /**
@@ -38,9 +46,10 @@ class AoflListOption extends parentDepMixin(LitElement) {
    */
   connectedCallback() {
     super.connectedCallback();
+    this.addEventListener('click', this.clickCallback);
     this.renderComplete.then(() => {
       this.value = this.value || this.textContent;
-      this.listElement = this.findParent('addOption');
+      this.listElement = findParent(this, 'addOption');
       this.listElement.addOption(this);
       if (typeof this.selected !== 'undefined' && this.selected !== 'false') {
         this.select();
@@ -52,9 +61,16 @@ class AoflListOption extends parentDepMixin(LitElement) {
    * Update selected value in the parent list
    */
   select() {
-    if (typeof this.listElement !== 'undefined') {
-      this.listElement.updateSelected(this.value);
-    }
+    this.listElement.updateSelected(this.value);
+  }
+
+  /**
+   *
+   *
+   * @memberof AoflListOption
+   */
+  disconnectedCallback() {
+    this.removeEventListener('click', this.clickCallback);
   }
 }
 
