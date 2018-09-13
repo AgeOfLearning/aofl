@@ -24,6 +24,9 @@ Features:
     - documentation
     - unit testing
     - extends AoflElement instead of LitElement
+- component-utils
+  - documentation
+  - unit testing
 
 Bugfixes:
 - api-request
