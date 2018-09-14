@@ -1,0 +1,4 @@
+**/node_modules
+__build
+coverage
+**/tests-dest

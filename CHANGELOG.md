@@ -16,6 +16,10 @@ Features:
 - router
   - improved unit testing coverage
   - navigate handles ?|# correctly
+- web-components
+  - aofl-element
+    - documentation
+    - unit testing
 
 Bugfixes:
 - api-request

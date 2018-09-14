@@ -1,0 +1,16 @@
+
+# i18n {./routes/home-element}
+msgid ""
+msgstr ""
+
+Content-Type: "text/plain; charset=UTF-8"
+Content-Transfer-Encoding: "8bit"
+Project-Id-Version: ""
+
+#: ./routes/home-element/template.js
+msgid "Home page"
+msgstr ""
+
+msgid "How are you"
+msgstr ""
+
