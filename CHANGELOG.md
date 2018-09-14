@@ -6,6 +6,10 @@ Features:
 - api-request
   - documentation
   - unit testing
+- resource-enumerate
+  - documentation
+  - unit testing
+  - refactored to use api-request
 
 Bugfixes:
 - api-request

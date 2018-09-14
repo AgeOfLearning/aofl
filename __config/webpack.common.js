@@ -121,9 +121,7 @@ module.exports = (mode) => {
                           '**/*.spec.*',
                           '**/tests-dest/*',
                           '**/node_modules_sourced/*',
-                          '**/__config/*',
-                          'js/webcomponents-loader',
-                          '**/*-{instance,enumerate}/*'
+                          '**/__config/*'
                         ]
                       }
                     ]

@@ -63,6 +63,7 @@
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
+    "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
     "@aofl/i18n-mixin": "file:i18n-mixin",
     "@aofl/middleware": "file:middleware",
@@ -70,6 +71,7 @@
     "@aofl/parent-dep-mixin": "file:parent-dep-mixin",
     "@aofl/polyfill-service": "file:polyfill-service",
     "@aofl/register-callback": "file:register-callback",
+    "@aofl/resource-enumerate": "file:resource-enumerate",
     "@aofl/rotations": "file:rotations",
     "@aofl/router": "file:router",
     "@aofl/server-environment": "file:server-environment",
