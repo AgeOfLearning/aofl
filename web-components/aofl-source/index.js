@@ -1,61 +1,56 @@
-import {template} from './template';
-import {html, LitElement} from '@polymer/lit-element';
+/**
+ * AoflSource class implementation.
+ *
+ * @summary aofl-source
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+import AoflElement from '../aofl-element';
+import {findParent} from '@aofl/component-utils';
 
 /**
- * @summary AoflSource
- * @class AoflSource
- * @extends {LitElement}
+ * AoflSource component must be used as a child of aofl-picture and specifies images
+ * for different media queries.
+ *
+ * @extends {AoflElement}
  */
-class AoflSource extends LitElement {
+class AoflSource extends AoflElement {
   /**
-   *
-   *
+   * @param {*} args
+   */
+  connectedCallback(...args) {
+    super.connectedCallback(...args);
+    const parent = findParent(this, 'addSource');
+    if (!parent) {
+      throw new Error('aofl-source must be used inside of aofl-picture');
+    }
+
+    parent.addSource(this);
+  }
+
+  /**
    * @readonly
-   * @static
-   * @memberof AoflSource
    */
   static get is() {
     return 'aofl-source';
   }
 
   /**
-   *
-   *
    * @readonly
-   * @static
-   * @memberof AoflSource
    */
   static get properties() {
     return {
       media: String,
-      aoflSrcset: String,
-      srcset: String,
-      dataViewbox: String,
-      dataWidth: String,
-      dataHeight: String,
-      group: String
+      srcset: String
     };
   }
 
   /**
-   * Creates an instance of AoflSource.
-   * @memberof AoflSource
-   */
-  constructor() {
-    super();
-    if (typeof this.parentNode.addSource === 'function') {
-      this.parentNode.addSource(this);
-    }
-  }
-
-  /**
-   *
    *
    * @return {Object}
-   * @memberof AoflSource
    */
   _render() {
-    return html`${template(this)}`;
+    return super._render((context, html) => html``);
   }
 }
 

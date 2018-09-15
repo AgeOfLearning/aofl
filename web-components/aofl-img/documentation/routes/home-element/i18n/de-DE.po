@@ -1,0 +1,15 @@
+
+# i18n {./routes/home}
+msgid ""
+msgstr ""
+
+Content-Type: "text/plain; charset=UTF-8"
+Content-Transfer-Encoding: "8bit"
+Project-Id-Version: ""
+
+#: ./routes/home/template.js
+msgid "Home page"
+msgstr "Startseite"
+
+msgid "How are you"
+msgstr "html`Wie geht es dir ${person}`"

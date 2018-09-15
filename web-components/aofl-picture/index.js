@@ -1,107 +1,110 @@
+/**
+ * AoflPicture class implementation.
+ *
+ * @summary aofl-picture
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import {template} from './template';
-import {html, LitElement} from '@polymer/lit-element';
+import AoflElement from '../aofl-element';
 
 /**
- * @summary AoflPicture
- * @class AoflPicture
- * @extends {LitElement}
+ * <aofl-picture> serves as a container for zero or more <aofl-source> and one <aofl-img> elements
+ * to provide versions of an image for different display sizes.
+ *
+ * @extends {AoflElement}
  */
-class AoflPicture extends LitElement {
-  /**
-   *
-   *
-   * @readonly
-   * @static
-   * @memberof AoflPicture
-   */
-  static get is() {
-    return 'aofl-picture';
-  }
-
+class AoflPicture extends AoflElement {
   /**
    * Creates an instance of AoflPicture.
-   * @memberof AoflPicture
    */
   constructor() {
     super();
     this.img = null;
     this.defaultSrc = null;
     this.sources = [];
-    this.boundMediaQueryListener = this._mediaQueryListener.bind(this);
+    this.updateImageSrc = () => {
+      const matchedSource = AoflPicture.findMatchingSource(this.sources);
+      this.setMediaSrc(matchedSource);
+    };
   }
 
   /**
    *
+   * @readonly
+   */
+  static get is() {
+    return 'aofl-picture';
+  }
+
+
+  /**
+   *
+   * @readonly
+   */
+  static get properties() {
+    return {
+      'disable-sources': String
+    };
+  }
+  /**
    *
    * @return {Object}
-   * @memberof AoflPicture
    */
   _render() {
-    return html`${template(this)}`;
+    return super._render(template);
   }
 
   /**
-   *
+   * setImg should be invoked by a slotted <aofl-img> and sets the aofl-img element as the main img element of aofl-picture.
    *
    * @param {HTMLElement} img
-   * @memberof AoflPicture
    */
   setImg(img) {
     if (this.img !== null) return;
     this.img = img;
     this.defaultSrc = {
-      src: this.img.src || this.img.aoflSrc,
+      src: this.img.src,
       height: this.img.height,
       width: this.img.width
     };
-    this._mediaQueryListener();
+
+    this.updateImageSrc();
   }
 
   /**
-   *
+   * addSource should be invoked by a slotted <aofl-source> element and adds aofl-source elements as alternative
+   * sources for image besed on media attribute of aofl-source
    *
    * @param {String} source
-   * @memberof AoflPicture
    */
   addSource(source) {
-    if (!document.documentElement.classList.contains('page-mobile')) return;
-    let mediaQuery = window.matchMedia(source.getAttribute('media'));
-    let src = source.getAttribute('srcset') || source.getAttribute('aofl-srcset');
-    let sourceAttributes = {
-      src,
-      height: source.getAttribute('data-height'),
-      width: source.getAttribute('data-width'),
+    if (typeof this['disable-sources'] !== 'undefined' && this['disable-sources'] !== 'false') return;
+    const mediaQuery = window.matchMedia(source.getAttribute('media'));
+    const sourceAttributes = {
+      src: source.getAttribute('srcset'),
+      height: source.getAttribute('height'),
+      width: source.getAttribute('width'),
       mediaQuery
     };
 
     this.sources.push(sourceAttributes);
-    mediaQuery.addListener(this.boundMediaQueryListener);
+    mediaQuery.addListener(this.updateImageSrc);
 
-    this._mediaQueryListener();
+    this.updateImageSrc();
   }
-
   /**
-   *
-   *
-   * @memberof AoflPicture
-   */
-  _mediaQueryListener() {
-    let matchedSource = this._findMediaQuery(this.sources);
-    this._setMediaSrc(matchedSource);
-  }
-
-  /**
-   *
+   * Set's aofl-picture's image source to the matching aofl-source media query.
    *
    * @param {String} [source=this.defaultSrc]
    * @memberof AoflPicture
    */
-  _setMediaSrc(source = this.defaultSrc) {
+  setMediaSrc(source = this.defaultSrc) {
     if (!this.img) return;
     let imgSrc = this.img.src;
 
     if (imgSrc !== source.src) {
-      this.img.src = source.src;
+      this.img.setAttribute('src', source.src);
 
       if (source.width) {
         this.img.setAttribute('width', source.width);
@@ -114,13 +117,12 @@ class AoflPicture extends LitElement {
   }
 
   /**
-   *
+   * Iterates through an array of sources and returns the first matching source.
    *
    * @param {Array} [sources=[]]
-   * @return {String}
-   * @memberof AoflPicture
+   * @return {Object}
    */
-  _findMediaQuery(sources = []) {
+  static findMatchingSource(sources = []) {
     for (let i = 0; i < sources.length; i++) {
       if (sources[i].mediaQuery.matches === true) {
         return sources[i];
@@ -130,12 +132,10 @@ class AoflPicture extends LitElement {
 
   /**
    *
-   *
-   * @memberof AoflPicture
    */
   disconnectedCallback() {
     for (let i = 0; i < this.sources.length; i++) {
-      this.sources[i].mediaQuery.removeListener(this.boundMediaQueryListener);
+      this.sources[i].mediaQuery.removeListener(this.updateImageSrc);
     }
   }
 }

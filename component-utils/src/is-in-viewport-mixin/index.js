@@ -1,0 +1,139 @@
+/**
+ * IsInViewPortMixin implementation. This mixin listens for window resize and scroll
+ * events and invokes appropriate methods.
+ *
+ * @summary is-in-viewport-mixin
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+
+import isInViewport from '../is-in-viewport';
+
+export default (superClass) => {
+  /**
+   * Mixes the superClass with functions necessary to detect if the element is within the visible
+   * area of the page.
+   *
+   * @class IsInViewport
+   * @extends {superClass}
+   */
+  class IsInViewport extends superClass {
+    /**
+     * Creates an instance of IsInViewport.
+     * @param {*} args
+     * @memberof IsInViewport
+     */
+    constructor(...args) {
+      super(...args);
+      this.trackScrollHosts = [window];
+      this.isWithinViewport;
+      this.onceWithinViewport = false;
+
+      this.checkInViewport = () => {
+        const oldIsWithinViewport = this.isWithinViewport;
+
+        this.isWithinViewport = this.offsetHeight > 0 && this.offsetWidth > 0 &&
+        isInViewport(this, this.widthThreshold, this.heightThreshold);
+
+        if (!this.onceWithinViewport && this.isWithinViewport === true) {
+          this.onceWithinViewport = true;
+          this.firstWithinViewport();
+        }
+
+        if (this.isWithinViewport !== oldIsWithinViewport) {
+          this.withinViewportUpdated(this.isWithinViewport, oldIsWithinViewport);
+        }
+      };
+    }
+
+    /**
+     *
+     *
+     * @param {*} args
+     */
+    connectedCallback(...args) {
+      this.addListeners();
+      super.connectedCallback(...args);
+      this.checkInViewport();
+    }
+
+
+    /**
+     *
+     *
+     * @memberof IsInViewport
+     */
+    addListeners() {
+      let parent = this;
+       while (parent !== null) {
+        if (parent.assignedSlot) {
+          parent = parent.assignedSlot;
+        } else if (typeof parent.tagName === 'undefined' && typeof parent.host !== 'undefined') {
+          this.trackScrollHosts.push(parent);
+          parent = parent.host;
+        } else if (parent.parentNode) {
+          parent = parent.parentNode;
+        } else {
+          break;
+        }
+      };
+
+      window.addEventListener('resize', this.checkInViewport);
+      for (let i = 0; i < this.trackScrollHosts.length; i++) {
+        this.trackScrollHosts[i].addEventListener('scroll', this.checkInViewport, true);
+      }
+    }
+
+    /* istanbul ignore next */
+    /**
+     * firstWithinViewport() is invoked when the element scrolls into view for the first time. This
+     * function should be implemented by the sub class.
+     *
+     * @protected
+     */
+    firstWithinViewport() {
+
+    }
+
+    /* istanbul ignore next */
+    /**
+     * withinViewportUpdated() is invoked anytime the element enters or exists the viewport. This
+     * function should be implemented by the sub class.
+     *
+     * @protected
+     * @param {Boolean} newValue
+     * @param {Boolean} oldValue
+     */
+    withinViewportUpdated(newValue, oldValue) {
+
+    }
+
+    /**
+     * When stopiIsInViewportCheck() is invoked it removes the event listeners and stops invoking
+     * the withinViewportUpdated() function. This is useful when we want to disconnect the event
+     * listeners and keep the component attached to dom. For example, conside lazy loading images
+     * with aofl-img. Once the image is loaded it is no longer necessary to check isInViewStatus.
+     *
+     * @protected
+     */
+    stopIsInViewportCheck() {
+      window.removeEventListener('resize', this.checkInViewport);
+      for (let i = 0; i < this.trackScrollHosts.length; i++) {
+        this.trackScrollHosts[i].removeEventListener('scroll', this.checkInViewport, true);
+      }
+    }
+
+    /**
+     *
+     *
+     * @param {*} args
+     */
+    disconnectedCallback(...args) {
+      this.stopIsInViewportCheck();
+      super.disconnectedCallback(...args);
+    };
+  }
+
+  return IsInViewport;
+};
+

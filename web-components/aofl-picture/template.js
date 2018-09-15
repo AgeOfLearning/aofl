@@ -6,11 +6,6 @@ export const template = (context) => html`
   display: inline-block;
   line-height: 0;
 }
-
-::slotted(aofl-img) {
-  width: inherit;
-  height: auto;
-}
 </style>
 <slot></slot>
 `;

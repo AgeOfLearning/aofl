@@ -3,9 +3,7 @@ const loaderUtils = require('loader-utils');
 const uniki = require('uniki');
 
 const defaultOptions = {
-  tags: [
-    'a'
-  ]
+  tags: []
 };
 
 const escapeRegExp = (str) => {

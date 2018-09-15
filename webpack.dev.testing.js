@@ -17,6 +17,7 @@ const config = merge(devConfig, {
         '**/*-plugin/**',
         // '**/api-request',
         // '**/cache-manager',
+        // '**/component-utils',
         // '**/form-validate',
         // '**/i18n-mixin',
         // '**/map-state-properties-mixin',

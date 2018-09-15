@@ -33,9 +33,23 @@ Features:
     - documentation
     - unit testing
     - extends AoflElement instead of LitElement
+  - aofl-source
+    - documentation
+    - unit testing
+    - extends AoflElement instead of LitElement
+  - aofl-img
+    - documentation
+    - unit testing
+    - extends AoflElement instead of LitElement
+  - aofl-picture
+    - documentation
+    - unit testing
+    - extends AoflElement instead of LitElement
 - component-utils
   - documentation
   - unit testing
+  - added is-in-viewport
+  - added is-in-viewport-mixin
 - parent-dep-mixin
   - removed
 

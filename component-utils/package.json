@@ -11,5 +11,8 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.5"
+  }
 }

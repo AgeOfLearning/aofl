@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  overflow: scroll;
+}
+
+:host .scroll-container {
+  width: 500%;
+}
+
+:host .placeholder {
+  display: inline-block;
+  width: 80%;
+}

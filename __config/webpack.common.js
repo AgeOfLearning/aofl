@@ -121,7 +121,8 @@ module.exports = (mode) => {
                           '**/*.spec.*',
                           '**/tests-dest/*',
                           '**/node_modules_sourced/*',
-                          '**/__config/*'
+                          '**/__config/*',
+                          '**/aofl-source'
                         ]
                       }
                     ]
