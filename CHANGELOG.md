@@ -32,6 +32,8 @@ Features:
 - component-utils
   - documentation
   - unit testing
+- parent-dep-mixin
+  - removed
 
 Bugfixes:
 - api-request
