@@ -3,6 +3,7 @@ const PathHelper = require('../../lib/path-helper');
 const fs = require('fs');
 const chalk = require('chalk');
 const Table = require('cli-table');
+const path = require('path');
 
 const excludePatterns = [
   '**/node_modules/**',
@@ -25,41 +26,46 @@ class DomScope {
    * @param {*} pattern
    * @param {*} exclude
    * @param {*} excludePattern
-   * @memberof DomScope
    */
-  constructor(paths, pattern, exclude, excludePattern) {
-    this.patterns = pattern;
-    this._setPaths(paths);
+  constructor(paths, pattern = [], exclude, excludePattern) {
+    this.inputPatterns = pattern;
+    if (pattern.length === 0) {
+      this.inputPatterns = ['**/*'];
+    }
+
+    this.createGlobPatterns(paths);
     this.exclude = PathHelper
       .convertToGlobPattern(exclude)
       .concat(excludePatterns)
       .concat(excludePattern);
+
     this.directories = null;
     this.domScopes = {};
   }
 
   /**
    *
-   *
    * @param {*} paths
-   * @memberof DomScope
    */
-  _setPaths(paths) {
+  createGlobPatterns(paths) {
     if (paths.length === 0) {
       paths = [process.env.PWD];
     }
-    this.paths = [];
-    for (let i = 0; i < this.patterns.length; i++) {
-      this.paths = this.paths.concat(PathHelper.convertToGlobPattern(paths, this.patterns[i]));
+
+    this.globPatterns = [];
+
+    for (let i = 0; i < this.inputPatterns.length; i++) {
+      for (let j = 0; j < paths.length; j++) {
+        this.globPatterns.push(path.resolve(path.join(paths[j], this.inputPatterns[i])));
+      }
     }
   }
 
   /**
    *
-   * @memberof DomScope
    */
-  _getFilePaths() {
-    return glob(this.paths, {
+  getFilePaths() {
+    return glob(this.globPatterns, {
       ignore: this.exclude,
       nodir: true
     })
@@ -75,8 +81,6 @@ class DomScope {
 
   /**
    *
-   *
-   * @memberof DomScope
    */
   validateDomScopes() {
     return new Promise((resolve, reject) => {
@@ -103,7 +107,7 @@ class DomScope {
    */
   async init() {
     try {
-      await this._getFilePaths();
+      await this.getFilePaths();
       await this.validateDomScopes();
       let table = new Table({
         head: ['dom-scope id', 'paths']

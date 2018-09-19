@@ -35,8 +35,10 @@ module.exports = function(content) {
       updated = true;
     }
   }
+
   if (updated) {
     fs.writeFileSync(sourcePath, content);
   }
+
   return content;
 };

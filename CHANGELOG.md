@@ -52,6 +52,9 @@ Features:
   - added is-in-viewport-mixin
 - parent-dep-mixin
   - removed
+- cli
+  - dom-scope
+    - fixed pattern bug
 
 Bugfixes:
 - api-request
