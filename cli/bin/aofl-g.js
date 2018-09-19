@@ -9,8 +9,8 @@ program
   Examples:
 
     aofl help g
-    aofl g aofl path/to/element-name ${chalk.dim('## generate an element that extends AoflElement')}
-    aofl g lit path /to element-name ${chalk.dim('## generate an element that extends LitElement')}
+    aofl g c path/to/element-name ${chalk.dim('## generate an element that extends AoflElement')}
+    aofl g mixin path/to/mixin ${chalk.dim('## generate a mixin class')}
 `);
 })
 .parse(process.argv);

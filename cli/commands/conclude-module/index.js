@@ -21,7 +21,7 @@ class ConcludeModule {
     this.cwd = process.cwd();
     this.all = all;
     this.revert = revert;
-    this.configPath = path.resolve(this.cwd, 'aofl.json');
+    this.configPath = path.resolve(this.cwd, '.aofl.json');
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
   }
@@ -79,7 +79,7 @@ class ConcludeModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      console.log(chalk.yellow(`Could not load aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
+      console.log(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;

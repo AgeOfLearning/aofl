@@ -55,6 +55,12 @@ Features:
 - cli
   - dom-scope
     - fixed pattern bug
+  - sw
+    - removed
+  - generate
+    - changed aofl to c
+    - removed lit
+    - updated templates
 
 Bugfixes:
 - api-request

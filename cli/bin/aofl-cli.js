@@ -18,7 +18,6 @@ program
 .command('source <moduleName>', 'Download an npm module into your project')
 .command('conclude <moduleName>', 'conclude module')
 .command('g [type] [name]', 'scoffold component')
-.command('sw [path]', 'generate service worker')
 .command('i18n <moduleName>', 'Generates .pot files from source')
 .command('dom-scope [path]', 'validate generated dom-scope');
 
