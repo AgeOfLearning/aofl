@@ -1,0 +1,16 @@
+hr {
+  border: 0;
+  border-top: 0.1rem solid #f4f5f6;
+  margin: 3rem 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+::selection {
+  background: #ffeb3b; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #ffeb3b; /* Gecko Browsers */
+}

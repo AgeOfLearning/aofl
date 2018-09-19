@@ -65,6 +65,10 @@ Features:
   - README.md added
   - prerender injects \_\_prerender\_\_ before page load
   - template name is added to the routes config
+- aofl-validate
+  - documentation
+  - unit testing
+  - completely refactored
 
 Bugfixes:
 - api-request

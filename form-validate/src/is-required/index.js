@@ -5,7 +5,7 @@
  * @return {Boolean}
  */
 function isRequired(value) {
-  return value !== '';
+  return typeof value === 'string' && value !== '';
 }
 
 export default isRequired;

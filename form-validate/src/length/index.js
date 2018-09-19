@@ -5,7 +5,7 @@
   * @return {Function}
   */
 const minLength = (length) => {
-  return (value) => value.length >= length;
+  return (value) => typeof value === 'string' && value.length >= length;
 };
 
 /**
@@ -15,7 +15,7 @@ const minLength = (length) => {
   * @return {Function}
   */
 const maxLength = (length) => {
-  return (value) => value.length <= length;
+  return (value) => typeof value === 'string' && value.length <= length;
 };
 
 export {

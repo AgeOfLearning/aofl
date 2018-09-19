@@ -6,7 +6,7 @@ const allDigitRegex = /^[0-9]+$/;
  * @return {Boolean} True or false if the regex passes
  */
 function isAllDigits(value) {
-  return !allDigitRegex.test(value);
+  return typeof value === 'string' && allDigitRegex.test(value);
 }
 
 export default isAllDigits;
