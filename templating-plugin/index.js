@@ -43,7 +43,6 @@ class TemplatingPlugin {
       },
       mainRoutes: 'routes',
       locale: 'en-US',
-      inlineConfig: false,
       partials: {}
     });
     this.options.template = path.resolve(this.options.template);
@@ -348,6 +347,7 @@ class TemplatingPlugin {
         acc[rotation] = [];
       }
 
+      routeConfig.template = path.basename(path.dirname(this.options.template));
       acc[rotation].push(routeConfig);
       return acc;
     }, {});

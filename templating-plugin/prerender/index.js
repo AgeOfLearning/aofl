@@ -4,10 +4,13 @@ module.exports = async (url) => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
 
-  await page.goto(url, {waitUntil: 'domcontentloaded'});
-  let str = await page.evaluate(async () => {
+  page.evaluateOnNewDocument(`
     window.aofljsConfig = window.aofljsConfig || {};
     window.aofljsConfig.__prerender__ = true;
+  `);
+
+  await page.goto(url, {waitUntil: 'domcontentloaded'});
+  let str = await page.evaluate(async () => {
     let selfClosingTags = [
       'area',
       'base',
