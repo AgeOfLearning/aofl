@@ -3,6 +3,7 @@
 
 ## v1.0.0-beta.28 (date)
 Features:
+- added ISSUE_TEMPLATE.md
 - api-request
   - documentation
   - unit testing
