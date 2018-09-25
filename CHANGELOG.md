@@ -54,6 +54,8 @@ Features:
 - parent-dep-mixin
   - removed
 - cli
+  - readme.md added
+  - license added
   - dom-scope
     - fixed pattern bug
   - sw

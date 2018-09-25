@@ -9,14 +9,6 @@ const path = require('path');
  */
 class POTGenerator {
   /**
-   *
-   * @param {Array} args
-   */
-  constructor(args, repo) {
-    console.log('args', args);
-  }
-
-  /**
    * @param {String} root
    * @param {Array} files
    * @return {String|Boolean}
