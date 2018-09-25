@@ -9,7 +9,7 @@
 export default (router) => {
   return (request, response, next) => {
     if (request.to !== response.to) {
-      next(Object.assign({}, response, {redirect: router.navigate(response.to, true, false, true)}));
+      router.applyMiddleware(response, 'beforeEach', Object.assign({}, request));
     } else {
       next(response);
     }

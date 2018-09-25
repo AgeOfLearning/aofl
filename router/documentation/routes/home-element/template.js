@@ -14,7 +14,9 @@ export const template = (context, html) => html`
     <aofl-list-option slot="tab" class="link" value="examples" selected$="${context.selectedContentTab === 'examples'}">Examples</aofl-list-option>
   </tab-headers>
 
-  <tab-content groupId="contentTabs" tabId="overview" storeInstance$="${context.storeInstance}">${html([md])}</tab-content>
+  <tab-content groupId="contentTabs" tabId="overview" storeInstance$="${context.storeInstance}">
+    ${html([md])}
+  </tab-content>
   <tab-content groupId="contentTabs" tabId="examples" storeInstance$="${context.storeInstance}">
     <aofl-preview dom-scope="router-preview">
       <span slot="title">Router</span>

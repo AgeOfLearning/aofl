@@ -14,7 +14,14 @@ class Router {
    * @return {void}
    */
   constructor() {
-    this.middleware = new Middleware('before', 'after', 'afterEach', 'beforeEach');
+    Object.defineProperties(this, {
+      middleware: {
+        value: new Middleware('before', 'after', 'afterEach', 'beforeEach')
+      },
+      resolve: {
+        writable: true
+      }
+    });
   }
 
   /**
@@ -26,6 +33,7 @@ class Router {
     this.config = {
       routes: this.addRegexRoutes(config)
     };
+
     this
       .beforeEach(matchRouteMiddleware)
       .after(redirectMiddleware(this))
@@ -77,12 +85,11 @@ class Router {
    * @description Runs all middleware
    * @param {Object} request
    */
-  async applyMiddlware(request) {
-    let beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
+  async applyMiddleware(request) {
+    const beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
     await this.middleware.iterateMiddleware(request, 'afterEach', beforeEachResponse);
-    let afterResponse = await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
-    if (afterResponse.redirect) return afterResponse.redirect;
-    return true;
+    await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+    this.resolve();
   }
 
   /**
@@ -106,7 +113,7 @@ class Router {
    * @return {Function}
    */
   listen() {
-    let popStateHandler = (e) => {
+    const popStateHandler = (e) => {
       e.preventDefault();
       this.navigate(location.pathname, true, true);
     };
@@ -121,23 +128,26 @@ class Router {
    * @param {String} path
    * @param {Boolean} force
    * @param {Boolean} popped
-   * @param {Boolean} isRedirect
+   * @return {Promise}
    */
-  async navigate(path, force=false, popped=false, isRedirect=false) {
-    let request = {
-      to: path,
-      from: location.pathname,
-      routes: this.config.routes,
-      popped
-    };
-    if (path !== location.pathname || force) {
-      if (!isRedirect) {
-        await this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request));
+  navigate(path, force = false, popped = false) {
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      const request = {
+        to: path,
+        from: location.pathname,
+        routes: this.config.routes,
+        popped
+      };
+      if (path !== location.pathname || force) {
+        this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
+        .then(() => {
+          this.applyMiddleware(request, popped);
+        });
+      } else {
+        reject('Can\'t navigate to current path');
       }
-      return await this.applyMiddlware(request, popped);
-    } else {
-      return Promise.reject('Can\'t navigate to current path');
-    }
+    });
   }
 }
 

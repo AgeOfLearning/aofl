@@ -12,11 +12,17 @@ import htmlExample from '!raw-loader!./examples/template';
 import AoflElement from '@aofl/web-components/aofl-element';
 import {i18nMixin} from '@aofl/i18n-mixin';
 import '@aofl/web-components/aofl-list-option';
-import '@aofl/aofl-samples/aofl-preview-element';
 import {mapStatePropertiesMixin} from '@aofl/map-state-properties-mixin';
+import '@aofl/aofl-samples/aofl-preview-element';
 import {storeInstance} from '@aofl/store';
 import {tabsSdoEnumerate} from '@aofl/aofl-samples/tab-element';
 import Prism from 'prismjs';
+import Router from '../../../src/Router';
+import {html} from '@polymer/lit-element';
+
+window.AoflElement = AoflElement;
+window.Router = Router;
+window.html = html;
 
 storeInstance.commit({
   namespace: tabsSdoEnumerate.NAMESPACE,

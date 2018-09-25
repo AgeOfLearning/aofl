@@ -17,7 +17,6 @@ class PathUtils {
    */
   static getRegex(_path) {
     const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
-    console.log('getRegex', path);
     let regexStr = '';
     let matches = DYNAMIC_PATH_REGEX.exec(path);
     let keys = [];
@@ -64,7 +63,6 @@ class PathUtils {
     if (cleanPathMatch === null) {
       return new Error('cannot clean invalid path');
     }
-
     return cleanPathMatch[1];
   }
 
@@ -77,7 +75,8 @@ class PathUtils {
    * @memberof PathUtils
    */
   static removeTrailingSlash(str) {
-    return str.replace(TRAILING_SLASH_REGEX, '');
+    if (str === '/') return str;
+    return str && str.replace(TRAILING_SLASH_REGEX, '');
   }
 
 

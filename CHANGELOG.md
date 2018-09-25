@@ -76,6 +76,9 @@ Bugfixes:
   - getCacheManager() fix issue with returning new cacheManager
   - changed cache argument to fromCache.
   - Replaced static class property with a static getter.
+- router
+  - Fixes reject case in navigate method
+  - router.navigate resolve after redirects
 
 ---
 ## v1.0.0-beta.27 (09-11-2018)

@@ -14,17 +14,13 @@ const matchBestPath = (_path, routes) => {
   for (let i = 0; i < routes.length; i++) {
     let route = routes[i];
     route.path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(route.path));
-    console.log('route', JSON.stringify(route), route.regex);
-    console.log('path', path);
     if (path === route.path) { // exact match
       stack.shift();
       stack.push(route);
       break;
     }
     let matches = route.regex.exec(path);
-    console.log('matches', matches);
     if (matches !== null) {
-      console.log(JSON.stringify(stack));
       if (stack.length === 0) {
         stack.push(route);
       } else {
