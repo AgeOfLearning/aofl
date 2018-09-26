@@ -37,11 +37,12 @@ class UnitTestingPlugin {
     this.options = defaultsDeep(options, {
       include: '**/*.js',
       exclude: ['**/node_modules/**'],
-      output: 'tests-dest',
-      config: path.join(process.env.PWD, '.wctrc.json'),
+      output: '__build_tests',
+      config: this.getConfigPath(),
       clean: true,
       scripts: []
     });
+
     this.options.exclude.push(path.join('**', this.options.output, '**'));
     this.options.output = path.resolve(process.env.PWD, this.options.output);
     let wctConfig = {};
@@ -73,7 +74,7 @@ class UnitTestingPlugin {
       new CliReporter(this.wctContext, this.wctContext.options.output, this.wctContext.options);
     }
     this.wctContext.options.suites = [];
-    this.firstRun = true;
+    this.runCount = 0;
     this.watchMode = false;
     this.createOutputFolder();
   }
@@ -123,14 +124,16 @@ class UnitTestingPlugin {
         }
 
         if (this.wctContext.options.suites.length > 0) {
-          if (this.firstRun) {
+          if (this.runCount === 1) {
             await steps.setupOverrides(this.wctContext);
             await steps.loadPlugins(this.wctContext);
             await steps.configure(this.wctContext);
             await steps.prepare(this.wctContext);
-            this.firstRun = false;
           }
-          await steps.runTests(this.wctContext);
+
+          if (this.runCount >= 1) {
+            await steps.runTests(this.wctContext);
+          }
         } else {
           console.log(chalk.red('no tests were supplied to wct'));
         }
@@ -145,8 +148,28 @@ class UnitTestingPlugin {
         }
       }
 
+      this.runCount++;
       return cb(null);
     });
+  }
+
+  /**
+   * @return {String}
+   */
+  getConfigPath() {
+    const paths = [
+      '.wctrc.json',
+      'wct.conf.json'
+    ];
+    for (let i = 0; i < paths.length; i++) {
+      try {
+        const p = path.join(process.env.PWD, paths[i]);
+        const stat = fs.statSync(p);
+        if (stat.isFile()) {
+          return p;
+        }
+      } catch (e) {}
+    }
   }
 
   /**
@@ -231,8 +254,12 @@ class UnitTestingPlugin {
   generateSuite(name, content, otherScripts) {
     const finalOutputPath = path.resolve(this.options.output, name + '.html');
     let template = fs.readFileSync(path.resolve(__dirname, 'templates', 'sample.html'), 'utf-8');
+
     template = template
-    .replace('aoflUnitTesting:wct-browser-legacy', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules/web-component-tester/browser.js')));
+    .replace('aoflUnitTesting:wct-browser-legacy', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules', 'web-component-tester', 'browser.js')));
+
+    template = template
+    .replace('aoflUnitTesting:fetch-mock', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules', 'fetch-mock', 'dist', 'es5', 'client-bundle.js')));
 
     template = this.replaceTemplatePart(template, 'aoflUnitTesting:js', '<script>\n' + otherScripts + content + '\n</script>');
 

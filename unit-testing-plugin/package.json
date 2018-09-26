@@ -17,6 +17,7 @@
     "chalk": "^2.4.1",
     "cleankill": "^2.0.0",
     "fast-glob": "^2.2.2",
+    "fetch-mock": "^7.0.2",
     "lodash.defaultsdeep": "^4.6.0",
     "tiny-js-md5": "^1.1.2",
     "wct-browser-legacy": "^1.0.1",

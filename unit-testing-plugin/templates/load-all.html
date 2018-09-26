@@ -8,6 +8,7 @@
   <title></title>
   <!-- wct-browser-legacy -->
   <script src="aoflUnitTesting:wct-browser-legacy"></script>
+  <script src="aoflUnitTesting:fetch-mock"></script>
 </head>
 
 <body>
@@ -19,10 +20,7 @@
   <!-- all files -->
   aoflUnitTesting:allFiles
   <script>
-    console.log('load-all', JSON.stringify(WCT.share));
-    console.log('load-all', JSON.stringify(window.__coverage__));
-    // console.log('load-all', JSON.stringify(gcv));
-    WCT.share.__coverage__ = window.__coverage__ || {};
+    WCT.share.__coverage__ = window.__coverage__;
   </script>
 </body>
 

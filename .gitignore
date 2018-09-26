@@ -1,5 +1,5 @@
 **/node_modules
 __build
+__build_tests
 coverage
-tests-dest
 docs

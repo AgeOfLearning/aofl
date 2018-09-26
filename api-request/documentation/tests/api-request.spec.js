@@ -1,6 +1,5 @@
 /* eslint no-invalid-this: "off" */
 import ApiRequest from '../../src/api-request';
-import fetchMock from 'fetch-mock';
 
 describe('@aofl/api-request/src/api-request', function() {
   before(function() {

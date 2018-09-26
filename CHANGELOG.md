@@ -70,6 +70,11 @@ Features:
   - documentation
   - unit testing
   - completely refactored
+- unit-testing-plugin
+  - documentation
+  - default output directory changed to __build_tests
+  - supports .wtcrc.json and wtc-conf.json
+  - adds fetch-mock to test suite automatically
 
 Bugfixes:
 - api-request
@@ -79,6 +84,9 @@ Bugfixes:
 - router
   - Fixes reject case in navigate method
   - router.navigate resolve after redirects
+- unit-testing-plugin
+  - run inital unit test once when watch mode enabled
+  - clean coverage report between runs
 
 ---
 ## v1.0.0-beta.27 (09-11-2018)

@@ -1,6 +1,5 @@
 /* eslint no-invalid-this: "off" */
 import {ResourceEnumerate} from '../../';
-import fetchMock from 'fetch-mock';
 import {CacheManager} from '@aofl/cache-manager';
 
 describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
