@@ -1,0 +1,12 @@
+:host {
+  padding: 2rem;
+}
+
+aofl-list-option {
+  cursor: pointer;
+}
+
+aofl-list-option[selected=true] {
+  background: #bbdefb;
+  color: #fff;
+}

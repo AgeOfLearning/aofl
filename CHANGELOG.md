@@ -1,8 +1,9 @@
 # aofl-os changelog
 
 
-## v1.0.0-beta.28 (date)
+## v1.0.0-beta.28 (09-27-2018)
 Features:
+- Refactord and seperated components
 - added ISSUE_TEMPLATE.md
 - api-request
   - documentation

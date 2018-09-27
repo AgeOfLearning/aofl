@@ -1,0 +1,20 @@
+{
+  "source": {
+    "includePattern": "index.js$",
+    "excludePattern": "(node_modules|documentation|api-docs|webpack)"
+  },
+  "opts": {
+    "template": "node_modules/docdash",
+    "encoding": "utf8",
+    "destination": "api-docs/",
+    "recurse": true,
+    "verbose": true
+  },
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

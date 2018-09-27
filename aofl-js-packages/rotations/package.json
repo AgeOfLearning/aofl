@@ -1,0 +1,18 @@
+{
+  "name": "@aofl/rotations",
+  "version": "1.0.0-beta.28",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AgeOfLearning/aofl.git"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@aofl/cache-manager": "^1.0.0-beta.28"
+  }
+}

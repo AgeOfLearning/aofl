@@ -1,0 +1,24 @@
+:host {
+  padding: 1rem;
+}
+
+div {
+  padding: 1rem;
+  border: 1px solid black;
+}
+
+div:first-of-type {
+  border-bottom: 0;
+}
+
+p {
+  background: red;
+  color: #fff;
+  margin: 0;
+  padding: 0.5rem;
+  white-space: nowrap;
+}
+
+div:last-of-type p {
+  background: blue;
+}
