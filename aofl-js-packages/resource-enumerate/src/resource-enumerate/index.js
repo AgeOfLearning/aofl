@@ -5,7 +5,7 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import {environmentTypeEnumerate, getServerEnvironment} from '@aofl/server-environment';
+import {environmentTypeEnumerate} from '@aofl/server-environment';
 import {Middleware} from '@aofl/middleware';
 import {ApiRequest} from '@aofl/api-request';
 
@@ -18,8 +18,11 @@ import {ApiRequest} from '@aofl/api-request';
 class ResourceEnumerate {
   /**
    * Creates an instance of ResourceEnumerate.
+   *
+   * @param {String} environment
    */
-  constructor() {
+  constructor(environment) {
+    this.environment = environment;
     this.middlewareInstance = new Middleware('before', 'after');
     this.apiRequestInstance = new ApiRequest();
    }
@@ -36,11 +39,10 @@ class ResourceEnumerate {
   /**
    * init() updates apis.url based on supplied config object.
    *
-   * @param {Object} {apis, developmentRegex, stageRegex, developmentConfig, stageConfig}
+   * @param {Object} {apis, developmentConfig, stageConfig}
    * @return {Promise}
    */
-  init({apis, developmentRegex, stageRegex, developmentConfig, stageConfig}) {
-    this.environment = getServerEnvironment(developmentRegex, stageRegex);
+  init({apis, developmentConfig, stageConfig}) {
     this.apis = apis;
 
     for (let apiNs in this.apis) {

@@ -1,17 +1,17 @@
 # @aofl/resource-enumerate
 
-Resource enumerate is a special case API call that returns the interface of the API code in a single endpoint. The response can contain server time, paths to resources, and other information based on application needs. An advantage of this technique is that it eliminates the need to hardcode paths\urls.
+Resource enumerate is a special case API call that returns the interface of the API code in a single endpoint. The response can contain server time, paths to resources, and other information based on application needs. An advantage of this technique is that it eliminates the need to hardcode paths/urls.
 
-`@aofl/resource-enumerate` accepts a config object that defines the path to the production api server. It also accepts regexes to determine development or stage environments based on the url.
+`@aofl/resource-enumerate` accepts a config object that defines the path to the production api server.
 
 It also supports `before()` and `after()` hooks. See example below.
 
-### Installation
+## Installation
 ```bash
 npm i -S @aofl/resource-enumerate
 ```
 
-### Usage
+## Usage
 ```javascript
 const resourceEnumerateConfig = {
   apis: {
@@ -36,8 +36,6 @@ const resourceEnumerateConfig = {
       }
     }
   },
-  developmentRegex: /localhost|192\.168\.[\d|\.]+|172\.(1[6-9]|2[0-9]|3[01])\.[\d|\.]+|10\.([0-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.[\d|\.]+/, // localhost or all private ips
-  stageRegex: /^stage\./, // match url starting with "stage."
   developmentConfig: () => import('./dev-api-config'), // lazy-load dev config
   stageConfig: () => import('./stage-api-config') // lazy-load stage config
 };
@@ -65,8 +63,14 @@ export default (apiNs, {host}) => {
 import {ResourceEnumerate} from '@aofl/resource-enumerate';
 import resourceEnumerateConfig from './__config/resource-enumerate-config';
 import apiRequestInstance from 'apiRequestInstanceFile :)'; // see @aofl/api-request
+import {getServerEnvironment} from '@aofl/server-environment';
 
-const resourceEnumerate = new ResourceEnumerate();
+
+const developmentRegex = /localhost|192\.168\.[\d|\.]+|172\.(1[6-9]|2[0-9]|3[01])\.[\d|\.]+|10\.([0-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.[\d|\.]+/; // localhost or all private ips
+const stageRegex = /^stage\./; // match url starting with "stage."
+
+const environment = getServerEnvironment(developmentRegex, stageRegex);
+const resourceEnumerate = new ResourceEnumerate(environment);
 const serverTime = {};
 
 resourceEnumerate.before((request, response, next) => {
@@ -89,10 +93,28 @@ resourceEnumerate.init(resourceEnumerateConfig)
 .then(() => {
   resourceEnumerate.get('awesome-apis')
   .then((resourceEnumeratePayload) => {
-    apiRequestInstance.request(resourceEnumeratePayload.api_urs + resourceEnumeratePayload.endpoints.getPosts)
+    apiRequestInstance
+    .request(resourceEnumeratePayload.api_url + resourceEnumeratePayload.endpoints.getPosts)
     .then((response) => {
       // do something with response
     });
   });
 });
+```
+
+## Caching
+Calling `get()` will cache the api response by default. There are 2 ways to invalidate cache and fetch a new copy of the resource enumerate data.
+
+1. By calling `get()` and passing `false` as the second argument (`fromCache`).
+1. By implementing `invalidateCache()` in the config object. This function is invoked everytime `get()` is invoked and will return the cached data if it evaluates to `false`.
+
+```javascript
+...
+'awesome-apis': {
+  url: '/apis/v1.0/resource-enumerate.json'
+  invalidateCache() { // add invalidateCache function
+    return Math.random() > 0.8;
+  }
+}
+...
 ```

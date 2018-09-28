@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {ResourceEnumerate} from '../../';
+import {ResourceEnumerate} from '../';
 import {CacheManager} from '@aofl/cache-manager';
 
 describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
@@ -20,8 +20,6 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
           }
         }
       },
-      developmentRegex: /no-match/,
-      stageRegex: /no-match/,
       developmentConfig: () => Promise.resolve({
         default(ns, {host}) {
           return host;
@@ -33,8 +31,6 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
         }
       })
     };
-
-    this.resourceEnumerateInstance = new ResourceEnumerate();
   });
 
   beforeEach(function() {
@@ -51,7 +47,8 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should call production', function(done) {
     const config = this.config;
-    this.resourceEnumerateInstance.init(this.config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(this.config)
     .then(() => {
       expect(config.apis.apins.url).to.be.equal('productionHost');
       done();
@@ -60,8 +57,9 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should call development', function(done) {
     const config = this.config;
-    config.developmentRegex = /./;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('development');
+
+    resourceEnumerateInstance.init(config)
     .then(() => {
       expect(config.apis.apins.url).to.be.equal('developmentHost');
       done();
@@ -70,8 +68,8 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should call stage', function(done) {
     const config = this.config;
-    config.stageRegex = /./;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('stage');
+    resourceEnumerateInstance.init(config)
     .then(() => {
       expect(config.apis.apins.url).to.be.equal('stageHost');
       done();
@@ -81,14 +79,14 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
   it('should work without variables function', function(done) {
     const config = this.config;
     config.apis.apins.developmentVariables = void 0;
-    config.developmentRegex = /./;
+    const resourceEnumerateInstance = new ResourceEnumerate('development');
     config.developmentConfig = () => Promise.resolve({
       default(ns, {host}) {
         return 'stageHost';
       }
     });
 
-    this.resourceEnumerateInstance.init(config)
+    resourceEnumerateInstance.init(config)
     .then(() => {
       expect(config.apis.apins.url).to.be.equal('stageHost');
       done();
@@ -97,12 +95,13 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should get from cache', function(done) {
     const config = this.config;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(config)
     .then(() => {
-      this.resourceEnumerateInstance
+      resourceEnumerateInstance
       .get('apins')
       .then(() => {
-        this.resourceEnumerateInstance
+        resourceEnumerateInstance
         .get('apins')
         .then((payload) => {
           const numCalls = fetchMock.calls('productionHost').length;
@@ -116,9 +115,10 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should make network call', function(done) {
     const config = this.config;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(config)
     .then(() => {
-      this.resourceEnumerateInstance
+      resourceEnumerateInstance
       .get('apins')
       .then((payload) => {
         expect(fetchMock.called('productionHost')).to.be.true;
@@ -129,12 +129,13 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should make new call when fromCache is false', function(done) {
     const config = this.config;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(config)
     .then(() => {
-      this.resourceEnumerateInstance
+      resourceEnumerateInstance
       .get('apins', false)
       .then((payload) => {
-        this.resourceEnumerateInstance
+        resourceEnumerateInstance
         .get('apins', false)
         .then(() => {
           const numCalls = fetchMock.calls('productionHost').length;
@@ -149,13 +150,13 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
   it('should make new call when invalidateCache return true', function(done) {
     const config = this.config;
     config.apis.apins.invalidateCache = () => true;
-
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(config)
     .then(() => {
-      this.resourceEnumerateInstance
+      resourceEnumerateInstance
       .get('apins')
       .then((payload) => {
-        this.resourceEnumerateInstance
+        resourceEnumerateInstance
         .get('apins')
         .then(() => {
           const numCalls = fetchMock.calls('productionHost').length;
@@ -169,9 +170,10 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
 
   it('should throw a TypeError when api namespace is undefined', function(done) {
     const config = this.config;
-    this.resourceEnumerateInstance.init(config)
+    const resourceEnumerateInstance = new ResourceEnumerate('production');
+    resourceEnumerateInstance.init(config)
     .then(() => {
-      this.resourceEnumerateInstance
+      resourceEnumerateInstance
       .get('undefined-namespace', false)
       .catch((e) => {
         expect(e).to.be.an.instanceOf(TypeError);
