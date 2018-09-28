@@ -21,7 +21,7 @@ export const template = (context, html) => html`
 }
 </style>
 
-<canvas width$="${context.width}" height$="${context.height}"></canvas>
+<canvas width="${context.width}" height="${context.height}"></canvas>
 
-<img alt$="${context.alt}" height$="${context.height}" width$="${context.width}" src$="${context.imgSrc}" on-load="${(e) => context.imageLoaded(e)}">
+<img alt="${context.alt}" height="${context.height}" width="${context.width}" src="${context.imgSrc}" @load="${(e) => context.imageLoaded(e)}">
 `;

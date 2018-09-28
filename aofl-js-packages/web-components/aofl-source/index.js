@@ -4,6 +4,10 @@
  * @summary aofl-source
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflSource
+ *
+ * @requires aofl-js/web-components:AoflElement
  */
 import AoflElement from '../aofl-element';
 import {findParent} from '@aofl/component-utils';
@@ -40,8 +44,8 @@ class AoflSource extends AoflElement {
    */
   static get properties() {
     return {
-      media: String,
-      srcset: String
+      media: {type: String},
+      srcset: {type: String}
     };
   }
 
@@ -49,8 +53,8 @@ class AoflSource extends AoflElement {
    *
    * @return {Object}
    */
-  _render() {
-    return super._render((context, html) => html``);
+  render() {
+    return super.render((context, html) => html``);
   }
 }
 

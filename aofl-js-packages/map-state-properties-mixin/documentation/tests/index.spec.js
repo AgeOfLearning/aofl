@@ -2,11 +2,10 @@
 import {storeInstance} from '@aofl/store';
 import AoflElement from '@aofl/web-components/aofl-element';
 import mapStatePropertiesMixin from '../../src/map-state-properties-mixin';
-import {html} from '@polymer/lit-element';
-import {render} from 'lit-html';
+import {render, html} from 'lit-html';
 
 describe('@aofl/map-state-properties-mixin', function() {
-  beforeEach(function() {
+  before(function() {
     this.sdo = {
       namespace: 'device',
       mutations: {
@@ -15,8 +14,8 @@ describe('@aofl/map-state-properties-mixin', function() {
             device: 'desktop'
           }
         },
-        setDevice(state, device) {
-          return Object.assign({}, state, {device});
+        setDevice(subState, device) {
+          return Object.assign({}, subState, {device});
         }
       }
     };
@@ -35,8 +34,8 @@ describe('@aofl/map-state-properties-mixin', function() {
         const state = this.storeInstance.getState();
         this.parentNode.device = state.device.device;
       }
-      _render() {
-        return super._render((context, html) => html`<p>Current device: ${context.device}</p>`);
+      render() {
+        return super.render((context, html) => html`<p>Current device: ${context.device}</p>`);
       }
     }
 
@@ -45,28 +44,30 @@ describe('@aofl/map-state-properties-mixin', function() {
         super();
         this.device = 'desktop';
       }
+
       static get is() {
         return 'parent-comp';
       }
-      _render() {
-        return super._render((context, html) => html`
+
+      render() {
+        return super.render((context, html) => html`
           <p>Current device: ${context.device}</p>
         `);
       }
     }
+
     if (!customElements.get(ChildComp.is)) {
       customElements.define(ChildComp.is, ChildComp);
     }
     if (!customElements.get(ParentComp.is)) {
       customElements.define(ParentComp.is, ParentComp);
     }
-    this.childComponent = document.createElement(ChildComp.is);
-  });
-  beforeEach(function() {
+
     render(html`
       <test-fixture id="MapStatePropertiesMixinTest">
         <template>
           <parent-comp>
+            <child-comp></child-comp>
           </parent-comp>
         </template>
       </test-fixture>
@@ -75,8 +76,12 @@ describe('@aofl/map-state-properties-mixin', function() {
 
   beforeEach(function() {
     this.element = fixture('MapStatePropertiesMixinTest');
-    this.element.appendChild(this.childComponent);
   });
+
+  it('should be true', function() {
+    expect(true).to.be.true;
+  });
+
   context('connectedCallback()', function() {
     it('Should update parent component "device" on state change', function(done) {
       const unsubscribe = storeInstance.subscribe(() => {
@@ -95,7 +100,7 @@ describe('@aofl/map-state-properties-mixin', function() {
 
   context('disconnectedCallback()', function() {
     it('Should NOT update parent component "device" on state change', function(done) {
-      this.element.removeChild(this.childComponent);
+      this.element.removeChild(this.element.querySelector('child-comp'));
       const unsubscribe = storeInstance.subscribe(() => {
         expect(this.element.device).to.equal('desktop');
         unsubscribe();

@@ -30,7 +30,7 @@ export default dedupingMixin((superClass) => {
      * @memberof MapStatePropertiesMixin
      */
     disconnectedCallback(...args) {
-      super.disconnectedCallback(...args);
+      // super.disconnectedCallback(...args);
       if (typeof this.statePropertiesUnsubscribe === 'function') {
         this.statePropertiesUnsubscribe();
         this.statePropertiesUnsubscribe = null;

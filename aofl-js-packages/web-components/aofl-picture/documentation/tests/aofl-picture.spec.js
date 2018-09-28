@@ -70,7 +70,7 @@ describe('@aofl/web-components/aofl-picture', function() {
   });
 
   it('should set the correct source depending on window size', async function() {
-    await this.basicPictureElement.renderComplete;
+    await this.basicPictureElement.updateComplete;
     const src = this.basicPictureElement.querySelector('aofl-img').src;
 
     expect(src).to.be.equal(this.getSource(window.innerWidth));
@@ -79,10 +79,10 @@ describe('@aofl/web-components/aofl-picture', function() {
   it('should update source when window size changes to 1000px', function(done) {
     const element = this.basicPictureElement;
     const _this = this;
-    element.renderComplete.then(() => {
+    element.updateComplete.then(() => {
       window.addEventListener('resize', function resizeListener() {
         window.removeEventListener('resize', resizeListener);
-        element.renderComplete.then(() => {
+        element.updateComplete.then(() => {
           const src = element.querySelector('aofl-img').src;
 
           expect(src).to.be.equal(_this.getSource(window.innerWidth));
@@ -98,10 +98,10 @@ describe('@aofl/web-components/aofl-picture', function() {
   it('should update source when window size changes to 200px', function(done) {
     const element = this.basicPictureElement;
     const _this = this;
-    element.renderComplete.then(() => {
+    element.updateComplete.then(() => {
       window.addEventListener('resize', function resizeListener() {
         window.removeEventListener('resize', resizeListener);
-        element.renderComplete.then(() => {
+        element.updateComplete.then(() => {
           const src = element.querySelector('aofl-img').src;
 
           expect(src).to.be.equal(_this.getSource(window.innerWidth));
@@ -117,7 +117,7 @@ describe('@aofl/web-components/aofl-picture', function() {
   it('should only take the first aofl-img tag', async function() {
     const element = this.multipleImgElement;
     const mainImg = element.querySelector('#main');
-    await element.renderComplete;
+    await element.updateComplete;
 
     expect(element.img).to.be.equal(mainImg);
   });
@@ -125,10 +125,10 @@ describe('@aofl/web-components/aofl-picture', function() {
   it('should not update source when window size changes to 1000px and sources-disabled', function(done) {
     const element = this.sourcesDisabledElement;
     const _this = this;
-    element.renderComplete.then(() => {
+    element.updateComplete.then(() => {
       window.addEventListener('resize', function resizeListener() {
         window.removeEventListener('resize', resizeListener);
-        element.renderComplete.then(() => {
+        element.updateComplete.then(() => {
           const src = element.querySelector('aofl-img').src;
 
           expect(src).to.be.equal(_this.getSource(1000));
@@ -144,10 +144,10 @@ describe('@aofl/web-components/aofl-picture', function() {
   it('should not update source when window size changes to 200px and sources-disabled', function(done) {
     const element = this.sourcesDisabledElement;
     const _this = this;
-    element.renderComplete.then(() => {
+    element.updateComplete.then(() => {
       window.addEventListener('resize', function resizeListener() {
         window.removeEventListener('resize', resizeListener);
-        element.renderComplete.then(() => {
+        element.updateComplete.then(() => {
           const src = element.querySelector('aofl-img').src;
 
           expect(src).to.be.equal(_this.getSource(1000));

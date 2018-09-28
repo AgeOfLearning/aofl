@@ -1,10 +1,20 @@
+/**
+ * Implements AoflListOption
+ *
+ * @summary AoflListOption
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflListOption
+ *
+ * @requires aofl-js/web-components:AoflElement
+ * @requires aofl-js/ComponentUtils:findParent
+ */
 import {template} from './template';
 import AoflElement from '../aofl-element';
 import {findParent} from '@aofl/component-utils';
 
 /**
- * @summary AoflListOption
- * @class AoflListOption
  * @extends {AoflElement}
  */
 class AoflListOption extends AoflElement {
@@ -28,17 +38,17 @@ class AoflListOption extends AoflElement {
    */
   static get properties() {
     return {
-      selected: String,
-      disabled: Boolean,
-      value: String
+      selected: {type: String},
+      disabled: {type: Boolean},
+      value: {type: String}
     };
   }
 
   /**
    * @return {Object}
    */
-  _render() {
-    return super._render(template);
+  render() {
+    return super.render(template);
   }
 
   /**
@@ -47,7 +57,7 @@ class AoflListOption extends AoflElement {
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', this.clickCallback);
-    this.renderComplete.then(() => {
+    this.updateComplete.then(() => {
       this.value = this.value || this.textContent;
       this.listElement = findParent(this, 'addOption');
       this.listElement.addOption(this);

@@ -53,9 +53,9 @@ describe('@aofl/i18n-mixin', function() {
       static get is() {
         return 'my-comp';
       }
-      _render() {
+      render() {
         this.person = 'Albert Einstein';
-        return super._render(templates);
+        return super.render(templates);
       }
     };
     class MyCompNoAttrs extends i18nMixin(AoflElement) {
@@ -72,9 +72,9 @@ describe('@aofl/i18n-mixin', function() {
       static get is() {
         return 'my-comp-no-attrs';
       }
-      _render() {
+      render() {
         this.person = 'Albert Einstein';
-        return super._render(templates);
+        return super.render(templates);
       }
     };
     customElements.define(MyComp.is, MyComp);
@@ -96,26 +96,28 @@ describe('@aofl/i18n-mixin', function() {
   beforeEach(function() {
     this.element = fixture('I18nTestFixture');
     this.elementNoAttr = fixture('I18nTestFixtureNoAttr');
+
+    console.log(this.element);
   });
 
-  afterEach(function () {
-    document.getElementById('I18nTestFixture').restore();
+  afterEach(function() {
+    document.documentElement.removeAttribute('lang');
   });
 
   context('__()', function() {
     it('Should translate the string to German', async function() {
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
     });
 
     it('Should not translate the string to German', async function() {
       this.element.setAttribute('lang', 'en-US');
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
     });
 
     it('Should update to German layout', async function() {
-      await this.element.renderComplete;
+      await this.element.updateComplete;
 
       expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
     });
@@ -123,20 +125,20 @@ describe('@aofl/i18n-mixin', function() {
 
   context('_n()', function() {
     it('Should translate for one', async function() {
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
     });
 
     it('Should translate for two', async function() {
       this.element.count = 2;
-      await this.element.renderComplete;
+      await this.element.updateComplete;
 
       expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
     });
 
     it('Should translate for more', async function() {
       this.element.count = 3;
-      await this.element.renderComplete;
+      await this.element.updateComplete;
 
       expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
     });
@@ -155,32 +157,32 @@ describe('@aofl/i18n-mixin', function() {
       document.documentElement.setAttribute('lang', 'de-DE');
       this.element.setAttribute('lang', '');
 
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
     });
 
     it('Should not update to html lang change if local lang is set', async function() {
       this.element.setAttribute('lang', 'en-US');
       document.documentElement.setAttribute('lang', 'de-DE');
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
     });
 
     it('Should not trigger updates on non html lang changes', async function() {
       this.element.setAttribute('lang', 'en-US');
-      await this.element.renderComplete;
+      await this.element.updateComplete;
       expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
     });
   });
 
   context('No default attribute', function() {
     it('Should have no default lang', async function() {
-      await this.element.renderComplete;
-      expect(this.elementNoAttr.lang).to.equal('');
+      await this.elementNoAttr.updateComplete;
+      expect(this.elementNoAttr.lang).to.be.null;
     });
     it('Should have no effect on the change of foo attr', async function() {
-      await this.element.renderComplete;
-      expect(this.elementNoAttr.lang).to.equal('');
+      await this.elementNoAttr.updateComplete;
+      expect(this.elementNoAttr.lang).to.be.null;
     });
   });
 });

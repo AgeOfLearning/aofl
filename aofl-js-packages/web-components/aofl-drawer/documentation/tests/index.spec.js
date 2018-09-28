@@ -1,11 +1,11 @@
 /* eslint-disable */
 import '../../';
-import { equal } from 'assert';
+import {html, render} from 'lit-html';
 
 describe('@aofl/web-components/aofl-drawer', function() {
   beforeEach(function() {
-    document.getElementById('test-container').innerHTML =
-    `<style>
+    render(html`
+    <style>
     .ease-in {
       opacity: 0;
       transition: opacity 250ms ease-in;
@@ -26,22 +26,32 @@ describe('@aofl/web-components/aofl-drawer', function() {
     </style>
     <test-fixture id="drawerTestFixtureParent">
       <template>
-        <aofl-drawer opening="ease-in" closing="ease-out" open="false">
+        <aofl-drawer opening="ease-in" closing="ease-out">
           content
         </aofl-drawer>
       </template>
     </test-fixture>
-    <test-fixture id="drawerTestFixtureParent2">
+
+    <test-fixture id="drawerTestFixtureParent1">
       <template>
-        <aofl-drawer opening="ease-in" closing="ease-out" open="true">
+        <aofl-drawer opening="ease-in" closing="ease-out">
           content
         </aofl-drawer>
       </template>
-    </test-fixture>`;
+    </test-fixture>
+
+    <test-fixture id="drawerTestFixtureParent2">
+      <template>
+        <aofl-drawer opening="ease-in" closing="ease-out" .open="true">
+          content
+        </aofl-drawer>
+      </template>
+    </test-fixture>`, document.getElementById('test-container'));
   });
 
   beforeEach(function() {
     this.element = fixture('drawerTestFixtureParent');
+    this.element1 = fixture('drawerTestFixtureParent1');
     this.element2 = fixture('drawerTestFixtureParent2');
   });
 
@@ -51,38 +61,47 @@ describe('@aofl/web-components/aofl-drawer', function() {
     });
   });
 
-  context('animationEndHandler()', function() {
-    it('Should remove animation classes after opening', function(done) {
-      this.element.renderComplete.then(() => {
-        this.element.setAttribute('open', 'true');
-        this.element.style.display = 'inline-block';
-        this.element.addEventListener('aofl-drawer-change', (e) => {
-          expect(Array.from(this.element.classList).indexOf('animate')).to.be.equal(-1);
-          done();
+  context('animationEndHandler() closing', function() {
+    it('Should remove animation classes after closing', function(done) {
+      const element = this.element;
+      this.element.updateComplete.then(() => {
+        this.element.addEventListener('change', function listener(e) {
+          element.removeEventListener('change', listener);
+
+          element.addEventListener('change', function listener1(e) {
+            element.removeEventListener('change', listener1);
+            console.log('element.classList', element.classList);
+            expect(element.classList.contains('ease-out')).to.be.false;
+            expect(element.classList.contains('ease-in')).to.be.true;
+            done();
+          });
+          element.open = false;
         });
+        element.open = true;
       });
     });
+  });
 
-    it('Should remove animation classes after closing', function(done) {
-      this.element.renderComplete.then(() => {
-        this.element.setAttribute('open', 'true');
-        this.element.addEventListener('aofl-drawer-change', (e) => {
-          this.element.setAttribute('open', 'false');
-        });
-        setTimeout(() => {
-          expect(Array.from(this.element.classList).indexOf('ease-out')).to.not.equal(-1);
-          expect(Array.from(this.element.classList).indexOf('ease-in')).to.be.equal(-1);
+
+  context('animationEndHandler() opening', function() {
+    it('Should remove animation classes after opening', function(done) {
+      const element1 = this.element1;
+      this.element1.updateComplete.then(() => {
+        this.element1.addEventListener('change', function listener(e) {
+          element1.removeEventListener('change', listener);
+          expect(element1.classList.contains('animate')).to.be.false;
           done();
-        }, 1000);
+        });
+        this.element1.open = true;
       });
     });
   });
 
   context('openChanged()', function() {
     it('Should not add classes if passed invalid attribute values', function () {
-      this.element2.setAttribute('open', 'true');
-      this.element2.openChanged('false', undefined);
-      expect(Array.from(this.element2.classList).indexOf('ease-out')).to.be.equal(-1);
+      this.element2.open = true;
+      this.element2.openChanged();
+      expect(this.element2.classList.contains('ease-out')).to.be.false;
     });
   });
 });

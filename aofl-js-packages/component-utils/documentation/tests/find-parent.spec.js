@@ -1,8 +1,7 @@
 /* eslint-disable */
 import findParent from '../../src/find-parent';
 import AoflElement from '@aofl/web-components/aofl-element';
-import {html} from '@polymer/lit-element';
-import {render} from 'lit-html';
+import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils', function() {
   context('findParent()', function() {
@@ -23,8 +22,8 @@ describe('@aofl/component-utils', function() {
         incrementCount(amount) {
           this.count += amount;
         }
-        _render() {
-          return super._render((context, html) => html``);
+        render() {
+          return super.render((context, html) => html``);
         }
       }
 
@@ -44,8 +43,8 @@ describe('@aofl/component-utils', function() {
             this.parent.incrementCount(this.incrementAmount);
           }
         }
-        _render() {
-          return super._render((context, html) => html``);
+        render() {
+          return super.render((context, html) => html``);
         }
       }
       if (!customElements.get(ParentComp.is)) {

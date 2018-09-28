@@ -4,6 +4,10 @@
  * @summary aofl-select-list
  * @version 1.0.0
  * @author Daniel Belisle <daniel.belisle@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflSelectList
+ *
+ * @requires aofl-js/web-components:AoflElement
  */
 import {template} from './template';
 import AoflElement from '../aofl-element';
@@ -25,7 +29,7 @@ class AoflSelectList extends AoflElement {
    */
   static get properties() {
     return {
-      disabled: String
+      disabled: {type: String}
     };
   }
 
@@ -41,8 +45,8 @@ class AoflSelectList extends AoflElement {
   /**
    * @return {Object}
    */
-  _render() {
-    return super._render(template);
+  render() {
+    return super.render(template);
   }
 
   /**

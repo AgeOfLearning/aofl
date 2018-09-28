@@ -29,7 +29,7 @@ describe('@aofl/web-components/aofl-select-list', function() {
   context('updateSelected()', function() {
     it('Should update value when a list option is selected', function(done) {
       const children = Array.from(this.element.children).map((item) => {
-        return item.renderComplete;
+        return item.updateComplete;
       });
 
       Promise.all(children).then(() => {
@@ -43,13 +43,13 @@ describe('@aofl/web-components/aofl-select-list', function() {
   context('addOption()', function() {
     it('Should call addOption when a new option is added', function(done) {
       const children = Array.from(this.element.children).map((item) => {
-        return item.renderComplete;
+        return item.updateComplete;
       });
 
       Promise.all(children).then(() => {
         let listOption = document.createElement('aofl-list-option');
         this.element.appendChild(listOption);
-        listOption.renderComplete.then(() => {
+        listOption.updateComplete.then(() => {
           expect(this.element.options.length).to.be.equal(3);
           done();
         });

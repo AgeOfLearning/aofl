@@ -1,6 +1,17 @@
+/**
+ * Implements AoflDrawer.
+ *
+ * @summary aofl-drawer
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflDrawer
+ *
+ * @requires aofl-js/web-components:AoflElement
+ */
+
 import {template} from './template';
 import AoflElement from '../aofl-element';
-
 /**
  * @summary AoflDrawer
  * @class AoflDrawer
@@ -8,11 +19,18 @@ import AoflElement from '../aofl-element';
  */
 class AoflDrawer extends AoflElement {
   /**
+   * Creates an instance of AoflDrawer.
+   */
+  constructor() {
+    super();
+    this.open = null;
+    this.runningTransitions = [];
+  }
+  /**
    *
    *
    * @readonly
    * @static
-   * @memberof AoflDrawer
    */
   static get is() {
     return 'aofl-drawer';
@@ -23,85 +41,93 @@ class AoflDrawer extends AoflElement {
    *
    * @readonly
    * @static
-   * @property {String} open - state of drawer
+   * @property {Boolean} open - state of drawer
    * @property {String} trigger - className that triggers animations
    * @property {String} opening - className of opening animation
    * @property {String} closing - className of closing animation
-   * @memberof AoflDrawer
    */
   static get properties() {
     return {
-      open: String,
-      trigger: String,
-      opening: String,
-      closing: String
+      open: {type: Boolean, attribute: true},
+      trigger: {type: String},
+      opening: {type: String},
+      closing: {type: String}
     };
   }
 
   /**
    *
    *
-   * @memberof AoflDrawer
    */
   connectedCallback(...args) {
     super.connectedCallback(...args);
     // Set defaults
     this.cancelOpen = null;
     this.trigger = this.trigger || 'animate';
+    this.animated = typeof this.opening !== 'undefined' && typeof this.closing !== 'undefined';
 
     // Initialize class to prepare for next animation
-    this.className = this.open === 'true' ? this.closing : this.opening;
+    if (this.animated) {
+      if (this.open) {
+        this.classList.remove(this.opening);
+        this.classList.add(this.closing);
+       } else {
+         this.classList.remove(this.closing);
+         this.classList.add(this.opening);
+       }
+    }
 
     this.addEventListener('animationend', this.animationEndHandler);
     this.addEventListener('transitionend', this.animationEndHandler);
+
+    this.addEventListener('animationstart', this.animationStartHandler);
+    this.addEventListener('transitionstart', this.animationStartHandler);
   }
 
   /**
-   *
    *
    * @return {Object}
-   * @memberof AoflDrawer
    */
-  _render() {
-    return super._render(template);
+  render() {
+    return super.render(template);
   }
+
 
   /**
    *
    *
-   * @param {String} name
-   * @param {Boolean} oldVal
-   * @param {Boolean} newVal
-   * @memberof AoflDrawer
+   * @param {Map} changedProperties
+   * @return {Boolean}
    */
-  attributeChangedCallback(name, oldVal, newVal) {
-    super.attributeChangedCallback(name, oldVal, newVal);
-    if (typeof this.opening === 'undefined' || typeof this.closing === 'undefined') {
-      return;
-    }
+  shouldUpdate(changedProperties) {
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this.setAttribute('open', '');
+      } else {
+        this.removeAttribute('open');
+      }
 
-    let callBack = name + 'Changed';
-    if (typeof this[callBack] === 'function') {
-      this[callBack](newVal, oldVal);
+      if (this.animated && changedProperties.has('open')) {
+        this.openChanged(this.open);
+      }
+      return true;
     }
   }
 
   /**
    *
-   *
    * @param {Boolean} newVal
-   * @param {Boolean} oldVal
-   * @memberof AoflDrawer
    * @private
    */
-  openChanged(newVal, oldVal) {
-    if (newVal === 'true') {
+  openChanged(newVal) {
+    if (newVal) {
       this.cancelOpen = this.startOpeningAnimation(() => {
+        this.runningTransitions = [];
         this.classList.remove(this.closing);
         this.classList.add(this.opening);
         this.classList.add(this.trigger);
       });
-    } else if (typeof oldVal !== 'undefined') {
+    } else if (this.classList.contains(this.closing) || this.classList.contains(this.trigger)) {
       if (typeof this.cancelOpen === 'function') {
         this.cancelOpen();
         this.cancelOpen = null;
@@ -118,7 +144,6 @@ class AoflDrawer extends AoflElement {
    *
    * @param {Function} callback
    * @return {Function}
-   * @memberof AoflDrawer
    * @private
    */
   startOpeningAnimation(callback) {
@@ -144,38 +169,54 @@ class AoflDrawer extends AoflElement {
   /**
    * Removes closed after drawer closes so display: none can be applied
    *
-   * @memberof AoflDrawer
+   * @param {EventTarget} e
    * @private
    */
-  animationEndHandler() {
-    this.classList.remove(this.trigger);
-    let drawerState = 'open';
-    if (this.classList.contains(this.opening)) {
-      this.classList.remove(this.opening);
-      this.classList.add(this.closing);
-      drawerState = 'closed';
-    } else {
-      this.classList.remove(this.closing);
-      this.classList.add(this.opening);
-      this.classList.remove('closing');
+  animationEndHandler(e) {
+    const runningTransitionIndex = this.runningTransitions.indexOf(e.propertyName);
+    if (runningTransitionIndex > -1) {
+      this.runningTransitions.splice(runningTransitionIndex, 1);
     }
-    this.dispatchEvent(new CustomEvent('aofl-drawer-change', {
-      composed: true,
-      detail: {
-        drawerState
+
+    if (this.runningTransitions.length === 0) {
+      this.classList.remove(this.trigger);
+      if (this.classList.contains(this.opening)) {
+        this.classList.remove(this.opening);
+        this.classList.add(this.closing);
+      } else {
+        this.classList.add(this.opening);
+        this.classList.remove(this.closing);
+        this.classList.remove('closing');
       }
-    }));
+      this.dispatchEvent(new CustomEvent('change', {
+        composed: true
+      }));
+    }
   }
 
   /**
    *
    *
+   * @param {*} e
    * @memberof AoflDrawer
    */
+  animationStartHandler(e) {
+    const runningTransitionIndex = this.runningTransitions.indexOf(e.propertyName);
+    if (runningTransitionIndex === -1) {
+      this.runningTransitions.push(e.propertyName);
+    }
+  }
+
+  /**
+   *
+   *
+   */
   disconnectedCallback(...args) {
-    super.disconnectedCallback(...args);
+    // super.disconnectedCallback(...args);
     this.removeEventListener('animationend', this.animationEndHandler);
     this.removeEventListener('transitionend', this.animationEndHandler);
+    this.removeEventListener('animationestart', this.animationStartHandler);
+    this.removeEventListener('transitionstart', this.animationStartHandler);
   }
 }
 

@@ -78,9 +78,10 @@
     "@aofl/uuid": "file:uuid",
     "@aofl/web-components": "file:web-components",
     "@babel/runtime": "^7.0.0-rc.1",
-    "@polymer/lit-element": "^0.5.2",
+    "@polymer/lit-element": "^0.6.1",
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "babel-polyfill": "^6.26.0",
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "lit-html": "^0.11.4"
   }
 }

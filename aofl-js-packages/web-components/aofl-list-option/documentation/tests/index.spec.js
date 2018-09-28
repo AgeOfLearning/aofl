@@ -1,7 +1,6 @@
 /* eslint-disable */
 import '../../';
 import '@aofl/web-components/aofl-select-list';
-import { equal } from 'assert';
 
 describe('@aofl/web-components/aofl-select-list', function() {
   beforeEach(function() {
@@ -36,7 +35,7 @@ describe('@aofl/web-components/aofl-select-list', function() {
   context('connectedCallback()', function() {
     it('Should set selected when selected="true" attribute is given', function(done) {
       const children = Array.from(this.element2.children).map((item) => {
-        return item.renderComplete;
+        return item.updateComplete;
       });
 
       Promise.all(children).then(() => {
@@ -47,7 +46,7 @@ describe('@aofl/web-components/aofl-select-list', function() {
 
     it('Should set listElement a parent with addOption', function(done) {
       const children = Array.from(this.element.children).map((item) => {
-        return item.renderComplete;
+        return item.updateComplete;
       });
 
       Promise.all(children).then(() => {
@@ -60,7 +59,7 @@ describe('@aofl/web-components/aofl-select-list', function() {
   context('select()', function() {
     it('Should set attribute true to selected', function(done) {
       const children = Array.from(this.element.children).map((item) => {
-        return item.renderComplete;
+        return item.updateComplete;
       });
 
       Promise.all(children).then(() => {

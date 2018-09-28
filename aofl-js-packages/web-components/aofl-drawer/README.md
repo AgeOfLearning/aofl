@@ -6,16 +6,16 @@ The **`<aofl-drawer>` element** toggles content between an open and closed state
 
 | Attributes | Type    | Default     | Description                                                  |
 |------------|---------|-------------|--------------------------------------------------------------|
-| open       | String  | `'false'`     | State of content inside drawer                               |
+| open       | Boolean | `'null'`    | State of content inside drawer                               |
 | trigger    | String  | `'animate'` | Classname used to trigger the opening and closing animations |
 | opening    | String  |             | Classname of the opening animation                           |
 | closing    | String  |             | Classname of the closing animation                           |
 
 ## Events
 
-| Name                 | Triggered By                | Detail               |
-|----------------------|-----------------------------|----------------------|
-| `aofl-drawer-change` | animationEnd, transitionEnd | `'open'`, `'closed'` |
+| Name                 | Triggered By                | value                    |
+|----------------------|-----------------------------|--------------------------|
+| `change`             | animationEnd, transitionEnd | target.open={true,false} |
 
 ## Slots
 
@@ -28,7 +28,8 @@ The **`<aofl-drawer>` element** toggles content between an open and closed state
 
 To animate the drawer 4 css selectors need to be added. Here is an example for a drawer with the following attributes:
 
-`<aofl-drawer opening="ease-in" closing="ease-out" open$="${context.drawerState}"></aofl-drawer>`
+`<aofl-drawer opening="ease-in" closing="ease-out" .open="${context.open}"></aofl-drawer>`
+
 ```css
 .ease-in {
   opacity: 0;

@@ -29,21 +29,7 @@ export default (superClass) => {
       this.isWithinViewport;
       this.onceWithinViewport = false;
 
-      this.checkInViewport = () => {
-        const oldIsWithinViewport = this.isWithinViewport;
-
-        this.isWithinViewport = this.offsetHeight > 0 && this.offsetWidth > 0 &&
-        isInViewport(this, this.widthThreshold, this.heightThreshold);
-
-        if (!this.onceWithinViewport && this.isWithinViewport === true) {
-          this.onceWithinViewport = true;
-          this.firstWithinViewport();
-        }
-
-        if (this.isWithinViewport !== oldIsWithinViewport) {
-          this.withinViewportUpdated(this.isWithinViewport, oldIsWithinViewport);
-        }
-      };
+      this.checkInViewport = this.checkInViewport.bind(this);
     }
 
     /**
@@ -52,11 +38,39 @@ export default (superClass) => {
      * @param {*} args
      */
     connectedCallback(...args) {
-      this.addListeners();
       super.connectedCallback(...args);
-      this.checkInViewport();
+      // this.checkInViewport();
+      this.addListeners();
     }
 
+    /**
+     *
+     */
+    checkInViewport() {
+      console.log('checxinViewport', this.isWithinViewport);
+      const oldIsWithinViewport = this.isWithinViewport;
+
+      this.isWithinViewport = this.offsetHeight > 0 && this.offsetWidth > 0 &&
+      isInViewport(this, this.widthThreshold, this.heightThreshold);
+      console.log('isWithin', this.isWithinViewport);
+      if (!this.onceWithinViewport && this.isWithinViewport === true) {
+        this.onceWithinViewport = true;
+        this.firstWithinViewport();
+      }
+
+      console.log('this.isWithinViewport !== oldIsWithinViewport', this.isWithinViewport !== oldIsWithinViewport);
+      if (this.isWithinViewport !== oldIsWithinViewport) {
+        this.withinViewportUpdated(this.isWithinViewport, oldIsWithinViewport);
+      }
+      console.log('///////////////////////////////////////////////');
+    }
+
+    /**
+     *
+     */
+    firstUpdated() {
+      this.checkInViewport();
+    }
 
     /**
      *
@@ -130,7 +144,7 @@ export default (superClass) => {
      */
     disconnectedCallback(...args) {
       this.stopIsInViewportCheck();
-      super.disconnectedCallback(...args);
+      // super.disconnectedCallback(...args);
     };
   }
 

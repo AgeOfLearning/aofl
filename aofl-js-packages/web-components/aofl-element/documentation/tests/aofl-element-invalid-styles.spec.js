@@ -1,15 +1,14 @@
 /* eslint no-invalid-this: "off" */
 import AoflElement from '../..';
-import {render} from 'lit-html';
-import {html} from '@polymer/lit-element';
+import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-element >> invalid style', function() {
   before(function() {
     /** */
     class InvalidStyleElement extends AoflElement {
       /** @return {Object} */
-      _render() {
-        return super._render((context, html) => html``, ['']);
+      render() {
+        return super.render((context, html) => html``, ['']);
       };
     }
 

@@ -4,10 +4,12 @@ export const template = (context, html) => html`
   display: none;
 }
 
-:host([open=true]),
+:host([open]),
 :host(.closing) {
   display: block;
 }
 </style>
+${JSON.stringify(context.open)}
+${typeof context.open}
 <slot></slot>
 `;

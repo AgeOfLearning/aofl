@@ -4,6 +4,10 @@
  * @summary aofl-picture
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflPicture
+ *
+ * @requires aofl-js/web-components:AoflElement
  */
 import {template} from './template';
 import AoflElement from '../aofl-element';
@@ -44,15 +48,15 @@ class AoflPicture extends AoflElement {
    */
   static get properties() {
     return {
-      'disable-sources': String
+      'disable-sources': {type: String}
     };
   }
   /**
    *
    * @return {Object}
    */
-  _render() {
-    return super._render(template);
+  render() {
+    return super.render(template);
   }
 
   /**

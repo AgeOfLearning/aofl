@@ -6,6 +6,7 @@ const config = merge(common('development'), {
   devtool: 'source-map',
   plugins: [
     new UnitTesting({
+      clean: false,
       exclude: [
         '**/node_modules',
         '**/node_modules_sourced',
@@ -32,8 +33,7 @@ const config = merge(common('development'), {
         // '**/router',
         // '**/server-environment',
         // '**/store',
-        // '**/throttle-service',
-        // '**/uuid',
+        // '**/uuid'
         // '**/web-components'
       ],
       scripts: [

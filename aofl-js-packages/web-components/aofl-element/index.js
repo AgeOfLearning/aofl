@@ -1,9 +1,18 @@
+/**
+ * Implements AoflElement
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @module aofl-js/web-components:AoflElement
+ *
+ * @requires polymer/lit-element:LitElement
+ * @requires polymer/lit-element:html
+ */
 import {LitElement, html} from '@polymer/lit-element';
 
 /**
+ * Base class for all aofl-js elements.
  *
- *
- * @class AoflELement
  * @extends {LitElement}
  */
 class AoflElement extends LitElement {
@@ -14,15 +23,14 @@ class AoflElement extends LitElement {
    * @param {Array} [styles=[]]
    * @param {Array} args
    * @return {Object}
-   * @memberof AoflELement
    */
-  _render(template, styles = []) {
-    let s = html`<style>\n${styles.reduce((acc, item) => {
+  render(template, styles = []) {
+    let s = html`<style>${styles.reduce((acc, item) => {
       if (item && item.length) {
-        acc += `${String(item)}\n`;
+        acc += `${String(item)}`;
       }
       return acc;
-    }, '')}\n</style>`;
+    }, '')}</style>`;
 
     return html`${s} ${template(this, html)}`;
   }

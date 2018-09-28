@@ -4,6 +4,7 @@
 ## v1.0.0-beta.29 (date)
 Features:
 - aofl-js-packages
+  - upgraded lit-element to 0.6.1
   - resource-enumerate
     - moved tests to the root project
     - Config object no  longer supports local/stageRegex. Instead environment is passed to constructor.

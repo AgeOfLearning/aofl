@@ -23,7 +23,7 @@ export default dedupingMixin((superClass) => {
      */
     static get properties() {
       return {
-        lang: String
+        lang: {type: String}
       };
     }
     /**
@@ -37,7 +37,7 @@ export default dedupingMixin((superClass) => {
           // Only update if the component does not have a lang attr value
           if (this.lang === '') {
             this.__lang = mutationList[i].target.lang;
-            this.requestRender();
+            this.requestUpdate();
           }
           break;
         }
@@ -62,7 +62,7 @@ export default dedupingMixin((superClass) => {
         } else {
           this.__lang = newValue;
         }
-        this.requestRender();
+        this.requestUpdate();
       }
     }
 
@@ -73,12 +73,12 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      * @return {Object}
      */
-    _render(templates, ...args) {
+    render(templates, ...args) {
       let template = templates.default;
       if (typeof templates[this.__lang] !== 'undefined') {
         template = templates[this.__lang];
       }
-      return super._render(template.template, template.styles, ...args);
+      return super.render(template.template, template.styles, ...args);
     }
 
     /**
@@ -144,7 +144,7 @@ export default dedupingMixin((superClass) => {
      * @return {void}
      */
     disconnectedCallback(...args) {
-      super.disconnectedCallback(...args);
+      // super.disconnectedCallback(...args);
       this.observer.disconnect();
     }
   }
