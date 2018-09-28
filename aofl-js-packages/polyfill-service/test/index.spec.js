@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {Polyfill} from '../../';
+import {Polyfill} from '../';
 
 describe('@aofl/polyfill-service/polyfill', function() {
   context('supported()', function() {
@@ -24,21 +24,41 @@ describe('@aofl/polyfill-service/polyfill', function() {
     before(function() {
       this.unsupportedProperty = '$#%-not-supported';
       this.supportedProperty = 'Math';
+      this.supportedCustomTest = 'custom-test-supported';
+      this.unsupportedCustomTest = 'custom-test-unsupported';
 
       this.polyfillsConfig = {
         [this.unsupportedProperty]: sinon.spy(),
-        [this.supportedProperty]: sinon.spy()
+        [this.supportedProperty]: sinon.spy(),
+        [this.supportedCustomTest]: {
+          test: sinon.stub().returns(false),
+          load: sinon.spy()
+        },
+        [this.unsupportedCustomTest]: {
+          test: sinon.stub().returns(true),
+          load: sinon.spy()
+        }
       };
     });
 
     it('should load unsupported features', function() {
-      Polyfill.load(this.unsupportedProperty, this.polyfillsConfig);
+      Polyfill.load(this.unsupportedProperty, this.polyfillsConfig[this.unsupportedProperty]);
       expect(this.polyfillsConfig[this.unsupportedProperty].called).to.be.true;
     });
 
     it('shoulid not load supported features', function() {
-      Polyfill.load(this.supportedProperty, this.polyfillsConfig);
+      Polyfill.load(this.supportedProperty, this.polyfillsConfig[this.unsupportedProperty]);
       expect(this.polyfillsConfig[this.supportedProperty].called).to.be.false;
+    });
+
+    it('should call the load function of the supported custom polyfill', function() {
+      Polyfill.load(this.supportedCustomTest, this.polyfillsConfig[this.supportedCustomTest]);
+      expect(this.polyfillsConfig[this.supportedCustomTest].load.called).to.be.true;
+    });
+
+    it('should not call the load function of the supported custom polyfill', function() {
+      Polyfill.load(this.unsupportedCustomTest, this.polyfillsConfig[this.unsupportedCustomTest]);
+      expect(this.polyfillsConfig[this.unsupportedCustomTest].load.called).to.be.false;
     });
   });
 

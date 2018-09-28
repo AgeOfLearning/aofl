@@ -36,12 +36,15 @@ class Polyfill {
    * load polyfill
    *
    * @param {String} polyfillId id of polyfill to load
-   * @param {Object} polyfills polyfills config object
+   * @param {Object} polyfillConfig polyfills config object
    * @return {Promise}
    */
-  static load(polyfillId, polyfills) {
-    if (!Polyfill.supported(polyfillId) && polyfills.hasOwnProperty(polyfillId)) {
-      return polyfills[polyfillId]();
+  static load(polyfillId, polyfillConfig) {
+    if (typeof polyfillConfig.load === 'function' && typeof polyfillConfig.test === 'function'
+    && !polyfillConfig.test()) {
+      return polyfillConfig.load();
+    } else if (typeof polyfillConfig === 'function' && !Polyfill.supported(polyfillId)) {
+      return polyfillConfig();
     }
     return Promise.resolve();
   }
@@ -58,7 +61,7 @@ class Polyfill {
     for (let key in polyfills) {
       /* istanbul ignore next */
       if (polyfills.hasOwnProperty(key)) {
-        promises.push(Polyfill.load(key));
+        promises.push(Polyfill.load(key, polyfills[key]));
       }
     }
 

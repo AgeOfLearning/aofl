@@ -17,9 +17,16 @@ export default {
   'Object.assign': () => import('@aofl/polyfill-service/src/object-assign-polyfill'),
   'fetch': () => import('isomorphic-fetch'),
   'Reflect': () => import('harmony-reflect'),
-  'Array.prototype.find': () => import('array.prototype.find')
+  'Array.prototype.find': () => import('array.prototype.find'),
+  'html-imports': {
+    test() {
+      return !('import' in document.createElement('link'));
+    },
+    load: () => import('@webcomponents/webcomponentsjs/webcomponents-bundle')
+  }
 };
 ```
+
 
 ### Usage
 ```javascript

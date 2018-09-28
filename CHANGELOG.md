@@ -7,6 +7,9 @@ Features:
   - resource-enumerate
     - moved tests to the root project
     - Config object no  longer supports local/stageRegex. Instead environment is passed to constructor.
+  - polyfill-service
+    - moved tests to the root project
+    - config object accepts a {test, load} object to do custom checking
 
 ---
 ## v1.0.0-beta.28 (09-27-2018)
