@@ -158,9 +158,9 @@ class TemplatingPlugin {
    * @param {*} compiler
    * @memberof TemplatingPlugin
    */
-  async apply(compiler) {
-    let routeFileInfo = await this
-    .generateRouteConfig(compiler.options.output.path);
+  apply(compiler) {
+    let routeFileInfo = this.generateRouteConfig(compiler.options.output.path);
+
     new SingleEntryPlugin(compiler.context, routeFileInfo.path, routeFileInfo.name).apply(compiler);
 
     compiler.hooks.watchRun.tapAsync(TemplatingPlugin.name, async (compiler, cb) => {
@@ -369,11 +369,11 @@ class TemplatingPlugin {
     }
     let stats = fs.statSync(routeConfigPath);
 
-    return Promise.resolve({
+    return {
       name: routeConfigName,
       path: routeConfigPath,
       mtimeMs: stats.mtimeMs
-    });
+    };
   }
 
   /**

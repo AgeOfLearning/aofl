@@ -12,6 +12,11 @@ Features:
     - moved tests to the root project
     - config object accepts a {test, load} object to do custom checking
 
+Bugfixes:
+- webpack-packages
+  - templating-plugin
+    - Fixed prod builds
+
 ---
 ## v1.0.0-beta.28 (09-27-2018)
 Features:
