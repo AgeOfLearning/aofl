@@ -2,12 +2,15 @@
 
 AoflSource component must be used as a child of aofl-picture and specifies images for different media queries.
 
-# Installation
+## Examples
+* https://stackblitz.com/edit/1-0-0-aofl-picture?embed=1&file=js/example-component/template.js
+
+## Installation
 ```bash
 npm i -S @aofl/webcomponents
 ```
 
-# Usage
+## Usage
 ```html
 <aofl-picture>
   <aofl-source media="(max-width: 480px)" srcset="path/to/image-480"></aofl-source>

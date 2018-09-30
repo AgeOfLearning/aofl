@@ -4,8 +4,14 @@
 
 The class extending `mapStatePropertiesMixin(AoflElement)` is required to have `storeInstance` as an instance property and implement `mapStateProperties()` function.
 
+## Examples
+* [Basic](https://stackblitz.com/edit/1-0-0-map-state-properties-mixin?embed=1)
 
-## code example
+## Installation
+```bash
+$ npm i -S @aofl/map-state-properties-mixin
+```
+## Usage
 ```javascript
 import styles from './styles.css';
 const NAMESPACE = 'example-namespace';

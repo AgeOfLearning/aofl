@@ -1,6 +1,6 @@
 {
   "name": "@aofl/component-utils",
-  "version": "1.0.0-beta.28.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

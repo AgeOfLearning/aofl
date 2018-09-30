@@ -47,22 +47,18 @@ export default (superClass) => {
      *
      */
     checkInViewport() {
-      console.log('checxinViewport', this.isWithinViewport);
       const oldIsWithinViewport = this.isWithinViewport;
 
       this.isWithinViewport = this.offsetHeight > 0 && this.offsetWidth > 0 &&
       isInViewport(this, this.widthThreshold, this.heightThreshold);
-      console.log('isWithin', this.isWithinViewport);
       if (!this.onceWithinViewport && this.isWithinViewport === true) {
         this.onceWithinViewport = true;
         this.firstWithinViewport();
       }
 
-      console.log('this.isWithinViewport !== oldIsWithinViewport', this.isWithinViewport !== oldIsWithinViewport);
       if (this.isWithinViewport !== oldIsWithinViewport) {
         this.withinViewportUpdated(this.isWithinViewport, oldIsWithinViewport);
       }
-      console.log('///////////////////////////////////////////////');
     }
 
     /**

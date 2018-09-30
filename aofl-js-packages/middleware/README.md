@@ -2,6 +2,9 @@
 
 Simple base middleware class.
 
+## Examples
+* https://stackblitz.com/edit/1-0-0-middleware?embed=1
+
 ## Installation
 ```bash
 npm i -S @aofl/middleware

@@ -4,6 +4,15 @@ The rotations class provides weight based view logic for A B testing. It takes a
 
 Aofl Router works well in conjunction with Aofl Rotations. Other routers may be used as well if they take a configuration file that uses `path` as a key for the value of the route. See sample route config below.
 
+## Examples
+* https://stackblitz.com/edit/1-0-0-rotations?embed=1
+
+## Installation
+```bash
+$ npm i -S @aofl/rotations
+```
+
+## Usage
 ### Rotations config example
 
 ```javascript

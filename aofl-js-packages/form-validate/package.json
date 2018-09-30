@@ -1,7 +1,7 @@
 {
-  "name": "@aofl/aofl-validate",
-  "version": "1.0.0-beta.28",
-  "description": "Form validation mixin for Polymer 2+",
+  "name": "@aofl/form-validate",
+  "version": "1.0.0",
+  "description": "Form validation mixin for AoflElement",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

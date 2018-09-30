@@ -3,6 +3,10 @@
 Helps determine dev, stage, prod environments based on hostname.
 
 ---
+## Examples
+* https://stackblitz.com/edit/1-0-0-server-environment?embed=1
+
+---
 ## Installation
 ```bash
 npm i -S @aofl/server-environment

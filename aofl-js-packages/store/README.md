@@ -3,6 +3,10 @@
 @aofl/store is a built on the same principles as redux and attempts to simplify some of Redux's concepts. It also incorporates ideas from other centralized state management implementations.
 
 ---
+## Examples
+* https://stackblitz.com/edit/1-0-0-store?embed=1
+
+---
 ## Installation
 ```bash
 npm i -S @aofl/store

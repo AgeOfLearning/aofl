@@ -2,6 +2,10 @@
 
 It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called.
 
+
+## Examples
+https://stackblitz.com/edit/1-0-0-register-callback?embed=1
+
 ---
 ## Installation
 ```bash

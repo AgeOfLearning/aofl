@@ -15,8 +15,8 @@ export default dedupingMixin((superClass) => {
      * @memberof MapStatePropertiesMixin
      */
     connectedCallback(...args) {
-      if (typeof this?.mapStateProperties === 'function' &&
-      typeof this?.storeInstance?.subscribe === 'function') {
+      if (typeof this.mapStateProperties === 'function' &&
+      typeof this.storeInstance !== 'undefined') {
         this.statePropertiesUnsubscribe = this.storeInstance.subscribe(() => {
           this.mapStateProperties();
         });

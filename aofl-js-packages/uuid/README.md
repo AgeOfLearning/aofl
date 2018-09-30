@@ -4,6 +4,9 @@ An ultra-light (192b gzip) uuid like random value generator.
 
 > Note: this service does not generate actual uuids and does not guarantee uniqueness. Do not use it to enforce data integrity
 
+## Exmaples
+* https://stackblitz.com/edit/1-0-0-uuid?embed=1
+
 ## Installation
 ```bash
 npm i -S uuid

@@ -1,5 +1,0 @@
-*.min.js
-node_modules
-__build
-language.js
-routes/

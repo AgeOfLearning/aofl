@@ -6,6 +6,10 @@ Caching is implemented using @aofl/cache-manager and uses MemoryCache. @aofl/api
 
 Request/response formatting referes to constructing a request payload and parsing the response payload. A formatter object should implement `pack()` and `unpack()` properties. `pack()` is to construct the request payload and `unpack()` is used to parse the response. Any number of formatters can be added to `apiRequestInstance` using the `addFromatter()` method. E.g. `GetFormatter`, `PostFormatter`, `CorsFormatter`, `FileUploadFormatter`, `GoogleMapsFormatter`, ....
 
+## Examples
+* [Basic Example](https://stackblitz.com/edit/1-0-0-api-request?embed=1)
+
+
 ## Installation
 ```bash
 npm i -S @aofl/api-request

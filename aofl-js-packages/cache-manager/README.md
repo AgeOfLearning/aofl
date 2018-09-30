@@ -2,6 +2,10 @@
 
 Provides a unified class for storing objects in Storage-like Objects. You can choose from localStorage, sessionStorage and memoryStorage.
 
+## Examples
+* [Basic Example](https://stackblitz.com/edit/1-0-0-cache-manager?embed=1)
+
+
 ## Installation
 ```bash
 npm i -S @aofl/cache-manager

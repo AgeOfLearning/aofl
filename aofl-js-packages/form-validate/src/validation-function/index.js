@@ -87,7 +87,7 @@ class ValidationFunction {
         this.valid = valid;
         this.pending = false;
         this.resolve();
-        this.target.requestRender();
+        this.target.requestUpdate();
       }
     });
   }

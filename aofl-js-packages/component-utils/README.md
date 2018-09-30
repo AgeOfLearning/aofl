@@ -2,14 +2,15 @@
 
 A small collection of component utility functions.
 
----
+## Examples
+* [`findParent()`](https://stackblitz.com/edit/1-0-0-component-utils-1?embed=1)
+
 ## Installation
 
 ```bash
 npm i -S @aofl/component-utils
 ```
 
----
 ## Usage
 ```javascript
 import {findParent} from '@aofl/component-utils';
@@ -24,7 +25,6 @@ connectedCallback() {
 ...
 ```
 
----
 ## Methods
 
 ### `findParent()`

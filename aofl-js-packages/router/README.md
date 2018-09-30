@@ -2,6 +2,14 @@
 
 AOFL Router is a simple client side router. It supports the history API, dynamic paths and provides multiple middleware hooks. It makes no path rendering assumptions.
 
+## Examples
+* https://stackblitz.com/edit/1-0-0-router?embed=1
+
+## Installation
+```bash
+$ npm i -S @aofl/router
+```
+
 ## Middleware hooks
 
 | Name         | Arguments                     | Description                  |

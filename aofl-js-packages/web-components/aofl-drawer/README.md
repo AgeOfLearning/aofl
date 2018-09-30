@@ -2,6 +2,12 @@
 
 The **`<aofl-drawer>` element** toggles content between an open and closed state. Opening and closing animations are provided as classes to allow for any possible method of toggling content.
 
+## Examples
+* [no-amination](https://stackblitz.com/edit/1-0-0-drawer-no-animation?embed=1&file=js/example-component/template.js)
+* [fade-in](https://stackblitz.com/edit/1-0-0-drawer-fade?embed=1&file=js/example-component/template.js)
+* [accordion](https://stackblitz.com/edit/1-0-0-drawer-accordion?embed=1&file=js/example-component/template.js)
+* [side-panel](https://stackblitz.com/edit/1-0-0-drawer-side-panel?embed=1&file=js/example-component/template.js)
+
 ## Attributes
 
 | Attributes | Type    | Default     | Description                                                  |
