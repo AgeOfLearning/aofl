@@ -2,6 +2,116 @@
 import {Rotations} from '../';
 
 describe('@aofl/rotations/rotation', function() {
+  context('Methods', function() {
+    beforeEach(function() {
+      this.routeConfig = {
+        'routes': [
+          {
+            'resolve': () => fetch('./routes/home/index.js'),
+            'rotation': 'routes',
+            'path': '/home'
+          },
+          {
+            'resolve': () => fetch('./routes/login/index.js'),
+            'rotation': 'routes',
+            'path': '/login'
+          }
+        ],
+        'routes-b': [
+          {
+            'resolve': () => fetch('./routes-b/home-b/index.js  '),
+            'rotation': 'routes-b',
+            'path': '/home'
+          },
+          {
+            'resolve': () => fetch('./routes/login/index.js'),
+            'rotation': 'routes-b',
+            'path': '/login'
+          }
+        ]
+      };
+      this.rotationsConfig = {
+        'page_rotations': {
+          '/': [1, 2],
+          '/about': [1, 2],
+          '/contact': [2, 1]
+        },
+        'rotation_id_keyname_map': {
+          '1': 'routes',
+          '2': 'routes-b'
+        },
+        'rotation_version_page_group_version_map': {
+          '1000': 'routes',
+          '2000': 'routes-b'
+        },
+        'rotation_versions': {
+          '1': {
+            '1000': '3',
+            '2000': '1'
+          },
+          '2': {
+            '1000': '1',
+            '2000': '1'
+          }
+        }
+      };
+      this.rotationConditions = {
+        'routes': () => false,
+        'routes-b': () => true
+      };
+    });
+
+    it('"getWeightsTotal()" should return the correct sum of weights', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let total = rotations.getWeightsTotal(this.rotationsConfig['rotation_versions']['1']);
+      expect(total).to.equal(4);
+    });
+
+    it('"createVersionRanges" should create the correct weight based pct ranges', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let versions = rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
+      expect(versions[0].range).to.equal(75);
+      expect(versions[1].range).to.equal(100);
+    });
+
+    it('"createVersionRanges" should not mutate versions argument', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let originalVersions = Object.assign({}, this.rotationsConfig['rotation_versions']['1']);
+      rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
+      expect(this.rotationsConfig['rotation_versions']['1']).to.eql(originalVersions);
+    });
+
+    it('"chooseWeightedVariant()" should select rotations based on weighted distribution', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let routesCount = 0;
+      for (let i = 0; i < 100; i++) {
+        let version = rotations.chooseWeightedVariant('1');
+        if (version === '1000') routesCount++;
+      }
+      expect(routesCount/100).to.be.within(0.7, 0.8);
+    });
+
+    it('"replaceRoute()" should replace routes correctly', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let routes = rotations.replaceRoute(this.routeConfig.routes, 'routes-b', '/login');
+      expect(routes[1].rotation).to.equal('routes-b');
+    });
+
+    it('"getQualifyingRotation()" should qualify in the correct order', function(done) {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      rotations.getQualifyingRotation({path: '/about'})
+      .then((selectedRoationId)=>{
+        expect(selectedRoationId).to.equal(2);
+        done();
+      });
+    });
+
+    it('"uniqueRoutes()" should provide unique routes', function() {
+      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      let routes = rotations.uniqueRoutes();
+      expect(routes.length).to.equal(2);
+    });
+  });
   context('No Match', function() {
     beforeEach(function() {
       this.routeConfig = {
@@ -10,19 +120,31 @@ describe('@aofl/rotations/rotation', function() {
             'resolve': () => fetch('./routes/home/index.js'),
             'rotation': 'routes',
             'path': '/home'
+          },
+          {
+            'resolve': () => fetch('./routes/login/index.js'),
+            'rotation': 'routes',
+            'path': '/login'
           }
         ],
         'routes-b': [
           {
-            'resolve': () => fetch('./routes-b/home-b/index.js'),
+            'resolve': () => fetch('./routes-b/home-b/index.js  '),
             'rotation': 'routes-b',
             'path': '/home'
+          },
+          {
+            'resolve': () => fetch('./routes/login/index.js'),
+            'rotation': 'routes-b',
+            'path': '/login'
           }
         ]
       };
       this.rotationsConfig = {
         'page_rotations': {
-          '/': [1, 2]
+          '/': [1, 2],
+          '/about': [1, 2],
+          '/contact': [2, 1]
         },
         'rotation_id_keyname_map': {
           '1': 'routes',
@@ -44,25 +166,20 @@ describe('@aofl/rotations/rotation', function() {
         }
       };
       this.rotationConditions = {
-        'routes': (resolve, reject) => {
-          resolve(false);
-        },
-        'routes-b': (resolve, reject) => {
-          resolve(true);
-        }
+        'routes': () => false,
+        'routes-b': () => true
       };
     });
 
     it('Should return the defualt routes with no matched rotations', function(done) {
       let rotations = new Rotations('my-rotations-c', this.routeConfig, this.rotationsConfig, this.rotationConditions);
       rotations.getRoutes().then((routes) => {
-        expect(routes).to.have.lengthOf(1);
         expect(routes[0].rotation).to.equal('routes'); // default
         expect(routes).to.eql(this.routeConfig.routes);
-        expect(routes).to.be.a('array');
         done();
       });
     });
+
     it('Should handle empty routeConfig, returning empty array without error', function(done) {
       let rotations = new Rotations('my-rotations-c', {}, this.rotationsConfigOne, this.rotationConditionsFirstFalse);
       rotations.getRoutes().then((routes) => {
@@ -80,14 +197,14 @@ describe('@aofl/rotations/rotation', function() {
           {
             'resolve': () => fetch('./routes/home/index.js'),
             'rotation': 'routes',
-            'path': '/home'
+            'path': '/'
           }
         ],
         'routes-b': [
           {
             'resolve': () => fetch('./routes-b/home-b/index.js'),
             'rotation': 'routes-b',
-            'path': '/home'
+            'path': '/'
           }
         ]
       };
@@ -115,16 +232,12 @@ describe('@aofl/rotations/rotation', function() {
         }
       };
       this.rotationConditions = {
-        'routes': (resolve, reject) => {
-          resolve(false);
-        },
-        'routes-b': (resolve, reject) => {
-          resolve(true);
-        }
+        'routes': () => new Promise((resolve) => resolve(true)),
+        'routes-b': () => true
       };
     });
 
-    it('Should generate routes-b ~33% of the time', function(done) {
+    it('Should generate routes-b ~33%  of the time', function(done) {
       let rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
       let totalCount = 0;
       let routesBCount = 0;
@@ -147,6 +260,60 @@ describe('@aofl/rotations/rotation', function() {
         });
       };
       genRoutes();
+    });
+
+    it('Should generate routes-b 100%', function(done) {
+      const limit = 20;
+      const promises = [];
+      let i = 0;
+      const matches = {'routes': 0, 'routes-b': 0};
+      const rotationsConfig = {
+        'page_rotations': {
+          '/': [1, 2]
+        },
+        'rotation_id_keyname_map': {
+          '1': 'routes',
+          '2': 'routes-b'
+        },
+        'rotation_version_page_group_version_map': {
+          '1000': 'routes',
+          '2000': 'routes-b'
+        },
+        'rotation_versions': {
+          '1': {
+            '1000': '0',
+            '2000': '1'
+          },
+          '2': {
+            '1000': '0',
+            '2000': '1'
+          }
+        }
+      };
+      // console.log('routeConfig', this.routeConfig);
+      let rotations;
+      const interval = setInterval(() => {
+        if (i++ === limit) {
+          clearInterval(interval);
+          Promise.all(promises).then(() => {
+            console.log('routes', matches.routes, (matches.routes / limit * 100) + '%');
+            console.log('routes-b', matches['routes-b'], (matches['routes-b'] / limit * 100) + '%');
+            expect(matches.routes).to.equal(0);
+            expect(matches['routes-b'] / limit).to.equal(1);
+            done();
+          });
+        } else {
+          if (rotations) rotations.clearCache();
+          rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
+
+          let p = rotations.getRoutes();
+          promises.push(p);
+          p.then((routes) => {
+            // console.log('matched routes', routes);
+            matches[routes[0].rotation] += 1;
+          });
+        }
+      }, 10);
     });
   });
   context('Cache / Prerender', function() {
@@ -213,12 +380,8 @@ describe('@aofl/rotations/rotation', function() {
         }
       };
       this.rotationConditions = {
-        'routes': (resolve, reject) => {
-          resolve(true);
-        },
-        'routes-b': (resolve, reject) => {
-          resolve(true);
-        }
+        'routes': () => true,
+        'routes-b': () => new Promise((resolve) => resolve(true))
       };
     });
 
@@ -240,9 +403,10 @@ describe('@aofl/rotations/rotation', function() {
         done();
       });
     });
+
     it('Should serve a cached route', function(done) {
       // Allows for in loops to be properly covered
-      /*eslint-disable */
+      /* eslint-disable */
       Object.prototype.versions = true;
       Object.prototype.routeConfig = true;
 

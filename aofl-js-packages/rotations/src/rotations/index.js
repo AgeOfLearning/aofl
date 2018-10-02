@@ -29,10 +29,10 @@ class Rotations {
   /**
    *
    * @param {String} rotationName
-   * @return {Boolean}
+   * @return {Promise}
    */
   qualifies(rotationName) {
-    return new Promise(this.rotationConditions[rotationName]);
+    return Promise.resolve(this.rotationConditions[rotationName]());
   }
 
   /**
@@ -66,7 +66,6 @@ class Rotations {
   createVersionRanges(versions) {
     const versionRanges = [];
     let startRange = 0;
-
     // Weights need to be converted into a percentage
     // Weight percentage = weight / weights total
     const weightTotal = this.getWeightsTotal(versions);
@@ -76,13 +75,11 @@ class Rotations {
       let pct = Math.round(Number(weight) / weightTotal * 100);
       let range = Number(startRange) + pct;
       startRange += range;
-      versions[version] = range;
       versionRanges.push({
         version,
         range
       });
     }
-
     return versionRanges;
   }
 
@@ -112,7 +109,7 @@ class Rotations {
           resolve(selectedRotationId);
         });
       } else {
-        reject();
+        reject('No matching rotations ids for ' + route && route.path);
       }
     });
   }
@@ -135,21 +132,20 @@ class Rotations {
     return selectedRotation;
   }
 
-
   /**
    *
    *
    * @param {Array} routes
    * @param {String} selectedRotation
-   * @param {Object} _route
+   * @param {String} path
    * @return {Array}
    * @memberof Rotations
    */
-  replaceRoute(routes, selectedRotation = 'routes', _route) {
+  replaceRoute(routes, selectedRotation = 'routes', path) {
     let route = null;
     for (let i = 0; i < this.routeConfig[selectedRotation].length; i++) {
       let configRoute = this.routeConfig[selectedRotation][i];
-      if (configRoute.path === _route.path) {
+      if (configRoute.path === path) {
         route = configRoute;
         break;
       }
@@ -211,6 +207,8 @@ class Rotations {
       let iterRoutes = gen(routes);
       let route = {};
       let routeConfig = this.routeConfig.routes;
+      let rotationId;
+      // this.cache.clear();
       const pushRoutes = (routeConfig=[]) => {
         let next = iterRoutes.next();
         let selectedRotation = '';
@@ -224,12 +222,13 @@ class Rotations {
               selectedRotation = this.chooseWeightedVariant(selectedRotationId);
               this.cache.setItem(selectedRotationId, selectedRotation);
             }
-            routeConfig = this.replaceRoute(routeConfig,
-              this.rotationConfig.rotation_version_page_group_version_map[selectedRotation], route);
+            rotationId = this.rotationConfig.rotation_version_page_group_version_map[selectedRotation];
+            routeConfig = this.replaceRoute(routeConfig, rotationId, route.path);
             pushRoutes(routeConfig);
           })
           .catch((e) => {
-            // no matching rotation, pass on
+            // no matching rotation, pass on, also catches errors
+            console.log(e);
             pushRoutes(routeConfig);
           });
         }

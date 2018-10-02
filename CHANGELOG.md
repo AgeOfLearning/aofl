@@ -18,6 +18,8 @@ Features:
     - Support for multi plural sentences
   - router
     - Router holds reference to matchedRoute
+  - rotations
+    - Allows qualify functions to return primitive values or promises, adds unit test for qualify order
 
 - webpack-packages
   - templating-plugin
@@ -32,6 +34,10 @@ Features:
     - refactored. Now uses lexical analysis to find translation strings
 
 Bugfixes:
+- aofl-js-packages
+  - rotations
+    - Fixes bug causing erratic weighted rotations
+    - Adds several more unit tests covering all methods, w/minor refactoring
 - webpack-packages
   - templating-plugin
     - Fixed prod builds
