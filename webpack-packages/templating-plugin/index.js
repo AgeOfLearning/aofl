@@ -37,6 +37,7 @@ class TemplatingPlugin {
       template: 'template.html',
       templateFilename: 'template.html',
       filename: 'index.html',
+      publicPath: '/',
       routes: {
         pattern: path.join(__dirname, '..', 'routes*', 'index.js'),
         ignore: ['**/__build/**/*', '**/node_modules/**/*']
@@ -95,6 +96,8 @@ class TemplatingPlugin {
     let assets = [];
     let rotationRegex = /\/routes-([^\/]+?)\//;
     let routesRegex = new RegExp(`/${this.options.mainRoutes}/`);
+    const leadingSlashRegex = /^\//;
+    const trailingSlashRegex = /\/$/;
     let options = {};
     if (typeof this.options.routes.ignore !== 'undefined') {
       options.ignore = this.options.partials.ignore;
@@ -123,7 +126,7 @@ class TemplatingPlugin {
         let routeConfig = {
           resolve: `() => import('./${routePath}')`,
           rotation,
-          path: routeInfo.url,
+          path: (this.options.publicPath.replace(trailingSlashRegex, '') + '/' + routeInfo.url.replace(leadingSlashRegex, '').replace(trailingSlashRegex, '') + '/').replace(/\/\//g, '/'),
           dynamic: routeInfo.dynamic,
           title: routeInfo.title,
           meta: routeInfo.meta,
@@ -248,7 +251,7 @@ class TemplatingPlugin {
         if (!assets[key].partialMap.hasOwnProperty(partialKey)) continue;
         t = this.replaceTemplatePart(t, partialKey, assets[key].partialMap[partialKey]);
       }
-      compilation.assets[assets[key].routeInfo.outputName] = {
+      compilation.assets[assets[key].routeInfo.outputName.replace(new RegExp('^' + this.options.outputPath), '/')] = {
         source: () => t,
         size: () => t.length
       };
@@ -258,11 +261,12 @@ class TemplatingPlugin {
     if (compiler.options.mode === 'production') {
       for (let key in assets) {
         if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
+        const assetPath = assets[key].routeInfo.outputName.replace(new RegExp('^' + this.options.outputPath), '/');
         let s = await server(compilation.assets);
         let body = await preRender(s.url + '/' + assets[key].routeInfo.outputName.replace(/index\.html$/, ''));
-        let source = compilation.assets[assets[key].routeInfo.outputName].source();
+        let source = compilation.assets[assetPath].source();
         let t = source.replace(/<body.*<\/body>/, body).replace(/\n/g, ' ');
-        compilation.assets[assets[key].routeInfo.outputName] = {
+        compilation.assets[assetPath] = {
           source: () => t,
           size: () => t.length
         };

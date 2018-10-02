@@ -14,6 +14,10 @@ Features:
     - moved tests to the root project
     - config object accepts a {test, load} object to do custom checking
 
+- webpack-packages
+  - templating-plugin
+    - added support for baseurl and webpack output dir
+
 Bugfixes:
 - webpack-packages
   - templating-plugin
