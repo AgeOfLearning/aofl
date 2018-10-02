@@ -98,6 +98,14 @@ describe('@aofl/router/router', function() {
       this.router.navigate('/home');
     });
 
+    it('Should have matchedRoute on routerInstance', function(done) {
+      this.router.after((request, response, next) => {
+        expect(this.router.matchedRoute).to.have.property('path', '/home')
+        done();
+      });
+      this.router.navigate('/home');
+    });
+
     it('Should match dynamic "/about/mike" route and navigate to it', function(done) {
       this.router.after((request, response, next) => {
         expect(response.matchedRoute).to.have.property('path', '/about/:user')

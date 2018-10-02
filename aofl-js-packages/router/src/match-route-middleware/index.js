@@ -46,15 +46,15 @@ const matchBestPath = (_path, routes) => {
    * Adds the match route before middleware logic
    *
    * @static
-   * @param {Object} request
-   * @param {Object} response
-   * @param {Function} next
+   * @param {Object} router
    * @memberof MatchRoute
+   * @return {Function}
    */
-export default (request, response, next) => {
+export default (router) => (request, response, next) => {
   let matchedRoute = matchBestPath(request.to, request.routes);
   if (matchedRoute !== null) {
     matchedRoute.props = matchedRoute.parse(request.to);
+    router.matchedRoute = matchedRoute; // add MatchedRoute to the router instance
     next(Object.assign({}, response, {matchedRoute}));
   } else {
     next(Object.assign({}, response, {matchedRoute: null}));

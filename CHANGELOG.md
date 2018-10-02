@@ -16,6 +16,8 @@ Features:
   - i18n-mixin
     - Refactored to cover all requirements from the translators
     - Support for multi plural sentences
+  - router
+    - Router holds reference to matchedRoute
 
 - webpack-packages
   - templating-plugin

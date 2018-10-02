@@ -35,7 +35,7 @@ class Router {
     };
 
     this
-      .beforeEach(matchRouteMiddleware)
+      .beforeEach(matchRouteMiddleware(this))
       .after(redirectMiddleware(this))
       .after(updateStateMiddleware);
     this.removeListener = this.listen();
