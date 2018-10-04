@@ -1,11 +1,3 @@
-/**
- * Provides a unified class for storing objects in Storage-like Objects. You can choose from
- * localStorage, sessionStorage and memoryStorage.
- *
- * @summary cache-manager
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
 import {cacheTypeEnumerate} from '../cache-type-enumerate';
 import MemoryStorage from '../memory-storage';
 import md5 from 'tiny-js-md5';
@@ -19,6 +11,15 @@ const STORAGE = {
 /**
  * Provides a unified class for storing objects in Storage-like Objects. You can choose from
  * localStorage, sessionStorage and memoryStorage.
+ *
+ * @summary cache-manager
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/cache-manager-package
+ *
+ * @requires module:aofl-js/cache-manager-package/src/cache-type-enumerate
+ * @requires module:aofl-js/cache-manager-package/src/memory-storage
+ * @requires tiny-js-md5/md5
  */
 class CacheManager {
   /**

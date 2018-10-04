@@ -6,16 +6,20 @@ const REPLACE_REGEX = /%%?r(\d+)(?:%|::.*?%%)/g;
 const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
 
 /**
- * @description Mixin function for I18nMixin class
+ * Mixin function for I18nMixin class
+ *
+ * @memberof module:aofl-js/i18n-mixin-package
+ *
+ * @requires tiny-js-md5/md5
+ * @requires polymer/dedupingMixin
  */
 export default dedupingMixin((superClass) => {
   /**
-   * @class I18nMixin
-   * @extends superClass
+   * @memberof module:aofl-js/i18n-mixin-package
    */
    class I18nMixin extends superClass {
     /**
-     * @memberof I18nMixin
+     *
      */
     constructor(...args) {
       super(...args);
@@ -25,7 +29,7 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
-     * @memberof I18nMixin
+     *
      */
     static get properties() {
       return {
@@ -33,11 +37,9 @@ export default dedupingMixin((superClass) => {
       };
     }
 
-
     /**
      * Listens for html lang mutations
-     * @memberof I18nMixin
-     * @return {void}
+     * @return {MutationObserver}
      */
     langListener() {
       let observer = new MutationObserver((mutationList) => {
@@ -52,9 +54,9 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
+     * Lazy-load the translation map
      *
-     *
-     * @param {*} lang
+     * @param {String} lang
      * @return {Promise}
      */
     getTranslationMap(lang) {
@@ -68,10 +70,8 @@ export default dedupingMixin((superClass) => {
     /**
      * Language translation function.
      *
-     * @memberof I18nMixin
      * @param {String} id
      * @param {String} str
-     * @param {Object} translations
      * @return {String}
      */
     __(id, str) {
@@ -95,7 +95,7 @@ export default dedupingMixin((superClass) => {
      * Replace function. When invoked it will replace %r(number)% with the number matching the index
      * of the arguments passed to the _r function.
      *
-     * @param {*} _str
+     * @param {String} _str
      * @param {*} args
      * @return {String}
      */
@@ -198,9 +198,6 @@ export default dedupingMixin((superClass) => {
 
     /**
      * Sets initial lang
-     *
-     * @memberof I18nMixin
-     * @return {void}
      */
     connectedCallback() {
       this.__lang = this.lang || document.documentElement.getAttribute('lang');
@@ -254,9 +251,7 @@ export default dedupingMixin((superClass) => {
     }
     /**
      *
-     * @memberof I18nMixin
      * @param {*} args
-     * @return {void}
      */
     disconnectedCallback(...args) {
       // super.disconnectedCallback(...args);

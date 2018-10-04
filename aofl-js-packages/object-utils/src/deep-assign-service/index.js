@@ -1,11 +1,4 @@
 /**
- * Calls Object.assign along the specified path.
- *
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
-/**
  * Recursively calls Object.assign along the specified path.
  *
  * @example
@@ -42,6 +35,9 @@
  * //   }
  * // };
  *
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/object-utils-package
  * @param {Object} leftSource left source
  * @param {String} path path to target
  * @param {Object} rightSource right source

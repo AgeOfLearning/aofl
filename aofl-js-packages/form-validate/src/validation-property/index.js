@@ -1,8 +1,16 @@
+/**
+ * ValidationProperty implementation
+ *
+ * @summary validation property
+ * @version 1.0.0
+ * @requires module:aofl-js/form-validate-package/src/validation-function
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+
 import ValidationFunction from '../validation-function';
 
 /**
  *
- * @class ValidationProperty
  */
 class ValidationProperty {
   /**
@@ -133,7 +141,7 @@ class ValidationProperty {
 
   /**
    *
-   *
+   * @readonly
    */
   get validateComplete() {
     if (this.pending && this.validateCompleteResolved) {

@@ -1,27 +1,20 @@
-/**
- * IsInViewPortMixin implementation. This mixin listens for window resize and scroll
- * events and invokes appropriate methods.
- *
- * @summary is-in-viewport-mixin
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
 import isInViewport from '../is-in-viewport';
 
 export default (superClass) => {
   /**
    * Mixes the superClass with functions necessary to detect if the element is within the visible
    * area of the page.
+   * @summary is-in-viewport-mixin
+   * @version 1.0.0
+   * @author Arian Khosravi <arian.khosravi@aofl.com>
+   * @memberof module:aofl-js/component-utils-package
    *
-   * @class IsInViewport
-   * @extends {superClass}
+   * @requires module:aofl-js/component-utils-package/src/is-in-viewport
    */
   class IsInViewport extends superClass {
     /**
      * Creates an instance of IsInViewport.
      * @param {*} args
-     * @memberof IsInViewport
      */
     constructor(...args) {
       super(...args);
@@ -70,8 +63,6 @@ export default (superClass) => {
 
     /**
      *
-     *
-     * @memberof IsInViewport
      */
     addListeners() {
       let parent = this;
@@ -121,7 +112,7 @@ export default (superClass) => {
     /**
      * When stopiIsInViewportCheck() is invoked it removes the event listeners and stops invoking
      * the withinViewportUpdated() function. This is useful when we want to disconnect the event
-     * listeners and keep the component attached to dom. For example, conside lazy loading images
+     * listeners and keep the component attached to dom. For example, consider lazy loading images
      * with aofl-img. Once the image is loaded it is no longer necessary to check isInViewStatus.
      *
      * @protected

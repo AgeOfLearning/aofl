@@ -5,9 +5,8 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  *
- * @module aofl-js/web-components:AoflListOption
  *
- * @requires aofl-js/web-components:AoflElement
+ * @requires AoflElement
  * @requires aofl-js/ComponentUtils:findParent
  */
 import {template} from './template';
@@ -28,6 +27,7 @@ class AoflListOption extends AoflElement {
 
   /**
    *
+   * @readonly
    */
   static get is() {
     return 'aofl-list-option';
@@ -35,6 +35,7 @@ class AoflListOption extends AoflElement {
 
   /**
    *
+   * @readonly
    */
   static get properties() {
     return {
@@ -76,8 +77,6 @@ class AoflListOption extends AoflElement {
 
   /**
    *
-   *
-   * @memberof AoflListOption
    */
   disconnectedCallback() {
     this.removeEventListener('click', this.clickCallback);

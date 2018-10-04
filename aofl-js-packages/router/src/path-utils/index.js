@@ -1,19 +1,25 @@
+/**
+ * PathUtils implementation
+ *
+ * @summary path utilities
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+
+/**
+ * @memberof PathUtils
+ */
 const DYNAMIC_PATH_REGEX = /:([^\/\s]*)(\/?)/g;
 const CLEAN_PATH_REGEX = /^([^#\?\s]+)/;
 const TRAILING_SLASH_REGEX = /\/$/;
 
 /**
  *
- *
- * @class PathUtils
  */
 class PathUtils {
   /**
-   *
-   * @static
    * @param {String} _path
    * @return {Object}
-   * @memberof PathUtils
    */
   static getRegex(_path) {
     const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
@@ -50,11 +56,8 @@ class PathUtils {
 
 
   /**
-   *
-   * @static
    * @param {*} path
    * @return {String}
-   * @memberof PathUtils
    * @throws {Error}
    */
   static cleanPath(path) {
@@ -68,11 +71,8 @@ class PathUtils {
 
 
   /**
-   *
-   * @static
    * @param {String} str
    * @return {String}
-   * @memberof PathUtils
    */
   static removeTrailingSlash(str) {
     if (str === '/') return str;
@@ -83,10 +83,8 @@ class PathUtils {
   /**
    * Creates an array of url path segments from a url string
    *
-   * @static
    * @param {String} path
    * @return {Array}
-   * @memberof PathUtils
    */
   static getPathSegments(path) {
     return path.split('/').filter((item) => item);
@@ -96,10 +94,8 @@ class PathUtils {
   /**
    * Evaluates whether the given segment is dynamic
    *
-   * @static
    * @param {String} segment
    * @return {Boolean}
-   * @memberof PathUtils
    */
   static isDynamicSegment(segment) {
     return segment.indexOf(':') > -1;
@@ -108,11 +104,9 @@ class PathUtils {
 
   /**
    * Enumerates the number of matching segments in the given arrays of strings
-   * @static
    * @param {Array} segmentsA
    * @param {Array} segmentsB
    * @return {Number}
-   * @memberof PathUtils
    */
   static matchingSegmentsCount(segmentsA, segmentsB) {
     let matches = 0;

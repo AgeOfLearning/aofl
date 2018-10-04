@@ -5,9 +5,7 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  *
- * @module aofl-js/web-components:AoflPicture
- *
- * @requires aofl-js/web-components:AoflElement
+ * @requires AoflElement
  */
 import {template} from './template';
 import AoflElement from '../aofl-element';
@@ -101,7 +99,6 @@ class AoflPicture extends AoflElement {
    * Set's aofl-picture's image source to the matching aofl-source media query.
    *
    * @param {String} [source=this.defaultSrc]
-   * @memberof AoflPicture
    */
   setMediaSrc(source = this.defaultSrc) {
     if (!this.img) return;

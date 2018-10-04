@@ -1,18 +1,16 @@
 import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin';
 
+/**
+ * @memberof module:aofl-js/map-state-properties-mixin-package
+ * @requires polymer/dedupingMixin
+ */
 export default dedupingMixin((superClass) => {
   /**
-   *
-   *
-   * @class MapStatePropertiesMixin
    * @extends {dedupingMixin(superClass)}
    */
   class MapStatePropertiesMixin extends superClass {
     /**
-     *
-     *
      * @param {*} args
-     * @memberof MapStatePropertiesMixin
      */
     connectedCallback(...args) {
       if (typeof this.mapStateProperties === 'function' &&
@@ -25,9 +23,7 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
-     *
      * @param {*} args
-     * @memberof MapStatePropertiesMixin
      */
     disconnectedCallback(...args) {
       // super.disconnectedCallback(...args);

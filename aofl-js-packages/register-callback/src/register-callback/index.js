@@ -1,14 +1,11 @@
 /**
- * Implements RegisterCallback class. It allows callback functions to be registered and called in
+ * RegisterCallback class. It allows callback functions to be registered and called in
  * series when registerCallbackinstance.next is called.
  *
  * @summary register-callback
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
-/**
- * RegisterCallback class.
+ * @memberof module:aofl-js/register-callback-package
  */
 class RegisterCallback {
   /**

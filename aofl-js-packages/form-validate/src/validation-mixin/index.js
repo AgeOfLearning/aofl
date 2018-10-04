@@ -1,9 +1,17 @@
 import ValidationProperty from '../validation-property';
 
+/**
+ * @summary validation mixin
+ * @version 1.0.0
+ * @requires module:aofl-js/form-validate-package/src/validation-property
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @param {Object} superClass
+ * @memberof module:aofl-js/form-validate-package
+ * @return {ValidationMixin}
+ */
 export default ((superClass) => {
   /**
    *
-   * @extends superClass
    */
   class ValidationMixin extends superClass {
     /**

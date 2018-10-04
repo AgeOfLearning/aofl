@@ -5,16 +5,14 @@
  * @version 1.0.0
  * @author Daniel Belisle <daniel.belisle@aofl.com>
  *
- * @module aofl-js/web-components:AoflSelectList
- *
- * @requires aofl-js/web-components:AoflElement
+ * @requires AoflElement
  */
 import {template} from './template';
 import AoflElement from '../aofl-element';
 
 /**
- * @class AoflSelectList
  * @extends {AoflElement}
+ * @fires AoflSelectList.change
  */
 class AoflSelectList extends AoflElement {
   /**
@@ -70,6 +68,8 @@ class AoflSelectList extends AoflElement {
   }
 
   /**
+   * Add an option to be selected
+   *
    * @param {String} option
    */
   addOption(option) {

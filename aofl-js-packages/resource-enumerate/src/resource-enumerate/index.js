@@ -1,10 +1,3 @@
-/**
- * Resource Enumerate implementation
- *
- * @summary resource-enumerate
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
 import {environmentTypeEnumerate} from '@aofl/server-environment';
 import {Middleware} from '@aofl/middleware';
 import {ApiRequest} from '@aofl/api-request';
@@ -14,6 +7,15 @@ import {ApiRequest} from '@aofl/api-request';
  * single endpoint. The response can contain server time, paths to resources, and other information
  * based on application needs. An advantage of this technique is that it eliminates the need to
  * hardcode paths\urls.
+ *
+ * @summary resource-enumerate
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/resource-enumerate-package
+ *
+ * @requires module:aofl-js/middleware-package
+ * @requires module:aofl-js/api-request-package
+ * @requires module:aofl-js/server-environment-package
  */
 class ResourceEnumerate {
   /**

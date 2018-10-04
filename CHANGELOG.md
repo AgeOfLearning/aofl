@@ -7,6 +7,7 @@ Features:
   - upgraded lit-element to 0.6.1
   - moved tests to root of each module
   - transfered documentation examples to stackblitz and removed documentation projects
+  - Updated jsdoc comments and new jsdoc theme
   - resource-enumerate
     - moved tests to the root project
     - Config object no  longer supports local/stageRegex. Instead environment is passed to constructor.

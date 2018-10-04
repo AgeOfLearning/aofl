@@ -1,10 +1,9 @@
 /**
- *
- *
- * @static
+ * @summary redirect middleware
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
  * @param {Router} router
  * @return {Function}
- * @memberof DefaultMiddleware
  */
 export default (router) => {
   return (request, response, next) => {

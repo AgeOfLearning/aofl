@@ -5,10 +5,6 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  *
- * @module aofl-js/web-components:AoflImg
- *
- * @requires aofl-js/web-components:AoflElement
- * @requires aofl-js/component-utils:findParent
  * @requires aofl-js/component-utils:isInViewportMixin
  */
 
@@ -22,10 +18,11 @@ const BLANK_PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAAL
  * aofl-img componont lazy loads images by default as they enter the viewport.
  *
  * @extends {AoflElement}
+ * @fires AoflImg.load
  */
 class AoflImg extends isInViewportMixin(AoflElement) {
   /**
-   * Creates an instance of AoflImg.
+   * Creates an instance of AoflImg
    */
   constructor() {
     super();
@@ -36,7 +33,6 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   }
 
   /**
-   *
    *
    * @readonly
    */
@@ -75,9 +71,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   }
 
   /**
-   *
-   *
-   * @memberof AoflImg
+   * Stop checking isInViewStatus and load the image
    */
   firstWithinViewport() {
     this.stopIsInViewportCheck();
@@ -85,7 +79,6 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   }
 
   /**
-   *
    *
    * @return {Object}
    */

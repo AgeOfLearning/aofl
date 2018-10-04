@@ -5,9 +5,8 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  *
- * @module aofl-js/web-components:AoflSource
  *
- * @requires aofl-js/web-components:AoflElement
+ * @requires AoflElement
  */
 import AoflElement from '../aofl-element';
 import {findParent} from '@aofl/component-utils';
@@ -50,7 +49,6 @@ class AoflSource extends AoflElement {
   }
 
   /**
-   *
    * @return {Object}
    */
   render() {

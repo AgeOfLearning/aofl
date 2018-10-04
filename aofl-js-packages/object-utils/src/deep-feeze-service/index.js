@@ -3,12 +3,8 @@
  *
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
-
-/**
- * Recursively calls Object.freeze on objects properties
  *
+ * @memberof module:aofl-js/object-utils-package
  * @param {Object} source
  * @return {Object}
  */

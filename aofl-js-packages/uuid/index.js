@@ -2,6 +2,7 @@
  * Generates uuid like random values
  *
  * @version 1.0.0
+ * @module aofl-js/uuid-package
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 

@@ -1,12 +1,14 @@
 /**
- *
- * @class Middleware
+ * @summary middleware
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/middleware-package
  */
 class Middleware {
   /**
    * Creates an instance of Middleware.
+   *
    * @param {Object} middleware
-   * @memberof Middleware
    */
   constructor(...hooks) {
     this.middleware = {};
@@ -16,10 +18,8 @@ class Middleware {
   }
 
   /**
-   *
    * @param {Function} callback
    * @param {String} [hook='post|pre']
-   * @memberof Middleware
    */
   use(callback, hook = 'post') {
     if (typeof callback !== 'function') throw new Error('callback must be a function');
@@ -31,10 +31,8 @@ class Middleware {
   }
 
   /**
-   *
    * @param {String} [hook='post']
    * @return {Iterator}
-   * @memberof Middleware
    */
   getMiddlewareIterator(hook = 'post') {
     let collection = this.middleware[hook];
@@ -50,12 +48,10 @@ class Middleware {
   }
 
   /**
-   *
    * @param {*} request
    * @param {String} [hook='post']
    * @param {*} response
    * @return {Promise}
-   * @memberof Middleware
    */
   iterateMiddleware(request, hook = 'post', response = null) {
     return new Promise((resolve, reject) => {

@@ -1,4 +1,17 @@
-import Store from '../Store';
+/**
+ *
+ * @requires module:aofl-js/store-package
+ *
+ */
 
-export default new Store(process.env.NODE_ENV === 'development');
+import {Store} from '../../';
+
+/**
+ * Persistent instance of Store.
+ *
+ * @memberof module:aofl-js/store-package
+ */
+const storeInstance = new Store(process.env.NODE_ENV === 'development');
+
+export default storeInstance;
 

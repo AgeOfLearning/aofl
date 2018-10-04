@@ -1,7 +1,9 @@
-
 /**
+ * ValidationFunction implementation
  *
- * @class ValidationFunction
+ * @summary validation function
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 class ValidationFunction {
   /**

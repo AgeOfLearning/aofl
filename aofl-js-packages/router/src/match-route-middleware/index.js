@@ -3,9 +3,12 @@ import PathUtils from '../path-utils';
 /**
  * Evaluates and returns the best matching route for the given path
  *
- * @static
+ * @summary match route middleware
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
  * @param {String} _path
  * @param {Array} routes
+ * @memberof module:aofl-js/router-package/src/match-route-middleware
  * @return {Object}
  */
 const matchBestPath = (_path, routes) => {
@@ -42,14 +45,16 @@ const matchBestPath = (_path, routes) => {
 };
 
 
-  /**
-   * Adds the match route before middleware logic
-   *
-   * @static
-   * @param {Object} router
-   * @memberof MatchRoute
-   * @return {Function}
-   */
+/**
+ * Adds the match route before middleware logic
+ *
+ * @summary match route middleware
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ * @param {Object} router
+ * @return {Function}
+ */
 export default (router) => (request, response, next) => {
   let matchedRoute = matchBestPath(request.to, request.routes);
   if (matchedRoute !== null) {

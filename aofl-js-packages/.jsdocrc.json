@@ -4,7 +4,7 @@
     "excludePattern": "(node_modules|documentation|api-docs|webpack)"
   },
   "opts": {
-    "template": "node_modules/docdash",
+    "template": "node_modules/jsdoc-template",
     "encoding": "utf8",
     "destination": "api-docs/",
     "recurse": true,
@@ -15,6 +15,11 @@
   },
   "templates": {
     "cleverLinks": false,
-    "monospaceLinks": false
+    "monospaceLinks": false,
+    "referenceTitle": "Age Of Learning JavaScript SDK",
+    "collapse": true,
+    "resources": {
+      "google": "https://www.google.com/"
+    }
   }
 }

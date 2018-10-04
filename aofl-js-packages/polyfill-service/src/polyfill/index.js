@@ -1,9 +1,3 @@
-/**
- * Implements Polyfill class which can be used to ployfill missing browser featurs.
- * @summary polyfill
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
 import promiscuous from '../promiscuous-polyfill';
 import webcomponentsLoader from '../webcomponents-loader';
 
@@ -13,7 +7,12 @@ if (typeof window.Promise === 'undefined') {
 }
 
 /**
- * polyfill service
+ * Used to polyfill missing browser features.
+ *
+ * @summary polyfill
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/polyfill-service-package
  */
 class Polyfill {
   /**

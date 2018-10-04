@@ -5,7 +5,6 @@
  * @version 1.0.0
  * @author Isaac Yoon <isaac.yoon@aofl.com>
  * @author Arian Khosravi <arian.khosravi@aofl.com>
- *
  */
 class FormatterManager {
   /**
@@ -16,7 +15,7 @@ class FormatterManager {
   }
 
   /**
-   * used to retrieve formatter based on format name
+   * Get formatter based on format name
    *
    * @param {String} format name of the format
    * @return {Object}
@@ -28,7 +27,7 @@ class FormatterManager {
   }
 
   /**
-   * adds formatter to the formatters object
+   * Add formatter to the formatters object
    *
    * @param {String} format name of the format
    * @param {Object} formatter formatter object

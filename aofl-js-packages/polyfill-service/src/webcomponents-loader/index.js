@@ -9,6 +9,9 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
+ /**
+  * @memberof webcomponentsLoader
+  */
 const scripts = {
   'webcompononts-ce': () => {
     return import('@webcomponents/webcomponentsjs/bundles/webcomponents-ce');

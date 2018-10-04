@@ -5,8 +5,17 @@ import redirectMiddleware from '../redirect-middleware';
 import updateStateMiddleware from '../update-state-middleware';
 
 /**
- * @class Router
+ * @summary router
+ * @version 1.0.0
  * @extends Middleware
+ * @memberof module:aofl-js/router-package
+ *
+ * @requires module:aofl-js/router-package/src/path-utils
+ * @requires module:aofl-js/middleware-package
+ * @requires module:aofl-js/router-package/src/match-route-middleware
+ * @requires module:aofl-js/router-package/src/redirect-middleware
+ * @requires module:aofl-js/router-package/src/update-state-middleware
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 class Router {
   /**

@@ -1,16 +1,13 @@
 import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
 /**
+ * Produces an updated route config based on a rotation config
+ * @summary rotations
+ * @version 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:aofl-js/rotations-package
  *
- * @description Simple generic array generator
- * @param {Array} arr
- */
-const gen = function* gen(arr) {
-  yield* arr;
-};
-
-/**
- * @description Produces an updated route config based on a rotation config
+ * @requires module:aofl-js/cache-manager-package
  */
 class Rotations {
   /**
@@ -24,6 +21,15 @@ class Rotations {
     this.rotationConfig = Object.assign({}, rotationConfig);
     this.rotationConditions = Object.assign({}, rotationConditions);
     this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, 7776000000); // expires in 90 days
+  }
+
+  /**
+   *
+   * @description Simple generic array generator
+   * @param {Array} arr
+   */
+  * gen(arr) {
+    yield* arr;
   }
 
   /**
@@ -134,12 +140,10 @@ class Rotations {
 
   /**
    *
-   *
    * @param {Array} routes
    * @param {String} selectedRotation
    * @param {String} path
    * @return {Array}
-   * @memberof Rotations
    */
   replaceRoute(routes, selectedRotation = 'routes', path) {
     let route = null;
@@ -167,7 +171,6 @@ class Rotations {
   /**
    *
    * @return {Array}
-   * @memberof Rotations
    */
   uniqueRoutes() {
     const cachedPaths = [];
@@ -204,7 +207,7 @@ class Rotations {
         return resolve(this.routeConfig.routes);
       }
       const routes = this.uniqueRoutes();
-      let iterRoutes = gen(routes);
+      let iterRoutes = this.gen(routes);
       let route = {};
       let routeConfig = this.routeConfig.routes;
       let rotationId;

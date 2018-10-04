@@ -2,6 +2,7 @@
  * Finds parent method with matching signature
  * @param {HTMLElement} node
  * @param {*} args
+ * @memberof module:aofl-js/component-utils-package
  * @return {Object}
  */
 const findParent = (node, ...args) => {

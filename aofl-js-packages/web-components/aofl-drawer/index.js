@@ -4,17 +4,13 @@
  * @summary aofl-drawer
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
- *
- * @module aofl-js/web-components:AoflDrawer
- *
- * @requires aofl-js/web-components:AoflElement
  */
 
 import {template} from './template';
 import AoflElement from '../aofl-element';
 /**
  * @summary AoflDrawer
- * @class AoflDrawer
+ * @fires AoflDrawer.change
  * @extends {AoflElement}
  */
 class AoflDrawer extends AoflElement {
@@ -26,21 +22,16 @@ class AoflDrawer extends AoflElement {
     this.open = null;
     this.runningTransitions = [];
   }
+
   /**
-   *
-   *
    * @readonly
-   * @static
    */
   static get is() {
     return 'aofl-drawer';
   }
 
   /**
-   *
-   *
    * @readonly
-   * @static
    * @property {Boolean} open - state of drawer
    * @property {String} trigger - className that triggers animations
    * @property {String} opening - className of opening animation
@@ -56,7 +47,6 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   *
    *
    */
   connectedCallback(...args) {
@@ -85,17 +75,13 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   *
    * @return {Object}
    */
   render() {
     return super.render(template);
   }
 
-
   /**
-   *
-   *
    * @param {Map} changedProperties
    * @return {Boolean}
    */
@@ -115,7 +101,6 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   *
    * @param {Boolean} newVal
    * @private
    */
@@ -195,10 +180,7 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   *
-   *
    * @param {*} e
-   * @memberof AoflDrawer
    */
   animationStartHandler(e) {
     const runningTransitionIndex = this.runningTransitions.indexOf(e.propertyName);
@@ -208,7 +190,6 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   *
    *
    */
   disconnectedCallback(...args) {
