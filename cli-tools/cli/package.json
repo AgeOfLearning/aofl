@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "1.0.0-beta.28",
+  "version": "1.0.0-beta.29",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,10 +22,13 @@
     "chalk": "^2.4.1",
     "cli-table": "^0.3.1",
     "commander": "^2.16.0",
+    "esprima": "^4.0.1",
     "fast-glob": "^2.2.2",
     "fs-extra": "^7.0.0",
     "mkdirp": "^0.5.1",
     "rimraf": "^2.6.2",
-    "tiny-js-md5": "^1.1.2"
+    "tiny-js-md5": "^1.1.2",
+    "uniki": "^1.0.3",
+    "uuid": "^3.3.2"
   }
 }

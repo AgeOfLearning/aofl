@@ -25,6 +25,10 @@ Features:
   - i18n-auto-id-loader
     - Added
 
+- cli-tools
+  - i18n
+    - refactored. Now uses lexical analysis to find translation strings
+
 Bugfixes:
 - webpack-packages
   - templating-plugin
