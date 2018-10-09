@@ -132,17 +132,16 @@ describe('@aofl/web-components/aofl-drawer', function() {
   it('Should remove animation classes after closing', async function() {
     try {
       const elementDrawerAnimatedOpen = this.elementDrawerAnimatedOpen;
-      await this.elementDrawerAnimatedOpen.updateComplete;
 
       await new Promise((resolve) => {
         setTimeout(() => {
-          this.elementDrawerAnimatedOpen.addEventListener('change', function listener() {
+          elementDrawerAnimatedOpen.addEventListener('change', function listener() {
             elementDrawerAnimatedOpen.removeEventListener('change', listener);
             expect(elementDrawerAnimatedOpen.classList.contains('ease-in')).to.be.true;
             resolve();
           });
           this.elementDrawerAnimatedOpen.removeAttribute('open');
-        }, 100);
+        }, 500);
       });
     } catch (e) {
       return Promise.reject(e);
@@ -152,6 +151,7 @@ describe('@aofl/web-components/aofl-drawer', function() {
   it('Should remove animation classes after opening', async function() {
     try {
       const elementDrawerAnimatedClosed = this.elementDrawerAnimatedClosed;
+      elementDrawerAnimatedClosed.requestUpdate();
       await this.elementDrawerAnimatedClosed.updateComplete;
       await new Promise((resolve) => {
         setTimeout(() => {
@@ -171,6 +171,7 @@ describe('@aofl/web-components/aofl-drawer', function() {
   it('should dispatch change when all animations finish', async function() {
     try {
       const elementDrawerMultiAnimated = this.elementDrawerMultiAnimated;
+      elementDrawerMultiAnimated.requestUpdate();
       await this.elementDrawerMultiAnimated.updateComplete;
       let initTime = null;
       await new Promise((resolve) => {
@@ -178,7 +179,7 @@ describe('@aofl/web-components/aofl-drawer', function() {
           this.elementDrawerMultiAnimated.addEventListener('change', function listener() {
             const delta = Date.now() - initTime;
             elementDrawerMultiAnimated.removeEventListener('change', listener);
-            expect(delta).to.be.above(100);
+            expect(delta).to.be.above(99);
             resolve();
           });
           initTime = Date.now();

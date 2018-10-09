@@ -65,7 +65,7 @@ class UnitTestingPlugin {
       },
       webserver: {
         port: '8081',
-        hostname: '127.0.0.1'
+        hostname: 'localhost'
       },
       root: process.env.PWD,
       npm: true,
@@ -181,6 +181,7 @@ class UnitTestingPlugin {
    */
   getConfigPath() {
     const paths = [
+      '.wct.config.js',
       '.wctrc.json',
       'wct.conf.json'
     ];

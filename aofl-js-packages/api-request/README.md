@@ -1,6 +1,6 @@
 # @aofl/api-request
 
-A module to make making api calls easier. Key features include, caching responses and request and response formatters.
+A module for making api calls easier. Key features include caching responses and request/response formatters.
 
 Caching is implemented using @aofl/cache-manager and uses MemoryCache. @aofl/api-request caches the promises created by fetch api.
 

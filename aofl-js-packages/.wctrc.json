@@ -3,26 +3,15 @@
   "persistent": false,
   "plugins": {
     "local": {
-      "browsers": [
-        "firefox",
-        "chrome",
-        "canary",
-        "safari"
-      ],
+      "browsers": ["firefox", "chrome", "canary", "safari"],
       "browserOptions": {
-        "chrome": [
-          "headless"
-        ],
-        "canary": [
-          "headless"
-        ],
-        "firefox": [
-          "-headless"
-        ]
+        "chrome": ["headless"],
+        "canary": ["headless"],
+        "firefox": ["-headless"]
       }
     },
     "istanbul": {
-      "dir": "./coverage",
+      "dir": "../docs/v1.x/coverage/",
       "reporters": ["text-summary", "lcov"],
       "include": "**/*.js",
       "exclude": [

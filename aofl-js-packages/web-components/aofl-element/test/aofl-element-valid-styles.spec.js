@@ -43,7 +43,8 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
   it('should have red background', async function() {
     let backgroundColor = '';
     try {
-      await Promise.resolve(this.styledFixture.updateComplete);
+      this.styledFixture.requestUpdate();
+      await this.styledFixture.updateComplete;
       backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
       expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
     } catch (e) {
@@ -53,6 +54,7 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
 
   it('should have green text color', async function() {
     try {
+      this.styledFixture.requestUpdate();
       await this.styledFixture.updateComplete;
       const color = window.getComputedStyle(this.styledFixture).color;
       expect(color).to.be.equal('rgb(0, 255, 0)');

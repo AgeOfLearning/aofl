@@ -1,16 +1,27 @@
 {
   "name": "@aofl/i18n-mixin",
   "version": "1.2.0",
-  "description": "",
+  "description": "Adds i18n support to elements",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/i18n-mixin",
+    "i18n",
+    "translation",
+    "language"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@polymer/lit-element": "^0.6.2",

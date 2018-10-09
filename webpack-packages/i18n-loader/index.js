@@ -2,7 +2,7 @@ const glob = require('fast-glob');
 const LANG_CODE_REGEX = /translations_(.*)\.json/;
 
 module.exports = function(content, map, meta) {
-  this.cacheable(true);
+  this.cacheable(false);
 
   let out = 'export default {';
   const dirname = this.resourcePath.substr(0, this.resourcePath.lastIndexOf('/')); ;

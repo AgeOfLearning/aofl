@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for aofl-js-packages/rotations/src/rotations/index.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">aofl-js-packages/rotations/src/rotations</a> index.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>94/94</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>32/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>18/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>94/94</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-yes">32x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">256x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">120x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">626x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">626x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1252x</span>
+<span class="cline-any cline-yes">1252x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">626x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">625x</span>
+<span class="cline-any cline-yes">625x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">625x</span>
+<span class="cline-any cline-yes">625x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-yes">1250x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">625x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">132x</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">256x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">129x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">800x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">623x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">135x</span>
+<span class="cline-any cline-yes">135x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">128x</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">262x</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">250x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-yes">256x</span>
+<span class="cline-any cline-yes">256x</span>
+<span class="cline-any cline-yes">256x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-yes">131x</span>
+<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">123x</span>
+<span class="cline-any cline-yes">123x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">127x</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
+&nbsp;
+/**
+ * Produces an updated route config based on a rotation config
+ * @summary rotations
+ * @version 1.0.0
+ * @author Arian Khosravi &lt;arian.khosravi@aofl.com&gt;
+ * @memberof module:aofl-js/rotations-package
+ *
+ * @requires module:aofl-js/cache-manager-package
+ */
+class Rotations {
+  /**
+   * @param {String} cacheNamespace
+   * @param {Object} routeConfig
+   * @param {Object} rotationConfig
+   * @param {Object} rotationConditions
+   */
+  constructor(cacheNamespace, routeConfig, rotationConfig, rotationConditions) {
+    this.routeConfig = Object.assign({}, routeConfig);
+    this.rotationConfig = Object.assign({}, rotationConfig);
+    this.rotationConditions = Object.assign({}, rotationConditions);
+    this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, 7776000000); // expires in 90 days
+  }
+&nbsp;
+  /**
+   *
+   * @description Simple generic array generator
+   * @param {Array} arr
+   */
+  * gen(arr) {
+    yield* arr;
+  }
+&nbsp;
+  /**
+   *
+   * @param {String} rotationName
+   * @return {Promise}
+   */
+  qualifies(rotationName) {
+    return Promise.resolve(this.rotationConditions[rotationName]());
+  }
+&nbsp;
+  /**
+   *
+   */
+  clearCache() {
+    this.cache.clear();
+  }
+&nbsp;
+  /**
+   *
+   * @param {Object} versions
+   * @return {Number}
+   */
+  getWeightsTotal(versions) {
+    let total = 0;
+&nbsp;
+    for (const version in versions) {
+      /* istanbul ignore if */
+      if (!versions.hasOwnProperty(version)) continue;
+      total += Number(versions[version]);
+    }
+&nbsp;
+    return total;
+  }
+&nbsp;
+  /**
+   *
+   * @param {Object} versions
+   * @return {Array}
+   */
+  createVersionRanges(versions) {
+    const versionRanges = [];
+    let startRange = 0;
+    // Weights need to be converted into a percentage
+    // Weight percentage = weight / weights total
+    const weightTotal = this.getWeightsTotal(versions);
+    for (const version in versions) {
+      /* istanbul ignore if */
+      if (!versions.hasOwnProperty(version)) continue;
+      const weight = versions[version];
+      const pct = Math.round(Number(weight) / weightTotal * 100);
+      const range = Number(startRange) + pct;
+      startRange += range;
+      versionRanges.push({
+        version,
+        range
+      });
+    }
+    return versionRanges;
+  }
+&nbsp;
+  /**
+   *
+   * @param {Object} route
+   * @return {Promise} resolves to {Number} selectedRotationId
+   */
+  getQualifyingRotation(route) {
+    const promises = [];
+    let rotationIds = [];
+    let selectedRotationId = null;
+    return new Promise((resolve, reject) =&gt; {
+      rotationIds = this.rotationConfig['page_rotations'][route.path];
+      if (rotationIds) {
+        for (let i = 0; i &lt; rotationIds.length; i++) {
+          promises.push(this.qualifies(this.rotationConfig['rotation_id_keyname_map'][rotationIds[i]]));
+        }
+        Promise.all(promises).then((results) =&gt; {
+          for (let i = 0; i &lt; results.length; i++) {
+            if (results[i] === true) {
+              // Order of promises is preserved so the promise matches the order of rotationIds
+              selectedRotationId = rotationIds[i];
+              break;
+            }
+          }
+          resolve(selectedRotationId);
+        });
+      } else {
+        reject('No matching rotations ids for ' + route &amp;&amp; route.path);
+      }
+    });
+  }
+&nbsp;
+  /**
+   * @description Returns a rotation view string based on its weighted value
+   * @param {Number} selectedRotationId
+   * @return {String}
+   */
+  chooseWeightedVariant(selectedRotationId) {
+    let selectedRotation;
+    const versions = this.createVersionRanges(this.rotationConfig['rotation_versions'][selectedRotationId]);
+    const randomVal = Math.round(Math.random()*100);
+    for (let i = 0; i &lt; versions.length; i++) {
+      if ((randomVal &lt; versions[i].range) || (i + 1 === versions.length)) {
+        selectedRotation = versions[i].version;
+        break;
+      }
+    }
+    return selectedRotation;
+  }
+&nbsp;
+  /**
+   *
+   * @param {Array} routes
+   * @param {String} selectedRotation
+   * @param {String} path
+   * @return {Array}
+   */
+  replaceRoute(routes, selectedRotation, path) {
+    let route = null;
+    for (let i = 0; i &lt; this.routeConfig[selectedRotation].length; i++) {
+      const configRoute = this.routeConfig[selectedRotation][i];
+      if (configRoute.path === path) {
+        route = configRoute;
+        break;
+      }
+    }
+&nbsp;
+    for (let i = 0; i &lt; routes.length; i++) {
+      if (routes[i].path === route.path) {
+        routes = [
+          ...routes.slice(0, i),
+          route,
+          ...routes.slice(i + 1)
+        ];
+        break;
+      }
+    }
+    return routes;
+  }
+&nbsp;
+  /**
+   *
+   * @return {Array}
+   */
+  uniqueRoutes() {
+    const cachedPaths = [];
+    const uniqueRoutes = [];
+    const addRoute = (route) =&gt; {
+      if (cachedPaths.indexOf(route.path) === -1) {
+        uniqueRoutes.push(route);
+        cachedPaths.push(route.path);
+      }
+    };
+&nbsp;
+    if (typeof this.routeConfig.routes !== 'undefined') {
+      for (let i = 0; i &lt; this.routeConfig.routes.length; i++) {
+        addRoute(this.routeConfig.routes[i]);
+      }
+    }
+    for (const key in this.routeConfig) {
+      /* istanbul ignore if */
+      if (!this.routeConfig.hasOwnProperty(key) || key === 'routes') continue;
+      for (let i = 0; i &lt; this.routeConfig[key].length; i++) {
+        const route = this.routeConfig[key][i];
+        addRoute(route);
+      }
+    }
+    return uniqueRoutes;
+  }
+&nbsp;
+  /**
+   *
+   * @return {Promise} resolves to a route configuration Array of route objects
+   */
+  async getRoutes() {
+    return new Promise((resolve, reject) =&gt; {
+      if (window.aofljsConfig &amp;&amp; window.aofljsConfig.prerender) { // @todo: find better solution
+        return resolve(this.routeConfig.routes);
+      }
+      const routes = this.uniqueRoutes();
+      const iterRoutes = this.gen(routes);
+      let route = {};
+      const routeConfig = this.routeConfig.routes;
+      let rotationId;
+      // this.cache.clear();
+      const pushRoutes = (routeConfig=[]) =&gt; {
+        const next = iterRoutes.next();
+        let selectedRotation = '';
+        if (next.done === true) {
+          resolve(routeConfig);
+        } else {
+          route = next.value;
+          this.getQualifyingRotation(route).then((selectedRotationId) =&gt; {
+            selectedRotation = this.cache.getItem(selectedRotationId);
+            if (selectedRotation === null) {
+              selectedRotation = this.chooseWeightedVariant(selectedRotationId);
+              this.cache.setItem(selectedRotationId, selectedRotation);
+            }
+            rotationId = this.rotationConfig.rotation_version_page_group_version_map[selectedRotation];
+            routeConfig = this.replaceRoute(routeConfig, rotationId, route.path);
+            pushRoutes(routeConfig);
+          })
+          .catch((e) =&gt; {
+            // no matching rotation, pass on, also catches errors
+            pushRoutes(routeConfig);
+          });
+        }
+      };
+      pushRoutes(routeConfig);
+    });
+  }
+}
+&nbsp;
+export default Rotations;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 18 2018 12:43:59 GMT-0800 (Pacific Standard Time)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

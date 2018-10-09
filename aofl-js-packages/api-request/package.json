@@ -1,12 +1,23 @@
 {
   "name": "@aofl/api-request",
   "version": "1.2.0",
-  "description": "",
+  "description": "A module for simplifying api calls",
+  "keywords": [
+    "aofljs",
+    "@aofl/api-request",
+    "api request",
+    "api",
+    "cache response"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -16,6 +16,7 @@ export default dedupingMixin((superClass) => {
       /* istanbul ignore else */
       if (typeof this.mapStateProperties === 'function' &&
       typeof this.storeInstance !== 'undefined') {
+        this.mapStateProperties();
         this.statePropertiesUnsubscribe = this.storeInstance.subscribe(() => {
           this.mapStateProperties();
         });

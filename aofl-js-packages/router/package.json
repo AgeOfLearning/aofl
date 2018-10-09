@@ -1,12 +1,22 @@
 {
   "name": "@aofl/router",
   "version": "1.2.0",
-  "description": "AofL Router",
+  "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/router",
+    "router",
+    "client side router"
+  ],
   "author": "Micah Blu",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Arian Khosravi <arian.khosravi@aofl.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

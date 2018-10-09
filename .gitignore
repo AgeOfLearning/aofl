@@ -1,5 +1,9 @@
-**/node_modules
+node_modules
 __build
 __build_tests
+
 coverage
+!docs/**/coverage
+
 api-docs
+!docs/**/api-docs

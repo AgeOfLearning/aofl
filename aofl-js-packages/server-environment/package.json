@@ -1,15 +1,26 @@
 {
   "name": "@aofl/server-environment",
   "version": "1.2.0",
-  "description": "",
+  "description": "Helps determine dev, stage, prod environments based on hostname",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/server-environment",
+    "server environment",
+    "server",
+    "environment"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT"
 }

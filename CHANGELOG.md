@@ -1,7 +1,28 @@
 # aofl changelog
 
-## v1.2.0 (11-06-2018)
+## unreleased
+
 Features:
+
+- gh-pages docs created
+- decreased SauceLabs browsers to 10
+- webpack-packages
+  - unit-testing-plugin
+    - accepts .wtcrc.js file
+- aofl-js-packages
+  - map-state-properties-mixin
+    - calls mapStateProperties function on connectedCallback automatically
+
+Bugfixes:
+
+- webpack-packages
+  - i18n-loader
+    - Set cacheable to false
+
+## v1.2.0 (11-06-2018)
+
+Features:
+
 - Updated node packages
 - Adjusted eslint config for indentation
 - Fixed linting issues
@@ -34,6 +55,7 @@ Features:
     - added getTestContainer()
 
 Bugfixes:
+
 - webpack-packages
   - webcomponent-css-loader
     - removed logs
@@ -49,9 +71,13 @@ Bugfixes:
     - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 
 ---
+
 ## v1.1.0 (10-17-2019)
+
 Features:
+
 - aofl-js-packages
+
   - upgraded lit-element to 0.6.2
   - moved tests to root of each module
   - transfered documentation examples to stackblitz and removed documentation projects
@@ -60,7 +86,7 @@ Features:
   - ready for saucelabs integration
   - resource-enumerate
     - moved tests to the root project
-    - Config object no  longer supports local/stageRegex. Instead environment is passed to constructor.
+    - Config object no longer supports local/stageRegex. Instead environment is passed to constructor.
   - polyfill-service
     - moved tests to the root project
     - config object accepts a {test, load} object to do custom checking
@@ -73,6 +99,7 @@ Features:
     - Allows qualify functions to return primitive values or promises, adds unit test for qualify order
 
 - webpack-packages
+
   - templating-plugin
     - added support for baseurl and webpack output dir
   - i18n-loader
@@ -87,6 +114,7 @@ Features:
     - refactored. Now uses lexical analysis to find translation strings
 
 Bugfixes:
+
 - aofl-js-packages
   - rotations
     - Fixes bug causing erratic weighted rotations
@@ -96,8 +124,11 @@ Bugfixes:
     - Fixed prod builds
 
 ---
+
 ## v1.0.0-beta.28 (09-27-2018)
+
 Features:
+
 - Refactord and seperated components
 - added ISSUE_TEMPLATE.md
 - api-request
@@ -170,11 +201,12 @@ Features:
   - completely refactored
 - unit-testing-plugin
   - documentation
-  - default output directory changed to __build_tests
+  - default output directory changed to \_\_build_tests
   - supports .wtcrc.json and wtc-conf.json
   - adds fetch-mock to test suite automatically
 
 Bugfixes:
+
 - api-request
   - getCacheManager() fix issue with returning new cacheManager
   - changed cache argument to fromCache.
@@ -187,9 +219,11 @@ Bugfixes:
   - clean coverage report between runs
 
 ---
+
 ## v1.0.0-beta.27 (09-11-2018)
 
 Features:
+
 - Unit Testing
 - uuid
   - documentation
@@ -255,6 +289,7 @@ Features:
   - version up
 
 Bugfixes:
+
 - cache-manager
   - fixed issue with expired keys
   - fixed issues with json.parse when storage is not memoryStorage

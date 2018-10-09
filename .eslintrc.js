@@ -1,6 +1,7 @@
 const config = {
   extends: 'eslint-config-google',
   parser: 'babel-eslint',
+  root: true,
   parserOptions: {
     ecmaVersion: 8,
     sourceType: 'module',

@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const path = require('path');
 const getTranslationCalls = require('../../lib/get-translation-calls');
 
-const outputFilename = 'translation.json';
+const outputFilename = 'translations.json';
 const REPLACE_REGEX = /%r(\d+)%/g;
 const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
 

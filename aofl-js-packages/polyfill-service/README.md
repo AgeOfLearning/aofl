@@ -1,6 +1,6 @@
 # @aofl/polyfill-service
 
-Implements a customized version of `@webcomponents/webcomponentsjs/webcomponents-loader.js` that uses dynamic imports to load polyfills. I also allows for lazy loading other polyfills based on a config file.
+Implements a customized version of `@webcomponents/webcomponentsjs/webcomponents-loader.js` that uses dynamic imports to load polyfills. It also allows for lazy loading other polyfills based on a config file.
 
 
 ## How to use

@@ -1,16 +1,27 @@
 {
   "name": "@aofl/map-state-properties-mixin",
   "version": "1.2.0",
-  "description": "",
+  "description": "Subscribe mapStateProperties() to storeInstance. Unsubscribes when the component detaches from dom",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/map-state-properties-mixin",
+    "subscribe",
+    "map state properties",
+    "mapStateProperties"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@polymer/lit-element": "^0.6.2",

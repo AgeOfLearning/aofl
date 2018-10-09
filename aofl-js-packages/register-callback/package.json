@@ -1,15 +1,25 @@
 {
   "name": "@aofl/register-callback",
   "version": "1.2.0",
-  "description": "",
+  "description": "It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/register-callback",
+    "callback",
+    "register callback"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT"
 }

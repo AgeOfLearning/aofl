@@ -69,6 +69,11 @@ describe('@aofl/map-state-properties-mixin', function() {
   });
 
   beforeEach(function() {
+    storeInstance.replaceState({
+      device: {
+        device: 'desktop'
+      }
+    });
 
     render(html`
       <test-fixture id="MapStatePropertiesMixinTest">

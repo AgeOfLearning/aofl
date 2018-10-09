@@ -1,16 +1,27 @@
 {
   "name": "@aofl/rotations",
   "version": "1.2.0",
-  "description": "",
+  "description": "The rotations class provides weight based view logic for A B testing",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/rotations",
+    "rotations",
+    "A B testing",
+    "testing"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "@aofl/cache-manager": "^1.2.0"

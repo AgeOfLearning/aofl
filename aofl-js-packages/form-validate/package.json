@@ -10,6 +10,23 @@
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
+  "keywords": [
+    "aofljs",
+    "@aofl/aofl-validate",
+    "validation",
+    "validate",
+    "form",
+    "form validation",
+    "isRequired",
+    "isEqual",
+    "minLength",
+    "maxLength",
+    "isAllDigits"
+  ],
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT"
 }

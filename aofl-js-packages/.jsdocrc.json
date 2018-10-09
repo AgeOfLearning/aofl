@@ -6,7 +6,7 @@
   "opts": {
     "template": "node_modules/@aofl/jsdoc-template",
     "encoding": "utf8",
-    "destination": "api-docs/",
+    "destination": "../docs/v1.x/api-docs/",
     "recurse": true,
     "verbose": true
   },
@@ -19,7 +19,7 @@
     "referenceTitle": "Age Of Learning JavaScript SDK",
     "collapse": true,
     "resources": {
-      "google": "https://www.google.com/"
+      "AofL JS Documentation": "/"
     }
   }
 }

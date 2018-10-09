@@ -1,8 +1,15 @@
 {
   "name": "@aofl/cache-manager",
   "version": "1.2.0",
-  "description": "",
+  "description": "Provides a unified class for storing objects in Storage-like Objects",
   "main": "index.js",
+  "keywords": [
+    "aofljs",
+    "@aofl/cache-manager",
+    "cache",
+    "caching",
+    "storage"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +18,10 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "dependencies": {
     "tiny-js-md5": "^1.1.2"

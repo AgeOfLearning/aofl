@@ -1,11 +1,28 @@
 {
   "name": "@aofl/web-components",
   "version": "1.2.0",
-  "description": "",
+  "description": "Several simple building block components",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "aofljs",
+    "aofljs/web-components",
+    "web components",
+    "components",
+    "aofl-drawer",
+    "aofl-element",
+    "aofl-img",
+    "aofl-picture",
+    "aofl-source",
+    "aofl-select-list",
+    "aofl-list-option"
+  ],
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "contributors": [
+    "Daniel Belisle <daniel.belisle@aofl.com>",
+    "Micah Blu <micah.blu@aofl.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
