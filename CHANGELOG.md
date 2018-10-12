@@ -20,6 +20,10 @@ Features:
 - webpack-packages
   - templating-plugin
     - added support for baseurl and webpack output dir
+  - i18n-loader
+    - Refactored to work with the updated system
+  - i18n-auto-id-loader
+    - Added
 
 Bugfixes:
 - webpack-packages

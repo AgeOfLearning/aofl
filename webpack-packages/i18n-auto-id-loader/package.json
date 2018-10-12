@@ -1,0 +1,23 @@
+{
+  "name": "@aofl/i18n-auto-id-loader",
+  "version": "1.0.0-beta.29",
+  "description": "Generates tt-tags and inserts them as the 1st argument to  __, _c fucntion calls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://github.com/AgeOfLearning/aofl#readme",
+  "dependencies": {
+    "@aofl/cli": "^1.0.0-beta.20",
+    "fast-glob": "^2.2.3"
+  }
+}
