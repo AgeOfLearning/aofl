@@ -1,5 +1,9 @@
 import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin';
+import {html} from '@polymer/lit-element';
 import md5 from 'tiny-js-md5';
+
+const REPLACE_REGEX = /%%?r(\d+)(?:%|::.*?%%)/g;
+const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
 
 /**
  * @description Mixin function for I18nMixin class
@@ -16,6 +20,8 @@ export default dedupingMixin((superClass) => {
     constructor(...args) {
       super(...args);
       this.observer = this.langListener();
+      this.langageMap = {};
+      this.translationMap = {};
     }
 
     /**
@@ -26,6 +32,8 @@ export default dedupingMixin((superClass) => {
         lang: {type: String}
       };
     }
+
+
     /**
      * Listens for html lang mutations
      * @memberof I18nMixin
@@ -33,13 +41,10 @@ export default dedupingMixin((superClass) => {
      */
     langListener() {
       let observer = new MutationObserver((mutationList) => {
-        for (let i = 0; i < mutationList.length; i++) {
-          // Only update if the component does not have a lang attr value
-          if (this.lang === '') {
-            this.__lang = mutationList[i].target.lang;
-            this.requestUpdate();
-          }
-          break;
+        if (this.getAttribute('lang')) return;
+        if (mutationList.length > 0) {
+          this.__lang = mutationList[0].target.lang;
+          this.requestUpdate();
         }
       });
       observer.observe(document.documentElement, {attributes: true});
@@ -47,7 +52,164 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
+     *
+     *
+     * @param {*} lang
+     * @return {Promise}
+     */
+    getTranslationMap(lang) {
+      if (typeof this.translations[lang] === 'function') {
+        return this.translations[lang]();
+      } else {
+        return Promise.resolve({});
+      }
+    }
+
+    /**
+     * Language translation function.
+     *
+     * @memberof I18nMixin
+     * @param {String} id
+     * @param {String} str
+     * @param {Object} translations
+     * @return {String}
+     */
+    __(id, str) {
+      const languageMap = this.langageMap[this.__lang] || {};
+      let out = str;
+      if (typeof languageMap !== 'undefined' && typeof languageMap.default === 'object' &&
+      typeof languageMap.default[id] === 'object' && typeof languageMap.default[id].text === 'string') {
+        out = languageMap.default[id].text;
+      }
+
+      const translated = html([out]);
+      if (typeof this.translationMap[id] === 'undefined' ||
+      this.translationMap[id].strings[0] !== translated.strings[0]) {
+        this.translationMap[id] = translated;
+      }
+
+      return this.translationMap[id];
+    }
+
+    /**
+     * Replace function. When invoked it will replace %r(number)% with the number matching the index
+     * of the arguments passed to the _r function.
+     *
+     * @param {*} _str
+     * @param {*} args
+     * @return {String}
+     */
+    _r(_str, ...args) {
+      let str = _str;
+      if (typeof str === 'object' && Array.isArray(str.strings) && str.strings.length) {
+        str = str.strings[0];
+      }
+
+      let matches = REPLACE_REGEX.exec(str);
+      let pivot = 0;
+      let out = '';
+
+      while (matches !== null) {
+        const match = matches[0];
+        const argIndex = matches[1] - 1;
+        const offset = match.length;
+
+        out += str.slice(pivot, matches.index) + args[argIndex];
+        pivot = matches.index + offset;
+        matches = REPLACE_REGEX.exec(str);
+      }
+
+      out += str.slice(pivot);
+
+      const translated = html([out]);
+      const key = md5(out);
+
+      if (typeof this.translationMap[key] === 'undefined' ||
+      this.translationMap[key].strings[0] !== translated.strings[0]) {
+        this.translationMap[key] = translated;
+      }
+
+      return this.translationMap[key];
+    }
+
+    /**
+     * Conditonal translation function. When invoked it findes the correct string based on the labels
+     * specified in ...args.
+     *
+     * @param {*} _id
+     * @param {*} _str
+     * @param {*} args
+     * @return {String}
+     */
+    _c(_id, _str, ...args) {
+      let id = _id;
+      let out = '';
+      let str = _str;
+      const languageMap = this.langageMap[this.__lang] || {};
+
+      if (typeof languageMap !== 'undefined' && typeof languageMap.default === 'object') {
+        let idParts = [];
+        for (let i = 0; i < args.length; i = i + 2) {
+          const nextI = i + 1;
+          if (nextI >= args.length) continue;
+          let key = args[nextI];
+
+          if (typeof args[i][key] === 'undefined') {
+            key = '%other%';
+          }
+
+          idParts.push(key);
+        }
+
+        id += '-' + idParts.join('^^');
+        if (typeof languageMap.default[id] === 'object' && typeof languageMap.default[id].text === 'string') {
+          str = languageMap.default[id].text;
+        }
+      }
+
+      let matches = CONDITIONAL_REPLACE_REGEX.exec(str);
+      let pivot = 0;
+
+      while (matches !== null) {
+        const match = matches[0];
+        const argIndex = (matches[1] - 1) * 2;
+        let argCountIndex = args[argIndex + 1];
+        const offset = match.length;
+
+        if (typeof args[argIndex][argCountIndex] === 'undefined') {
+          argCountIndex = '%other%';
+        }
+
+        out += str.slice(pivot, matches.index) + args[argIndex][argCountIndex];
+        pivot = matches.index + offset;
+        matches = CONDITIONAL_REPLACE_REGEX.exec(str);
+      }
+
+      out += str.slice(pivot);
+
+      const translated = html([out]);
+      if (typeof this.translationMap[id] === 'undefined' ||
+      this.translationMap[id].strings[0] !== translated.strings[0]) {
+        this.translationMap[id] = translated;
+      }
+
+      return this.translationMap[id];
+    }
+
+    /**
+     * Sets initial lang
+     *
+     * @memberof I18nMixin
+     * @return {void}
+     */
+    connectedCallback() {
+      this.__lang = this.lang || document.documentElement.getAttribute('lang');
+      super.connectedCallback();
+    }
+
+    /**
      * Listen for component lang attribute mutataions
+     *
      * @memberof I18nMixin
      * @param {String} name
      * @param {String} oldValue
@@ -62,8 +224,18 @@ export default dedupingMixin((superClass) => {
         } else {
           this.__lang = newValue;
         }
-        this.requestUpdate();
       }
+    }
+
+    /**
+     * @return {Promise}
+     */
+    async requestUpdate(...args) {
+      const translation = await this.getTranslationMap(this.__lang);
+      if (typeof this.langageMap[this.__lang] === 'undefined') {
+        this.langageMap[this.__lang] = translation.default;
+      }
+      return super.requestUpdate(...args);
     }
 
     /**
@@ -80,63 +252,6 @@ export default dedupingMixin((superClass) => {
       }
       return super.render(template.template, template.styles, ...args);
     }
-
-    /**
-     *
-     * @memberof I18nMixin
-     * @param {String} s
-     * @param {String|Number} contexts
-     * @return {String}
-     */
-    printf(s, ...contexts) {
-      if (contexts.length === 0) return s;
-      return s.replace(/%s(\d)/g, (matches, p1) => {
-        return contexts[Number(p1)-1];
-      });
-    }
-
-    /**
-     * Language translation function
-     * @memberof I18nMixin
-     * @param {String} s
-     * @param {Object} langMap
-     * @return {String}
-     */
-    __(s, ...contexts) {
-      let key = md5(s);
-      if (!this.langMap[key] || !this.langMap[key][this.__lang]) {
-        return this.printf(s, ...contexts);
-      } else {
-        return this.printf(this.langMap[key][this.__lang], ...contexts);
-      }
-    }
-
-    /**
-     *
-     * Plural supported language function
-     * @param {Object} variants
-     * @param {Number} count
-     * @param {*} contexts
-     * @return {String}
-     */
-    _n(variants, count, ...contexts) {
-      if (typeof variants[count] !== 'undefined') {
-        return this.__(variants[count], ...contexts);
-      } else {
-        throw new Error('Invalid count variable provided to _n() method', variants);
-      }
-    }
-
-    /**
-     * Sets initial lang
-     * @memberof I18nMixin
-     * @return {void}
-     */
-    connectedCallback() {
-      this.__lang = this.lang || document.documentElement.getAttribute('lang');
-      super.connectedCallback();
-    }
-
     /**
      *
      * @memberof I18nMixin

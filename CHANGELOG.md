@@ -13,6 +13,9 @@ Features:
   - polyfill-service
     - moved tests to the root project
     - config object accepts a {test, load} object to do custom checking
+  - i18n-mixin
+    - Refactored to cover all requirements from the translators
+    - Support for multi plural sentences
 
 - webpack-packages
   - templating-plugin

@@ -3,6 +3,10 @@
 The **AOFL i18nMixin element** decorates any element with **i18n** support.
 
 
+## Examples
+* https://stackblitz.com/edit/1-0-0-i18n-mixin?embed=1&file=index.js
+
+
 ## Requirements
 
 For each component which will support internationalization an `i18n` directory will need to be created in the root of the component directory. Inside this directory language `.po` files will be expected.
