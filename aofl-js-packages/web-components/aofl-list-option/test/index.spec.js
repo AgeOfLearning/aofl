@@ -33,40 +33,46 @@ describe('@aofl/web-components/aofl-select-list', function() {
   });
 
   context('connectedCallback()', function() {
-    it('Should set selected when selected="true" attribute is given', function(done) {
-      const children = Array.from(this.element2.children).map((item) => {
-        return item.updateComplete;
-      });
+    it('Should set selected when selected="true" attribute is given', async function() {
+      try {
+        const children = Array.from(this.element2.children).map((item) => {
+          return item.updateComplete;
+        });
 
-      Promise.all(children).then(() => {
+        await Promise.all(children);
         expect(this.element2.querySelector('aofl-list-option').getAttribute('selected')).to.be.equal('true');
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should set listElement a parent with addOption', function(done) {
-      const children = Array.from(this.element.children).map((item) => {
-        return item.updateComplete;
-      });
+    it('Should set listElement a parent with addOption', async function() {
+      try {
+        const children = Array.from(this.element.children).map((item) => {
+          return item.updateComplete;
+        });
 
-      Promise.all(children).then(() => {
+        await Promise.all(children);
         expect(this.element.querySelector('aofl-list-option').listElement).to.not.be.undefined;
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('select()', function() {
-    it('Should set attribute true to selected', function(done) {
-      const children = Array.from(this.element.children).map((item) => {
-        return item.updateComplete;
-      });
+    it('Should set attribute true to selected', async function() {
+      try {
+        const children = Array.from(this.element.children).map((item) => {
+          return item.updateComplete;
+        });
 
-      Promise.all(children).then(() => {
+        await Promise.all(children);
         this.element.querySelector('aofl-list-option').click();
         expect(this.element.querySelector('aofl-list-option').getAttribute('selected')).to.be.equal('true');
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

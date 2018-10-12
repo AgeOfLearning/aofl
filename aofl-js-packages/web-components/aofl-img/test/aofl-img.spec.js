@@ -36,26 +36,37 @@ describe('@aofl/web-components/aofl-img', function() {
   });
 
   context('Image is in viewport on page load', function() {
-    it('should have inner img element with property src matching aofl-img:src', function(done) {
-      const element = this.element;
-      this.element.addEventListener('load', () => {
-        const renderedSource = element.shadowRoot.querySelector('img').getAttribute('src');
-        expect(renderedSource).to.be.equal(element.src);
-        done();
-      });
+    it('should have inner img element with property src matching aofl-img:src', async function() {
+      try {
+        await new Promise((resolve) => {
+          const element = this.element;
+          setTimeout(() => {
+            const renderedSource = element.shadowRoot.querySelector('img').src;
+            expect(renderedSource).to.be.equal(element.src);
+            resolve();
+          }, 1000);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('image is not in viewport on page load', function() {
-    it('should not load the image when element is outside the viewport', function(done) {
-      const element = this.elementOutside;
-      element.updateComplete
-      .then(() => {
-        const renderedSource = element.shadowRoot.querySelector('img').src;
-        expect(renderedSource).to.not.be.equal(element.src);
-        done();
-      })
-      .catch(done);
+    it('should not load the image when element is outside the viewport', async function() {
+      try {
+        await new Promise((resolve) => {
+          const element = this.elementOutside;
+          element.updateComplete
+          .then(() => {
+            const renderedSource = element.shadowRoot.querySelector('img').src;
+            expect(renderedSource).to.not.be.equal(element.src);
+            resolve();
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

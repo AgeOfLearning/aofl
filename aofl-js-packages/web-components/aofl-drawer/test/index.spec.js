@@ -8,7 +8,7 @@ describe('@aofl/web-components/aofl-drawer', function() {
     <style>
     .ease-in {
       opacity: 0;
-      transition: opacity 250ms ease-in;
+      transition: opacity 50ms ease-in;
     }
 
     .ease-in.animate {
@@ -17,7 +17,7 @@ describe('@aofl/web-components/aofl-drawer', function() {
 
     .ease-out {
       opacity: 1;
-      transition: opacity 250ms ease-out;
+      transition: opacity 50ms ease-out;
     }
 
     .ease-out.animate {
@@ -62,37 +62,53 @@ describe('@aofl/web-components/aofl-drawer', function() {
   });
 
   context('animationEndHandler() closing', function() {
-    it('Should remove animation classes after closing', function(done) {
-      const element = this.element;
-      this.element.updateComplete.then(() => {
-        this.element.addEventListener('change', function listener(e) {
-          element.removeEventListener('change', listener);
+    it('Should remove animation classes after closing', async function() {
+      try {
+        await new Promise((resolve) => {
+          const element = this.element;
+          this.element.updateComplete.then(() => {
+            this.element.addEventListener('change', function listener(e) {
+              element.removeEventListener('change', listener);
 
-          element.addEventListener('change', function listener1(e) {
-            element.removeEventListener('change', listener1);
-            expect(element.classList.contains('ease-out')).to.be.false;
-            expect(element.classList.contains('ease-in')).to.be.true;
-            done();
+              element.addEventListener('change', function listener1(e) {
+                element.removeEventListener('change', listener1);
+                expect(element.classList.contains('ease-out')).to.be.false;
+                expect(element.classList.contains('ease-in')).to.be.true;
+                resolve();
+              });
+              setTimeout(() => {
+                element.open = false;
+              }, 500);
+            });
+            setTimeout(() => {
+              element.open = true;
+            }, 500);
           });
-          element.open = false;
         });
-        element.open = true;
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
 
   context('animationEndHandler() opening', function() {
-    it('Should remove animation classes after opening', function(done) {
-      const element1 = this.element1;
-      this.element1.updateComplete.then(() => {
-        this.element1.addEventListener('change', function listener(e) {
-          element1.removeEventListener('change', listener);
-          expect(element1.classList.contains('animate')).to.be.false;
-          done();
+    it('Should remove animation classes after opening', async function() {
+      try {
+        await new Promise((resolve) => {
+          const element1 = this.element1;
+          this.element1.updateComplete.then(() => {
+            this.element1.addEventListener('change', function listener(e) {
+              element1.removeEventListener('change', listener);
+              expect(element1.classList.contains('animate')).to.be.false;
+              resolve();
+            });
+            this.element1.open = true;
+          });
         });
-        this.element1.open = true;
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 

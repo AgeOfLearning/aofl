@@ -26,33 +26,36 @@ describe('@aofl/web-components/aofl-select-list', function() {
   });
 
   context('updateSelected()', function() {
-    it('Should update value when a list option is selected', function(done) {
-      const children = Array.from(this.element.children).map((item) => {
-        return item.updateComplete;
-      });
+    it('Should update value when a list option is selected', async function() {
+      try {
+        const children = Array.from(this.element.children).map((item) => {
+          return item.updateComplete;
+        });
 
-      Promise.all(children).then(() => {
+        await Promise.all(children);
         this.element.querySelector('aofl-list-option').select();
         expect(this.element.value).to.be.equal('1');
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('addOption()', function() {
-    it('Should call addOption when a new option is added', function(done) {
-      const children = Array.from(this.element.children).map((item) => {
-        return item.updateComplete;
-      });
+    it('Should call addOption when a new option is added', async function() {
+      try {
+        const children = Array.from(this.element.children).map((item) => {
+          return item.updateComplete;
+        });
 
-      Promise.all(children).then(() => {
+        await Promise.all(children);
         let listOption = document.createElement('aofl-list-option');
         this.element.appendChild(listOption);
-        listOption.updateComplete.then(() => {
-          expect(this.element.options.length).to.be.equal(3);
-          done();
-        });
-      });
+        await listOption.updateComplete;
+        expect(this.element.options.length).to.be.equal(3);
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

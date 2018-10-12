@@ -175,20 +175,30 @@ describe('@aofl/store/src/store', function() {
       expect(this.sdo.asyncMutations.updateName.condition.calledOnce).to.be.true;
     });
 
-    it('should invoke asyncMutations method', function(done) {
-      this.storeInstance.subscribe(() => {
-        if (this.storeInstance.pending.any === false) {
-          expect(this.sdo.asyncMutations.updateName.method.calledOnce).to.be.true;
-          expect(this.storeInstance.state['unit-test']).to.have.property('name', 'Async Name');
-          done();
-        }
-      });
+    it('should invoke asyncMutations method', async function() {
+      try {
+        await new Promise((resolve, reject) => {
+          this.storeInstance.subscribe(() => {
+            if (this.storeInstance.pending.any === false) {
+              try {
+                expect(this.sdo.asyncMutations.updateName.method.calledOnce).to.be.true;
+                expect(this.storeInstance.state['unit-test']).to.have.property('name', 'Async Name');
+                resolve();
+              } catch (e) {
+                reject(e);
+              }
+            }
+          });
 
-      this.storeInstance.commit({
-        namespace: 'unit-test',
-        mutationId: 'updateKey',
-        payload: 'newKey'
-      });
+          this.storeInstance.commit({
+            namespace: 'unit-test',
+            mutationId: 'updateKey',
+            payload: 'newKey'
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 

@@ -8,6 +8,8 @@ Features:
   - moved tests to root of each module
   - transfered documentation examples to stackblitz and removed documentation projects
   - Updated jsdoc comments and new jsdoc theme
+  - fix and updated unit tests for all browsers
+  - ready for saucelabs integration
   - resource-enumerate
     - moved tests to the root project
     - Config object no  longer supports local/stageRegex. Instead environment is passed to constructor.

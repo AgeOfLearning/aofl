@@ -129,17 +129,16 @@ class Store {
           this.setPending(key, mutationId, true);
           ns[key].asyncMutations[mutationId].method(nextState)
           .then(function(mutationId, namespace, payload) {
-            this.setPending(key, mutationId, false);
+            this.setPending(namespace, mutationId, false);
             this.commit({
               namespace,
               mutationId,
               payload
             });
-            this.setPending(key, mutationId, false);
           }.bind(this, mutationId, key))
-          .catch(/* istanbul ignore next  */() => {
-            this.setPending(key, mutationId, false);
-          });
+          .catch(/* istanbul ignore next  */function(mutationId, namespace) {
+            this.setPending(namespace, mutationId, false);
+          }.bind(this, mutationId, key));
         }
       }
     }

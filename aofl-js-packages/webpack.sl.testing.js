@@ -11,7 +11,7 @@ const config = merge(common('development'), {
     }),
     new UnitTesting({
       clean: false,
-      config: '.wctrc.json',
+      config: '.wctrc-sl.json',
       exclude: [
         '**/node_modules',
         '**/node_modules_sourced',

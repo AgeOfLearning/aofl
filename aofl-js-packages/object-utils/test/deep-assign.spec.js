@@ -26,7 +26,7 @@ describe('object-utils#deepAssign', function() {
   it('should return an object', function() {
     const newData = deepAssign(this.data, '', {});
 
-    expect(newData).to.be.an('object');
+    expect(typeof newData).to.equal('object');
   });
 
   it('should act like object.assign when path is an empty string', function() {

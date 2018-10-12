@@ -118,97 +118,166 @@ describe('@aofl/i18n-mixin', function() {
   });
 
   context('__()', function() {
-    it('Should translate the string to German', function(done) {
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
-        done();
-      }, 200);
+    it('Should translate the string to German', async function() {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should not translate the string to German', function(done) {
-      this.element.setAttribute('lang', 'en-US');
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
-        done();
-      }, 500);
+    it('Should not translate the string to German', async function() {
+      try {
+        await this.element.updateComplete;
+        this.element.setAttribute('lang', 'en-US');
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+            resolve();
+          }, 250);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should update to German layout', function(done) {
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
-        done();
-      }, 500);
+    it('Should update to German layout', async function() {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('_c()', function() {
-    it('Should translate for one', function(done) {
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
-        done();
-      }, 500);
+    it('Should translate for one', async function() {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should translate for two', function(done) {
-      this.element.count = 2;
+    it('Should translate for two', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.element.count = 2;
 
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
-        done();
-      }, 500);
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should translate for more', function(done) {
-      this.element.count = 3;
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
-        done();
-      }, 500);
-
+    it('Should translate for more', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.element.count = 3;
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('langListener()', function() {
-    it('Should update to html lang change if local lang is not set', function(done) {
-      document.documentElement.setAttribute('lang', 'de-DE');
-      this.element.setAttribute('lang', '');
+    it('Should update to html lang change if local lang is not set', async function() {
+      try {
+        await new Promise((resolve) => {
+          document.documentElement.setAttribute('lang', 'de-DE');
+          this.element.setAttribute('lang', '');
 
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
-        done();
-      }, 500);
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should not update to html lang change if local lang is set', function(done) {
-      this.element.setAttribute('lang', 'en-US');
-      document.documentElement.setAttribute('lang', 'de-DE');
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
-        done();
-      }, 500);
+    it('Should not update to html lang change if local lang is set', async function() {
+      try {
+        await this.element.updateComplete;
+        this.element.setAttribute('lang', 'en-US');
+        document.documentElement.setAttribute('lang', 'de-DE');
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should not trigger updates on non html lang changes', function(done) {
-      this.element.setAttribute('lang', 'en-US');
-      setTimeout(() => {
-        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
-        done();
-      }, 500);
+    it('Should not trigger updates on non html lang changes', async function() {
+      try {
+        await this.element.updateComplete;
+        this.element.setAttribute('lang', 'en-US');
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('No default attribute', function() {
-    it('Should have no default lang', function(done) {
-      setTimeout(() => {
-        expect(this.elementNoAttr.lang).to.be.null;
-        done();
-      }, 500);
+    it('Should have no default lang', async function() {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.elementNoAttr.getAttribute('lang')).to.be.null;
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
-    it('Should have no effect on the change of foo attr', function(done) {
-      setTimeout(() => {
-        expect(this.elementNoAttr.lang).to.be.null;
-        done();
-      }, 500);
+
+    it('Should have no effect on the change of foo attr', async function() {
+      try {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            expect(this.elementNoAttr.getAttribute('lang')).to.be.null;
+            resolve();
+          }, 500);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

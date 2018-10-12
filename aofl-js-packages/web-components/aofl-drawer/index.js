@@ -39,7 +39,7 @@ class AoflDrawer extends AoflElement {
    */
   static get properties() {
     return {
-      open: {type: Boolean, attribute: true},
+      open: {type: Boolean, attribute: false},
       trigger: {type: String},
       opening: {type: String},
       closing: {type: String}

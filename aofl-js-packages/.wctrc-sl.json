@@ -1,0 +1,82 @@
+{
+  "verbose": false,
+  "persistent": false,
+  "plugins": {
+    "sauce": {
+      "browsers": [
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "7.1",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "7.0",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "6.0",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Browser",
+          "platformVersion": "5.1",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Browser",
+          "platformVersion": "5.0",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Browser",
+          "platformVersion": "4.4",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Samsung Galaxy S4 Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Browser",
+          "platformVersion": "4.4",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        },
+        {
+          "appiumVersion": "1.9.1",
+          "deviceName": "Samsung Galaxy S6 GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "7.1",
+          "platformName": "Android",
+          "idleTimeout": "600"
+        }
+      ]
+    }
+  }
+}

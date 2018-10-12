@@ -7,13 +7,13 @@
     "env:prod": "cross-env NODE_ENV=production",
     "env:dev": "cross-env NODE_ENV=development",
     "env:test": "cross-env NODE_ENV=test",
-    "test": "npm run env:test -- webpack --config webpack.dev.testing.js --progress",
-    "test:watch": "npm test -- --watch",
+    "test": "npm run env:test -- webpack --config webpack.sl.testing.js --progress",
+    "test:dev": "npm run env:test -- webpack --config webpack.dev.testing.js --progress",
+    "test:dev:watch": "npm test:dev -- --watch",
     "prod": "npm run env:prod -- webpack --config webpack.prod.js --progress",
     "dev": "npm run env:dev -- webpack --config webpack.dev.js --progress",
     "dev:watch": "npm run env:dev -- npm run dev -- --watch",
     "start:dev": "npm run env:dev -- webpack-dev-server --config webpack.dev.js --progress",
-    "start:test": "npm run env:test -- webpack-dev-server --config webpack.dev.testing.js  --progress",
     "start": "npm run env:prod -- webpack-dev-server --config webpack.prod.js --progress",
     "stats": "webpack --profile --config webpack.prod.js --json > stats.json",
     "docs": "rm -rf api-docs && jsdoc -c .jsdocrc.json ."
@@ -59,8 +59,8 @@
     "postcss-loader": "^2.1.6",
     "raw-loader": "^0.5.1",
     "uglifyjs-webpack-plugin": "^1.3.0",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.5",
     "webpack-merge": "^4.1.4"
   },
@@ -80,10 +80,12 @@
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
     "@aofl/web-components": "file:web-components",
+    "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.2",
     "@polymer/lit-element": "^0.6.2",
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "lit-html": "^0.12.0"
+    "lit-html": "^0.12.0",
+    "weakmap-polyfill": "^2.0.0"
   }
 }

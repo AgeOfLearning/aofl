@@ -1,6 +1,5 @@
 /* eslint no-invalid-this: "off" */
 import ApiRequest from '../src/api-request';
-
 describe('@aofl/api-request/src/api-request', function() {
   before(function() {
     this.formatter = {
@@ -14,74 +13,76 @@ describe('@aofl/api-request/src/api-request', function() {
   });
 
   beforeEach(function() {
-    fetchMock.mock('http://example.org', 200);
+    sinon.stub(window, 'fetch')
+    .returns(Promise.resolve({
+      json: () => Promise.resolve({})
+    }));
     this.apiRequest = new ApiRequest();
     this.apiRequest.addFormatter('test', this.formatter);
   });
 
   afterEach(function() {
     this.apiRequest.clearCache('default');
-    fetchMock.restore();
+    window.fetch.restore();
   });
 
   context('request()', function() {
-    it('should make a network call to specified url', function() {
-      this.apiRequest.request('http://example.org', '', 'test');
-
-      expect(fetchMock.called('http://example.org')).to.be.true;
+    it('should make a network call to specified url', async function() {
+      try {
+        await this.apiRequest.request('http://example.org', '', 'test');
+        expect(window.fetch.calledWith('http://example.org')).to.true;
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('should return cached result', function(done) {
+    it('should return cached result', async function() {
       const apiRequest = this.apiRequest;
-      apiRequest.request('http://example.org', '', 'test')
-      .then(() => {
-        apiRequest.request('http://example.org', '', 'test')
-        .then(() => {
-          const numCalls = fetchMock.calls('http://example.org').length;
-          expect(numCalls).to.be.equal(1);
-          done();
-        });
-      });
+      try {
+        await apiRequest.request('http://example.org', '', 'test');
+        await apiRequest.request('http://example.org', '', 'test');
+
+        expect(window.fetch.calledOnce).to.be.true;
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('should invoke fetch when cache is disabled', function(done) {
+    it('should invoke fetch when cache is disabled', async function() {
       const apiRequest = this.apiRequest;
-      apiRequest.request('http://example.org', '', 'test')
-      .then(() => {
-        apiRequest.request('http://example.org', '', 'test', false)
-        .then(() => {
-          const numCalls = fetchMock.calls('http://example.org').length;
-          expect(numCalls).to.be.equal(2);
-          done();
-        });
-      });
+      try {
+        await apiRequest.request('http://example.org', '', 'test');
+        await apiRequest.request('http://example.org', '', 'test', false);
+
+        expect(window.fetch.calledTwice).to.be.true;
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('should invoke fetch when cache is cleared', function(done) {
-      const apiRequest = this.apiRequest;
-      apiRequest.request('http://example.org', '', 'test')
-      .then(() => {
+    it('should invoke fetch when cache is cleared', async function() {
+      try {
+        const apiRequest = this.apiRequest;
+        await apiRequest.request('http://example.org', '', 'test');
         apiRequest.clearCache('default');
-        apiRequest.request('http://example.org', '', 'test')
-        .then(() => {
-          const numCalls = fetchMock.calls('http://example.org').length;
-          expect(numCalls).to.be.equal(2);
-          done();
-        });
-      });
+        await apiRequest.request('http://example.org', '', 'test');
+
+        expect(window.fetch.calledTwice).to.be.true;
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('should invoke fetch when a deffirent cache namespace is used', function(done) {
-      const apiRequest = this.apiRequest;
-      apiRequest.request('http://example.org', '', 'test', true)
-      .then(() => {
-        apiRequest.request('http://example.org', '', 'test', true, 'test')
-        .then(() => {
-          const numCalls = fetchMock.calls('http://example.org').length;
-          expect(numCalls).to.be.equal(2);
-          done();
-        });
-      });
+    it('should invoke fetch when a deffirent cache namespace is used', async function() {
+      try {
+        const apiRequest = this.apiRequest;
+        await apiRequest.request('http://example.org', '', 'test', true);
+        await apiRequest.request('http://example.org', '', 'test', true, 'test');
+
+        expect(window.fetch.calledTwice).to.be.true;
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

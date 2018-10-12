@@ -217,14 +217,15 @@ export default dedupingMixin((superClass) => {
      * @return {void}
      */
     attributeChangedCallback(name, oldValue, newValue) {
-      super.attributeChangedCallback(name, oldValue, newValue);
       if (name === 'lang') {
         if (!newValue) {
           this.__lang = document.documentElement.lang;
         } else {
           this.__lang = newValue;
         }
+        this.requestUpdate();
       }
+      super.attributeChangedCallback(name, oldValue, newValue);
     }
 
     /**

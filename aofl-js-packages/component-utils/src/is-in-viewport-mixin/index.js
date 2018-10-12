@@ -32,7 +32,6 @@ export default (superClass) => {
      */
     connectedCallback(...args) {
       super.connectedCallback(...args);
-      // this.checkInViewport();
       this.addListeners();
     }
 

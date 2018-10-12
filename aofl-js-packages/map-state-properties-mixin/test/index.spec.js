@@ -83,35 +83,47 @@ describe('@aofl/map-state-properties-mixin', function() {
   });
 
   context('connectedCallback()', function() {
-    it('Should update parent component "device" on state change', function(done) {
-      const unsubscribe = storeInstance.subscribe(() => {
-        expect(this.element.device).to.equal('phone');
-        unsubscribe();
-        done();
-      });
+    it('Should update parent component "device" on state change', async function() {
+      try {
+        await new Promise((resolve) => {
+          const unsubscribe = storeInstance.subscribe(() => {
+            expect(this.element.device).to.equal('phone');
+            unsubscribe();
+            resolve();
+          });
 
-      storeInstance.commit({
-        namespace: this.sdo.namespace,
-        mutationId: 'setDevice',
-        payload: 'phone'
-      });
+          storeInstance.commit({
+            namespace: this.sdo.namespace,
+            mutationId: 'setDevice',
+            payload: 'phone'
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
   context('disconnectedCallback()', function() {
-    it('Should NOT update parent component "device" on state change', function(done) {
-      this.element.removeChild(this.element.querySelector('child-comp'));
-      const unsubscribe = storeInstance.subscribe(() => {
-        expect(this.element.device).to.equal('desktop');
-        unsubscribe();
-        done();
-      });
+    it('Should NOT update parent component "device" on state change', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.element.removeChild(this.element.querySelector('child-comp'));
+          const unsubscribe = storeInstance.subscribe(() => {
+            expect(this.element.device).to.equal('desktop');
+            unsubscribe();
+            resolve();
+          });
 
-      storeInstance.commit({
-        namespace: this.sdo.namespace,
-        mutationId: 'setDevice',
-        payload: 'tablet'
-      });
+          storeInstance.commit({
+            namespace: this.sdo.namespace,
+            mutationId: 'setDevice',
+            payload: 'tablet'
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

@@ -13,6 +13,7 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      */
     connectedCallback(...args) {
+      /* istanbul ignore else */
       if (typeof this.mapStateProperties === 'function' &&
       typeof this.storeInstance !== 'undefined') {
         this.statePropertiesUnsubscribe = this.storeInstance.subscribe(() => {
@@ -27,6 +28,7 @@ export default dedupingMixin((superClass) => {
      */
     disconnectedCallback(...args) {
       super.disconnectedCallback(...args);
+      /* istanbul ignore else */
       if (typeof this.statePropertiesUnsubscribe === 'function') {
         this.statePropertiesUnsubscribe();
         this.statePropertiesUnsubscribe = null;

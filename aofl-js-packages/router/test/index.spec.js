@@ -90,129 +90,214 @@ describe('@aofl/router/router', function() {
       this.router = null;
     });
 
-    it('Should match "/home" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/home')
-        done();
-      });
-      this.router.navigate('/home');
+    it('Should match "/home" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/home')
+            resolve();
+          });
+          this.router.navigate('/home');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should have matchedRoute on routerInstance', function(done) {
-      this.router.after((request, response, next) => {
-        expect(this.router.matchedRoute).to.have.property('path', '/home')
-        done();
-      });
-      this.router.navigate('/home');
+    it('Should have matchedRoute on routerInstance', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(this.router.matchedRoute).to.have.property('path', '/home')
+            resolve();
+          });
+          this.router.navigate('/home');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should match dynamic "/about/mike" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/:user')
-        done();
-      });
-      this.router.navigate('/about/mike');
+    it('Should match dynamic "/about/mike" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/:user')
+            resolve();
+          });
+          this.router.navigate('/about/mike');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
     it('Should match static "/about/team" route and navigate to it event when there is /about/:user',
-    function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/team')
-        done();
-      });
-      this.router.navigate('/about/team');
+    async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/team');
+            resolve();
+          });
+          this.router.navigate('/about/team');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
     it('Should match static "/about/team?hello=world" route and navigate to it event when there is /about/:user',
-    function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/team')
-        done();
-      });
-      this.router.navigate('/about/team?hello=world');
+    async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/team')
+            resolve();
+          });
+          this.router.navigate('/about/team?hello=world');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should match nested dynamic "/about/mike/title/programmer" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/:user/title/:title')
-        done();
-      });
-      this.router.navigate('/about/mike/title/programmer');
+    it('Should match nested dynamic "/about/mike/title/programmer" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/:user/title/:title')
+            resolve();
+          });
+          this.router.navigate('/about/mike/title/programmer');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
     it('Should not match nested dynamic "/about/mike/hobby/programmer" route and navigate to it',
-    function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.be.null;
-        done();
-      });
-      this.router.navigate('/about/mike/hobby/programmer');
+    async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.be.null;
+            resolve();
+          });
+          this.router.navigate('/about/mike/hobby/programmer');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should match nested dynamic "/about/mike/programmer" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/:user/:title')
-        done();
-      });
-      this.router.navigate('/about/mike/programmer');
+    it('Should match nested dynamic "/about/mike/programmer" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/:user/:title')
+            resolve();
+          });
+          this.router.navigate('/about/mike/programmer');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should match nested dynamic "/about/mike/profile" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/:user/profile')
-        done();
-      });
-      this.router.navigate('/about/mike/profile');
+    it('Should match nested dynamic "/about/mike/profile" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/:user/profile')
+            resolve();
+          });
+          this.router.navigate('/about/mike/profile');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+
     });
 
-    it('Should match nested dynamic "/about/mike/profileAfterDynamic" route and navigate to it. The order of the routes in the routes config should not matter', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.have.property('path', '/about/:user/profileAfterDynamic')
-        done();
-      });
-      this.router.navigate('/about/mike/profileAfterDynamic');
+    it('Should match nested dynamic "/about/mike/profileAfterDynamic" route and navigate to it. The order of the routes in the routes config should not matter', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.have.property('path', '/about/:user/profileAfterDynamic')
+            resolve();
+          });
+          this.router.navigate('/about/mike/profileAfterDynamic');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should not match "/" route and navigate to it', function(done) {
-      this.router.after((request, response, next) => {
-        expect(response.matchedRoute).to.be.null;
-        done();
-      });
-      this.router.navigate('/');
+    it('Should not match "/" route and navigate to it', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.after((request, response, next) => {
+            expect(response.matchedRoute).to.be.null;
+            resolve();
+          });
+          this.router.navigate('/');
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+
     });
 
-    it('Should not navigate to same path', function(done) {
-      this.router.navigate(location.pathname).catch((e) => {
-        expect(e).to.equal('Can\'t navigate to current path');
-        done();
-      });
+    it('Should not navigate to same path', async function() {
+      try {
+        await new Promise((resolve) => {
+          this.router.navigate(location.pathname).catch((e) => {
+            expect(e).to.equal('Can\'t navigate to current path');
+            resolve();
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+
     });
 
-    it('Should redirect', function(done) {
-      this.router.beforeEach((request, response, next) => {
-        if (response.to === '/about') {
-          response.to = '/login';
-        }
-        next(response);
-      });
+    it('Should redirect', async function() {
+      try {
+        await new Promise(async (resolve) => {
+          this.router.beforeEach((request, response, next) => {
+            if (response.to === '/about') {
+              response.to = '/login';
+            }
+            next(response);
+          });
 
-      this.router.navigate('/about').then(() => {
-        expect(this.historyState.slice(-1)[0]).to.equal('/login');
-        done();
-      });
+          await this.router.navigate('/about');
+          expect(this.historyState.slice(-1)[0]).to.equal('/login');
+          resolve();
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+
     });
 
-    it('Should navigate back to the previous path', function(done) {
-      this.router.navigate('/home').then(() => {
-        setTimeout(() => {
-          this.router.navigate('/about').then(() => {
+    it('Should navigate back to the previous path', async function() {
+      try {
+        await new Promise(async (resolve) => {
+          await this.router.navigate('/home');
+          setTimeout(async () => {
+            await this.router.navigate('/about');
             window.history.back();
             expect(this.historyState.slice(-1)[0]).to.equal('/home');
             this.router.removeListener();
-            done();
-          });
-        })
-      });
+            resolve();
+          }, 100);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
@@ -246,18 +331,23 @@ describe('@aofl/router/router', function() {
       });
     });
 
-    it('Should have called before middleware', function(done) {
-      this.router.navigate('/home').then(() => {
+    it('Should have called before middleware', async function() {
+      try {
+        await this.router.navigate('/home');
         expect(this.beforeStub.called).to.equal(true);
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+
     });
 
-    it('Should have called afterEach middleware', function(done) {
-      this.router.navigate('/home').then(() => {
-        expect(this.afterEachStub.called).to.equal(true);
-        done();
-      });
+    it('Should have called afterEach middleware', async function() {
+      try {
+        await this.router.navigate('/home');
+          expect(this.afterEachStub.called).to.equal(true);
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

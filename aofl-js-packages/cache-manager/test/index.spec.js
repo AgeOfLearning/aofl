@@ -79,7 +79,7 @@ describe('@aofl/cache-manager#CacheManager', function() {
         cacheManager.setItem('key2', 'value2');
 
         const collection = cacheManager.getCollection();
-        expect(collection).to.be.an('object');
+        expect(typeof collection).to.be.equal('object');
         expect(Object.keys(collection)).to.have.property('length', 2);
       });
     });
@@ -257,7 +257,7 @@ describe('@aofl/cache-manager#CacheManager', function() {
         cacheManager.setItem('key2', 'value2');
 
         const collection = cacheManager.getCollection();
-        expect(collection).to.be.an('object');
+        expect(typeof collection).to.equal('object');
         expect(Object.keys(collection)).to.have.property('length', 2);
       });
     });
@@ -435,7 +435,7 @@ describe('@aofl/cache-manager#CacheManager', function() {
         cacheManager.setItem('key2', 'value2');
 
         const collection = cacheManager.getCollection();
-        expect(collection).to.be.an('object');
+        expect(typeof collection).to.equal('object');
         expect(Object.keys(collection)).to.have.property('length', 2);
       });
     });

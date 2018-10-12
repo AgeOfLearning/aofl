@@ -18,7 +18,7 @@ describe('@aofl/aofl-validate/is-equal', function() {
         };
       }
 
-      requestRender() {}
+      requestUpdate() {}
     };
     this.ValidationTest = ValidationTest;
   });
@@ -28,26 +28,38 @@ describe('@aofl/aofl-validate/is-equal', function() {
   });
 
   it('should be true when values match', async function() {
-    this.testForm.password = 'password';
-    this.testForm.verifyPassword = 'password';
-    this.testForm.form.validate();
-    await this.testForm.form.validateComplete;
+    try {
+      this.testForm.password = 'password';
+      this.testForm.verifyPassword = 'password';
+      this.testForm.form.validate();
+      await this.testForm.form.validateComplete;
 
-    expect(this.testForm.form.verifyPassword).to.have.property('valid', true);
+      expect(this.testForm.form.verifyPassword).to.have.property('valid', true);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
   it('should be false when values match', async function() {
-    this.testForm.password = 'password';
-    this.testForm.form.validate();
-    await this.testForm.form.validateComplete;
+    try {
+      this.testForm.password = 'password';
+      this.testForm.form.validate();
+      await this.testForm.form.validateComplete;
 
-    expect(this.testForm.form.verifyPassword).to.have.property('valid', false);
+      expect(this.testForm.form.verifyPassword).to.have.property('valid', false);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
   it('should be false when validating against missing field', async function() {
-    this.testForm.form.validate();
-    await this.testForm.form.validateComplete;
+    try {
+      this.testForm.form.validate();
+      await this.testForm.form.validateComplete;
 
-    expect(this.testForm.form.verifyPasswordAgainstUndefined).to.have.property('valid', false);
+      expect(this.testForm.form.verifyPasswordAgainstUndefined).to.have.property('valid', false);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 });

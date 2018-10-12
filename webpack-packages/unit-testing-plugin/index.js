@@ -47,7 +47,7 @@ class UnitTestingPlugin {
     this.options.output = path.resolve(process.env.PWD, this.options.output);
     let wctConfig = {};
     try {
-       wctConfig = require(this.options.config);
+       wctConfig = require(path.resolve(this.options.config));
     } catch (e) {}
 
     this.wctConfig = defaultsDeep(wctConfig, {

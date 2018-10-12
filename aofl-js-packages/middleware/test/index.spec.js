@@ -27,18 +27,22 @@ describe('@aofl/middleware', function() {
       expect(this.mw.middleware['after']).to.have.lengthOf(1);
     });
 
-    it('Should call before middleware', function(done) {
-      this.mw.iterateMiddleware({}, 'before').then(() => {
+    it('Should call before middleware', async function() {
+      try {
+        await this.mw.iterateMiddleware({}, 'before');
         expect(this.beforeStub.called).to.equal(true);
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should call after middleware', function(done) {
-      this.mw.iterateMiddleware({}, 'after').then(() => {
+    it('Should call after middleware', async function() {
+      try {
+        await this.mw.iterateMiddleware({}, 'after');
         expect(this.afterStub.called).to.equal(true);
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 

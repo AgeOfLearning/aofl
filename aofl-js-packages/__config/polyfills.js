@@ -1,4 +1,5 @@
 export default {
-  'fetch': () => import('isomorphic-fetch'),
-  'Object.assign': () => import('@aofl/polyfill-service/src/object-assign-polyfill')
+  'fetch': () => require('isomorphic-fetch'),
+  'Object.assign': () => require('@aofl/polyfill-service/src/object-assign-polyfill'),
+  'Map': () => require('@babel/polyfill')
 };

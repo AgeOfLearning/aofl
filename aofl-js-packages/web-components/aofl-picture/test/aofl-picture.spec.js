@@ -2,13 +2,14 @@
 import '../';
 import '../../aofl-source';
 import '../../aofl-img';
+import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-picture', function() {
   before(function() {
     this.initialWidth = window.innerWidth;
     this.initialHeight = window.innerHeight;
 
-    document.getElementById('test-container').innerHTML = `
+    render(html`
     <test-fixture id="BasicPicture">
     <template>
       <aofl-picture>
@@ -42,7 +43,7 @@ describe('@aofl/web-components/aofl-picture', function() {
       </aofl-picture>
     </template>
     </test-fixture>
-    `;
+    `, document.getElementById('test-container'));
 
     this.getSource = (windowWidth) => {
       if (windowWidth <= 300) {
@@ -64,8 +65,8 @@ describe('@aofl/web-components/aofl-picture', function() {
   });
 
   afterEach(function() {
-    window.innerWidth = this.initialWidth;
-    window.innerHeight = this.initialHeight;
+    window.parent.document.querySelector('iframe').style.width = this.initialWidth + 'px';
+    window.parent.document.querySelector('iframe').style.height = this.initialHeight + 'px';
     window.parent.document.querySelector('iframe').width = this.initialWidth;
   });
 
@@ -76,87 +77,115 @@ describe('@aofl/web-components/aofl-picture', function() {
     expect(src).to.be.equal(this.getSource(window.innerWidth));
   });
 
-  it('should update source when window size changes to 1000px', function(done) {
-    const element = this.basicPictureElement;
-    const _this = this;
-    element.updateComplete.then(() => {
-      window.addEventListener('resize', function resizeListener() {
-        window.removeEventListener('resize', resizeListener);
+  it('should update source when window size changes to 1000px', async function() {
+    try {
+      await new Promise((resolve) => {
+        const element = this.basicPictureElement;
+        const _this = this;
         element.updateComplete.then(() => {
-          const src = element.querySelector('aofl-img').src;
+          window.addEventListener('resize', function resizeListener() {
+            window.removeEventListener('resize', resizeListener);
+            element.updateComplete.then(() => {
+              const src = element.querySelector('aofl-img').src;
 
-          expect(src).to.be.equal(_this.getSource(window.innerWidth));
-          done();
+              expect(src).to.be.equal(_this.getSource(window.innerWidth));
+              resolve();
+            });
+          });
+
+          window.parent.document.querySelector('iframe').width = 1000;
+          window.dispatchEvent(new Event('resize'));
         });
       });
-
-      window.parent.document.querySelector('iframe').width = 1000;
-      window.dispatchEvent(new Event('resize'));
-    });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
-  it('should update source when window size changes to 200px', function(done) {
-    const element = this.basicPictureElement;
-    const _this = this;
-    element.updateComplete.then(() => {
-      window.addEventListener('resize', function resizeListener() {
-        window.removeEventListener('resize', resizeListener);
+  it('should update source when window size changes to 200px', async function() {
+    try {
+      await new Promise((resolve) => {
+        const element = this.basicPictureElement;
+        const _this = this;
         element.updateComplete.then(() => {
-          const src = element.querySelector('aofl-img').src;
+          window.addEventListener('resize', function resizeListener() {
+            window.removeEventListener('resize', resizeListener);
+            element.updateComplete.then(() => {
+              const src = element.querySelector('aofl-img').src;
 
-          expect(src).to.be.equal(_this.getSource(window.innerWidth));
-          done();
+              expect(src).to.be.equal(_this.getSource(window.innerWidth));
+              resolve();
+            });
+          });
+
+          window.parent.document.querySelector('iframe').width = 200;
+          window.dispatchEvent(new Event('resize'));
         });
       });
-
-      window.parent.document.querySelector('iframe').width = 200;
-      window.dispatchEvent(new Event('resize'));
-    });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
   it('should only take the first aofl-img tag', async function() {
-    const element = this.multipleImgElement;
-    const mainImg = element.querySelector('#main');
-    await element.updateComplete;
+    try {
+      const element = this.multipleImgElement;
+      const mainImg = element.querySelector('#main');
+      await element.updateComplete;
 
-    expect(element.img).to.be.equal(mainImg);
+      expect(element.img).to.be.equal(mainImg);
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
-  it('should not update source when window size changes to 1000px and sources-disabled', function(done) {
-    const element = this.sourcesDisabledElement;
-    const _this = this;
-    element.updateComplete.then(() => {
-      window.addEventListener('resize', function resizeListener() {
-        window.removeEventListener('resize', resizeListener);
+  it('should not update source when window size changes to 1000px and sources-disabled', async function() {
+    try {
+      await new Promise((resolve) => {
+        const element = this.sourcesDisabledElement;
+        const _this = this;
         element.updateComplete.then(() => {
-          const src = element.querySelector('aofl-img').src;
+          window.addEventListener('resize', function resizeListener() {
+            window.removeEventListener('resize', resizeListener);
+            element.updateComplete.then(() => {
+              const src = element.querySelector('aofl-img').src;
 
-          expect(src).to.be.equal(_this.getSource(1000));
-          done();
+              expect(src).to.be.equal(_this.getSource(1000));
+              resolve();
+            });
+          });
+
+          window.parent.document.querySelector('iframe').width = 1000;
+          window.dispatchEvent(new Event('resize'));
         });
       });
-
-      window.parent.document.querySelector('iframe').width = 1000;
-      window.dispatchEvent(new Event('resize'));
-    });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
-  it('should not update source when window size changes to 200px and sources-disabled', function(done) {
-    const element = this.sourcesDisabledElement;
-    const _this = this;
-    element.updateComplete.then(() => {
-      window.addEventListener('resize', function resizeListener() {
-        window.removeEventListener('resize', resizeListener);
+  it('should not update source when window size changes to 200px and sources-disabled', async function() {
+    try {
+      await new Promise((resolve) => {
+        const element = this.sourcesDisabledElement;
+        const _this = this;
         element.updateComplete.then(() => {
-          const src = element.querySelector('aofl-img').src;
+          window.addEventListener('resize', function resizeListener() {
+            window.removeEventListener('resize', resizeListener);
+            element.updateComplete.then(() => {
+              const src = element.querySelector('aofl-img').src;
 
-          expect(src).to.be.equal(_this.getSource(1000));
-          done();
+              expect(src).to.be.equal(_this.getSource(1000));
+              resolve();
+            });
+          });
+
+          window.parent.document.querySelector('iframe').width = 200;
+          window.dispatchEvent(new Event('resize'));
         });
       });
-
-      window.parent.document.querySelector('iframe').width = 200;
-      window.dispatchEvent(new Event('resize'));
-    });
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 });

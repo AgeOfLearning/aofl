@@ -98,13 +98,14 @@ describe('@aofl/rotations/rotation', function() {
       expect(routes[1].rotation).to.equal('routes-b');
     });
 
-    it('"getQualifyingRotation()" should qualify in the correct order', function(done) {
+    it('"getQualifyingRotation()" should qualify in the correct order', async function() {
+      try {
       let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      rotations.getQualifyingRotation({path: '/about'})
-      .then((selectedRoationId)=>{
-        expect(selectedRoationId).to.equal(2);
-        done();
-      });
+        const selectedRotationId = await rotations.getQualifyingRotation({path: '/about'});
+        expect(selectedRotationId).to.equal(2);
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
     it('"uniqueRoutes()" should provide unique routes', function() {
@@ -172,22 +173,26 @@ describe('@aofl/rotations/rotation', function() {
       };
     });
 
-    it('Should return the defualt routes with no matched rotations', function(done) {
-      let rotations = new Rotations('my-rotations-c', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      rotations.getRoutes().then((routes) => {
+    it('Should return the defualt routes with no matched rotations', async function() {
+      try {
+        const rotations = new Rotations('my-rotations-c', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+        const routes = await rotations.getRoutes();
         expect(routes[0].rotation).to.equal('routes'); // default
         expect(routes).to.eql(this.routeConfig.routes);
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should handle empty routeConfig, returning empty array without error', function(done) {
-      let rotations = new Rotations('my-rotations-c', {}, this.rotationsConfigOne, this.rotationConditionsFirstFalse);
-      rotations.getRoutes().then((routes) => {
+    it('Should handle empty routeConfig, returning empty array without error', async function() {
+      try {
+        const rotations = new Rotations('my-rotations-c', {}, this.rotationsConfigOne, this.rotationConditionsFirstFalse);
+        const routes = await rotations.getRoutes();
         expect(routes).to.be.a('array');
         expect(routes).to.have.lengthOf(0);
-        done();
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 
@@ -238,80 +243,92 @@ describe('@aofl/rotations/rotation', function() {
       };
     });
 
-    it('Should generate routes-b ~33%  of the time', function(done) {
-      let rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let totalCount = 0;
-      let routesBCount = 0;
+    it('Should generate routes-b ~33%  of the time', async function() {
+      try {
+        await new Promise((resolve) => {
+          let rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          let totalCount = 0;
+          let routesBCount = 0;
 
-      const genRoutes = () => {
-        rotations.clearCache();
-        rotations.getRoutes().then((routes) => {
-          expect(routes).to.be.a('array');
-          // expect(routes.rotation).to.equal('routes-b');
-          if (routes.rotation === 'routes-b') {
-            routesBCount++;
-          }
-          if (totalCount++ < 100) {
-            genRoutes();
-          } else {
-            // we're all done
-            expect(Math.abs(routesBCount/100 - .33)).to.be.within(.28, .38);
-            done();
-          }
+          const genRoutes = () => {
+            rotations.clearCache();
+            rotations.getRoutes().then((routes) => {
+              expect(routes).to.be.a('array');
+              // expect(routes.rotation).to.equal('routes-b');
+              if (routes.rotation === 'routes-b') {
+                routesBCount++;
+              }
+              if (totalCount++ < 100) {
+                genRoutes();
+              } else {
+                // we're all done
+                expect(Math.abs(routesBCount/100 - .33)).to.be.within(.28, .38);
+                resolve();
+              }
+            });
+          };
+          genRoutes();
         });
-      };
-      genRoutes();
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should generate routes-b 100%', function(done) {
-      const limit = 20;
-      const promises = [];
-      let i = 0;
-      const matches = {'routes': 0, 'routes-b': 0};
-      const rotationsConfig = {
-        'page_rotations': {
-          '/': [1, 2]
-        },
-        'rotation_id_keyname_map': {
-          '1': 'routes',
-          '2': 'routes-b'
-        },
-        'rotation_version_page_group_version_map': {
-          '1000': 'routes',
-          '2000': 'routes-b'
-        },
-        'rotation_versions': {
-          '1': {
-            '1000': '0',
-            '2000': '1'
-          },
-          '2': {
-            '1000': '0',
-            '2000': '1'
-          }
-        }
-      };
+    it('Should generate routes-b 100%', async function() {
+      try {
+        await new Promise((resolve) => {
+          const limit = 20;
+          const promises = [];
+          let i = 0;
+          const matches = {'routes': 0, 'routes-b': 0};
+          const rotationsConfig = {
+            'page_rotations': {
+              '/': [1, 2]
+            },
+            'rotation_id_keyname_map': {
+              '1': 'routes',
+              '2': 'routes-b'
+            },
+            'rotation_version_page_group_version_map': {
+              '1000': 'routes',
+              '2000': 'routes-b'
+            },
+            'rotation_versions': {
+              '1': {
+                '1000': '0',
+                '2000': '1'
+              },
+              '2': {
+                '1000': '0',
+                '2000': '1'
+              }
+            }
+          };
 
-      let rotations;
-      const interval = setInterval(() => {
-        if (i++ === limit) {
-          clearInterval(interval);
-          Promise.all(promises).then(() => {
-            expect(matches.routes).to.equal(0);
-            expect(matches['routes-b'] / limit).to.equal(1);
-            done();
-          });
-        } else {
-          if (rotations) rotations.clearCache();
-          rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
+          let rotations;
+          const interval = setInterval(() => {
+            if (i++ === limit) {
+              clearInterval(interval);
+              Promise.all(promises).then(() => {
+                expect(matches.routes).to.equal(0);
+                expect(matches['routes-b'] / limit).to.equal(1);
+                resolve();
+              });
+            } else {
+              if (rotations) rotations.clearCache();
+              rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
 
-          let p = rotations.getRoutes();
-          promises.push(p);
-          p.then((routes) => {
-            matches[routes[0].rotation] += 1;
-          });
-        }
-      }, 10);
+              let p = rotations.getRoutes();
+              promises.push(p);
+              p.then((routes) => {
+                matches[routes[0].rotation] += 1;
+              });
+            }
+          }, 10);
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
   context('Cache / Prerender', function() {
@@ -389,34 +406,46 @@ describe('@aofl/rotations/rotation', function() {
       };
     });
 
-    it('Should generate the original routes on prerender true', function(done) {
-      window.aofljsConfig = {
-        prerender: true
-      };
+    it('Should generate the original routes on prerender true', async function() {
+      try {
+        await new Promise((resolve) => {
+          window.aofljsConfig = {
+            prerender: true
+          };
 
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      rotations.getRoutes().then((routes) => {
-        expect(routes).to.be.a('array');
-        expect(routes).to.have.lengthOf(3);
-        done();
-      });
+          let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          rotations.getRoutes().then((routes) => {
+            expect(routes).to.be.a('array');
+            expect(routes).to.have.lengthOf(3);
+            resolve();
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
 
-    it('Should serve a cached route', function(done) {
-      // Allows for in loops to be properly covered
-      /* eslint-disable */
-      Object.prototype.versions = true;
-      Object.prototype.routeConfig = true;
+    it('Should serve a cached route', async function() {
+      try {
+        await new Promise((resolve) => {
+          // Allows for in loops to be properly covered
+          /* eslint-disable */
+          Object.prototype.versions = true;
+          Object.prototype.routeConfig = true;
 
-      let rotations = new Rotations('my-rotations-d', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      rotations.getRoutes().then((origRoutes) => {
-        rotations.getRoutes().then((routes) => {
-          expect(routes).have.lengthOf(3);
-          expect(routes).to.be.a('array');
-          expect(routes).to.eql(origRoutes);
-          done();
+          let rotations = new Rotations('my-rotations-d', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          rotations.getRoutes().then((origRoutes) => {
+            rotations.getRoutes().then((routes) => {
+              expect(routes).have.lengthOf(3);
+              expect(routes).to.be.a('array');
+              expect(routes).to.eql(origRoutes);
+              resolve();
+            });
+          });
         });
-      });
+      } catch (e) {
+        return Promise.reject(e);
+      }
     });
   });
 });

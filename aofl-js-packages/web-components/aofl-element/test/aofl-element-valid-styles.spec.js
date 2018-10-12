@@ -42,13 +42,19 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
     try {
       await Promise.resolve(this.styledFixture.updateComplete);
       backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
-    } catch (e) {}
-    expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
+      expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 
   it('should have green text color', async function() {
-    await this.styledFixture.updateComplete;
-    const color = window.getComputedStyle(this.styledFixture).color;
-    expect(color).to.be.equal('rgb(0, 255, 0)');
+    try {
+      await this.styledFixture.updateComplete;
+      const color = window.getComputedStyle(this.styledFixture).color;
+      expect(color).to.be.equal('rgb(0, 255, 0)');
+    } catch (e) {
+      return Promise.reject(e);
+    }
   });
 });

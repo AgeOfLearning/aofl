@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@aofl/cli": "^1.0.0-beta.28",
-    "@babel/core": "7.0.0-beta.35",
     "@polymer/polymer": "^3.0.5",
     "@polymer/test-fixture": "^4.0.2",
     "ajv": "^6.5.4",
@@ -29,6 +28,8 @@
     "lodash.defaultsdeep": "^4.6.0",
     "mocha": "^4.1.0",
     "node-fetch": "^2.2.0",
+    "polymer-analyzer": "^3.1.2",
+    "polymer-build": "^3.0.4",
     "sinon": "^6.3.5",
     "sinon-chai": "^3.2.0",
     "tiny-js-md5": "^1.1.2",
