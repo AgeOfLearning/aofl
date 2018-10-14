@@ -193,7 +193,7 @@ class AoflDrawer extends AoflElement {
    *
    */
   disconnectedCallback(...args) {
-    // super.disconnectedCallback(...args);
+    super.disconnectedCallback(...args);
     this.removeEventListener('animationend', this.animationEndHandler);
     this.removeEventListener('transitionend', this.animationEndHandler);
     this.removeEventListener('animationestart', this.animationStartHandler);

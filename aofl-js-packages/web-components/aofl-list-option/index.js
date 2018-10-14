@@ -79,6 +79,7 @@ class AoflListOption extends AoflElement {
    *
    */
   disconnectedCallback() {
+    super.disconnectedCallback();
     this.removeEventListener('click', this.clickCallback);
   }
 }

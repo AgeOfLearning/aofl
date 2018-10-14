@@ -15,7 +15,7 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
     customElements.define('styled-element', StyledElement);
   });
 
-  beforeEach(function() {
+  before(function() {
     render(html`
       <test-fixture id="StyledFixture">
         <template>
@@ -23,6 +23,9 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
         </template>
       </test-fixture>
     `, document.getElementById('test-container'));
+  });
+
+  beforeEach(function() {
     this.styledFixture = fixture('StyledFixture');
   });
 
@@ -30,9 +33,16 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
     expect(typeof this.styledFixture.shadowRoot).to.equal('object');
   });
 
+  it('should create a shadow root', function() {
+    expect(typeof this.styledFixture.shadowRoot).to.equal('object');
+  });
+
   it('should have red background', async function() {
-    await this.styledFixture.updateComplete;
-    const backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
+    let backgroundColor = '';
+    try {
+      await Promise.resolve(this.styledFixture.updateComplete);
+      backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
+    } catch (e) {}
     expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
   });
 

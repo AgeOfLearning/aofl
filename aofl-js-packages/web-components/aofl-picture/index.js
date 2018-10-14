@@ -138,6 +138,7 @@ class AoflPicture extends AoflElement {
     for (let i = 0; i < this.sources.length; i++) {
       this.sources[i].mediaQuery.removeListener(this.updateImageSrc);
     }
+    super.disconnectedCallback();
   }
 }
 

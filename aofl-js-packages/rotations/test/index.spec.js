@@ -84,11 +84,12 @@ describe('@aofl/rotations/rotation', function() {
     it('"chooseWeightedVariant()" should select rotations based on weighted distribution', function() {
       let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
       let routesCount = 0;
-      for (let i = 0; i < 100; i++) {
+      const limit = 500;
+      for (let i = 0; i < limit; i++) {
         let version = rotations.chooseWeightedVariant('1');
         if (version === '1000') routesCount++;
       }
-      expect(routesCount/100).to.be.within(0.7, 0.8);
+      expect(routesCount/limit).to.be.within(0.65, 0.85);
     });
 
     it('"replaceRoute()" should replace routes correctly', function() {
@@ -290,14 +291,12 @@ describe('@aofl/rotations/rotation', function() {
           }
         }
       };
-      // console.log('routeConfig', this.routeConfig);
+
       let rotations;
       const interval = setInterval(() => {
         if (i++ === limit) {
           clearInterval(interval);
           Promise.all(promises).then(() => {
-            console.log('routes', matches.routes, (matches.routes / limit * 100) + '%');
-            console.log('routes-b', matches['routes-b'], (matches['routes-b'] / limit * 100) + '%');
             expect(matches.routes).to.equal(0);
             expect(matches['routes-b'] / limit).to.equal(1);
             done();
@@ -309,7 +308,6 @@ describe('@aofl/rotations/rotation', function() {
           let p = rotations.getRoutes();
           promises.push(p);
           p.then((routes) => {
-            // console.log('matched routes', routes);
             matches[routes[0].rotation] += 1;
           });
         }

@@ -4,7 +4,7 @@
 ## v1.0.0-beta.29 (date)
 Features:
 - aofl-js-packages
-  - upgraded lit-element to 0.6.1
+  - upgraded lit-element to 0.6.2
   - moved tests to root of each module
   - transfered documentation examples to stackblitz and removed documentation projects
   - Updated jsdoc comments and new jsdoc theme

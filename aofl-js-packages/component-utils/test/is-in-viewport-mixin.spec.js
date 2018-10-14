@@ -57,7 +57,6 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
   });
 
   afterEach(function() {
-    console.log('afterEach');
     this.firstWithinViewport.reset();
     this.withinViewportUpdated.reset();
     this.firstWithinViewportOutside.reset();
@@ -70,8 +69,7 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
 
   context('Element is in viewport on page load', function() {
     it('should have property isWithinViewport with value of true', async function() {
-      const element = this.element;
-      await element.updateComplete;
+      await this.element.updateComplete;
       expect(this.element).to.have.property('isWithinViewport', true);
     });
 

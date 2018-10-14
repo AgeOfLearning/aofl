@@ -5,20 +5,36 @@ import {render, html} from 'lit-html';
 
 describe('@aofl/i18n-mixin', function() {
   before(function() {
-    const langMap = {
-      "7b19b37e7fc3dfe3c3e1ad5b84c7f565":{"de-DE":"Startseite"},
-      "b7951d7d44b8d3250a753a46f4b76f5b":{"de-DE":"Gruß und Gruß!"},
-      "540d145a49f84752b9f0f74f7808765c":{"de-DE":"Wie geht es dir %s1"},
-      "cedf634e8fd64019f98da9cad4f8ef42":{"de-DE":"Es gibt eine Person hier und diese Person ist %s1"},
-      "4b6aec97fcbc3856a27a628ab4854186":{"de-DE":"Hier sind zwei Leute"},
-      "7a750a246b85a075068b664f2d01bfc2":{"de-DE":"Es gibt viele Leute hier!"}
+    const translations = {
+      'de-DE': () => Promise.resolve({
+        default: {
+          '<tt-1>': {
+            text: 'Startseite'
+          },
+          '<tt-2>': {
+            text: 'Gruß und Gruß!'
+          },
+          '<tt-3>': {
+            text: 'Wie geht es dir %%r1::context.person%%'
+          },
+          '<tt-4>-1': {
+            text: 'Es gibt eine Person hier und diese Person ist %%r1::context.person%%'
+          },
+          '<tt-4>-2': {
+            text: 'Hier sind zwei Leute'
+          },
+          '<tt-4>-3': {
+            text: 'Es gibt viele Leute hier!'
+          }
+        }
+      })
     };
     const templates = {
       default: {
         template(context, html) {
           return html`
-            <h1>${context.__('Greeting and salutations!')}</h1>
-            <h2>${context.__('How are you %s1', context.person)}</h2>
+            <h1>${context.__('<tt-1>', 'Greeting and salutations!')}</h1>
+            <h2>${context._r(context.__('<tt-2>', 'How are you %r1%'), context.person)}</h2>
           `
         },
         styles: []
@@ -27,12 +43,12 @@ describe('@aofl/i18n-mixin', function() {
         template(context, html) {
           return html`
             <h1>German version</h1>
-            <h2>${context.__('How are you %s1', context.person)}</h2>
-            <p>${context._n({
-              1: 'There is one person here and that person is %s1',
-              2: 'There are two people here',
-              3: 'There are many people here!'
-            }, context.count, context.person)}</p>
+            <h2>${context._r(context.__('<tt-3>', 'How are you %r1%'), context.person)}</h2>
+            <p>${context._r(context._c('<tt-4>', 'There %c1%', {
+              1: 'is one person here and that person is %r1%',
+              2: 'are two people here',
+              3: 'are many people here!'
+            }, context.count), context.person)}</p>
           `;
         },
         styles: []
@@ -41,8 +57,9 @@ describe('@aofl/i18n-mixin', function() {
     class MyComp extends i18nMixin(AoflElement) {
       constructor() {
         super();
-        this.langMap = langMap;
+        this.translations = translations;
         this.count = 1;
+        this.person = 'Albert Einstein';
       }
       static get properties() {
         return {
@@ -53,14 +70,14 @@ describe('@aofl/i18n-mixin', function() {
         return 'my-comp';
       }
       render() {
-        this.person = 'Albert Einstein';
         return super.render(templates);
       }
     };
     class MyCompNoAttrs extends i18nMixin(AoflElement) {
       constructor() {
         super();
-        this.langMap = langMap;
+        this.translations = translations;
+        this.person = 'Albert Einstein';
         this.count = 1;
       }
       static get properties() {
@@ -72,7 +89,6 @@ describe('@aofl/i18n-mixin', function() {
         return 'my-comp-no-attrs';
       }
       render() {
-        this.person = 'Albert Einstein';
         return super.render(templates);
       }
     };
@@ -89,14 +105,12 @@ describe('@aofl/i18n-mixin', function() {
           <my-comp-no-attrs foo="bar"></my-comp-no-attrs>
         </template>
       </test-fixture>
-    `, document.getElementById('test-container'));
+      `, document.getElementById('test-container'));
   });
 
   beforeEach(function() {
     this.element = fixture('I18nTestFixture');
     this.elementNoAttr = fixture('I18nTestFixtureNoAttr');
-
-    console.log(this.element);
   });
 
   afterEach(function() {
@@ -104,84 +118,97 @@ describe('@aofl/i18n-mixin', function() {
   });
 
   context('__()', function() {
-    it('Should translate the string to German', async function() {
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+    it('Should translate the string to German', function(done) {
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+        done();
+      }, 200);
     });
 
-    it('Should not translate the string to German', async function() {
+    it('Should not translate the string to German', function(done) {
       this.element.setAttribute('lang', 'en-US');
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+        done();
+      }, 500);
     });
 
-    it('Should update to German layout', async function() {
-      await this.element.updateComplete;
-
-      expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
+    it('Should update to German layout', function(done) {
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
+        done();
+      }, 500);
     });
   });
 
-  context('_n()', function() {
-    it('Should translate for one', async function() {
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
+  context('_c()', function() {
+    it('Should translate for one', function(done) {
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
+        done();
+      }, 500);
     });
 
-    it('Should translate for two', async function() {
+    it('Should translate for two', function(done) {
       this.element.count = 2;
-      await this.element.updateComplete;
 
-      expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
+        done();
+      }, 500);
     });
 
-    it('Should translate for more', async function() {
+    it('Should translate for more', function(done) {
       this.element.count = 3;
-      await this.element.updateComplete;
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
+        done();
+      }, 500);
 
-      expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
-    });
-
-    it('Should throw error on invalid count', function() {
-      expect(() => this.element._n({
-        1: 'There is one person here and that person is %s1',
-        2: 'There are two people here',
-        3: 'There are many people here!'
-      }, 5, 'Albert Einstein')).to.throw();
     });
   });
 
   context('langListener()', function() {
-    it('Should update to html lang change if local lang is not set', async function() {
+    it('Should update to html lang change if local lang is not set', function(done) {
       document.documentElement.setAttribute('lang', 'de-DE');
       this.element.setAttribute('lang', '');
 
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
+        done();
+      }, 500);
     });
 
-    it('Should not update to html lang change if local lang is set', async function() {
+    it('Should not update to html lang change if local lang is set', function(done) {
       this.element.setAttribute('lang', 'en-US');
       document.documentElement.setAttribute('lang', 'de-DE');
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+        done();
+      }, 500);
     });
 
-    it('Should not trigger updates on non html lang changes', async function() {
+    it('Should not trigger updates on non html lang changes', function(done) {
       this.element.setAttribute('lang', 'en-US');
-      await this.element.updateComplete;
-      expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+      setTimeout(() => {
+        expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+        done();
+      }, 500);
     });
   });
 
   context('No default attribute', function() {
-    it('Should have no default lang', async function() {
-      await this.elementNoAttr.updateComplete;
-      expect(this.elementNoAttr.lang).to.be.null;
+    it('Should have no default lang', function(done) {
+      setTimeout(() => {
+        expect(this.elementNoAttr.lang).to.be.null;
+        done();
+      }, 500);
     });
-    it('Should have no effect on the change of foo attr', async function() {
-      await this.elementNoAttr.updateComplete;
-      expect(this.elementNoAttr.lang).to.be.null;
+    it('Should have no effect on the change of foo attr', function(done) {
+      setTimeout(() => {
+        expect(this.elementNoAttr.lang).to.be.null;
+        done();
+      }, 500);
     });
   });
 });

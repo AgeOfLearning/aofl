@@ -70,7 +70,6 @@ describe('@aofl/web-components/aofl-drawer', function() {
 
           element.addEventListener('change', function listener1(e) {
             element.removeEventListener('change', listener1);
-            console.log('element.classList', element.classList);
             expect(element.classList.contains('ease-out')).to.be.false;
             expect(element.classList.contains('ease-in')).to.be.true;
             done();

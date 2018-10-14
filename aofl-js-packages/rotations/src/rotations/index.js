@@ -231,7 +231,6 @@ class Rotations {
           })
           .catch((e) => {
             // no matching rotation, pass on, also catches errors
-            console.log(e);
             pushRoutes(routeConfig);
           });
         }

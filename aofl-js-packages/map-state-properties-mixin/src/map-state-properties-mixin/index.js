@@ -26,7 +26,7 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      */
     disconnectedCallback(...args) {
-      // super.disconnectedCallback(...args);
+      super.disconnectedCallback(...args);
       if (typeof this.statePropertiesUnsubscribe === 'function') {
         this.statePropertiesUnsubscribe();
         this.statePropertiesUnsubscribe = null;

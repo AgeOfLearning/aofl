@@ -31,12 +31,8 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
         }
       })
     };
-  });
 
-  beforeEach(function() {
-    fetchMock.mock('productionHost', {});
-    fetchMock.mock('stageHost', {});
-    fetchMock.mock('developmentHost', {});
+    fetchMock.mock('*', '200');
   });
 
   afterEach(function() {
@@ -45,38 +41,30 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
     fetchMock.restore();
   });
 
-  it('should call production', function(done) {
+  it('should call production', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(this.config)
-    .then(() => {
-      expect(config.apis.apins.url).to.be.equal('productionHost');
-      done();
-    });
+    await resourceEnumerateInstance.init(this.config);
+
+    expect(config.apis.apins.url).to.be.equal('productionHost');
   });
 
-  it('should call development', function(done) {
+  it('should call development', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('development');
 
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      expect(config.apis.apins.url).to.be.equal('developmentHost');
-      done();
-    });
+    await resourceEnumerateInstance.init(config);
+    expect(config.apis.apins.url).to.be.equal('developmentHost');
   });
 
-  it('should call stage', function(done) {
+  it('should call stage', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('stage');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      expect(config.apis.apins.url).to.be.equal('stageHost');
-      done();
-    });
+    await resourceEnumerateInstance.init(config);
+    expect(config.apis.apins.url).to.be.equal('stageHost');
   });
 
-  it('should work without variables function', function(done) {
+  it('should work without variables function', async function() {
     const config = this.config;
     config.apis.apins.developmentVariables = void 0;
     const resourceEnumerateInstance = new ResourceEnumerate('development');
@@ -86,99 +74,60 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
       }
     });
 
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      expect(config.apis.apins.url).to.be.equal('stageHost');
-      done();
-    });
+    await resourceEnumerateInstance.init(config);
+    expect(config.apis.apins.url).to.be.equal('stageHost');
   });
 
-  it('should get from cache', function(done) {
+  it('should get from cache', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      resourceEnumerateInstance
-      .get('apins')
-      .then(() => {
-        resourceEnumerateInstance
-        .get('apins')
-        .then((payload) => {
-          const numCalls = fetchMock.calls('productionHost').length;
-
-          expect(numCalls).to.be.equal(1);
-          done();
-        });
-      });
-    });
+    await resourceEnumerateInstance.init(config);
+    await resourceEnumerateInstance.get('apins');
+    await resourceEnumerateInstance.get('apins');
+    const numCalls = fetchMock.calls('/productionHost').length;
+    expect(numCalls).to.be.equal(1);
   });
 
-  it('should make network call', function(done) {
+  it('should make network call', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      resourceEnumerateInstance
-      .get('apins')
-      .then((payload) => {
-        expect(fetchMock.called('productionHost')).to.be.true;
-        done();
-      });
-    });
+    await resourceEnumerateInstance.init(config);
+    await resourceEnumerateInstance.get('apins');
+
+    expect(fetchMock.called('/productionHost')).to.be.true;
   });
 
-  it('should make new call when fromCache is false', function(done) {
+  it('should make new call when fromCache is false', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      resourceEnumerateInstance
-      .get('apins', false)
-      .then((payload) => {
-        resourceEnumerateInstance
-        .get('apins', false)
-        .then(() => {
-          const numCalls = fetchMock.calls('productionHost').length;
+    await resourceEnumerateInstance.init(config);
+    await resourceEnumerateInstance.get('apins', false);
+    await resourceEnumerateInstance.get('apins', false);
+    const numCalls = fetchMock.calls('/productionHost').length;
 
-          expect(numCalls).to.be.equal(2);
-          done();
-        });
-      });
-    });
+    expect(numCalls).to.be.equal(2);
   });
 
-  it('should make new call when invalidateCache return true', function(done) {
+  it('should make new call when invalidateCache return true', async function() {
     const config = this.config;
     config.apis.apins.invalidateCache = () => true;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      resourceEnumerateInstance
-      .get('apins')
-      .then((payload) => {
-        resourceEnumerateInstance
-        .get('apins')
-        .then(() => {
-          const numCalls = fetchMock.calls('productionHost').length;
+    await resourceEnumerateInstance.init(config);
+    await resourceEnumerateInstance.get('apins');
+    await resourceEnumerateInstance.get('apins');
 
-          expect(numCalls).to.be.equal(2);
-          done();
-        });
-      });
-    });
+    const numCalls = fetchMock.calls('/productionHost').length;
+    expect(numCalls).to.be.equal(2);
   });
 
-  it('should throw a TypeError when api namespace is undefined', function(done) {
+  it('should throw a TypeError when api namespace is undefined', async function() {
     const config = this.config;
     const resourceEnumerateInstance = new ResourceEnumerate('production');
-    resourceEnumerateInstance.init(config)
-    .then(() => {
-      resourceEnumerateInstance
-      .get('undefined-namespace', false)
-      .catch((e) => {
-        expect(e).to.be.an.instanceOf(TypeError);
-        done();
-      });
-    });
+    await resourceEnumerateInstance.init(config);
+    try {
+      await resourceEnumerateInstance.get('undefined-namespace', false);
+    } catch (e) {
+      expect(e).to.be.an.instanceOf(TypeError);
+    }
   });
 });

@@ -1,15 +1,13 @@
 {
   "verbose": true,
   "persistent": false,
-  "clientOptions": {
-    "environmentImports": []
-  },
   "plugins": {
     "local": {
       "browsers": [
         "firefox",
         "chrome",
-        "canary"
+        "canary",
+        "safari"
       ],
       "browserOptions": {
         "chrome": [

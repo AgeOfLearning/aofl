@@ -70,7 +70,8 @@ class Polyfill {
       document.dispatchEvent(new CustomEvent('WebComponentsReady', {
         bubbles: true
       }));
-    });
+    })
+    .catch((e) => {});
   }
 };
 

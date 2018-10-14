@@ -24,7 +24,6 @@ export default dedupingMixin((superClass) => {
     constructor(...args) {
       super(...args);
       this.observer = this.langListener();
-      this.langageMap = {};
       this.translationMap = {};
     }
 
@@ -61,7 +60,8 @@ export default dedupingMixin((superClass) => {
      */
     getTranslationMap(lang) {
       if (typeof this.translations[lang] === 'function') {
-        return this.translations[lang]();
+        return this.translations[lang]()
+        .then((langModule) => langModule.default);
       } else {
         return Promise.resolve({});
       }
@@ -74,12 +74,14 @@ export default dedupingMixin((superClass) => {
      * @param {String} str
      * @return {String}
      */
-    __(id, str) {
-      const languageMap = this.langageMap[this.__lang] || {};
+    async __(id, str) {
+      const translation = await this.getTranslationMap(this.__lang);
+      const languageMap = translation || {};
       let out = str;
-      if (typeof languageMap !== 'undefined' && typeof languageMap.default === 'object' &&
-      typeof languageMap.default[id] === 'object' && typeof languageMap.default[id].text === 'string') {
-        out = languageMap.default[id].text;
+
+      if (typeof languageMap !== 'undefined' && typeof languageMap[id] === 'object' &&
+      typeof languageMap[id].text === 'string') {
+        out = languageMap[id].text;
       }
 
       const translated = html([out]);
@@ -99,8 +101,8 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      * @return {String}
      */
-    _r(_str, ...args) {
-      let str = _str;
+    async _r(_str, ...args) {
+      let str = await Promise.resolve(_str);
       if (typeof str === 'object' && Array.isArray(str.strings) && str.strings.length) {
         str = str.strings[0];
       }
@@ -141,13 +143,14 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      * @return {String}
      */
-    _c(_id, _str, ...args) {
+    async _c(_id, _str, ...args) {
       let id = _id;
       let out = '';
       let str = _str;
-      const languageMap = this.langageMap[this.__lang] || {};
+      const translation = await this.getTranslationMap(this.__lang);
+      const languageMap = translation || {};
 
-      if (typeof languageMap !== 'undefined' && typeof languageMap.default === 'object') {
+      if (typeof languageMap !== 'undefined' && typeof languageMap === 'object') {
         let idParts = [];
         for (let i = 0; i < args.length; i = i + 2) {
           const nextI = i + 1;
@@ -162,8 +165,8 @@ export default dedupingMixin((superClass) => {
         }
 
         id += '-' + idParts.join('^^');
-        if (typeof languageMap.default[id] === 'object' && typeof languageMap.default[id].text === 'string') {
-          str = languageMap.default[id].text;
+        if (typeof languageMap[id] === 'object' && typeof languageMap[id].text === 'string') {
+          str = languageMap[id].text;
         }
       }
 
@@ -200,7 +203,7 @@ export default dedupingMixin((superClass) => {
      * Sets initial lang
      */
     connectedCallback() {
-      this.__lang = this.lang || document.documentElement.getAttribute('lang');
+      this.__lang = this.getAttribute('lang') || document.documentElement.getAttribute('lang');
       super.connectedCallback();
     }
 
@@ -225,17 +228,6 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
-     * @return {Promise}
-     */
-    async requestUpdate(...args) {
-      const translation = await this.getTranslationMap(this.__lang);
-      if (typeof this.langageMap[this.__lang] === 'undefined') {
-        this.langageMap[this.__lang] = translation.default;
-      }
-      return super.requestUpdate(...args);
-    }
-
-    /**
      *
      * @memberof I18nMixin
      * @param {Object} templates
@@ -247,6 +239,7 @@ export default dedupingMixin((superClass) => {
       if (typeof templates[this.__lang] !== 'undefined') {
         template = templates[this.__lang];
       }
+
       return super.render(template.template, template.styles, ...args);
     }
     /**
@@ -254,7 +247,7 @@ export default dedupingMixin((superClass) => {
      * @param {*} args
      */
     disconnectedCallback(...args) {
-      // super.disconnectedCallback(...args);
+      super.disconnectedCallback(...args);
       this.observer.disconnect();
     }
   }

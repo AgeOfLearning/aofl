@@ -131,7 +131,7 @@ export default (superClass) => {
      */
     disconnectedCallback(...args) {
       this.stopIsInViewportCheck();
-      // super.disconnectedCallback(...args);
+      super.disconnectedCallback(...args);
     };
   }
 
