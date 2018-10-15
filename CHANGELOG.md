@@ -31,6 +31,8 @@ Features:
     - Refactored to work with the updated system
   - i18n-auto-id-loader
     - Added
+  - webcomponent-css-loader
+    - Added
 
 - cli-tools
   - i18n
