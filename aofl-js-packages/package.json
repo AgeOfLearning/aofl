@@ -21,8 +21,8 @@
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "ISC",
   "devDependencies": {
-    "@aofl/i18n-loader": "^1.0.0-beta.26",
-    "@aofl/templating-plugin": "^1.0.0-beta.26",
+    "@aofl/i18n-loader": "file:../webpack-packages/i18n-loader",
+    "@aofl/templating-plugin": "file:../webpack-packages/templating-plugin",
     "@aofl/unit-testing-plugin": "file:../webpack-packages/unit-testing-plugin",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",

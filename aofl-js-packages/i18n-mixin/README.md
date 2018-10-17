@@ -9,11 +9,11 @@ The **AOFL i18nMixin element** decorates any element with **i18n** support.
 
 ## Requirements
 
-For each component which will support internationalization an `i18n` directory will need to be created in the root of the component directory. Inside this directory language `.po` files will be expected.
+For each component which will support internationalization an `i18n` directory will need to be created in the root of the component directory. Inside this directory language `translations-[language-contrycode].js` files will be expected.
 
-A `translations.pot` file will be generated via running `aofl i18n`. The command will find all component template instances of translation method strings, e.g. `__('string to translate'), _n('more strings')`.
+A `translation.js` file will be generated via running `aofl i18n`. The command will find all component template instances of translation method strings, e.g. `__('string to translate'), _c('more strings')`.
 
-The `translations.pot` can be used by a tranlsations api or translators to create the necessary language.po files in the format of `lang-LOCALE.po`, e.g. `en-US` or `pt-BZ.po`, which again will be expected in the compontent's `i18n` directory.
+The `translation.js` can be used by a tranlsations api or translators to create the necessary translation-[lang].js files in the format of `translation-LOCALE.js`, e.g. `translation-en-US` or `translation-pt-BZ.po`, which again will be expected in the compontent's `i18n` directory.
 
 Finally the component class will need to set the current language, e.g. `this.lang = 'pt-BZ';`
 
@@ -54,24 +54,12 @@ return super._render({
       return html`
         <h1>German version</h1>
         <h2>${context.__('How are you %s1', context.person)}</h2>
-        <p>${context._n({
-          1: 'There is one person here and that person is %s1',
-          2: 'There are two people here',
-          3: 'There are many people here!'
-        }, context.count, context.person)}</p>
       `;
     },
     styles: []
   }
 })
 ```
-
-## Methods
-
-| Name | Arguments  | Description                  |
-| ---- | ---------- | ---------------------------- |
-| __()  |  s[String], ...contexts[Number\|String]    | Translates the given string |
-| _n()  |  variants[Object], count[Number], ...contexts[Number\|String]    | Translates the given string, supporting plural variants |
 
 ## code example
 ```javascript
@@ -94,7 +82,7 @@ class MyComp extends i18nMixin(AoflElement) {
     return super._render({
       default: {
         template(context, html) {
-          return html`<h2>${context.__('How are you %s1', context.person)}</h2>`
+          return html`<h2>${context._r(context.__('How are you %r1%'), context.person)}</h2>`
         },
         styles: []
       },
@@ -102,12 +90,12 @@ class MyComp extends i18nMixin(AoflElement) {
         template(context, html) {
           return html`
             <h1>German version</h1>
-            <h2>${context.__('How are you %s1', context.person)}</h2>
-            <p>${context._n({
-              1: 'There is one person here and that person is %s1',
-              2: 'There are two people here',
-              3: 'There are many people here!'
-            }, context.count, context.person)}</p>
+            <h2>${context._r(context.__('How are you %r1%'), context.person)}</h2>
+            <p>${context._c('There %c1% here!', {
+              1: 'is one person',
+              2: 'are two people',
+              3: 'are many people'
+            }, context.count)}</p>
           `;
         },
         styles: []

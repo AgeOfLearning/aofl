@@ -1,7 +1,7 @@
-# aofl-os changelog
+# aofl changelog
 
 
-## v1.0.0-beta.29 (date)
+## v1.1.0 (10-17-2019)
 Features:
 - aofl-js-packages
   - upgraded lit-element to 0.6.2
