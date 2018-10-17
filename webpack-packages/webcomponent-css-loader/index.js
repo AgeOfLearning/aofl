@@ -64,8 +64,8 @@ module.exports = function(source) {
       }).then((localCss) => {
         const combinedCss = globalCss.css + localCss.css;
         const purified = purify(content.toString(), combinedCss, {
-          info: true,
-          rejected: true,
+          info: false,
+          rejected: false,
           whitelist: []
         });
 

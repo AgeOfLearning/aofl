@@ -1,6 +1,11 @@
 # aofl changelog
 
+## unreleased
+Bugfixes
+- webcomponent-css-loader
+  - removed logs
 
+---
 ## v1.1.0 (10-17-2019)
 Features:
 - aofl-js-packages
