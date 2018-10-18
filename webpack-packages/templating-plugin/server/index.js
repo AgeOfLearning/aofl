@@ -1,10 +1,8 @@
 const compression = require('compression');
 const express = require('express');
-const path = require('path');
 const serveStatic = require('serve-static');
 
-module.exports = (fileMap) => {
-  const rootPath = path.resolve(__dirname, '../../../__build');
+module.exports = (fileMap, rootPath, rootUri) => {
   let indexes = [
     'index.html',
     'index.htm'
@@ -18,7 +16,7 @@ module.exports = (fileMap) => {
 
   app.use(compression());
   app.use((req, res, next)=> {
-    let url = req.url.replace(/^\//, '');
+    let url = req.url.replace(new RegExp('^' + rootUri), '');
     let asset = null;
 
     if (typeof fileMap[url] !== 'undefined') {
@@ -26,7 +24,8 @@ module.exports = (fileMap) => {
     } else if (typeof fileMap[url + 'index.html'] !== 'undefined') {
       asset = fileMap[url + 'index.html'];
     }
-    if (typeof asset.source === 'function') {
+
+    if (asset && typeof asset.source === 'function') {
       res.send(asset.source());
     } else {
       next();
@@ -41,7 +40,7 @@ module.exports = (fileMap) => {
           console.trace(err);
           return process.exit(1);
         }
-        console.log('App listening on %s:%s', ip, port);
+        // console.log('App listening on %s:%s', ip, port);
         return resolve({
           url: 'http://localhost:8090',
           close() {

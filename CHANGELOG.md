@@ -2,8 +2,11 @@
 
 ## unreleased
 Bugfixes
-- webcomponent-css-loader
-  - removed logs
+- webpack-packages
+  - webcomponent-css-loader
+    - removed logs
+  - templating-plugin
+    - added support for variable webpackConfig.output.publicPath
 
 ---
 ## v1.1.0 (10-17-2019)
