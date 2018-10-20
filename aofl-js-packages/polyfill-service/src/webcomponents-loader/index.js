@@ -9,7 +9,7 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
- /**
+/**
   * @memberof webcomponentsLoader
   */
 const scripts = {
@@ -31,7 +31,7 @@ const scripts = {
 const load = () => {
   return new Promise((resolve, reject) => {
     let polyfillsLoaded = false;
-    let whenLoadedFns = [];
+    const whenLoadedFns = [];
     let allowUpgrades = false;
     let flushFn;
     let polyfills = [];
@@ -54,22 +54,22 @@ const load = () => {
 
     const runWhenLoadedFns = () => {
       allowUpgrades = false;
-      let done = function() {
+      const done = function() {
         allowUpgrades = true;
         whenLoadedFns.length = 0;
         flushFn && flushFn();
       };
       return Promise.all(
-        whenLoadedFns.map(function(fn) {
-          return fn instanceof Function ? fn() : fn;
-        })
+      whenLoadedFns.map(function(fn) {
+        return fn instanceof Function ? fn() : fn;
+      })
       )
-        .then(function() {
-          done();
-        })
-        .catch(function(err) {
-          console.error(err);
-        });
+      .then(function() {
+        done();
+      })
+      .catch(function(err) {
+        console.error(err);
+      });
     };
 
     const ready = () => {
@@ -100,40 +100,40 @@ const load = () => {
         }
       }
     };
-if (!('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) ||
+    if (!('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) ||
 (window.ShadyDOM && window.ShadyDOM.force)) {
-  polyfills.push('sd');
-}
+      polyfills.push('sd');
+    }
 
-if (!window.customElements || window.customElements.forcePolyfill) {
-  polyfills.push('ce');
-}
+    if (!window.customElements || window.customElements.forcePolyfill) {
+      polyfills.push('ce');
+    }
 
-let needsTemplate = (function() {
-  // no real <template> because no `content` property (IE and older browsers)
-  let t = document.createElement('template');
-  if (!('content' in t)) {
-    return true;
-  }
-  // broken doc fragment (older Edge)
-  if (!(t.content.cloneNode() instanceof DocumentFragment)) {
-    return true;
-  }
-  // broken <template> cloning (Edge up to at least version 17)
-  let t2 = document.createElement('template');
-  t2.content.appendChild(document.createElement('div'));
-  t.content.appendChild(t2);
-  let clone = t.cloneNode(true);
-  return (clone.content.childNodes.length === 0 ||
+    const needsTemplate = (function() {
+      // no real <template> because no `content` property (IE and older browsers)
+      const t = document.createElement('template');
+      if (!('content' in t)) {
+        return true;
+      }
+      // broken doc fragment (older Edge)
+      if (!(t.content.cloneNode() instanceof DocumentFragment)) {
+        return true;
+      }
+      // broken <template> cloning (Edge up to at least version 17)
+      const t2 = document.createElement('template');
+      t2.content.appendChild(document.createElement('div'));
+      t.content.appendChild(t2);
+      const clone = t.cloneNode(true);
+      return (clone.content.childNodes.length === 0 ||
     clone.content.firstChild.content.childNodes.length === 0);
-  })();
-  // NOTE: any browser that does not have template or ES6 features
-  // must load the full suite of polyfills.
-  if (!window.Promise || !Array.from || !window.URL || !window.Symbol || needsTemplate) {
-    polyfills = ['sd-ce-pf'];
-  }
+    })();
+    // NOTE: any browser that does not have template or ES6 features
+    // must load the full suite of polyfills.
+    if (!window.Promise || !Array.from || !window.URL || !window.Symbol || needsTemplate) {
+      polyfills = ['sd-ce-pf'];
+    }
 
-  if (polyfills.length) {
+    if (polyfills.length) {
       const replacement = 'webcomponents-' + polyfills.join('-');
       if (typeof scripts[replacement] === 'function') {
         // if readyState is 'loading', this script is synchronous

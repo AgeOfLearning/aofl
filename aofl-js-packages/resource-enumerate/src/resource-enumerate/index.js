@@ -27,7 +27,7 @@ class ResourceEnumerate {
     this.environment = environment;
     this.middlewareInstance = new Middleware('before', 'after');
     this.apiRequestInstance = new ApiRequest();
-   }
+  }
 
   /**
    *
@@ -47,7 +47,7 @@ class ResourceEnumerate {
   init({apis, developmentConfig, stageConfig}) {
     this.apis = apis;
 
-    for (let apiNs in this.apis) {
+    for (const apiNs in this.apis) {
       /* istanbul ignore next */
       if (!this.apis.hasOwnProperty(apiNs)) continue;
       const api = this.apis[apiNs];
@@ -145,7 +145,7 @@ class ResourceEnumerate {
 
     return configFn()
     .then((configModule) => {
-      for (let apiNs in this.apis) {
+      for (const apiNs in this.apis) {
         /* istanbul ignore next */
         if (!this.apis.hasOwnProperty(apiNs)) continue;
         const api = this.apis[apiNs];

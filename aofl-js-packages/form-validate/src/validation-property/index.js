@@ -31,7 +31,7 @@ class ValidationProperty {
       writable: true
     });
 
-    for (let key in validators) {
+    for (const key in validators) {
       /* istanbul ignore next */
       if (!validators.hasOwnProperty(key)) continue;
       /* istanbul ignore next */
@@ -65,7 +65,7 @@ class ValidationProperty {
     });
     this.validateCompleteResolved = false;
 
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
@@ -79,7 +79,7 @@ class ValidationProperty {
    * @readonly
    */
   get valid() {
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
@@ -96,7 +96,7 @@ class ValidationProperty {
    * @readonly
    */
   get pending() {
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
@@ -113,7 +113,7 @@ class ValidationProperty {
    * @readonly
    */
   get observed() {
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
@@ -130,7 +130,7 @@ class ValidationProperty {
    *
    */
   validate() {
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
@@ -175,7 +175,7 @@ class ValidationProperty {
    */
   getKeys() {
     const keys = ['valid', 'pending', 'observed'];
-    for (let key in this) {
+    for (const key in this) {
       /* istanbul ignore next */
       if (!this.hasOwnProperty(key)) continue;
       keys.push(key);

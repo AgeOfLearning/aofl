@@ -100,7 +100,7 @@ describe('@aofl/store/src/store', function() {
     });
 
     it('replaceState() to replace the state with the supplied object', function() {
-      let state = {};
+      const state = {};
       this.storeInstance.replaceState(state);
       expect(storeInstance.state).to.eql(state);
     });

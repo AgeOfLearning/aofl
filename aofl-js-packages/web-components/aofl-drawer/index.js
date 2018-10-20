@@ -61,10 +61,10 @@ class AoflDrawer extends AoflElement {
       if (this.open) {
         this.classList.remove(this.opening);
         this.classList.add(this.closing);
-       } else {
-         this.classList.remove(this.closing);
-         this.classList.add(this.opening);
-       }
+      } else {
+        this.classList.remove(this.closing);
+        this.classList.add(this.opening);
+      }
     }
 
     this.addEventListener('animationend', this.animationEndHandler);
@@ -135,8 +135,8 @@ class AoflDrawer extends AoflElement {
     let cancel = false;
     let max = 100;
 
-    let testDisplayBlock = () => {
-      let display = window.getComputedStyle(this).getPropertyValue('display');
+    const testDisplayBlock = () => {
+      const display = window.getComputedStyle(this).getPropertyValue('display');
       /* istanbul ignore next */
       if (display === 'block') {
         callback();

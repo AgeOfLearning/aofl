@@ -120,7 +120,7 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
       await resourceEnumerateInstance.get('apins');
 
       expect(window.fetch.calledWith('productionHost')).to.true;
-     } catch (e) {
+    } catch (e) {
       return Promise.reject(e);
     }
   });

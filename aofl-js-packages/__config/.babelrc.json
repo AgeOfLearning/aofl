@@ -1,0 +1,41 @@
+{
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-optional-chaining",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": false,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        [
+          "istanbul",
+          {
+            "include": [
+              "**/*.js"
+            ],
+            "exclude": [
+              "**/node_modules/*",
+              "**/*.spec.*",
+              "**/tests-dest/*",
+              "**/node_modules_sourced/*",
+              "**/__config/*",
+              "**/aofl-source"
+            ]
+          }
+        ]
+      ]
+    }
+  }
+}

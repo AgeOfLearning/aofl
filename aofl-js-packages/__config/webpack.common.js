@@ -4,17 +4,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = (mode) => {
   const config = {
-    resolve: {
-      modules: [
-        path.resolve('./'),
-        './node_modules/'
-      ]
-    },
     entry: {
       'custom-elements-es5-adapter':
         './node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js',
       'polyfill-service': './__config/polyfill-service.js'
-      // 'webcomponents-bundle': './node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js'
     },
     output: {
       path: path.join(__dirname, '..', '__build'),
@@ -24,29 +17,6 @@ module.exports = (mode) => {
     mode,
     module: {
       rules: [
-        {
-          test: /\.html$/,
-          exclude: /template\.html/,
-          use: [
-            {
-              loader: 'html-loader',
-              options: {
-                minimize: true,
-                attrs: [
-                  'aofl-img:aofl-src',
-                  'aofl-source:aofl-srcset',
-                  'aofl-img:src',
-                  'source:srcset',
-                  ':src'
-                ]
-              }
-            }
-          ]
-        },
-        {
-          test: /language\.js$/,
-          use: '@aofl/i18n-loader'
-        },
         {
           test: /\.css$/,
           use: [
@@ -86,45 +56,7 @@ module.exports = (mode) => {
             loader: 'babel-loader',
             options: {
               'cacheDirectory': true,
-              'presets': [
-                '@babel/preset-env'
-              ],
-              'plugins': [
-                '@babel/plugin-proposal-object-rest-spread',
-                '@babel/plugin-syntax-dynamic-import',
-                '@babel/plugin-proposal-optional-chaining',
-                [
-                  '@babel/plugin-transform-runtime',
-                  {
-                    'corejs': false,
-                    'helpers': false,
-                    'regenerator': true,
-                    'useESModules': false
-                  }
-                ]
-              ],
-              'env': {
-                'test': {
-                  'plugins': [
-                    [
-                      'istanbul',
-                      {
-                        'include': [
-                          '**/*.js'
-                        ],
-                        'exclude': [
-                          '**/node_modules/*',
-                          '**/*.spec.*',
-                          '**/tests-dest/*',
-                          '**/node_modules_sourced/*',
-                          '**/__config/*',
-                          '**/aofl-source'
-                        ]
-                      }
-                    ]
-                  ]
-                }
-              }
+              ...require('./.babelrc.json')
             }
           }
         },
@@ -151,10 +83,6 @@ module.exports = (mode) => {
               }
             }
           ]
-        },
-        {
-          test: /\.svg$/,
-          loader: 'svg-inline-loader'
         }
       ]
     },
@@ -164,6 +92,12 @@ module.exports = (mode) => {
         root: path.resolve(__dirname, '..')
       })
     ],
+    resolve: {
+      modules: [
+        path.resolve('./'),
+        './node_modules/'
+      ]
+    },
     watchOptions: {
       ignored: [/node_modules\//]
     },
@@ -193,12 +127,6 @@ module.exports = (mode) => {
           }
         }
       }
-    },
-    resolve: {
-      modules: [
-        path.resolve('.'),
-        path.resolve('node_modules')
-      ]
     }
   };
 

@@ -68,7 +68,7 @@ class Store {
 
     const setPendingAny = (obj, root = false) => {
       let anyPending = false;
-      for (let key in obj) {
+      for (const key in obj) {
         /* istanbul ignore next */
         if (key === 'any' || !obj.hasOwnProperty(key)) continue;
         if (obj[key] === true || (root && obj[key].any === true)) {
@@ -118,11 +118,11 @@ class Store {
    * @param {Object} nextState
    */
   execAsyncMutations(nextState) {
-    let ns = this.namespaces;
-    for (let key in ns) {
+    const ns = this.namespaces;
+    for (const key in ns) {
       /* istanbul ignore next  */
       if (!ns.hasOwnProperty(key)) continue;
-      for (let mutationId in ns[key].asyncMutations) {
+      for (const mutationId in ns[key].asyncMutations) {
         /* istanbul ignore next  */
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
@@ -160,8 +160,8 @@ class Store {
         throw new TypeError(`${mutations[i].namespace} is not a valid namespace`);
       };
 
-      let mutation = mutations[i];
-      let ns = this.namespaces[mutation.namespace];
+      const mutation = mutations[i];
+      const ns = this.namespaces[mutation.namespace];
 
       nextState = Object.assign({}, nextState, {
         [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload)

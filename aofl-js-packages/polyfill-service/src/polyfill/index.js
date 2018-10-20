@@ -22,7 +22,7 @@ class Polyfill {
    * @return {Boolean}
    */
   static supported(property) {
-    let modulePath = property.split('.');
+    const modulePath = property.split('.');
     let obj = window;
     for (let i = 0; i < modulePath.length; i++) {
       if (typeof obj[modulePath[i]] === 'undefined') return false;
@@ -55,9 +55,9 @@ class Polyfill {
    * @return {Promis}
    */
   static loadAll(polyfills) {
-    let promises = [];
+    const promises = [];
 
-    for (let key in polyfills) {
+    for (const key in polyfills) {
       /* istanbul ignore next */
       if (polyfills.hasOwnProperty(key)) {
         promises.push(Polyfill.load(key, polyfills[key]));

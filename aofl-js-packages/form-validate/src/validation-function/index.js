@@ -66,7 +66,7 @@ class ValidationFunction {
   validate() {
     this.observed = true;
     let target = this.target; // @todo: move to object utils
-    let propChain = this.propName.split('.');
+    const propChain = this.propName.split('.');
 
     for (let i = 0; i < propChain.length - 1; i++) {
       target = target[propChain[i]];
@@ -108,8 +108,8 @@ class ValidationFunction {
    * @return {Array}
    */
   getKeys() {
-    let keys = ['valid', 'pending', 'observed'];
-    for (let key in this) {
+    const keys = ['valid', 'pending', 'observed'];
+    for (const key in this) {
       if (!this.hasOwnProperty(key)) continue;
       keys.push(key);
     }

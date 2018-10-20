@@ -2,6 +2,10 @@
 
 ## unreleased
 Features:
+- Updated node packages
+- Adjusted eslint config for indentation
+- Fixed linting issues
+- Moved babel config out of webpack config
 - cli-tools
   - cli
     - Updated generate component to match v1.1.0 standards

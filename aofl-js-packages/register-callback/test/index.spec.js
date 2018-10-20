@@ -119,7 +119,7 @@ describe('@aofl/register-callback/src/register-callback', function() {
 
   context('next()', function() {
     it('should invoke all next functions', function() {
-      let nextSpy = sinon.spy();
+      const nextSpy = sinon.spy();
       this.rc.register(nextSpy);
       this.rc.next();
 
@@ -129,7 +129,7 @@ describe('@aofl/register-callback/src/register-callback', function() {
 
   context('error()', function() {
     it('should invoke all error functions', function() {
-      let errorSpy = sinon.spy();
+      const errorSpy = sinon.spy();
       this.rc.register('', errorSpy);
       this.rc.error();
 

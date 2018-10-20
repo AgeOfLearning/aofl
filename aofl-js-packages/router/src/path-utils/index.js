@@ -25,7 +25,7 @@ class PathUtils {
     const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
     let regexStr = '';
     let matches = DYNAMIC_PATH_REGEX.exec(path);
-    let keys = [];
+    const keys = [];
     if (matches === null) {
       regexStr = path;
     } else {
@@ -45,7 +45,7 @@ class PathUtils {
       regex,
       parse(path) {
         if (keys.length === 0) return {};
-        let matches = regex.exec(path);
+        const matches = regex.exec(path);
         return keys.reduce((acc, key, index) => {
           acc[key] = matches[index + 1];
           return acc;

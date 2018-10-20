@@ -17,7 +17,7 @@ export default dedupingMixin((superClass) => {
   /**
    * @memberof module:aofl-js/i18n-mixin-package
    */
-   class I18nMixin extends superClass {
+  class I18nMixin extends superClass {
     /**
      *
      */
@@ -41,7 +41,7 @@ export default dedupingMixin((superClass) => {
      * @return {MutationObserver}
      */
     langListener() {
-      let observer = new MutationObserver((mutationList) => {
+      const observer = new MutationObserver((mutationList) => {
         if (this.getAttribute('lang')) return;
         if (mutationList.length > 0) {
           this.__lang = mutationList[0].target.lang;
@@ -151,7 +151,7 @@ export default dedupingMixin((superClass) => {
       const languageMap = translation || {};
 
       if (typeof languageMap !== 'undefined' && typeof languageMap === 'object') {
-        let idParts = [];
+        const idParts = [];
         for (let i = 0; i < args.length; i = i + 2) {
           const nextI = i + 1;
           if (nextI >= args.length) continue;

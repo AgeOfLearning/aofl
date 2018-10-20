@@ -35,14 +35,21 @@ class Middleware {
    * @return {Iterator}
    */
   getMiddlewareIterator(hook = 'post') {
-    let collection = this.middleware[hook];
+    const collection = this.middleware[hook];
     let nextIndex = 0;
 
     return {
       next() {
-        return nextIndex < collection.length ?
-        {value: collection[nextIndex++], done: false} :
-        {done: true};
+        if (nextIndex < collection.length) {
+          return {
+            value: collection[nextIndex++],
+            done: false
+          };
+        }
+
+        return {
+          done: true
+        };
       }
     };
   }
@@ -55,9 +62,9 @@ class Middleware {
    */
   iterateMiddleware(request, hook = 'post', response = null) {
     return new Promise((resolve, reject) => {
-      let iterator = this.getMiddlewareIterator(hook);
+      const iterator = this.getMiddlewareIterator(hook);
       let mw = null;
-      let next = (response = null) => {
+      const next = (response = null) => {
         mw = iterator.next();
         if (mw.done !== true) {
           mw.value.callback(request, response, next);

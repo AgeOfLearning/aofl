@@ -42,8 +42,8 @@ document.onreadystatechange = function documentListener() {
     router.init(config);
     router.navigate('/', true); // load initial route
 
-    let menu = document.getElementsByTagName('nav')[0];
-    let pageContent = document.getElementById('page-content');
+    const menu = document.getElementsByTagName('nav')[0];
+    const pageContent = document.getElementById('page-content');
 
     router.beforeEach((request, response, next) => {
       if (request.to === '/about/bob') {
@@ -54,21 +54,21 @@ document.onreadystatechange = function documentListener() {
 
     router.after((request, response, next) => {
       response.matchedRoute.resolve()
-      .then((content) => {
-        pageContent.innerHTML = content.default;
-        next(response);
-      });
+          .then((content) => {
+            pageContent.innerHTML = content.default;
+            next(response);
+          });
     });
 
     router.after((request, response, next) => {
-      let currentPath = document.getElementById('current-path');
+      const currentPath = document.getElementById('current-path');
       if (currentPath !== null) {
         currentPath.innerText = location.pathname || '/';
       }
       if (/about/.test(response.to)) {
         if (response.matchedRoute.props !== undefined) {
-          let person = document.getElementById('person');
-          let occupation = document.getElementById('occupation');
+          const person = document.getElementById('person');
+          const occupation = document.getElementById('occupation');
           if (person) person.innerText = response.matchedRoute.props.person;
           if (occupation) occupation.innerText = response.matchedRoute.props.occupation;
         }

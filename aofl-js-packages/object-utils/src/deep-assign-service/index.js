@@ -49,13 +49,13 @@ export function deepAssign(leftSource, path, rightSource) {
     pathParts = [];
   }
 
-  let recursiveAssign = (pathParts, obj) => {
+  const recursiveAssign = (pathParts, obj) => {
     if (pathParts.length === 0) {
       return Object.assign({}, obj, rightSource);
     }
 
-    let key = pathParts[0];
-    let subPath = pathParts.splice(1);
+    const key = pathParts[0];
+    const subPath = pathParts.splice(1);
     return Object.assign({}, obj, {
       [key]: recursiveAssign(subPath, obj[key])
     });

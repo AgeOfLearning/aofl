@@ -12,12 +12,12 @@ module.exports = (environment = 'production') => {
     cache: true,
     alwaysWriteToDisk: true,
     templateParameters(compilation, assets, options) {
-      let assetsMap = {};
-      for (let key in assets.chunks) {
+      const assetsMap = {};
+      for (const key in assets.chunks) {
         if (!assets.chunks.hasOwnProperty(key)) continue;
-        let url = assets.chunks[key].entry;
-        let source = compilation.assets[url.substr(assets.publicPath.length)].source();
-        let sourceStr = jsStringEscape(source);
+        const url = assets.chunks[key].entry;
+        const source = compilation.assets[url.substr(assets.publicPath.length)].source();
+        const sourceStr = jsStringEscape(source);
         assetsMap[key] = {
           url,
           source,

@@ -102,7 +102,7 @@ class AoflPicture extends AoflElement {
    */
   setMediaSrc(source = this.defaultSrc) {
     if (!this.img) return;
-    let imgSrc = this.img.src;
+    const imgSrc = this.img.src;
 
     if (imgSrc !== source.src) {
       this.img.setAttribute('src', source.src);

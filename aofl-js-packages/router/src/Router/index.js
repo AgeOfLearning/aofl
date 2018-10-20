@@ -44,9 +44,10 @@ class Router {
     };
 
     this
-      .beforeEach(matchRouteMiddleware(this))
-      .after(redirectMiddleware(this))
-      .after(updateStateMiddleware);
+    .beforeEach(matchRouteMiddleware(this))
+    .after(redirectMiddleware(this))
+    .after(updateStateMiddleware);
+
     this.removeListener = this.listen();
   }
 

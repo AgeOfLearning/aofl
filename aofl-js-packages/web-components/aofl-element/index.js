@@ -20,7 +20,7 @@ class AoflElement extends LitElement {
    * @return {Object}
    */
   render(template, styles = []) {
-    let s = html`<style>${styles.reduce((acc, item) => {
+    const s = html`<style>${styles.reduce((acc, item) => {
       if (item && item.length) {
         acc += `${String(item)}`;
       }

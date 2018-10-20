@@ -13,25 +13,25 @@ import PathUtils from '../path-utils';
  */
 const matchBestPath = (_path, routes) => {
   const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
-  let stack = [];
+  const stack = [];
   for (let i = 0; i < routes.length; i++) {
-    let route = routes[i];
+    const route = routes[i];
     route.path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(route.path));
     if (path === route.path) { // exact match
       stack.shift();
       stack.push(route);
       break;
     }
-    let matches = route.regex.exec(path);
+    const matches = route.regex.exec(path);
     if (matches !== null) {
       if (stack.length === 0) {
         stack.push(route);
       } else {
-        let pathSegments = PathUtils.getPathSegments(path);
-        let routeSegments = PathUtils.getPathSegments(route.path);
-        let lastSegments = PathUtils.getPathSegments(stack[0].path);
-        let routeSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, routeSegments);
-        let lastSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, lastSegments);
+        const pathSegments = PathUtils.getPathSegments(path);
+        const routeSegments = PathUtils.getPathSegments(route.path);
+        const lastSegments = PathUtils.getPathSegments(stack[0].path);
+        const routeSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, routeSegments);
+        const lastSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, lastSegments);
         if (routeSegmentMatchesCount > lastSegmentMatchesCount) {
           stack.shift();
           stack.push(route);
@@ -39,7 +39,7 @@ const matchBestPath = (_path, routes) => {
       }
     }
   }
-  let match = stack.shift();
+  const match = stack.shift();
   if (!match) return null;
   return Object.assign({}, match);
 };
@@ -56,7 +56,7 @@ const matchBestPath = (_path, routes) => {
  * @return {Function}
  */
 export default (router) => (request, response, next) => {
-  let matchedRoute = matchBestPath(request.to, request.routes);
+  const matchedRoute = matchBestPath(request.to, request.routes);
   if (matchedRoute !== null) {
     matchedRoute.props = matchedRoute.parse(request.to);
     router.matchedRoute = matchedRoute; // add MatchedRoute to the router instance

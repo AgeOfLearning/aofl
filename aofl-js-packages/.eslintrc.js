@@ -23,7 +23,11 @@ const config = {
       ignoreTemplateLiterals: true,
       ignoreRegExpLiterals: true
     }],
-    'space-in-parens': ['error', 'never']
+    'space-in-parens': ['error', 'never'],
+    'indent': ['error', 2, {
+      MemberExpression: 0,
+      CallExpression: {arguments: 0}
+    }]
   }
 };
 

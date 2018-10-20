@@ -39,7 +39,7 @@ class RegisterCallback {
    * @private
    */
   removeCb(type, fn) {
-    let index = this.callbacks[type].indexOf(fn);
+    const index = this.callbacks[type].indexOf(fn);
     if (index > -1) {
       this.callbacks[type].splice(index, 1);
     }
@@ -64,7 +64,7 @@ class RegisterCallback {
     const unsubscribe = () => {
       if (unsubscribe.executed) return;
       Object.defineProperty(unsubscribe, 'executed', {
-            value: true
+        value: true
       });
 
       this.removeCb('next', next);

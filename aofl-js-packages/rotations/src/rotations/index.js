@@ -56,7 +56,7 @@ class Rotations {
   getWeightsTotal(versions) {
     let total = 0;
 
-    for (let version in versions) {
+    for (const version in versions) {
       if (!versions.hasOwnProperty(version)) continue;
       total += Number(versions[version]);
     }
@@ -75,11 +75,11 @@ class Rotations {
     // Weights need to be converted into a percentage
     // Weight percentage = weight / weights total
     const weightTotal = this.getWeightsTotal(versions);
-    for (let version in versions) {
+    for (const version in versions) {
       if (!versions.hasOwnProperty(version)) continue;
-      let weight = versions[version];
-      let pct = Math.round(Number(weight) / weightTotal * 100);
-      let range = Number(startRange) + pct;
+      const weight = versions[version];
+      const pct = Math.round(Number(weight) / weightTotal * 100);
+      const range = Number(startRange) + pct;
       startRange += range;
       versionRanges.push({
         version,
@@ -95,7 +95,7 @@ class Rotations {
    * @return {Promise} resolves to {Number} selectedRotationId
    */
   getQualifyingRotation(route) {
-    let promises = [];
+    const promises = [];
     let rotationIds = [];
     let selectedRotationId = null;
     return new Promise((resolve, reject) => {
@@ -127,8 +127,8 @@ class Rotations {
    */
   chooseWeightedVariant(selectedRotationId) {
     let selectedRotation;
-    let versions = this.createVersionRanges(this.rotationConfig['rotation_versions'][selectedRotationId]);
-    let randomVal = Math.round(Math.random()*100);
+    const versions = this.createVersionRanges(this.rotationConfig['rotation_versions'][selectedRotationId]);
+    const randomVal = Math.round(Math.random()*100);
     for (let i = 0; i < versions.length; i++) {
       if ((randomVal < versions[i].range) || (i + 1 === versions.length)) {
         selectedRotation = versions[i].version;
@@ -148,7 +148,7 @@ class Rotations {
   replaceRoute(routes, selectedRotation = 'routes', path) {
     let route = null;
     for (let i = 0; i < this.routeConfig[selectedRotation].length; i++) {
-      let configRoute = this.routeConfig[selectedRotation][i];
+      const configRoute = this.routeConfig[selectedRotation][i];
       if (configRoute.path === path) {
         route = configRoute;
         break;
@@ -187,10 +187,10 @@ class Rotations {
         addRoute(this.routeConfig.routes[i]);
       }
     }
-    for (let key in this.routeConfig) {
+    for (const key in this.routeConfig) {
       if (!this.routeConfig.hasOwnProperty(key) || key === 'routes') continue;
       for (let i = 0; i < this.routeConfig[key].length; i++) {
-        let route = this.routeConfig[key][i];
+        const route = this.routeConfig[key][i];
         addRoute(route);
       }
     }
@@ -207,13 +207,13 @@ class Rotations {
         return resolve(this.routeConfig.routes);
       }
       const routes = this.uniqueRoutes();
-      let iterRoutes = this.gen(routes);
+      const iterRoutes = this.gen(routes);
       let route = {};
-      let routeConfig = this.routeConfig.routes;
+      const routeConfig = this.routeConfig.routes;
       let rotationId;
       // this.cache.clear();
       const pushRoutes = (routeConfig=[]) => {
-        let next = iterRoutes.next();
+        const next = iterRoutes.next();
         let selectedRotation = '';
         if (next.done === true) {
           resolve(routeConfig);

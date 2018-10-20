@@ -57,8 +57,8 @@ class CacheManager {
    * @return {Array}
    */
   getStoredKeys() {
-    let keys = [];
-    for (let key in this.storage) {
+    const keys = [];
+    for (const key in this.storage) {
       if (!this.storage.hasOwnProperty(key)) continue;
       if (key.indexOf(this.namespace + '_') === 0) {
         keys.push(key);
@@ -99,7 +99,7 @@ class CacheManager {
       obj = JSON.stringify(obj);
     }
 
-    let namespaceKey = this.getNamespaceKey(key);
+    const namespaceKey = this.getNamespaceKey(key);
     this.storage.setItem(namespaceKey, obj);
     this.storedKeys.push(namespaceKey);
   }
@@ -135,7 +135,7 @@ class CacheManager {
    * @return {Object}
    */
   getCollection() {
-    let collection = {};
+    const collection = {};
     for (let i = 0; i < this.storedKeys.length; i++) {
       if (this.isExpired(this.storedKeys[i])) continue;
       collection[this.storedKeys[i]] = this.getItem(this.storedKeys[i]);
@@ -151,8 +151,8 @@ class CacheManager {
    * @param {String} key The name of the key you want to remove
    */
   removeItem(key) {
-    let namespaceKey = this.getNamespaceKey(key);
-    let index = this.storedKeys.indexOf(namespaceKey);
+    const namespaceKey = this.getNamespaceKey(key);
+    const index = this.storedKeys.indexOf(namespaceKey);
 
     if (index > -1) {
       this.storage.removeItem(namespaceKey);
@@ -182,7 +182,7 @@ class CacheManager {
       return false;
     }
 
-    let namespaceKey = this.getNamespaceKey(key);
+    const namespaceKey = this.getNamespaceKey(key);
     let obj = this.storage.getItem(namespaceKey);
     if (this.storageType === cacheTypeEnumerate.LOCAL ||
     this.storageType === cacheTypeEnumerate.SESSION) {

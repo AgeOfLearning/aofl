@@ -65,7 +65,7 @@ export default (superClass) => {
      */
     addListeners() {
       let parent = this;
-       while (parent !== null) {
+      while (parent !== null) {
         if (parent.assignedSlot) {
           parent = parent.assignedSlot;
         } else if (typeof parent.tagName === 'undefined' && typeof parent.host !== 'undefined') {

@@ -7,11 +7,11 @@ class SampleFormatter {
    * @return {Object}
    */
   static pack(payload) {
-    let headers = new Headers();
-    let boundary = 'Boundary-' + Date.now();
-    let args = JSON.stringify(payload.args);
+    const headers = new Headers();
+    const boundary = 'Boundary-' + Date.now();
+    const args = JSON.stringify(payload.args);
 
-    let body = `--${boundary}
+    const body = `--${boundary}
 Content-Disposition: form-data; name="arguments"
 
 ${args}

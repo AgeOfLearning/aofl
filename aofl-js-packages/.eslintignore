@@ -1,4 +1,5 @@
 *.min.js
 node_modules
 __build
+__build_tests
 language.js

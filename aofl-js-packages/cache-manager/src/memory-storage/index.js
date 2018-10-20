@@ -12,7 +12,7 @@ class MemoryStorage {
    * The clear() method of the Storage interface, when invoked, clears all stored keys.
    */
   static clear() {
-    for (let key in MemoryStorage) {
+    for (const key in MemoryStorage) {
       if (MemoryStorage.hasOwnProperty(key)) {
         MemoryStorage.removeItem(key);
       }
@@ -27,7 +27,7 @@ class MemoryStorage {
    */
   static get size() {
     let length = 0;
-    for (let key in MemoryStorage) {
+    for (const key in MemoryStorage) {
       if (MemoryStorage.hasOwnProperty(key)) {
         length++;
       }

@@ -62,45 +62,45 @@ describe('@aofl/rotations/rotation', function() {
     });
 
     it('"getWeightsTotal()" should return the correct sum of weights', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let total = rotations.getWeightsTotal(this.rotationsConfig['rotation_versions']['1']);
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const total = rotations.getWeightsTotal(this.rotationsConfig['rotation_versions']['1']);
       expect(total).to.equal(4);
     });
 
     it('"createVersionRanges" should create the correct weight based pct ranges', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let versions = rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const versions = rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
       expect(versions[0].range).to.equal(75);
       expect(versions[1].range).to.equal(100);
     });
 
     it('"createVersionRanges" should not mutate versions argument', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let originalVersions = Object.assign({}, this.rotationsConfig['rotation_versions']['1']);
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const originalVersions = Object.assign({}, this.rotationsConfig['rotation_versions']['1']);
       rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
       expect(this.rotationsConfig['rotation_versions']['1']).to.eql(originalVersions);
     });
 
     it('"chooseWeightedVariant()" should select rotations based on weighted distribution', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
       let routesCount = 0;
       const limit = 500;
       for (let i = 0; i < limit; i++) {
-        let version = rotations.chooseWeightedVariant('1');
+        const version = rotations.chooseWeightedVariant('1');
         if (version === '1000') routesCount++;
       }
       expect(routesCount/limit).to.be.within(0.65, 0.85);
     });
 
     it('"replaceRoute()" should replace routes correctly', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let routes = rotations.replaceRoute(this.routeConfig.routes, 'routes-b', '/login');
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const routes = rotations.replaceRoute(this.routeConfig.routes, 'routes-b', '/login');
       expect(routes[1].rotation).to.equal('routes-b');
     });
 
     it('"getQualifyingRotation()" should qualify in the correct order', async function() {
       try {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+        const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
         const selectedRotationId = await rotations.getQualifyingRotation({path: '/about'});
         expect(selectedRotationId).to.equal(2);
       } catch (e) {
@@ -109,8 +109,8 @@ describe('@aofl/rotations/rotation', function() {
     });
 
     it('"uniqueRoutes()" should provide unique routes', function() {
-      let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let routes = rotations.uniqueRoutes();
+      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+      const routes = rotations.uniqueRoutes();
       expect(routes.length).to.equal(2);
     });
   });
@@ -246,7 +246,7 @@ describe('@aofl/rotations/rotation', function() {
     it('Should generate routes-b ~33%  of the time', async function() {
       try {
         await new Promise((resolve) => {
-          let rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          const rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
           let totalCount = 0;
           let routesBCount = 0;
 
@@ -318,7 +318,7 @@ describe('@aofl/rotations/rotation', function() {
               if (rotations) rotations.clearCache();
               rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
 
-              let p = rotations.getRoutes();
+              const p = rotations.getRoutes();
               promises.push(p);
               p.then((routes) => {
                 matches[routes[0].rotation] += 1;
@@ -413,7 +413,7 @@ describe('@aofl/rotations/rotation', function() {
             prerender: true
           };
 
-          let rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
           rotations.getRoutes().then((routes) => {
             expect(routes).to.be.a('array');
             expect(routes).to.have.lengthOf(3);

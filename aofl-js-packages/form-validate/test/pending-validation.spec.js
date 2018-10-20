@@ -61,7 +61,7 @@ describe('@aofl/aofl-validate/validationMixin', function() {
     try {
       this.testForm.firstname = 'A';
       this.testForm.form.validate();
-      let validateCompleteCached = this.testForm.form.validateComplete;
+      const validateCompleteCached = this.testForm.form.validateComplete;
       this.testForm.form.validate();
       expect(this.testForm.form.validateComplete).to.equal(validateCompleteCached);
     } catch (e) {

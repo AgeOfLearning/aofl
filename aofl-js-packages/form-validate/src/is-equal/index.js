@@ -1,4 +1,4 @@
- /* eslint no-invalid-this: "off" */
+/* eslint no-invalid-this: "off" */
 
 /**
  * Tracks two properties of any class to be equal.
@@ -12,7 +12,7 @@
  * @return {Function} True or false if the given value passes the
  *                   given regex test is valid.
  */
-let isEqual = (propName) => {
+const isEqual = (propName) => {
   return function isEqualValidator(value) {
     if (typeof this.target[propName] === 'undefined') return false;
     return this.target[propName] === value;

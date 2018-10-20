@@ -57,7 +57,7 @@ class AoflSelectList extends AoflElement {
     for (let i = 0; i < this.options.length; i++) {
       this.options[i].removeAttribute('selected');
       if (this.options[i].value === newValue) {
-        let selected = this.options[i];
+        const selected = this.options[i];
         selected.setAttribute('selected', 'true');
         value = selected.value;
       }
