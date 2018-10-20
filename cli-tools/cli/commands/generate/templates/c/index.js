@@ -1,4 +1,4 @@
-import styles from './styles.css';
+import styles from './template.css';
 import template from './template';
 import AoflElement from '@aofl/web-components/aofl-element';
 
@@ -26,8 +26,8 @@ class __uppercamelcase__placeholder__ extends AoflElement {
    *
    * @return {Object}
    */
-  _render() {
-    return super._render(template, [styles]);
+  render() {
+    return super.render(template, [styles]);
   }
 }
 

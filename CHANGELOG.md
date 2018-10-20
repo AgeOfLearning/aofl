@@ -1,7 +1,12 @@
 # aofl changelog
 
 ## unreleased
-Bugfixes
+Features:
+- cli-tools
+  - cli
+    - Updated generate component to match v1.1.0 standards
+
+Bugfixes:
 - webpack-packages
   - webcomponent-css-loader
     - removed logs
