@@ -1,13 +1,30 @@
 const merge = require('webpack-merge');
 const common = require('./__config/webpack.common');
 const UnitTesting = require('@aofl/unit-testing-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
 
 const config = merge(common('development'), {
+  output: {
+    filename: '[name]-[chunkhash].min.js'
+  },
   devtool: 'none',
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
+    }),
+    new UglifyJsPlugin({
+      sourceMap: false,
+      cache: false,
+      parallel: true,
+      extractComments: true,
+      uglifyOptions: {
+        ecma: 8,
+        compress: {
+          warnings: false
+        }
+      },
+      exclude: /(custom-elements-es5-adapter)/
     }),
     new UnitTesting({
       clean: false,

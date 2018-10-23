@@ -6,6 +6,7 @@ Features:
 - Adjusted eslint config for indentation
 - Fixed linting issues
 - Moved babel config out of webpack config
+- Updated saucelabs config
 - cli-tools
   - cli
     - Updated generate component to match v1.1.0 standards
@@ -17,6 +18,8 @@ Bugfixes:
     - Add @import paths the modules dependencies.
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
+  -unit-testing-plugin
+    - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 
 ---
 ## v1.1.0 (10-17-2019)
