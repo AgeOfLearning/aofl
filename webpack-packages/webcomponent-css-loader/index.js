@@ -39,6 +39,18 @@ module.exports = function(source) {
     let indexContent = fs.existsSync(indexPath).toString() ? fs.readFileSync(indexPath) : '';
     content = indexContent + content;
     this.addDependency(templatePath);
+
+    const addDependencies = (messages) => {
+      if (Array.isArray(messages)) {
+        for (let i = 0; i < messages.length; i++) {
+          const message = messages[i];
+          if (typeof message.type === 'string' && message.type === 'dependency') {
+              this.addDependency(message.file);
+          };
+        }
+      }
+    };
+
     postcss()
     .use(atImport({
       root: path.dirname(options.path)
@@ -51,6 +63,7 @@ module.exports = function(source) {
       to: rPath,
       map: false
     }).then((globalCss) => {
+      addDependencies(globalCss.messages);
       postcss()
       .use(atImport({
         root: path.dirname(rPath)
@@ -62,6 +75,7 @@ module.exports = function(source) {
         from: rPath,
         map: false
       }).then((localCss) => {
+        addDependencies(localCss.messages);
         const combinedCss = globalCss.css + localCss.css;
         const purified = purify(content.toString(), combinedCss, {
           info: false,
