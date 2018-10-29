@@ -1,0 +1,9 @@
+:host {
+  display: inline;
+}
+
+svg {
+  fill: var(--icon-fill, #000);
+  width: 100%;
+  height: auto;
+}

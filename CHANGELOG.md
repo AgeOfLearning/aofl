@@ -10,6 +10,7 @@ Features:
 - cli-tools
   - cli
     - Updated generate component to match v1.1.0 standards
+    - Added icons template
 
 Bugfixes:
 - webpack-packages
@@ -18,7 +19,7 @@ Bugfixes:
     - Add @import paths the modules dependencies.
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
-  -unit-testing-plugin
+  - unit-testing-plugin
     - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 
 ---
