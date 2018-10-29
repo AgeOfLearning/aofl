@@ -24,6 +24,7 @@ const schema = {
  */
 module.exports = function(source) {
   /* eslint-disable */
+  const callback = this.async();
   const options = getOptions(this);
   /* eslint-enable */
   validationOptions(schema, options, 'Web components css loader');
@@ -33,7 +34,6 @@ module.exports = function(source) {
   let templateName = cssFileName.replace('css', 'js');
   let templatePath = rPath.replace(cssFileName, templateName);
   let indexPath = rPath.replace(cssFileName, 'index.js');
-  let callback = this.async();
   if (fs.existsSync(templatePath)) {
     let content = fs.readFileSync(templatePath);
     let indexContent = fs.existsSync(indexPath).toString() ? fs.readFileSync(indexPath) : '';
@@ -77,13 +77,18 @@ module.exports = function(source) {
       }).then((localCss) => {
         addDependencies(localCss.messages);
         const combinedCss = globalCss.css + localCss.css;
-        const purified = purify(content.toString(), combinedCss, {
-          info: false,
-          rejected: false,
-          whitelist: []
-        });
 
-        callback(null, purified);
+        if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
+          callback(null, combinedCss);
+        } else {
+          const purified = purify(content.toString(), combinedCss, {
+            info: false,
+            rejected: false,
+            whitelist: []
+          });
+
+          callback(null, purified);
+        }
       });
     });
   } else {

@@ -17,6 +17,7 @@ Bugfixes:
   - webcomponent-css-loader
     - removed logs
     - Add @import paths the modules dependencies.
+    - skip pruning on dev
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
     - Skip index.js files that do not contain a valid route doc block
