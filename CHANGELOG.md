@@ -19,6 +19,7 @@ Bugfixes:
     - Add @import paths the modules dependencies.
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
+    - Skip index.js files that do not contain a valid route doc block
   - unit-testing-plugin
     - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 

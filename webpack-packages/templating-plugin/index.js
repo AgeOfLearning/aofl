@@ -120,6 +120,10 @@ class TemplatingPlugin {
         }
 
         let routeInfo = this.parseRouteFile(routeFile);
+        if (typeof routeInfo.url === 'undefined' || routeInfo.url === '') {
+          continue;
+        }
+
         let routePath = path.relative(process.env.PWD,
           routeFile);
         let routeConfig = {
