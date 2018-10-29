@@ -21,8 +21,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
         {
           "name": "iPhone (5, 5c)",
@@ -38,8 +37,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
         {
           "name": "iPhone (4s)",
@@ -55,8 +53,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
 
 
@@ -74,8 +71,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
         {
           "name": "Android Marshmallow 6.0 - Chrome",
@@ -91,8 +87,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
         {
           "name": "Android Lollipop 5.0 - Browser",
@@ -108,8 +103,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
         {
           "name": "Andriod KitKat 4.4 - Browser",
@@ -125,8 +119,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 0
+          "extendedDebugging": true
         },
 
 
@@ -141,8 +134,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 8.1 - chrome",
@@ -155,8 +147,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 7 - chrome",
@@ -169,8 +160,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
 
         {
@@ -184,8 +174,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 8.1 - firefox",
@@ -198,8 +187,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 7 - firefox",
@@ -212,8 +200,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
 
         {
@@ -227,8 +214,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 8.1 - ie11",
@@ -241,8 +227,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "Windows 7 - ie11",
@@ -255,8 +240,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
 
         {
@@ -270,8 +254,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "OS X El Capitan - chrome",
@@ -284,8 +267,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "macOS Mojave - firefox",
@@ -298,8 +280,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "OS X El Capitan - firefox",
@@ -312,8 +293,7 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
         },
         {
           "name": "macOS Mojave - safari",
@@ -326,8 +306,20 @@
           "videoUploadOnPass": false,
           "recordScreenshots": false,
           "recordLogs": false,
-          "extendedDebugging": true,
-          "priority": 1
+          "extendedDebugging": true
+        },
+        {
+          "name": "OS X El Capitan - Safari",
+          "browserName": "safari",
+          "platform": "OS X 10.11",
+          "version": "10.0",
+          "idleTimeout": 1000,
+          "commandTimeout": 600,
+          "recordVideo": true,
+          "videoUploadOnPass": false,
+          "recordScreenshots": false,
+          "recordLogs": false,
+          "extendedDebugging": true
         }
 
       ]
