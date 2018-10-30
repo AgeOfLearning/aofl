@@ -9,41 +9,9 @@ describe('@aofl/web-components/aofl-picture', function() {
     this.initialWidth = window.innerWidth;
     this.initialHeight = window.innerHeight;
 
-    render(html`
-    <test-fixture id="BasicPicture">
-    <template>
-      <aofl-picture>
-        <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
-        <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
-        <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
-        <aofl-img src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
-      </aofl-picture>
-    </template>
-    </test-fixture>
-
-    <test-fixture id="MultipleImg">
-    <template>
-      <aofl-picture>
-        <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
-        <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
-        <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
-        <aofl-img id="main" src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
-        <aofl-img src="https://via.placeholder.com/2000x1000" width="1000" height="500"></aofl-img>
-      </aofl-picture>
-    </template>
-    </test-fixture>
-
-    <test-fixture id="SourcesDisabled">
-    <template>
-      <aofl-picture disable-sources>
-        <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
-        <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
-        <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
-        <aofl-img src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
-      </aofl-picture>
-    </template>
-    </test-fixture>
-    `, document.getElementById('test-container'));
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
 
     this.getSource = (windowWidth) => {
       if (windowWidth <= 300) {
@@ -59,6 +27,42 @@ describe('@aofl/web-components/aofl-picture', function() {
   });
 
   beforeEach(function() {
+    render(html`
+      <test-fixture id="BasicPicture">
+      <template>
+        <aofl-picture>
+          <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
+          <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
+          <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
+          <aofl-img src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
+        </aofl-picture>
+      </template>
+      </test-fixture>
+
+      <test-fixture id="MultipleImg">
+      <template>
+        <aofl-picture>
+          <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
+          <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
+          <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
+          <aofl-img id="main" src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
+          <aofl-img src="https://via.placeholder.com/2000x1000" width="1000" height="500"></aofl-img>
+        </aofl-picture>
+      </template>
+      </test-fixture>
+
+      <test-fixture id="SourcesDisabled">
+      <template>
+        <aofl-picture disable-sources>
+          <aofl-source media="(max-width: 320px)" srcset="https://via.placeholder.com/300x150" width="300" height="150"></aofl-source>
+          <aofl-source media="(max-width: 500px)" srcset="https://via.placeholder.com/500x250" width="500" height="250"></aofl-source>
+          <aofl-source media="(max-width: 700px)" srcset="https://via.placeholder.com/700x350" width="700" height="350"></aofl-source>
+          <aofl-img src="https://via.placeholder.com/1000x500" width="1000" height="500"></aofl-img>
+        </aofl-picture>
+      </template>
+      </test-fixture>
+    `, this.testContainer);
+
     this.basicPictureElement = fixture('BasicPicture');
     this.multipleImgElement = fixture('MultipleImg');
     this.sourcesDisabledElement = fixture('SourcesDisabled');
@@ -79,24 +83,15 @@ describe('@aofl/web-components/aofl-picture', function() {
 
   it('should update source when window size changes to 1000px', async function() {
     try {
-      await new Promise((resolve) => {
-        const element = this.basicPictureElement;
-        const _this = this;
-        element.updateComplete.then(() => {
-          window.addEventListener('resize', function resizeListener() {
-            window.removeEventListener('resize', resizeListener);
-            element.updateComplete.then(() => {
-              const src = element.querySelector('aofl-img').src;
+      const element = this.basicPictureElement;
 
-              expect(src).to.be.equal(_this.getSource(window.innerWidth));
-              resolve();
-            });
-          });
+      window.parent.document.querySelector('iframe').width = 1000;
+      element.requestUpdate();
 
-          window.parent.document.querySelector('iframe').width = 1000;
-          window.dispatchEvent(new Event('resize'));
-        });
-      });
+      await element.updateComplete;
+      const src = element.querySelector('aofl-img').src;
+
+      expect(src).to.be.equal(this.getSource(window.innerWidth));
     } catch (e) {
       return Promise.reject(e);
     }
@@ -104,24 +99,14 @@ describe('@aofl/web-components/aofl-picture', function() {
 
   it('should update source when window size changes to 200px', async function() {
     try {
-      await new Promise((resolve) => {
-        const element = this.basicPictureElement;
-        const _this = this;
-        element.updateComplete.then(() => {
-          window.addEventListener('resize', function resizeListener() {
-            window.removeEventListener('resize', resizeListener);
-            element.updateComplete.then(() => {
-              const src = element.querySelector('aofl-img').src;
+      const element = this.basicPictureElement;
+      window.parent.document.querySelector('iframe').width = 200;
 
-              expect(src).to.be.equal(_this.getSource(window.innerWidth));
-              resolve();
-            });
-          });
+      element.requestUpdate();
+      await element.updateComplete;
+      const src = element.querySelector('aofl-img').src;
 
-          window.parent.document.querySelector('iframe').width = 200;
-          window.dispatchEvent(new Event('resize'));
-        });
-      });
+      expect(src).to.be.equal(this.getSource(window.innerWidth));
     } catch (e) {
       return Promise.reject(e);
     }
@@ -141,24 +126,14 @@ describe('@aofl/web-components/aofl-picture', function() {
 
   it('should not update source when window size changes to 1000px and sources-disabled', async function() {
     try {
-      await new Promise((resolve) => {
-        const element = this.sourcesDisabledElement;
-        const _this = this;
-        element.updateComplete.then(() => {
-          window.addEventListener('resize', function resizeListener() {
-            window.removeEventListener('resize', resizeListener);
-            element.updateComplete.then(() => {
-              const src = element.querySelector('aofl-img').src;
+      const element = this.sourcesDisabledElement;
+      window.parent.document.querySelector('iframe').width = 1000;
 
-              expect(src).to.be.equal(_this.getSource(1000));
-              resolve();
-            });
-          });
+      element.requestUpdate();
+      await element.updateComplete;
+      const src = element.querySelector('aofl-img').src;
 
-          window.parent.document.querySelector('iframe').width = 1000;
-          window.dispatchEvent(new Event('resize'));
-        });
-      });
+      expect(src).to.be.equal(this.getSource(1000));
     } catch (e) {
       return Promise.reject(e);
     }
@@ -166,23 +141,16 @@ describe('@aofl/web-components/aofl-picture', function() {
 
   it('should not update source when window size changes to 200px and sources-disabled', async function() {
     try {
-      await new Promise((resolve) => {
+      await new Promise(async (resolve) => {
         const element = this.sourcesDisabledElement;
-        const _this = this;
-        element.updateComplete.then(() => {
-          window.addEventListener('resize', function resizeListener() {
-            window.removeEventListener('resize', resizeListener);
-            element.updateComplete.then(() => {
-              const src = element.querySelector('aofl-img').src;
+        window.parent.document.querySelector('iframe').width = 200;
 
-              expect(src).to.be.equal(_this.getSource(1000));
-              resolve();
-            });
-          });
+        element.requestUpdate();
+        await element.updateComplete;
+        const src = element.querySelector('aofl-img').src;
 
-          window.parent.document.querySelector('iframe').width = 200;
-          window.dispatchEvent(new Event('resize'));
-        });
+        expect(src).to.be.equal(this.getSource(1000));
+        resolve();
       });
     } catch (e) {
       return Promise.reject(e);

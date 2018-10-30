@@ -86,27 +86,4 @@ describe('@aofl/cache-manager/memory-storage', function() {
       expect(MemoryStorage).to.have.property('size', 5);
     });
   });
-
-  context('Mutated Object.prototype', function() {
-    beforeEach(function() {
-      delete Object.prototype.hello;
-    });
-
-    context('clear()', function() {
-      it('should skip indirect properties', function() {
-        Object.prototype.hello = 'world'; // eslint-disable-line
-        MemoryStorage.clear();
-
-        expect(MemoryStorage).to.have.property('hello', 'world');
-      });
-    });
-
-    context('size', function() {
-      it('should skip indirect properties', function() {
-        Object.prototype.hello = 'world'; // eslint-disable-line
-
-        expect(MemoryStorage).to.have.property('size', 0);
-      });
-    });
-  });
 });

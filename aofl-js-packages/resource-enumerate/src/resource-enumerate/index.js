@@ -42,9 +42,10 @@ class ResourceEnumerate {
    * init() updates apis.url based on supplied config object.
    *
    * @param {Object} {apis, developmentConfig, stageConfig}
+   * @param {Boolean} [skipEnvironmentCheck=true] skip dev/stage config process
    * @return {Promise}
    */
-  init({apis, developmentConfig, stageConfig}) {
+  init({apis, developmentConfig, stageConfig}, skipEnvironmentCheck = false) {
     this.apis = apis;
 
     for (const apiNs in this.apis) {
@@ -61,7 +62,7 @@ class ResourceEnumerate {
       });
     }
 
-    if (this.environment !== environmentTypeEnumerate.PROD) {
+    if (skipEnvironmentCheck === false && this.environment !== environmentTypeEnumerate.PROD) {
       return this.updateApis(developmentConfig, stageConfig);
     }
 

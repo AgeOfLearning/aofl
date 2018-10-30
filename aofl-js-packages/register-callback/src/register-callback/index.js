@@ -12,54 +12,17 @@ class RegisterCallback {
    * Creates an instance of RegisterCallback.
    */
   constructor() {
-    this.callbacks = {
-      next: [],
-      error: []
-    };
-  }
-
-  /**
-   * When addCB() is invoked it adds a function to the list of callbacks.
-   *
-   * @param {String} type next|error callback type
-   * @param {Function} fn callback function
-   * @private
-   */
-  addCb(type, fn) {
-    if (this.callbacks[type].indexOf(fn) === -1) {
-      this.callbacks[type].push(fn);
-    }
-  }
-
-  /**
-   * When removeCB() is invoked it removes a function to the list of callbacks.
-   *
-   * @param {String} type next|error callback type
-   * @param {Function} fn callback function
-   * @private
-   */
-  removeCb(type, fn) {
-    const index = this.callbacks[type].indexOf(fn);
-    if (index > -1) {
-      this.callbacks[type].splice(index, 1);
-    }
+    this.callbacks = [];
   }
 
   /**
    * When register() is invoked, it adds next and error functions to the callbacks list.
    *
-   * @param {Function} next The next callback function is invoked when registerCallbackInstance.next is called.
-   * @param {Function} error The error callback function is invoked when registerCallbackInstance.error is called.
+   * @param {Function} cb The callback function is invoked when registerCallbackInstance.next is called.
    * @return {Function}
    */
-  register(next, error) {
-    if (typeof next === 'function') {
-      this.addCb('next', next);
-    }
-
-    if (typeof error === 'function') {
-      this.addCb('error', error);
-    }
+  register(cb) {
+    this.callbacks.push(cb);
 
     const unsubscribe = () => {
       if (unsubscribe.executed) return;
@@ -67,34 +30,26 @@ class RegisterCallback {
         value: true
       });
 
-      this.removeCb('next', next);
-      this.removeCb('error', error);
+      const index = this.callbacks.indexOf(cb);
+      /* istanbul ignore else */
+      if (index > -1) {
+        this.callbacks.splice(index, 1);
+      }
     };
 
     return unsubscribe;
   }
 
   /**
-   * When next() is invoked, it calls all functions in this.callbacks.next list and passes payload
+   * When next() is invoked, it calls all functions in this.callbacks list and passes error and args
    * to each function.
    *
-   * @param {*} payload This is the payload that is passed to each next callback function.
+   * @param {*} [err=null]
+   * @param {*} args
    */
-  next(payload) {
-    for (let i = 0; i < this.callbacks.next.length; i++) {
-      this.callbacks.next[i](payload);
-    }
-  }
-
-  /**
-   * When error() is invoked, it calls all functions in this.callbacks.error list and passes payload
-   * to each function.
-   *
-   * @param {*} payload This is the payload that is passed to each error callback function.
-   */
-  error(payload) {
-    for (let i = 0; i < this.callbacks.error.length; i++) {
-      this.callbacks.error[i](payload);
+  next(err = null, ...args) {
+    for (let i = 0; i < this.callbacks.length; i++) {
+      this.callbacks[i].call(null, err, ...args);
     }
   }
 }

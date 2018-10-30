@@ -56,16 +56,16 @@ class UnitTestingPlugin {
       plugins: {
         local: null,
         sauce: null,
-        istanbul: {
-          dir: path.join(process.env.PWD, 'coverage'),
-          reporters: ['text-summary', 'lcov'],
-          include: this.options.include,
-          exclude: this.options.exclude
-        }
+        // istanbul: {
+        //   dir: path.join(process.env.PWD, 'coverage'),
+        //   reporters: ['text-summary', 'lcov'],
+        //   include: this.options.include,
+        //   exclude: this.options.exclude
+        // }
       },
       webserver: {
         port: '8081',
-        hostname: 'localhost'
+        hostname: '127.0.0.1'
       },
       root: process.env.PWD,
       npm: true,
@@ -92,19 +92,20 @@ class UnitTestingPlugin {
    * @memberof UnitTestingPlugin
    */
   apply(compiler) {
-    let files = glob.sync(['**/*.spec.js', '**/index.js'], {
+    let files = glob.sync([
+      '**/*.spec.js',
+      '**/index.js'
+    ], {
       ignore: this.options.exclude
     });
 
-    let coverAllEntryPath = this.getCoverAllEntryPath(files.filter((item) => item.indexOf('.spec.js') === -1));
+    let allJsEntryPath = this.getCoverAllEntryPath(files, 'all-tests');
 
-    files.push(coverAllEntryPath);
-    files.forEach((item) => {
-      if (item.indexOf('.spec.js') !== -1) {
+    const entryPoints = [allJsEntryPath]
+    entryPoints.forEach((item) => {
         let entryPath = path.resolve(item);
         let entryName = UnitTestingPlugin.name + '-' + md5(entryPath);
         new SingleEntryPlugin(compiler.context, entryPath, entryName).apply(compiler);
-      }
     });
 
     compiler.hooks.beforeRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
@@ -246,20 +247,13 @@ class UnitTestingPlugin {
    * @return {String}
    * @memberof UnitTestingPlugin
    */
-  getCoverAllEntryPath(files) {
+  getCoverAllEntryPath(files, filename) {
     const context = this.options.output;
-    const filename = 'all-tests';
     const jsOutputPath = path.resolve(context, md5(filename) + '.spec.js');
     let content = files.reduce((acc, item) => {
       acc += `import './${path.relative(path.dirname(jsOutputPath), path.resolve(item))}';\n`;
       return acc;
     }, '');
-
-    content += `describe('cover all', function() {
-      it('should collect all testable files', function() {
-        expect(true).to.equal(true);
-      });
-    });\n`;
 
     fs.writeFileSync(jsOutputPath, content, {encoding: 'utf-8'});
     return jsOutputPath;

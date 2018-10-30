@@ -7,6 +7,12 @@ describe('@aofl/web-components/aofl-img', function() {
     this.initalWidth = window.innerWidth;
     this.initalHeight = window.innerHeight;
 
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+  });
+
+  beforeEach(function() {
     const top = 3 * this.initalHeight;
     const left = 3 * this.initalWidth;
     render(html`
@@ -21,10 +27,7 @@ describe('@aofl/web-components/aofl-img', function() {
         <aofl-img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" style="width: 100px; height: 100px; position: absolute; left: ${left}px; top: ${top}px;"></aofl-img>
       </template>
     </test-fixture>
-    `, document.getElementById('test-container'));
-  });
-
-  beforeEach(function() {
+    `, this.testContainer);
     this.element = fixture('ImageVisibleOnLoad');
     this.elementOutside = fixture('ImageNotVisibleOnLoad');
   });
@@ -34,6 +37,10 @@ describe('@aofl/web-components/aofl-img', function() {
     document.documentElement.style.height = this.initialHeight + 'px';
     window.scrollTo(0, 0);
   });
+
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
 
   context('Image is in viewport on page load', function() {
     it('should have inner img element with property src matching aofl-img:src', async function() {

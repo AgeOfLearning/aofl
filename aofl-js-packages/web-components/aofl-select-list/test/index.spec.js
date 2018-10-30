@@ -1,23 +1,33 @@
 /* eslint-disable */
 import '../';
 import '../../aofl-list-option';
+import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-select-list', function() {
   beforeEach(function() {
-    document.getElementById('test-container').innerHTML =
-    `<test-fixture id="ListTestFixtureParent">
-      <template>
-        <aofl-select-list>
-          <aofl-list-option>1</aofl-list-option>
-          <aofl-list-option selected="true">2</aofl-list-option>
-        </aofl-select-list>
-      </template>
-    </test-fixture>`;
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+
   });
 
   beforeEach(function() {
+    render(html`
+      <test-fixture id="ListTestFixtureParent">
+        <template>
+          <aofl-select-list>
+            <aofl-list-option>1</aofl-list-option>
+            <aofl-list-option selected="true">2</aofl-list-option>
+          </aofl-select-list>
+        </template>
+      </test-fixture>
+    `, this.testContainer);
     this.element = fixture('ListTestFixtureParent');
   });
+
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
 
   context('init', function() {
     it('parent should load the component', function() {

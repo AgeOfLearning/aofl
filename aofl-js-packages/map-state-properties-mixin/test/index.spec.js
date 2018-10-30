@@ -1,8 +1,10 @@
 /* eslint-disable */
-import {storeInstance} from '@aofl/store';
+import {Store} from '@aofl/store';
 import AoflElement from '@aofl/web-components/aofl-element';
 import mapStatePropertiesMixin from '../src/map-state-properties-mixin';
 import {render, html} from 'lit-html';
+
+const storeInstance = new Store();
 
 describe('@aofl/map-state-properties-mixin', function() {
   before(function() {
@@ -28,7 +30,7 @@ describe('@aofl/map-state-properties-mixin', function() {
         this.device = 'desktop';
       }
       static get is() {
-        return 'child-comp';
+        return 'map-state-child-comp';
       }
       mapStateProperties() {
         const state = this.storeInstance.getState();
@@ -46,7 +48,7 @@ describe('@aofl/map-state-properties-mixin', function() {
       }
 
       static get is() {
-        return 'parent-comp';
+        return 'map-state-parent-comp';
       }
 
       render() {
@@ -63,41 +65,36 @@ describe('@aofl/map-state-properties-mixin', function() {
       customElements.define(ParentComp.is, ParentComp);
     }
 
-    render(html`
-      <test-fixture id="MapStatePropertiesMixinTest">
-        <template>
-          <parent-comp>
-            <child-comp></child-comp>
-          </parent-comp>
-        </template>
-      </test-fixture>
-    `, document.getElementById('test-container'));
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
   });
 
   beforeEach(function() {
-    this.element = fixture('MapStatePropertiesMixinTest');
-  });
 
-  it('should be true', function() {
-    expect(true).to.be.true;
+    render(html`
+      <test-fixture id="MapStatePropertiesMixinTest">
+        <template>
+          <map-state-parent-comp>
+            <map-state-child-comp></map-state-child-comp>
+          </map-state-parent-comp>
+        </template>
+      </test-fixture>
+    `, this.testContainer);
+    this.element = fixture('MapStatePropertiesMixinTest');
   });
 
   context('connectedCallback()', function() {
     it('Should update parent component "device" on state change', async function() {
       try {
-        await new Promise((resolve) => {
-          const unsubscribe = storeInstance.subscribe(() => {
-            expect(this.element.device).to.equal('phone');
-            unsubscribe();
-            resolve();
-          });
-
-          storeInstance.commit({
-            namespace: this.sdo.namespace,
-            mutationId: 'setDevice',
-            payload: 'phone'
-          });
+        storeInstance.commit({
+          namespace: this.sdo.namespace,
+          mutationId: 'setDevice',
+          payload: 'phone'
         });
+
+        await this.element.updateComplete;
+        expect(this.element.device).to.equal('phone');
       } catch (e) {
         return Promise.reject(e);
       }
@@ -107,20 +104,16 @@ describe('@aofl/map-state-properties-mixin', function() {
   context('disconnectedCallback()', function() {
     it('Should NOT update parent component "device" on state change', async function() {
       try {
-        await new Promise((resolve) => {
-          this.element.removeChild(this.element.querySelector('child-comp'));
-          const unsubscribe = storeInstance.subscribe(() => {
-            expect(this.element.device).to.equal('desktop');
-            unsubscribe();
-            resolve();
-          });
+        this.element.removeChild(this.element.querySelector('map-state-child-comp'));
 
-          storeInstance.commit({
-            namespace: this.sdo.namespace,
-            mutationId: 'setDevice',
-            payload: 'tablet'
-          });
+        storeInstance.commit({
+          namespace: this.sdo.namespace,
+          mutationId: 'setDevice',
+          payload: 'tablet'
         });
+
+        await this.element.updateComplete;
+        expect(this.element.device).to.equal('desktop');
       } catch (e) {
         return Promise.reject(e);
       }

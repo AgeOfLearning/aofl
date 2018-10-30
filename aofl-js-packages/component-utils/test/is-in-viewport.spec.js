@@ -5,78 +5,53 @@ import {render} from 'lit-html';
 
 describe('@aofl/component-utils/src/is-in-viewport', function() {
   before(function() {
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+  });
+
+  beforeEach(function() {
     render(html`
-      <test-fixture id="VisibleOnLoad">
+      <test-fixture id="InInViewportVisibleOnLoad">
         <template>
           <div style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; background: red;"></div>
         </template>
       </test-fixture>
-    `, document.getElementById('test-container'));
+    `, this.testContainer);
+    this.element = fixture('InInViewportVisibleOnLoad');
   });
 
-  beforeEach(function() {
-    this.element = fixture('VisibleOnLoad');
-  });
-
-  afterEach(async function() {
+  afterEach(function() {
     this.element.style.left = '0';
     this.element.style.top = '0';
-    await new Promise((resolve) => {
-      setTimeout(resolve, 500);
-    });
   });
+
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
 
   it('should return true when element is in within the viewport', function() {
     const isVisible = isInViewport(this.element);
     expect(isVisible).to.be.true;
   });
 
-  it('should return false when element is outside of viewport along the x axis', async function() {
-    try {
-      await new Promise((resolve) => {
-        this.element.style.left = '-100000px';
+  it('should return false when element is outside of viewport along the x axis', function() {
+    this.element.style.left = '-100000px';
 
-        setTimeout(() => {
-          const isVisible = isInViewport(this.element);
-          expect(isVisible).to.be.false;
-          resolve();
-        }, 500);
-      });
-    } catch (e) {
-      Promise.reject(e);
-    }
+    const isVisible = isInViewport(this.element);
+    expect(isVisible).to.be.false;
   });
 
-  it('should return false when element is outside of viewport along the y axis', async function() {
-    try {
-      await new Promise((resolve) => {
-        this.element.style.top = '-100000px';
-
-        setTimeout(() => {
-          const isVisible = isInViewport(this.element);
-          expect(isVisible).to.be.false;
-          resolve();
-        }, 500);
-      });
-    } catch (e) {
-      Promise.reject(e);
-    }
+  it('should return false when element is outside of viewport along the y axis', function() {
+    this.element.style.top = '-100000px';
+    const isVisible = isInViewport(this.element);
+    expect(isVisible).to.be.false;
   });
 
-  it('should return false when element is outside of viewport along both x and y axis', async function() {
-    try {
-      await new Promise((resolve) => {
-        this.element.style.top = '-100000px';
-        this.element.style.left = '-100000px';
-
-        setTimeout(() => {
-          const isVisible = isInViewport(this.element);
-          expect(isVisible).to.be.false;
-          resolve();
-        }, 500);
-      });
-    } catch (e) {
-      Promise.reject(e);
-    }
+  it('should return false when element is outside of viewport along both x and y axis', function() {
+    this.element.style.top = '-100000px';
+    this.element.style.left = '-100000px';
+    const isVisible = isInViewport(this.element);
+    expect(isVisible).to.be.false;
   });
 });

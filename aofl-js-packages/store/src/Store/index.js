@@ -126,7 +126,7 @@ class Store {
         /* istanbul ignore next  */
         if (!ns[key].asyncMutations.hasOwnProperty(mutationId)) continue;
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
-          this.setPending(key, mutationId, true);
+          this.setPending(key, mutationId);
           ns[key].asyncMutations[mutationId].method(nextState)
           .then(function(mutationId, namespace, payload) {
             this.setPending(namespace, mutationId, false);
@@ -136,8 +136,9 @@ class Store {
               payload
             });
           }.bind(this, mutationId, key))
-          .catch(/* istanbul ignore next  */function(mutationId, namespace) {
+          .catch(function(mutationId, namespace) {
             this.setPending(namespace, mutationId, false);
+            this.forceCommit();
           }.bind(this, mutationId, key));
         }
       }
@@ -222,7 +223,7 @@ class Store {
 
     let nextState = this.applyMutations(mutations, this.state);
 
-    /* istanbul ignore next */
+    /* istanbul ignore else */
     if (nextState !== this.state) {
       nextState = this.applyDecorators(nextState);
       this.execAsyncMutations(nextState);

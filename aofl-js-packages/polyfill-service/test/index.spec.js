@@ -63,11 +63,8 @@ describe('@aofl/polyfill-service/polyfill', function() {
   });
 
   context('loadAll()', function() {
-    before(function() {
-      sinon.stub(Polyfill, 'load').returns(Promise.resolve());
-    });
-
     beforeEach(function() {
+      sinon.stub(Polyfill, 'load').returns(Promise.resolve());
       this.config = {
         '$%/': () => {},
         'Math': () => {}
@@ -75,7 +72,7 @@ describe('@aofl/polyfill-service/polyfill', function() {
     });
 
     afterEach(function() {
-      Polyfill.load.reset();
+      Polyfill.load.restore();
     });
 
     it('should itterate through all pollyfils and call Polyfill.load on each one', function() {

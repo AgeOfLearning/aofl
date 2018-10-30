@@ -23,7 +23,7 @@ describe('@aofl/i18n-mixin', function() {
           '<tt-4>-2': {
             text: 'Hier sind zwei Leute'
           },
-          '<tt-4>-3': {
+          '<tt-4>-%other%': {
             text: 'Es gibt viele Leute hier!'
           }
         }
@@ -47,7 +47,7 @@ describe('@aofl/i18n-mixin', function() {
             <p>${context._r(context._c('<tt-4>', 'There %c1%', {
               1: 'is one person here and that person is %r1%',
               2: 'are two people here',
-              3: 'are many people here!'
+              '%other%': 'are many people here!'
             }, context.count), context.person)}</p>
           `;
         },
@@ -67,7 +67,7 @@ describe('@aofl/i18n-mixin', function() {
         }
       }
       static get is() {
-        return 'my-comp';
+        return 'i18n-mixin-element';
       }
       render() {
         return super.render(templates);
@@ -86,7 +86,7 @@ describe('@aofl/i18n-mixin', function() {
         }
       }
       static get is() {
-        return 'my-comp-no-attrs';
+        return 'i18n-mixin-element-no-attrs';
       }
       render() {
         return super.render(templates);
@@ -94,21 +94,25 @@ describe('@aofl/i18n-mixin', function() {
     };
     customElements.define(MyComp.is, MyComp);
     customElements.define(MyCompNoAttrs.is, MyCompNoAttrs);
+
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+  });
+
+  beforeEach(function() {
     render(html`
       <test-fixture id="I18nTestFixture">
         <template>
-          <my-comp lang="de-DE"></my-comp>
+          <i18n-mixin-element lang="de-DE"></i18n-mixin-element>
         </template>
       </test-fixture>
       <test-fixture id="I18nTestFixtureNoAttr">
         <template>
-          <my-comp-no-attrs foo="bar"></my-comp-no-attrs>
+          <i18n-mixin-element-no-attrs foo="bar"></i18n-mixin-element-no-attrs>
         </template>
       </test-fixture>
-      `, document.getElementById('test-container'));
-  });
-
-  beforeEach(function() {
+      `, this.testContainer);
     this.element = fixture('I18nTestFixture');
     this.elementNoAttr = fixture('I18nTestFixtureNoAttr');
   });
@@ -117,14 +121,19 @@ describe('@aofl/i18n-mixin', function() {
     document.documentElement.removeAttribute('lang');
   });
 
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
+
   context('__()', function() {
     it('Should translate the string to German', async function() {
       try {
+        await this.element.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -135,11 +144,12 @@ describe('@aofl/i18n-mixin', function() {
       try {
         await this.element.updateComplete;
         this.element.setAttribute('lang', 'en-US');
+        await this.element.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 250);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -148,12 +158,8 @@ describe('@aofl/i18n-mixin', function() {
 
     it('Should update to German layout', async function() {
       try {
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
-            resolve();
-          }, 500);
-        });
+        await this.element.updateComplete;
+        expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
       } catch (e) {
         return Promise.reject(e);
       }
@@ -163,11 +169,12 @@ describe('@aofl/i18n-mixin', function() {
   context('_c()', function() {
     it('Should translate for one', async function() {
       try {
+        await this.element.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -176,13 +183,14 @@ describe('@aofl/i18n-mixin', function() {
 
     it('Should translate for two', async function() {
       try {
+        await this.element.updateComplete;
+        this.element.count = 2;
+        await this.element.updateComplete;
         await new Promise((resolve) => {
-          this.element.count = 2;
-
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -191,12 +199,14 @@ describe('@aofl/i18n-mixin', function() {
 
     it('Should translate for more', async function() {
       try {
+        await this.element.updateComplete;
+        this.element.count = 3;
+        await this.element.updateComplete;
         await new Promise((resolve) => {
-          this.element.count = 3;
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -207,14 +217,16 @@ describe('@aofl/i18n-mixin', function() {
   context('langListener()', function() {
     it('Should update to html lang change if local lang is not set', async function() {
       try {
-        await new Promise((resolve) => {
-          document.documentElement.setAttribute('lang', 'de-DE');
-          this.element.setAttribute('lang', '');
+        await this.element.updateComplete;
+        document.documentElement.setAttribute('lang', 'de-DE');
+        this.element.setAttribute('lang', '');
 
+        await this.element.updateComplete;
+        await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -226,11 +238,12 @@ describe('@aofl/i18n-mixin', function() {
         await this.element.updateComplete;
         this.element.setAttribute('lang', 'en-US');
         document.documentElement.setAttribute('lang', 'de-DE');
+        await this.element.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -241,11 +254,12 @@ describe('@aofl/i18n-mixin', function() {
       try {
         await this.element.updateComplete;
         this.element.setAttribute('lang', 'en-US');
+        await this.element.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -256,11 +270,12 @@ describe('@aofl/i18n-mixin', function() {
   context('No default attribute', function() {
     it('Should have no default lang', async function() {
       try {
+        await this.elementNoAttr.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.elementNoAttr.getAttribute('lang')).to.be.null;
             resolve();
-          }, 500);
+          }, 300);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -269,6 +284,7 @@ describe('@aofl/i18n-mixin', function() {
 
     it('Should have no effect on the change of foo attr', async function() {
       try {
+        await this.elementNoAttr.updateComplete;
         await new Promise((resolve) => {
           setTimeout(() => {
             expect(this.elementNoAttr.getAttribute('lang')).to.be.null;

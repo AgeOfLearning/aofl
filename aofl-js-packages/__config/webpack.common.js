@@ -45,7 +45,7 @@ module.exports = (mode) => {
           use: {
             loader: 'eslint-loader',
             options: {
-              configFile: path.resolve('.eslintrc.js')
+              configFile: path.resolve(__dirname, '..', '.eslintrc.js')
             }
           }
         },

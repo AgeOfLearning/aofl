@@ -54,10 +54,10 @@ document.onreadystatechange = function documentListener() {
 
     router.after((request, response, next) => {
       response.matchedRoute.resolve()
-          .then((content) => {
-            pageContent.innerHTML = content.default;
-            next(response);
-          });
+      .then((content) => {
+        pageContent.innerHTML = content.default;
+        next(response);
+      });
     });
 
     router.after((request, response, next) => {

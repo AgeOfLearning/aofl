@@ -15,7 +15,7 @@ const config = merge(common('development'), {
     }),
     new UglifyJsPlugin({
       sourceMap: false,
-      cache: false,
+      cache: true,
       parallel: true,
       extractComments: true,
       uglifyOptions: {

@@ -428,12 +428,7 @@ describe('@aofl/rotations/rotation', function() {
     it('Should serve a cached route', async function() {
       try {
         await new Promise((resolve) => {
-          // Allows for in loops to be properly covered
-          /* eslint-disable */
-          Object.prototype.versions = true;
-          Object.prototype.routeConfig = true;
-
-          let rotations = new Rotations('my-rotations-d', this.routeConfig, this.rotationsConfig, this.rotationConditions);
+          const rotations = new Rotations('my-rotations-d', this.routeConfig, this.rotationsConfig, this.rotationConditions);
           rotations.getRoutes().then((origRoutes) => {
             rotations.getRoutes().then((routes) => {
               expect(routes).have.lengthOf(3);

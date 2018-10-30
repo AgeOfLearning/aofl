@@ -43,10 +43,8 @@ export default dedupingMixin((superClass) => {
     langListener() {
       const observer = new MutationObserver((mutationList) => {
         if (this.getAttribute('lang')) return;
-        if (mutationList.length > 0) {
-          this.__lang = mutationList[0].target.lang;
-          this.requestUpdate();
-        }
+        this.__lang = mutationList[0].target.lang;
+        this.requestUpdate();
       });
       observer.observe(document.documentElement, {attributes: true});
       return observer;
@@ -59,7 +57,7 @@ export default dedupingMixin((superClass) => {
      * @return {Promise}
      */
     getTranslationMap(lang) {
-      if (typeof this.translations[lang] === 'function') {
+      if (typeof this.translations !== 'undefined' && typeof this.translations[lang] === 'function') {
         return this.translations[lang]()
         .then((langModule) => langModule.default);
       } else {
@@ -76,7 +74,7 @@ export default dedupingMixin((superClass) => {
      */
     async __(id, str) {
       const translation = await this.getTranslationMap(this.__lang);
-      const languageMap = translation || {};
+      const languageMap = translation;
       let out = str;
 
       if (typeof languageMap !== 'undefined' && typeof languageMap[id] === 'object' &&
@@ -103,6 +101,7 @@ export default dedupingMixin((superClass) => {
      */
     async _r(_str, ...args) {
       let str = await Promise.resolve(_str);
+      /* istanbul ignore else */
       if (typeof str === 'object' && Array.isArray(str.strings) && str.strings.length) {
         str = str.strings[0];
       }
@@ -148,12 +147,14 @@ export default dedupingMixin((superClass) => {
       let out = '';
       let str = _str;
       const translation = await this.getTranslationMap(this.__lang);
-      const languageMap = translation || {};
+      const languageMap = translation;
 
+      /* istanbul ignore else */
       if (typeof languageMap !== 'undefined' && typeof languageMap === 'object') {
         const idParts = [];
         for (let i = 0; i < args.length; i = i + 2) {
           const nextI = i + 1;
+          /* istanbul ignore next */
           if (nextI >= args.length) continue;
           let key = args[nextI];
 
@@ -170,6 +171,7 @@ export default dedupingMixin((superClass) => {
         }
       }
 
+      // when langugae map is not matched we still need to replace %c#% in the default text
       let matches = CONDITIONAL_REPLACE_REGEX.exec(str);
       let pivot = 0;
 

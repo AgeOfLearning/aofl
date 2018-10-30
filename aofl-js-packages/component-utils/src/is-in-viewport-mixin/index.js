@@ -65,6 +65,7 @@ export default (superClass) => {
      */
     addListeners() {
       let parent = this;
+      /* istanbul ignore next */
       while (parent !== null) {
         if (parent.assignedSlot) {
           parent = parent.assignedSlot;
@@ -78,7 +79,7 @@ export default (superClass) => {
         }
       };
 
-      window.addEventListener('resize', this.checkInViewport);
+      window.addEventListener('resize', this.checkInViewport, true);
       for (let i = 0; i < this.trackScrollHosts.length; i++) {
         this.trackScrollHosts[i].addEventListener('scroll', this.checkInViewport, true);
       }

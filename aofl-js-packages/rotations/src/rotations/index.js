@@ -57,6 +57,7 @@ class Rotations {
     let total = 0;
 
     for (const version in versions) {
+      /* istanbul ignore if */
       if (!versions.hasOwnProperty(version)) continue;
       total += Number(versions[version]);
     }
@@ -76,6 +77,7 @@ class Rotations {
     // Weight percentage = weight / weights total
     const weightTotal = this.getWeightsTotal(versions);
     for (const version in versions) {
+      /* istanbul ignore if */
       if (!versions.hasOwnProperty(version)) continue;
       const weight = versions[version];
       const pct = Math.round(Number(weight) / weightTotal * 100);
@@ -145,7 +147,7 @@ class Rotations {
    * @param {String} path
    * @return {Array}
    */
-  replaceRoute(routes, selectedRotation = 'routes', path) {
+  replaceRoute(routes, selectedRotation, path) {
     let route = null;
     for (let i = 0; i < this.routeConfig[selectedRotation].length; i++) {
       const configRoute = this.routeConfig[selectedRotation][i];
@@ -188,6 +190,7 @@ class Rotations {
       }
     }
     for (const key in this.routeConfig) {
+      /* istanbul ignore if */
       if (!this.routeConfig.hasOwnProperty(key) || key === 'routes') continue;
       for (let i = 0; i < this.routeConfig[key].length; i++) {
         const route = this.routeConfig[key][i];

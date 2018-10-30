@@ -25,15 +25,15 @@
     "html-import": "^1.0.0",
     "lodash": "^3.10.1",
     "lodash.defaultsdeep": "^4.6.0",
-    "mocha": "^4.1.0",
+    "mocha": "^3.5.3",
     "node-fetch": "^2.2.0",
     "polymer-analyzer": "^3.1.2",
     "polymer-build": "^3.0.4",
     "sinon": "^6.3.5",
     "sinon-chai": "^3.2.0",
     "tiny-js-md5": "^1.1.2",
-    "web-component-tester": "^6.8.0",
-    "web-component-tester-istanbul": "^0.10.0",
+    "wct-istanbul": "^0.14.3",
+    "web-component-tester": "6.8.0",
     "webpack": "^4.16.5"
   }
 }

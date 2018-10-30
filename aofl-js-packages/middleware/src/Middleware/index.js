@@ -19,9 +19,9 @@ class Middleware {
 
   /**
    * @param {Function} callback
-   * @param {String} [hook='post|pre']
+   * @param {String} hook
    */
-  use(callback, hook = 'post') {
+  use(callback, hook) {
     if (typeof callback !== 'function') throw new Error('callback must be a function');
     if (typeof this.middleware[hook] === 'undefined') throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`);
     this.middleware[hook].push({
@@ -31,10 +31,10 @@ class Middleware {
   }
 
   /**
-   * @param {String} [hook='post']
+   * @param {String} hook
    * @return {Iterator}
    */
-  getMiddlewareIterator(hook = 'post') {
+  getMiddlewareIterator(hook) {
     const collection = this.middleware[hook];
     let nextIndex = 0;
 
@@ -56,15 +56,15 @@ class Middleware {
 
   /**
    * @param {*} request
-   * @param {String} [hook='post']
+   * @param {String} hook
    * @param {*} response
    * @return {Promise}
    */
-  iterateMiddleware(request, hook = 'post', response = null) {
+  iterateMiddleware(request, hook, response = null) {
     return new Promise((resolve, reject) => {
       const iterator = this.getMiddlewareIterator(hook);
       let mw = null;
-      const next = (response = null) => {
+      const next = (/* istanbul ignore next */response = null) => {
         mw = iterator.next();
         if (mw.done !== true) {
           mw.value.callback(request, response, next);

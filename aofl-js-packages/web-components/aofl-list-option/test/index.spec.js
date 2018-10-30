@@ -1,30 +1,39 @@
 /* eslint-disable */
 import '../';
 import '@aofl/web-components/aofl-select-list';
+import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-select-list', function() {
-  beforeEach(function() {
-    document.getElementById('test-container').innerHTML =
-    `<test-fixture id="ListTestFixture">
-      <template>
-        <aofl-select-list>
-          <aofl-list-option>1</aofl-list-option>
-        </aofl-select-list>
-      </template>
-    </test-fixture>
-    <test-fixture id="ListTestFixture2">
-      <template>
-        <aofl-select-list>
-          <aofl-list-option selected="true">1</aofl-list-option>
-        </aofl-select-list>
-      </template>
-    </test-fixture>`;
+  before(function() {
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
   });
 
   beforeEach(function() {
+    render(html`
+      <test-fixture id="ListTestFixture">
+        <template>
+          <aofl-select-list>
+            <aofl-list-option>1</aofl-list-option>
+          </aofl-select-list>
+        </template>
+      </test-fixture>
+      <test-fixture id="ListTestFixture2">
+        <template>
+          <aofl-select-list>
+            <aofl-list-option selected="true">1</aofl-list-option>
+          </aofl-select-list>
+        </template>
+      </test-fixture>
+    `, this.testContainer);
     this.element = fixture('ListTestFixture');
     this.element2 = fixture('ListTestFixture2');
   });
+
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
 
   context('init', function() {
     it('parent should load the component', function() {

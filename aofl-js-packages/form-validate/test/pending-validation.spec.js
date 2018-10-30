@@ -14,7 +14,7 @@ describe('@aofl/aofl-validate/validationMixin', function() {
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   resolve(value === 'hello');
-                }, 200);
+                }, 50);
               });
             }
           },
@@ -23,7 +23,7 @@ describe('@aofl/aofl-validate/validationMixin', function() {
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   resolve(value === 'world');
-                }, 400);
+                }, 100);
               });
             }
           }
@@ -103,16 +103,14 @@ describe('@aofl/aofl-validate/validationMixin', function() {
       await new Promise((resolve) => {
         this.testForm.firstname = 'hello';
         this.testForm.form.firstname.validate();
-        this.testForm.form.validateComplete;
-        setTimeout(() => {
-          this.testForm.lastname = 'world';
-          this.testForm.form.lastname.validate();
-          this.testForm.form.validateComplete
-          .then(() => {
-            expect(this.testForm.form.observed).to.be.true;
-            resolve();
-          });
-        }, 50);
+        this.testForm.form.validateComplete
+        .then(() => {
+          expect(this.testForm.form.observed).to.be.true;
+          resolve();
+        });
+
+        this.testForm.lastname = 'world';
+        this.testForm.form.lastname.validate();
       });
     } catch (e) {
       return Promise.reject(e);

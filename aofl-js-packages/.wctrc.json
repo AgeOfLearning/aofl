@@ -11,7 +11,9 @@
       ],
       "browserOptions": {
         "chrome": [
-          "headless"
+          "headless",
+          "disable-gpu",
+          "no-sandbox"
         ],
         "canary": [
           "headless"
@@ -20,6 +22,23 @@
           "-headless"
         ]
       }
+    },
+    "istanbul": {
+      "dir": "./coverage",
+      "reporters": ["text-summary", "lcov"],
+      "include": "**/*.js",
+      "exclude": [
+        "**/node_modules",
+        "**/node_modules_sourced",
+        "**/documentation{,!(/tests/**)}",
+        "**/__config",
+        "**/cli",
+        "**/*-instance/**",
+        "**/*-loader/**",
+        "**/*-polyfill/**",
+        "**/*-plugin/**",
+        "**/router/examples"
+      ]
     }
   }
 }

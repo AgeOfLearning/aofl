@@ -114,7 +114,8 @@ describe('@aofl/store/src/store', function() {
           init() {
             return {
               key: '',
-              name: ''
+              name: '',
+              rejectAsync: ''
             };
           },
           updateKey(subState, key) {
@@ -125,6 +126,11 @@ describe('@aofl/store/src/store', function() {
           updateName(subState, name) {
             return Object.assign({}, subState, {
               name
+            });
+          },
+          updateRejectAsync(subState, rejectAsync) {
+            return Object.assign({}, subState, {
+              rejectAsync
             });
           }
         },
@@ -155,7 +161,20 @@ describe('@aofl/store/src/store', function() {
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   return resolve('Async Name');
-                }, 100);
+                }, 10);
+              });
+            }
+          },
+          updateRejectAsync: {
+            condition: (nextState) => {
+              const state = this.storeInstance.getState();
+              return nextState['unit-test'].key !== state['unit-test'].key;
+            },
+            method(_nextState) {
+              return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  return reject();
+                }, 10);
               });
             }
           }
@@ -164,6 +183,8 @@ describe('@aofl/store/src/store', function() {
 
       sinon.spy(this.sdo.asyncMutations.updateName, 'condition');
       sinon.spy(this.sdo.asyncMutations.updateName, 'method');
+      sinon.spy(this.sdo.asyncMutations.updateRejectAsync, 'condition');
+      sinon.spy(this.sdo.asyncMutations.updateRejectAsync, 'method');
       this.storeInstance.addState(this.sdo);
     });
 
@@ -183,6 +204,31 @@ describe('@aofl/store/src/store', function() {
               try {
                 expect(this.sdo.asyncMutations.updateName.method.calledOnce).to.be.true;
                 expect(this.storeInstance.state['unit-test']).to.have.property('name', 'Async Name');
+                resolve();
+              } catch (e) {
+                reject(e);
+              }
+            }
+          });
+
+          this.storeInstance.commit({
+            namespace: 'unit-test',
+            mutationId: 'updateKey',
+            payload: 'newKey'
+          });
+        });
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+
+    it('should notify subscribers when async mutation fails', async function() {
+      try {
+        await new Promise((resolve, reject) => {
+          this.storeInstance.subscribe(() => {
+            if (this.storeInstance.pending.any === false) {
+              try {
+                expect(this.sdo.asyncMutations.updateRejectAsync.method.calledOnce).to.be.true;
                 resolve();
               } catch (e) {
                 reject(e);

@@ -14,8 +14,8 @@
  */
 const isInViewPort = (node, widthThreshold = 0, heightThreshold = 0) => {
   const {top, right, bottom, left} = node.getBoundingClientRect();
-  const vWidth = window.innerWidth || document.documentElement.clientWidth;
-  const vHeight = window.innerHeight || document.documentElement.clientHeight;
+  const vWidth = window.innerWidth || /* istanbul ignore next */ document.documentElement.clientWidth;
+  const vHeight = window.innerHeight || /* istanbul ignore next */ document.documentElement.clientHeight;
   const wThreshold = vWidth * widthThreshold;
   const hThreshold = vHeight * heightThreshold;
 

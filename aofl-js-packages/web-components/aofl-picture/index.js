@@ -107,10 +107,12 @@ class AoflPicture extends AoflElement {
     if (imgSrc !== source.src) {
       this.img.setAttribute('src', source.src);
 
+      /* istanbul ignore else */
       if (source.width) {
         this.img.setAttribute('width', source.width);
       }
 
+      /* istanbul ignore else */
       if (source.height) {
         this.img.setAttribute('height', source.height);
       }
@@ -123,7 +125,7 @@ class AoflPicture extends AoflElement {
    * @param {Array} [sources=[]]
    * @return {Object}
    */
-  static findMatchingSource(sources = []) {
+  static findMatchingSource(/* istanbul ignore next */sources = []) {
     for (let i = 0; i < sources.length; i++) {
       if (sources[i].mediaQuery.matches === true) {
         return sources[i];

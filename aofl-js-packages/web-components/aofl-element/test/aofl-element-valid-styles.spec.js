@@ -13,21 +13,26 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
     }
 
     customElements.define('styled-element', StyledElement);
+
+    const mainTestContainer = document.getElementById('test-container');
+    this.testContainer = document.createElement('div');
+    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
   });
 
-  before(function() {
+  beforeEach(function() {
     render(html`
       <test-fixture id="StyledFixture">
         <template>
           <styled-element></styled-element>
         </template>
       </test-fixture>
-    `, document.getElementById('test-container'));
-  });
-
-  beforeEach(function() {
+    `, this.testContainer);
     this.styledFixture = fixture('StyledFixture');
   });
+
+  // after(function() {
+  //   this.testContainer.parentNode.removeChild(this.testContainer);
+  // });
 
   it('should create a shadow root', function() {
     expect(typeof this.styledFixture.shadowRoot).to.equal('object');

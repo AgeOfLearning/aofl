@@ -5,7 +5,7 @@ import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils', function() {
   context('findParent()', function() {
-    beforeEach(function() {
+    before(function() {
       class ParentComp extends AoflElement {
         constructor() {
           super();
@@ -13,11 +13,11 @@ describe('@aofl/component-utils', function() {
         }
         static get properties() {
           return {
-            count: Number
+            count: {type: Number}
           }
         }
         static get is() {
-          return 'parent-comp';
+          return 'find-parent-parent-comp';
         }
         incrementCount(amount) {
           this.count += amount;
@@ -35,7 +35,7 @@ describe('@aofl/component-utils', function() {
           this.parentMethodSignature = ['incrementCount'];
         }
         static get is() {
-          return 'child-comp';
+          return 'find-parent-child-comp';
         }
         incrementParent() {
           this.parent = findParent(this, ...this.parentMethodSignature);
@@ -53,24 +53,30 @@ describe('@aofl/component-utils', function() {
       if (!customElements.get(ChildComp.is)) {
         customElements.define(ChildComp.is, ChildComp);
       }
+
+
+      const mainTestContainer = document.getElementById('test-container');
+      this.testContainer = document.createElement('div');
+      mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
     });
 
     beforeEach(function() {
       render(html`
         <test-fixture id="ComponentUtilsTest-findParent">
           <template>
-            <parent-comp>
-              <child-comp></child-comp>
-            </parent-comp>
+            <find-parent-parent-comp>
+              <find-parent-child-comp></find-parent-child-comp>
+            </find-parent-parent-comp>
           </template>
         </test-fixture>
-      `, document.getElementById('test-container'));
+      `, this.testContainer);
+      this.parentElement = fixture('ComponentUtilsTest-findParent');
+      this.childElement = this.parentElement.querySelector('find-parent-child-comp');
     });
 
-    beforeEach(function() {
-      this.parentElement = fixture('ComponentUtilsTest-findParent');
-      this.childElement = this.parentElement.querySelector('child-comp');
-    });
+    // after(function() {
+    //   this.testContainer.parentNode.removeChild(this.testContainer);
+    // });
 
     it('Should find the parent and invoke its method', function () {
       this.childElement.incrementParent();

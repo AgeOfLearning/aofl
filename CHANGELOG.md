@@ -8,10 +8,27 @@ Features:
 - Moved babel config out of webpack config
 - Updated saucelabs config
 - Added CODE_OF_CONDUCT.md
+- 100% coverage
+- node container to run automation
+- jenkins file added
 - cli-tools
   - cli
     - Updated generate component to match v1.1.0 standards
     - Added icons template
+- aofl-js-packages
+  - Replaced babel-plugin-istanbul with istanbul-instrumenter-loader
+  - SauceLabs webpack config does not instrument and .wctrc-ls.json does not include istunbul plugin.
+  - Moved wct-istunbul plugin config to .wctrc.json
+  - web-components
+    - aofl-drawer
+      - refactored and added transition-count attribute. Instead of trying to detect multiple transitions.
+  - RegisterCallback
+    - Removed error functions. Next expect an error object or null as the first argument.
+- webpack-packages
+  - unit-testing-plugin
+    - Replaced web-components-tester-istanbul with wct-instanbul
+    - removed istanbul plugin from default list
+
 
 Bugfixes:
 - webpack-packages

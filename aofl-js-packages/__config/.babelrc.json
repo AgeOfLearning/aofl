@@ -15,27 +15,5 @@
         "useESModules": false
       }
     ]
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        [
-          "istanbul",
-          {
-            "include": [
-              "**/*.js"
-            ],
-            "exclude": [
-              "**/node_modules/*",
-              "**/*.spec.*",
-              "**/tests-dest/*",
-              "**/node_modules_sourced/*",
-              "**/__config/*",
-              "**/aofl-source"
-            ]
-          }
-        ]
-      ]
-    }
-  }
+  ]
 }

@@ -1,61 +1,51 @@
 {
   "verbose": false,
-  "quiet": false,
-  "persistent": false,
-  "simpleOutput": true,
-  "testTimeout": 90000,
   "plugins": {
     "sauce": {
+      "tunnelOptions": {
+        "noSslBumpDomains": "all",
+        "noProxyCaching": true
+      },
       "browsers": [
         {
           "name": "iPhone (Xr, XsMax, Xs, X, 8+, 8, 7+, 7, SE, 6s+, 6s, 6+, 6, 5s)",
           "browserName": "Safari",
           "appiumVersion": "1.9.1",
-          "deviceName": "iPhone Simulator",
+          "deviceName": "iPhone XS Simulator",
           "deviceOrientation": "portrait",
           "platformVersion": "12.0",
           "platformName": "iOS",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "iPhone (5, 5c)",
           "browserName": "Safari",
           "appiumVersion": "1.9.1",
-          "deviceName": "iPhone Simulator",
+          "deviceName": "iPhone 5 Simulator",
           "deviceOrientation": "portrait",
           "platformVersion": "10.3",
           "platformName": "iOS",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
-          "name": "iPhone (4s)",
+          "name": "iPhone 4s",
           "browserName": "Safari",
           "appiumVersion": "1.7.1",
-          "deviceName": "iPhone Simulator",
+          "deviceName": "iPhone 4s Simulator",
           "deviceOrientation": "portrait",
           "platformVersion": "9.3",
           "platformName": "iOS",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
-
 
         {
           "name": "Andriod Nougat 7.1 - Chrome",
@@ -67,11 +57,8 @@
           "platformName": "Android",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Android Marshmallow 6.0 - Chrome",
@@ -83,11 +70,8 @@
           "platformName": "Android",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Android Lollipop 5.0 - Browser",
@@ -99,11 +83,8 @@
           "platformName": "Android",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Andriod KitKat 4.4 - Browser",
@@ -115,11 +96,8 @@
           "platformName": "Android",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
 
 
@@ -130,11 +108,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 8.1 - chrome",
@@ -143,11 +118,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 7 - chrome",
@@ -156,11 +128,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
 
         {
@@ -170,11 +139,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 8.1 - firefox",
@@ -183,11 +149,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 7 - firefox",
@@ -196,13 +159,9 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
-
         {
           "name": "Windows 10 - ie11",
           "browserName": "internet explorer",
@@ -210,11 +169,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 8.1 - ie11",
@@ -223,11 +179,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "Windows 7 - ie11",
@@ -236,26 +189,42 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
 
+
         {
-          "name": "macOS Mojave - chrome",
+          "name": "macOS High Sierra - chrome",
           "browserName": "chrome",
           "platform": "macOS 10.13",
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
+        {
+          "name": "macOS High Sierra - firefox",
+          "browserName": "firefox",
+          "platform": "macOS 10.13",
+          "version": "latest",
+          "idleTimeout": 1000,
+          "commandTimeout": 600,
+          "videoUploadOnPass": false,
+          "build": "1.1.1"
+        },
+        {
+          "name": "macOS High Sierra - safari",
+          "browserName": "safari",
+          "platform": "macOS 10.13",
+          "version": "latest",
+          "idleTimeout": 1000,
+          "commandTimeout": 600,
+          "videoUploadOnPass": false,
+          "build": "1.1.1"
+        },
+
         {
           "name": "OS X El Capitan - chrome",
           "browserName": "chrome",
@@ -263,24 +232,8 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
-        },
-        {
-          "name": "macOS Mojave - firefox",
-          "browserName": "firefox",
-          "platform": "macOS 10.13",
-          "version": "latest",
-          "idleTimeout": 1000,
-          "commandTimeout": 600,
-          "recordVideo": true,
-          "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
           "name": "OS X El Capitan - firefox",
@@ -289,39 +242,19 @@
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         },
         {
-          "name": "macOS Mojave - safari",
+          "name": "OS X El Capitan - safari",
           "browserName": "safari",
-          "platform": "macOS 10.13",
+          "platform": "OS X 10.11",
           "version": "latest",
           "idleTimeout": 1000,
           "commandTimeout": 600,
-          "recordVideo": true,
           "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
-        },
-        {
-          "name": "OS X El Capitan - Safari",
-          "browserName": "safari",
-          "platform": "OS X 10.11",
-          "version": "10.0",
-          "idleTimeout": 1000,
-          "commandTimeout": 600,
-          "recordVideo": true,
-          "videoUploadOnPass": false,
-          "recordScreenshots": false,
-          "recordLogs": false,
-          "extendedDebugging": true
+          "build": "1.1.1"
         }
-
       ]
     }
   }
