@@ -28,7 +28,7 @@ Features:
   - unit-testing-plugin
     - Replaced web-components-tester-istanbul with wct-instanbul
     - removed istanbul plugin from default list
-
+    - Bundle all tests into 1 suite
 
 Bugfixes:
 - webpack-packages
@@ -36,6 +36,7 @@ Bugfixes:
     - removed logs
     - Add @import paths the modules dependencies.
     - skip pruning on dev
+    - Fixed hard crashes
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
     - Skip index.js files that do not contain a valid route doc block

@@ -22,7 +22,7 @@ const schema = {
  * @param {*} map
  * @param {*} meta
  */
-module.exports = function(source) {
+module.exports = async function(source) {
   /* eslint-disable */
   const callback = this.async();
   const options = getOptions(this);
@@ -51,20 +51,22 @@ module.exports = function(source) {
       }
     };
 
-    postcss()
-    .use(atImport({
-      root: path.dirname(options.path)
-    }))
-    .use(url({
-      url: 'rebase'
-    }))
-    .process(globalStyles.toString(), {
-      from: options.path,
-      to: rPath,
-      map: false
-    }).then((globalCss) => {
+    try {
+      const globalCss = await postcss()
+      .use(atImport({
+        root: path.dirname(options.path)
+      }))
+      .use(url({
+        url: 'rebase'
+      }))
+      .process(globalStyles.toString(), {
+        from: options.path,
+        to: rPath,
+        map: false
+      });
+
       addDependencies(globalCss.messages);
-      postcss()
+      const localCss = await postcss()
       .use(atImport({
         root: path.dirname(rPath)
       }))
@@ -74,23 +76,25 @@ module.exports = function(source) {
       .process(source.toString(), {
         from: rPath,
         map: false
-      }).then((localCss) => {
-        addDependencies(localCss.messages);
-        const combinedCss = globalCss.css + localCss.css;
-
-        if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
-          callback(null, combinedCss);
-        } else {
-          const purified = purify(content.toString(), combinedCss, {
-            info: false,
-            rejected: false,
-            whitelist: []
-          });
-
-          callback(null, purified);
-        }
       });
-    });
+
+      addDependencies(localCss.messages);
+      const combinedCss = globalCss.css + localCss.css;
+
+      if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
+        callback(null, combinedCss);
+      } else {
+        const purified = purify(content.toString(), combinedCss, {
+          info: false,
+          rejected: false,
+          whitelist: []
+        });
+
+        callback(null, purified);
+      }
+    } catch (e) {
+      callback(e);
+    }
   } else {
     callback(null, source);
   }
