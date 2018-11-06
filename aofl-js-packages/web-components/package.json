@@ -1,6 +1,6 @@
 {
   "name": "@aofl/web-components",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +12,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/component-utils": "^1.1.2",
+    "@aofl/component-utils": "^1.2.0",
     "@polymer/lit-element": "^0.6.2"
   }
 }

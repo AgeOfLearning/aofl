@@ -1,6 +1,6 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,9 +13,9 @@
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "MIT",
   "dependencies": {
-    "@aofl/api-request": "^1.1.2",
-    "@aofl/cache-manager": "^1.1.2",
-    "@aofl/middleware": "^1.1.2",
-    "@aofl/server-environment": "^1.1.2"
+    "@aofl/api-request": "^1.2.0",
+    "@aofl/cache-manager": "^1.2.0",
+    "@aofl/middleware": "^1.2.0",
+    "@aofl/server-environment": "^1.2.0"
   }
 }

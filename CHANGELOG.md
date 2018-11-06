@@ -1,6 +1,6 @@
 # aofl changelog
 
-## unreleased
+## v1.2.0 (11-06-2018)
 Features:
 - Updated node packages
 - Adjusted eslint config for indentation
@@ -32,7 +32,6 @@ Features:
   - templating-plugin
     - complete refactor
     - added getTestContainer()
-
 
 Bugfixes:
 - webpack-packages
