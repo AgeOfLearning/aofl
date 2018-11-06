@@ -55,9 +55,7 @@ describe('@aofl/component-utils', function() {
       }
 
 
-      const mainTestContainer = document.getElementById('test-container');
-      this.testContainer = document.createElement('div');
-      mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+      this.testContainer = getTestContainer();
     });
 
     beforeEach(function() {

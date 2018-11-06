@@ -5,10 +5,7 @@ import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-select-list', function() {
   beforeEach(function() {
-    const mainTestContainer = document.getElementById('test-container');
-    this.testContainer = document.createElement('div');
-    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
-
+    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {

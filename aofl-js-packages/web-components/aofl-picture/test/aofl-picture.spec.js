@@ -9,9 +9,7 @@ describe('@aofl/web-components/aofl-picture', function() {
     this.initialWidth = window.innerWidth;
     this.initialHeight = window.innerHeight;
 
-    const mainTestContainer = document.getElementById('test-container');
-    this.testContainer = document.createElement('div');
-    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+    this.testContainer = getTestContainer();
 
     this.getSource = (windowWidth) => {
       if (windowWidth <= 300) {

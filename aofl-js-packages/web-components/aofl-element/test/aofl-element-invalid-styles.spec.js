@@ -14,9 +14,7 @@ describe('@aofl/web-components/aofl-element >> invalid style', function() {
 
     customElements.define('invalid-style-element', InvalidStyleElement);
 
-    const mainTestContainer = document.getElementById('test-container');
-    this.testContainer = document.createElement('div');
-    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {

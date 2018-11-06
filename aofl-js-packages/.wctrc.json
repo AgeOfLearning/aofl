@@ -4,22 +4,13 @@
   "plugins": {
     "local": {
       "browsers": [
-        "firefox",
-        "chrome",
-        "canary",
-        "safari"
+        "chrome"
       ],
       "browserOptions": {
         "chrome": [
           "headless",
           "disable-gpu",
           "no-sandbox"
-        ],
-        "canary": [
-          "headless"
-        ],
-        "firefox": [
-          "-headless"
         ]
       }
     },

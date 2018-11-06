@@ -95,9 +95,7 @@ describe('@aofl/i18n-mixin', function() {
     customElements.define(MyComp.is, MyComp);
     customElements.define(MyCompNoAttrs.is, MyCompNoAttrs);
 
-    const mainTestContainer = document.getElementById('test-container');
-    this.testContainer = document.createElement('div');
-    mainTestContainer.insertBefore(this.testContainer, mainTestContainer.firstChild);
+    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {

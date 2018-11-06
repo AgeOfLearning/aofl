@@ -31,6 +31,8 @@ Features:
     - Bundle all tests into 1 suite
   - templating-plugin
     - complete refactor
+    - added getTestContainer()
+
 
 Bugfixes:
 - webpack-packages

@@ -99,7 +99,7 @@ class UnitTestingPlugin {
       ignore: this.options.exclude
     });
 
-    let allJsEntryPath = this.getCoverAllEntryPath(files, 'all-tests');
+    let allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files], 'all-tests');
 
     const entryPoints = [allJsEntryPath]
     entryPoints.forEach((item) => {

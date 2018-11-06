@@ -1,6 +1,6 @@
 # @aofl/unit-testing-plugin
 
-Aofl unit testing plugin makes it easy to setup [web-components-tester](https://www.npmjs.com/package/web-component-tester) with webpack configured with babel. It allows you to run webpack in watch mode and run your unit-tests run on each update. It also adds some additional functionality like auto-loading [fetch-mock](https://www.npmjs.com/package/fetch-mock).
+Aofl unit testing plugin makes it easy to setup [web-components-tester](https://www.npmjs.com/package/web-component-tester) with webpack. It allows you to run webpack in watch mode and run your unit-tests run on each update.
 
 
 ## Installation
@@ -15,6 +15,24 @@ If you plan on generating coverage report `babel-plugin-istanbul` is needed to i
 const UnitTesting = require('@aofl/unit-testing-plugin');
 
 module.export = {
+  entry: {
+    'custom-elements-es5-adapter': 'path/to/custom-e...',
+    'init-polyfill-service': 'path/to/...'
+  }.
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'istanbul-instrumenter-loader',
+          options: {
+            esModules: true
+          }
+        },
+        exclude: /(node_modules|\.spec\.|__build|__config)/
+      }
+    ]
+  },
   ...
   plugins: [
     new UnitTesting({
@@ -31,34 +49,6 @@ module.export = {
 }
 ```
 
-For coverage report...
-```javascript
-// .babelrc
-{
-  "presets": [
-    "@babel/preset-env"
-  ],
-  'env': {
-    'test': {
-      'plugins': [
-        [
-          'istanbul',
-          {
-            'include': [
-              '**/*.js'
-            ],
-            'exclude': [
-              '**/node_modules/*',
-              '**/*.spec.*',
-              '**/__build_tests/*'
-            ]
-          }
-        ]
-      ]
-    }
-  }
-}
-```
 and run webpack `cross-env NODE_ENV=test webpack`
 
 You will also need a `.wctrc.json` or `wct-conf.json` as explained in web-components-tester documentation.
