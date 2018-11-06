@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-module.exports = async (url) => {
+module.exports = async (url, timeout = 0) => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
 
@@ -9,8 +9,8 @@ module.exports = async (url) => {
     window.aofljsConfig.__prerender__ = true;
   `);
 
-  await page.goto(url, {waitUntil: 'domcontentloaded'});
-  let str = await page.evaluate(async () => {
+  await page.goto(url, {waitUntil: 'networkidle2'});
+  let str = await page.evaluate(async (timeout) => {
     let selfClosingTags = [
       'area',
       'base',
@@ -95,12 +95,12 @@ module.exports = async (url) => {
       let getContent = () => {
         setTimeout(() => {
           return resolve((tagNameWithAttributes(document.body) + replaceChildren(document.body) + closingTag(document.body)));
-        }, 500);
+        }, timeout);
       };
 
       return getContent();
     });
-  });
+  }, timeout);
   await browser.close();
   return str;
 };

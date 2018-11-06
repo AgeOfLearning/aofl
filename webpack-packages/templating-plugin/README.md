@@ -1,6 +1,6 @@
 # @aofl/templating-plugin
 
-@aofl/templating-plugin works along side html-webpack-plugin to create multiple entry points for aofl-js applications. It uses a single template file and mixes it with static partials, meta tags, title and locale based on annotated routes files. It automates the generation of routes json file base on the routes files. Just create new route components or update current routes and the application will automatically update the routes config during build.
+@aofl/templating-plugin creates multiple entry points and automatically generates the route config object for aofl-js applications. It uses a single template file and combines it with partial views, meta tags, title and locale based on annotated routes files to create index.html files for each route. Just create new route components or update current routes and the application will automatically update the routes config during build.
 
 ## Installation
 ```bash
@@ -9,81 +9,85 @@ npm i -D @aofl/@aofl/templating-plugin
 
 ## Usage
 ```javascript
-const htmlWebpackConfig = require('./html-webpack-config');
 const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 
 ...
   plugins: [
     ...
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'template.ejs'),
-      filename: 'templates/main/template.html',
-      ...htmlWebpackConfig(mode) // see [aofl-starter](https://github.com/AgeOfLearning/aofl-starter) for these settings
-    }),
     new AofLTemplatingPlugin({
-      template: path.resolve(__dirname, 'template.ejs'),
-      templateFilename: 'templates/main/template.html',
-      filename: 'index.html',
-      mainRoutes: 'routes',
-      locale: 'en-US',
-      inlineConfig: true,
+      template: {
+        name: 'main',
+        template: path.resolve(__dirname, '..', 'templates', 'main', 'template.ejs'),
+        filename: path.join('templates', 'main', 'template.html'),
+        ...{ other html-webpack-plugin options }
+      },
       routes: {
-        pattern: path.join(__dirname, '..', 'routes*', '*', 'index.js'),
+        mainRoutes: path.join(__dirname, '..', 'routes'),
+        pattern: [
+          path.join(__dirname, '..', 'routes', 'home', 'index.js')
+        ],
         ignore: ['**/__build/**/*', '**/node_modules/**/*']
       }
-    })
+    }),
+    ...
   ]
 ...
 ```
 
 ## Options
-| Name             | Type   | Default                                                                                                                       | Description                                                                                    |
-|------------------|--------|-------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| template         | String | template.html                                                                                                                 | Input template file path. It must match the template option of HtmlWebpackPlugin.            |
-| templateFilename | String | template.html                                                                                                                 | Must match the filename option of HtmlWebpackPlugin.                                         |
-| filename         | String | index.html                                                                                                                    | Application entry point filename.                                                              |
-| routes           | Object | ```{   pattern: path.join(__dirname, '..', 'routes*', 'index.js'),   ignore: ['**/__build/**/*', '**/node_modules/**/*'] }``` | Patterns for finding routes entry files. These files should include the routing comment block. |
-| mainRoutes       | String | routes                                                                                                                        | Name of the main routes folder.                                                                |
-| locale           | String | en-US                                                                                                                         | Default locale for the routes.                                                                 |
-| partials         | Object | {}                                                                                                                            | Used to define static partial templates.                                                       |
+| Name             | Type   | Default | Description                                                                                                                         |
+|------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------|
+| template         | Object | {}      | html-webpack-plugin options plus a `name` attribute that will be part of the route object.                                            |
+| routes           | Object | {}      | Define route entry points. `mainRoutes`, `pattern` and optional `ignore`.                                                           |
+| partials         | Object | {}      | Used to define static partial templates object where the keys are the partials name and the values are html-webpack-plugin options. |
+| locale           | String | en-US   | Default locale for entry points.                                                                                                    |
+| preRenderTimeout | Number | 0       | Add timeout in ms on top of the when there are no more than 2 network connections for at least 500 ms.                              |
 
-### template & templateFilename
-These optionsa are used to identify the template file and accessing the output of html-webpack-plugin.
+### template
+The `template` object is used with html-webpack-plugin to generate the html for the entry points. In addition to the html-webpack-plugin options you must specify a name for the template. This attribute will be part of the generated routes config object.
 
-
-### filename
-@aofl/templating-plugin will create entry points for each route and place an entry point file in each directory in the output folder. For example, in an application where there are a `/` and `/about` routes the output directory will contain `/index.html` and `/about/index.html`.
+```javascript
+    ...
+      new AofLTemplatingPlugin({
+        template: {
+          name: 'main',
+          template: path.resolve(__dirname, '..', 'templates', 'main', 'template.ejs'),
+          filename: path.join('templates', 'main', 'template.html'),
+          ...htmlWebpackConfig(mode)
+        }
+        ...
+```
 
 ### routes
-`options.routes` is used to find the routes entry files. We can have multiple routes folders but only one of these folders can be the `mainRoutes`. The other folders will be added to the routes.config.js file as rotations (A/B testing).
+`routes` is used to find the routes entry files. We can have multiple routes folders but only one of these folders can be the `mainRoutes`. `mainRoutes` will be under `routes` key in the generated routes config. Any other `routes-[anything here]` folder will be added to the routes configs under `[anything here]` key. These routes can be used for (A/B testing).
 
 ```javascript
   ...
-  routes: {
-    pattern: path.join(__dirname, '..', 'routes*', '*', 'index.js'),
-    ignore: ['**/__build/**/*', '**/node_modules/**/*']
-  }
+    routes: {
+      mainRoutes: path.join(__dirname, '..', 'routes'),
+      pattern: [
+        path.join(__dirname, '..', 'routes', 'other', 'index.js'),
+        path.join(__dirname, '..', 'routes-a', 'home', 'index.js')
+      ],
+      ignore: ['**/__build/**/*', '**/node_modules/**/*']
+    }
   ...
 ```
-
-### mainRoutes
-`options.routes` specifies the main routes folder for the application.
 
 ### locale
 `options.locale` specifes the default locale for the application. Each route can specify a locale in the route annotations as explained below.
 
 ### partials
-Static parial templates can be defined using partials key and can be added to template using template variables `aoflTemplate:partial:[partial-name]`. For Example, header and footer areas.
+Static parial templates can be defined using partials key and can be added to template using template variables `aoflTemplate:partial:[partial-name]`. For Example, header and footer areas. Partials should be html-webpack-plugin options.
 
 ```javascript
 // webpack.config.js
 ...
   partials: {
     header: {
-      pattern: path.join(__dirname, '..', 'js', 'header', '*.ejs'),
-      ignore: ['**/__build/**/*', '**/node_modules/**/*'],
-      filename: 'view-[chunkhash].html',
-      static: true
+      template: path.join(__dirname, '..', 'js', 'header', 'view.ejs'),
+      filename: path.join('js', 'header', 'view.html'),
+      ...other-html-webpack-plugin-options
     }
   }
 ...
@@ -173,12 +177,9 @@ Supported Tags
 | @locale    | String | Route specific locale. This value overrides the locale specified in the config.                                                                             |
 | @prerender | String | Specifies whether the page should be pre-rendered during production build.                                                                                  |
 
-
-## example routes.config.js
-
+## example @aofl/unit-testing-plugin/routes.config.js
 ```javascript
-window.aofljsConfig = window.aofljsConfig || {};
-window.aofljsConfig.routesConfig = {
+export default {
   'routes': [
     {
       'resolve': () => import('./routes-cn_zh/home/index.js'),

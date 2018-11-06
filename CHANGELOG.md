@@ -29,6 +29,8 @@ Features:
     - Replaced web-components-tester-istanbul with wct-instanbul
     - removed istanbul plugin from default list
     - Bundle all tests into 1 suite
+  - templating-plugin
+    - complete refactor
 
 Bugfixes:
 - webpack-packages
@@ -40,6 +42,8 @@ Bugfixes:
   - templating-plugin
     - added support for variable webpackConfig.output.publicPath
     - Skip index.js files that do not contain a valid route doc block
+    - Fixed double build issue
+    - Fixed issue with new routes or changes to route docBlock required 2 builds
   - unit-testing-plugin
     - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 
