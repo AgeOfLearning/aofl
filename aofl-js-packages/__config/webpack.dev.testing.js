@@ -74,9 +74,10 @@ const config = merge(common('development'), {
         // '**/web-components/aofl-element',
         // '**/web-components/aofl-img',
         // '**/web-components/aofl-list-option',
+        // '**/web-components/aofl-multiselect-list',
         // '**/web-components/aofl-picture',
         // '**/web-components/aofl-select-list',
-        '**/web-components/aofl-source',
+        // '**/web-components/aofl-source',
         '**/router/examples'
       ],
       scripts: [
