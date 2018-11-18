@@ -1,6 +1,6 @@
 {
   "name": "@aofl/polyfill-service",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Uses dynamic imports to load polyfills",
   "main": "index.js",
   "scripts": {

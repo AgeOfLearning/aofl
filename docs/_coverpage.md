@@ -8,7 +8,7 @@
 
 - Easy to learn
 - Zero configuration
-- :rocket: fast <small>[(see for yourself)](link.com)</small>
+- :rocket: fast <small>[(see for yourself)]()</small>
 - Featherweight ~20kB gzipped (including client-side router)
 
 [GitHub](https://github.com/AgeOfLearning/aofl)

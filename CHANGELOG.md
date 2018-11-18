@@ -1,6 +1,6 @@
 # aofl changelog
 
-## unreleased
+## 1.2.1 (11-18-2018)
 
 Features:
 
@@ -18,6 +18,8 @@ Bugfixes:
 - webpack-packages
   - i18n-loader
     - Set cacheable to false
+
+---
 
 ## v1.2.0 (11-06-2018)
 

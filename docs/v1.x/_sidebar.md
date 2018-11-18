@@ -1,4 +1,4 @@
-<h1 class="app-name"><a class="app-name-link" data-nosearch="" href="/"><img alt="A" js="" src="/_assets/manifest/icon-48x48.png"><span>ofL JS <small>v1.x</small></span></a></h1>
+<h1 class="app-name"><a class="app-name-link" data-nosearch="" href="#/"><img alt="A" js="" src="_assets/manifest/icon-48x48.png"><span>ofL JS <small>v1.x</small></span></a></h1>
 
 - Getting Started
 
@@ -12,7 +12,7 @@
   - [IDE Setup](v1.x/housekeeping/ide-setup.md)
   - [Coding Standards](v1.x/housekeeping/coding-standards.md)
   - [Documentation Standards](v1.x/housekeeping/documentation-standards.md)
-  - [Contributing](v1.x/housekeeping/contributing.md)
+  - [Contributing](v1.x/housekeeping/contrib.md)
   - [Changelog Rules](v1.x/housekeeping/changelog-rules.md)
 
 - Tutorials

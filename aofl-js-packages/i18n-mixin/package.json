@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n-mixin",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Adds i18n support to elements",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@polymer/lit-element": "^0.6.2",
+    "@polymer/lit-element": "^0.6.3",
     "@polymer/polymer": "^3.0.5",
     "tiny-js-md5": "^1.1.2"
   }

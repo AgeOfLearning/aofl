@@ -1,6 +1,6 @@
 {
   "name": "@aofl/form-validate",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Form validation mixin for AoflElement",
   "main": "index.js",
   "scripts": {
