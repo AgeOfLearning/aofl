@@ -14,6 +14,20 @@
     />
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css" />
     <style>
+      section.cover {
+        min-height: 100vh;
+        height: auto;
+        padding: 5px;
+      }
+      @media only screen and (max-height: 640px) {
+        .cover-main img {
+          max-width: 240px;
+        }
+      }
+      section.cover blockquote {
+        margin: 0;
+        margin-bottom: 20px;
+      }
       .app-name {
         padding: 15px;
         font-size: 40px;
