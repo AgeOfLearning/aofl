@@ -1,15 +1,16 @@
 # TODO App Tutorial
 
-The purpose of this tutorial is to demonstrate features of the AofL JS framework. In this tutorial we will use the CLI tool, the data store, form validation, and as a bonus we'll even implement localization.
+The purpose of this tutorial is to demonstrate features of the AofL JS framework. In this tutorial we will use the CLI tool, data store, form validation, and as a bonus we'll even implement localization.
 
 ## Requirements
+
 A User should be able to ...
+
 1. add new items
 1. toggle items complete/incomplete
 1. filter items by completed, not completed
 1. remove the filter
 1. see the count of incomplete items
-
 
 ## Init Project
 
@@ -21,39 +22,41 @@ cd todo-app
 ```
 
 ## State Definition Object (SDO)
+
 Before building the UI let's implement a SDO to handle all "todo list" operations.
 
 Install dependencies
+
 ```bash
 npm i -S @aofl/store @aofl/map-state-properties-mixin
 ```
-* @aofl/store is our data store implementation.
-* @aofl/map-state-properties-mixin is used connect our components to store. It abstracts subscribing and unsubscribing to store based on the component's life cycle.
+
+- @aofl/store is our data store implementation.
+- @aofl/map-state-properties-mixin is used connect our components to store. It abstracts subscribing and unsubscribing to/from store based on the component's life cycle.
 
 Update the `constants-enumerate` file and add a new key for sdoNamespaces. We'll call the store namespace for todos todos.
 
 ```javascript
 // modules/constants-enumerate/index.js
 const sdoNamespaces = {
-  TODOS: 'todos'
+  TODOS: "todos"
 };
 
-export {
-  sdoNamespaces
-};
+export { sdoNamespaces };
 ```
 
 Now create
-* routes/home/modules/todos-sdo/index.js
-* routes/home/modules/todos-sdo/mutations.js
-* routes/home/modules/todos-sdo/decorators.js
+
+- routes/home/modules/todos-sdo/index.js
+- routes/home/modules/todos-sdo/mutations.js
+- routes/home/modules/todos-sdo/decorators.js
 
 ```javascript
 // routes/home/modules/todos-sdo/index.js
-import {sdoNamespaces} from '../../../../modules/constants-enumerate';
-import {storeInstance} from '@aofl/store';
-import mutations from './mutations';
-import decorators from './decorators';
+import { sdoNamespaces } from "../../../../modules/constants-enumerate";
+import { storeInstance } from "@aofl/store";
+import mutations from "./mutations";
+import decorators from "./decorators";
 
 const sdo = {
   namespace: sdoNamespaces.TODOS,
@@ -70,19 +73,22 @@ An SDO defines a sub-state of the application store and consists of a namespace,
 // routes/home/modules/todos-sdo/mutations.js
 const mutations = {
   init(payload) {
-    return Object.assign({
-      todos: [],
-      filter: ''
-    }, payload);
+    return Object.assign(
+      {
+        todos: [],
+        filter: ""
+      },
+      payload
+    );
   }
 };
 
 export default mutations;
 ```
 
-`init` returns the initial state of the todos sub-state and is invoked when `storeInstance.addState(sdo)` is called. `addState` accepts a second argument that will be passed to thi `init` function. This let's save the state and restore from it the when our application loads. For our Todo App we need an array of todos and filter.
+`init` returns the initial state of the "todos" sub-state and is invoked when `storeInstance.addState(sdo)` is called. `addState` accepts a second argument that will be passed to the `init` function. This is useful if we want to save the state and restore from it the when our application loads. For our Todo App we need an array of "todos" and a "filter" type.
 
-Next we need to add a mutation function to insert new todos into our store.
+Next we need to add a mutation function to insert new items into our "todos" sub-state.
 
 ```javascript
 // routes/home/modules/todos-sdo/mutations.js
@@ -107,7 +113,7 @@ const mutations = {
 export default mutations;
 ```
 
-Mutation functions, with the exception of `init`, take `subState` and `payload` as parameters. Here we create a new object from `substate` and insert a new todo object based on payload.
+Mutation functions, with the exception of `init`, take `subState` and `payload` as parameters. Here we create a new object from `subState` and insert a new todo object based on payload.
 
 Here's the completed mutations file.
 
@@ -115,10 +121,13 @@ Here's the completed mutations file.
 // routes/home/modules/todos-sdo/mutations.js
 const mutations = {
   init(payload) {
-    return Object.assign({
-      todos: [],
-      filter: ''
-    }, payload);
+    return Object.assign(
+      {
+        todos: [],
+        filter: ""
+      },
+      payload
+    );
   },
   insert(subState, description) {
     return Object.assign({}, subState, {
@@ -150,17 +159,17 @@ const mutations = {
   },
   filterCompleted(subState) {
     return Object.assign({}, subState, {
-      filter: 'completed'
+      filter: "completed"
     });
   },
   filterIncomplete(subState) {
     return Object.assign({}, subState, {
-      filter: 'incomplete'
+      filter: "incomplete"
     });
   },
   removeFilter(subState) {
     return Object.assign({}, subState, {
-      filter: ''
+      filter: ""
     });
   }
 };
@@ -168,27 +177,32 @@ const mutations = {
 export default mutations;
 ```
 
-We can now set the filter type, add new items and toggle todos completed state. While we can set the filter type we still need to filter the todos array to meet our requirements. For this we turn to decorators. Decorators are functions that derive new data based on sub-state values and add new keys to store. By conventions these keys are prefixed with a dollar sign (`$`). Decorators are processed once all mutations are applied to the store but before the subscribed functions are invoked. A store update happens in 2 steps, first mutations are applied, then decorators.
+We can now set the filter type, add new items and toggle a todo's completed state. While we can set the filter type we still need to filter the "todos" array to meet our requirements. For this we turn to decorators. Decorators are functions that derive new data based on sub-state values and add new keys to store. By conventions these keys are prefixed with a dollar sign (`$`). Decorators are processed once all mutations are applied to the store but before the subscribed functions are invoked. A store update happens in 2 steps, first mutations are applied, then decorators.
 
 ```javascript
 // routes/home/modules/todos-sdo/decorators.js
-import {storeInstance} from '@aofl/store';
-import {sdoNamespaces} from '../../../../modules/constants-enumerate';
-import {deepAssign} from '@aofl/object-utils';
+import { storeInstance } from "@aofl/store";
+import { sdoNamespaces } from "../../../../modules/constants-enumerate";
+import { deepAssign } from "@aofl/object-utils";
 
 const decorators = [
-  (_nextState) => {
+  _nextState => {
     const state = storeInstance.getState();
     let nextState = _nextState;
 
-    if (typeof nextState[sdoNamespaces.TODOS].$todosCount === 'undefined' || // first run?
-    nextState[sdoNamespaces.TODOS] !== state[sdoNamespaces.TODOS]) {
-      const $todosCount = nextState[sdoNamespaces.TODOS].todos.reduce((acc, todo) => {
-        if (todo.completed === false) {
-          return acc + 1;
-        }
-        return acc;
-      }, 0);
+    if (
+      typeof nextState[sdoNamespaces.TODOS].$todosCount === "undefined" || // first run?
+      nextState[sdoNamespaces.TODOS] !== state[sdoNamespaces.TODOS]
+    ) {
+      const $todosCount = nextState[sdoNamespaces.TODOS].todos.reduce(
+        (acc, todo) => {
+          if (todo.completed === false) {
+            return acc + 1;
+          }
+          return acc;
+        },
+        0
+      );
 
       nextState = deepAssign(nextState, sdoNamespaces.TODOS, {
         $todosCount
@@ -202,30 +216,33 @@ const decorators = [
 export default decorators;
 ```
 
-First the `nextState` of the store is passed into the decorator function. Then we get the current state from the store. We can compare the values to see if they were changed. Since we create new objects in the mutation function this is a quick comparison. All decorator functions will have a similar conditional to the function above. Does the decorated key exist and did data change between current and next states. Next we count the number of incomplete todos and  update and return `nextState`. Check out the documentation for [deepAssign](https://www.npmjs.com/package/@aofl/object-utils#deepassign).
+First the `nextState` of the store is passed into the decorator function. Then we get the current state from the store. We can compare the values to see if they were changed. Since we create new objects in the mutation function this is a quick comparison. All decorator functions will have a similar conditional to the function above. Does the decorated key exist and is the sub-state different between current and next states. Next we count the number of incomplete todos and update and return `nextState`. Check out the documentation for [deepAssign](https://www.npmjs.com/package/@aofl/object-utils#deepassign).
 
-> Every time the todos sub-state updates our decorators will run and compute their respective values before subscribers are notified. This means decorated values are computed once when needed and can be used thoughout the application.
+> Every time the todos sub-state updates our decorators will run and compute their respective values before subscribers are notified. This means decorated values are computed once when needed and can be used throughout the application.
 
-Here's our $filteredTodoos decorator.
+Here's our \$filteredTodoos decorator.
 
 ```javascript
 // routes/home/modules/todos-sdo/decorators.js
 const decorators = [
-  ...
-  (_nextState) => {
+  ..._nextState => {
     const state = storeInstance.getState();
     let nextState = _nextState;
 
-    if (typeof nextState[sdoNamespaces.TODOS].$filteredTodos === 'undefined' || // first run?
-    nextState[sdoNamespaces.TODOS] !== state[sdoNamespaces.TODOS]) {
+    if (
+      typeof nextState[sdoNamespaces.TODOS].$filteredTodos === "undefined" || // first run?
+      nextState[sdoNamespaces.TODOS] !== state[sdoNamespaces.TODOS]
+    ) {
       let $filteredTodos = [...nextState[sdoNamespaces.TODOS].todos];
 
-      if (nextState[sdoNamespaces.TODOS].filter === 'completed') {
-        $filteredTodos = nextState[sdoNamespaces.TODOS].todos
-        .filter((todo) => todo.completed === false);
-      } else if (nextState[sdoNamespaces.TODOS].filter === 'incomplete') {
-        $filteredTodos = nextState[sdoNamespaces.TODOS].todos
-        .filter((todo) => todo.completed === true);
+      if (nextState[sdoNamespaces.TODOS].filter === "completed") {
+        $filteredTodos = nextState[sdoNamespaces.TODOS].todos.filter(
+          todo => todo.completed === false
+        );
+      } else if (nextState[sdoNamespaces.TODOS].filter === "incomplete") {
+        $filteredTodos = nextState[sdoNamespaces.TODOS].todos.filter(
+          todo => todo.completed === true
+        );
       }
 
       nextState = deepAssign(nextState, sdoNamespaces.TODOS, {
@@ -242,10 +259,9 @@ export default decorators;
 
 And we are done with setting up the state of the application and all the logic we need to support our requirements.
 
-
 ## Map State to Component
 
-Once the SDOs for the page are setup we need a way to display this data to the user. We can manually subscribe to store get notified when store updates happen. However, this will require us to manually unsubscribe from store when the component detaches from DOM. Instead, we have developed [@aofl/map-state-properties-mixin](https://www.npmjs.com/package/@aofl/map-state-properties-mixin) to automate this process.
+Once the SDOs for the page are setup we need a way to display this data to the user. We can manually subscribe to store and get notified when store updates happen. However, this will require us to manually unsubscribe from store when the component detaches from DOM. Instead, we have developed [@aofl/map-state-properties-mixin](https://www.npmjs.com/package/@aofl/map-state-properties-mixin) to automate this process.
 
 ```javascript
 // routes/home/index.js
@@ -269,6 +285,7 @@ class HomePage extends mapStatePropertiesMixin(AoflElement) {
 Here we import our dependencies as usual. The HomePage class extends from AoflElement mixed with mapStatePropertiesMixn. This new super class expects `storeInstance` to be defined by the child constructor.
 
 Next we implement `mapStateProperties` function.
+
 ```javascript
 // routes/home/index.js
 ...
@@ -293,11 +310,12 @@ class HomePage extends mapStatePropertiesMixin(AoflElement) {
   ...
 }
 ```
+
 @aofl/map-state-properties-mixin automatically subscribes the `mapStateProperties` function to store for us. In `mapStateProperties` we get the state of the application from store and map the decorated properties `$todoCount` and `$filteredTodos` to our component.
 
 In addition to the `mapStateProperties` function we need define a static `properties` property on HomePage to make these properties trigger the render function when their values change.
 
-New we can update our template and display these values.
+Now we can update our template and display these values.
 
 ```javascript
 // routes/home/template.js
@@ -305,7 +323,14 @@ export const template = (ctx, html) => html`
   <h1>TODO List - ${ctx.todosCount} Remaining</h1>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`<li>${todo.description}</li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo =>
+          html`
+            <li>${todo.description}</li>
+          `
+      )
+    }
   </ul>
 `;
 ```
@@ -318,17 +343,24 @@ export const template = (ctx, html) => html`
   <h1>TODO List - ${ctx.todosCount} Remaining</h1>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`<li>${todo.description}</li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo =>
+          html`
+            <li>${todo.description}</li>
+          `
+      )
+    }
     <li>
-      <form @submit="${(e) => ctx.insertTodo(e)}">
-        <input name="description">
+      <form @submit="${e => ctx.insertTodo(e)}">
+        <input name="description" />
       </form>
     </li>
   </ul>
 `;
 ```
 
-The only special thing is the `@submit` property on form which is `lit-html` syntax for adding event listeners.
+_`@submit` is `lit-html` syntax for adding event listeners._
 
 ```javascript
 // routes/home/index.js
@@ -352,12 +384,15 @@ class HomePage extends mapStatePropertiesMixin(AoflElement) {
   ...
 }
 ```
-In `insertTodo(e)` we get the form data and commit the task description to store.
+
+In `insertTodo(e)` we get the form data and commit the todo description to store.
 
 ## Architecture
+
 Before we add more features to the HomePage element let's think about how we want to break our application into smaller modules. We can look at our requirements and decide if which bullet points are generic and which ones are specific to the HomePage component.
 
 > A User should be able to ...
+>
 > 1. add new items
 > 1. toggle items complete/incomplete
 > 1. filter items by completed, not completed
@@ -367,15 +402,19 @@ Before we add more features to the HomePage element let's think about how we wan
 Based on this list, I would say showing the list and the count of incomplete items are features of the HomePage and the rest can be generic components. With this plan we can create 'add-todo-form' and 'todo-filters' components and use them any where in the application.
 
 ## add-todo-form
+
 In this section we'll create a new component, and setup form validation.
 
 Install dependencies
+
 ```bash
 npm i -S @aofl/form-validate
 ```
-* @aofl/form-validate gives us form validation capabilities.
+
+- @aofl/form-validate gives us form validation capabilities.
 
 Create component
+
 ```bash
 npx aofl g c routes/home/modules/add-todo-form
 ```
@@ -454,6 +493,7 @@ class AddTodoForm extends validationMixin(AoflElement) {
 }
 ...
 ```
+
 We mix `AddTodoForm` with `validationMixin` and provide a `validators` object in the constructor. We define a view property `description`.
 
 `onDescriptionUpdate(e)` will be used as an input event listener callback on the description field. It will update the value of `description` property and invoke the validation function on the field.
@@ -463,11 +503,20 @@ We have modified version of the `insertTodo` function that validates the form be
 ```javascript
 // routes/home/modules/add-todo-form/template.js
 export default (ctx, html) => html`
-<form @submit="${(e) => ctx.addTodo(e)}">
-  <input name="description" @input="${(e) => ctx.onDescriptionUpdate(e)}" .value="${ctx.description}">
-  <button type="submit" ?disabled="${!ctx.form.valid}">Add</button>
-  ${ctx.form.description.isRequired.valid? '': html`<p>Description is required</p>`}
-</form>
+  <form @submit="${e => ctx.addTodo(e)}">
+    <input
+      name="description"
+      @input="${e => ctx.onDescriptionUpdate(e)}"
+      .value="${ctx.description}"
+    />
+    <button type="submit" ?disabled="${!ctx.form.valid}">Add</button> ${
+      ctx.form.description.isRequired.valid
+        ? ""
+        : html`
+            <p>Description is required</p>
+          `
+    }
+  </form>
 `;
 ```
 
@@ -479,18 +528,24 @@ We also added a button to the form and we can use the Boolean attribute disabled
 
 Finally, we use conditional rendering to display the form validation error message.
 
-
 Update `routes/home/temeplate.js` and `routes/home/index.js`. Remove the code we added in the previous section and import `add-todo-farm` in the template.js file and use the component in the template.
 
 ```javascript
 // routes/home/template.js
-import './modules/add-todo-form';
+import "./modules/add-todo-form";
 
 export const template = (ctx, html) => html`
   <h1>TODO List - ${ctx.todosCount} Remaining</h1>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`<li>${todo.description}</li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo =>
+          html`
+            <li>${todo.description}</li>
+          `
+      )
+    }
     <li><add-todo-form></add-todo-form></li>
   </ul>
 `;
@@ -503,18 +558,19 @@ Now we can use the form to add new items to the todo list.
 todo-filters is going to be a component that renders 3 buttons, Show All, Show Remaining, and Show Completed.
 
 Create the component
+
 ```bash
 npx aofl g c routes/home/modules/todo-filters
 ```
 
 ```javascript
 // routes/home/modules/todo-filters/index.js
-import styles from './template.css';
-import template from './template';
-import AoflElement from '@aofl/web-components/aofl-element';
-import {sdoNamespaces} from '../../../../modules/constants-enumerate';
-import '../todos-sdo';
-import {storeInstance} from '@aofl/store';
+import styles from "./template.css";
+import template from "./template";
+import AoflElement from "@aofl/web-components/aofl-element";
+import { sdoNamespaces } from "../../../../modules/constants-enumerate";
+import "../todos-sdo";
+import { storeInstance } from "@aofl/store";
 
 /**
  * @summary TodoFilters
@@ -526,17 +582,17 @@ class TodoFilters extends AoflElement {
    * @readonly
    */
   static get is() {
-    return 'todo-filters';
+    return "todo-filters";
   }
 
-    /**
+  /**
    *
    * @param {*} e
    */
   clearFilter() {
     storeInstance.commit({
       namespace: sdoNamespaces.TODOS,
-      mutationId: 'removeFilter'
+      mutationId: "removeFilter"
     });
   }
 
@@ -547,7 +603,7 @@ class TodoFilters extends AoflElement {
   filterCompleted() {
     storeInstance.commit({
       namespace: sdoNamespaces.TODOS,
-      mutationId: 'filterCompleted'
+      mutationId: "filterCompleted"
     });
   }
 
@@ -557,7 +613,7 @@ class TodoFilters extends AoflElement {
   filterIncomplete() {
     storeInstance.commit({
       namespace: sdoNamespaces.TODOS,
-      mutationId: 'filterIncomplete'
+      mutationId: "filterIncomplete"
     });
   }
 
@@ -580,9 +636,9 @@ We added 3 click handler functions clearFilter, filterCompleted, filterIncomplet
 ```javascript
 // routes/home/modules/todo-filters/template.js
 export default (ctx, html) => html`
-  <button @click="${(e) => ctx.clearFilter(e)}">Show All</button>
-  <button @click="${(e) => ctx.filterCompleted(e)}">Show Remaining</button>
-  <button @click="${(e) => ctx.filterIncomplete(e)}">Show Completed</button>
+  <button @click="${e => ctx.clearFilter(e)}">Show All</button>
+  <button @click="${e => ctx.filterCompleted(e)}">Show Remaining</button>
+  <button @click="${e => ctx.filterIncomplete(e)}">Show Completed</button>
 `;
 ```
 
@@ -590,8 +646,8 @@ Import todo-filters and use them in HomePage. And let's add a button to toggle t
 
 ```javascript
 // routes/home/template.js
-import './modules/add-todo-form';
-import './modules/todo-filters';
+import "./modules/add-todo-form";
+import "./modules/todo-filters";
 
 export const template = (ctx, html) => html`
   <h1>TODO List - ${ctx.todosCount} Remaining</h1>
@@ -599,11 +655,20 @@ export const template = (ctx, html) => html`
   <todo-filters></todo-filters>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`
-    <li>
-      <span class="${todo.completed? 'completed': ''}">${todo.description}</span>
-      <button @click="${(e) => ctx.toggleTodo(e, todo.index)}">toggle</button>
-    </li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo => html`
+          <li>
+            <span class="${todo.completed ? "completed" : ""}"
+              >${todo.description}</span
+            >
+            <button @click="${e => ctx.toggleTodo(e, todo.index)}">
+              toggle
+            </button>
+          </li>
+        `
+      )
+    }
     <li><add-todo-form></add-todo-form></li>
   </ul>
 `;
@@ -616,7 +681,7 @@ export const template = (ctx, html) => html`
 }
 
 .completed {
-  color: #F00;
+  color: #f00;
   font-style: italic;
 }
 ```
@@ -637,6 +702,7 @@ class HomePage extends i18nMixin(mapStatePropertiesMixin(AoflElement)) {
   }
 ...
 ```
+
 ## Localization
 
 @aofl/i18-loader and @aofl/i18n-mixin are required to implement localization. The starter app is already configured with the loader so we only need to install the mixin.
@@ -683,6 +749,7 @@ Mix the `mapStatePropertiesMixin(AoflElement)` class with i18nMixin mixin and as
 Update the render function return an pass an object to `super.render()`. The i18nMixin lets us specify multiple templates based on locale.
 
 E.g.
+
 ```javascript
   ...
   render() {
@@ -700,24 +767,34 @@ E.g.
   ...
 
 ```
+
 Now we can use the `__` and `_r` functions in the template.
 
 ```javascript
 // routes/home/template.js
-import './modules/add-todo-form';
-import './modules/todo-filters';
+import "./modules/add-todo-form";
+import "./modules/todo-filters";
 
 export const template = (ctx, html) => html`
-  <h1>${ctx._r(ctx.__('TODO List - %r1% Remaining'), ctx.todosCount)}</h1>
+  <h1>${ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount)}</h1>
 
   <todo-filters></todo-filters>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`
-    <li>
-      <span class="${todo.completed? 'completed': ''}">${todo.description}</span>
-      <button @click="${(e) => ctx.toggleTodo(e, todo.index)}">${ctx.__('toggle')}</button>
-    </li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo => html`
+          <li>
+            <span class="${todo.completed ? "completed" : ""}"
+              >${todo.description}</span
+            >
+            <button @click="${e => ctx.toggleTodo(e, todo.index)}">
+              ${ctx.__("toggle")}
+            </button>
+          </li>
+        `
+      )
+    }
     <li><add-todo-form></add-todo-form></li>
   </ul>
 `;
@@ -728,20 +805,36 @@ Apply the these changes to todo-filters and add-todo-form components.
 ```javascript
 // routes/home/modules/todo-filters/template.js
 export default (ctx, html) => html`
-  <button @click="${(e) => ctx.clearFilter(e)}">${ctx.__('Show All')}</button>
-  <button @click="${(e) => ctx.filterCompleted(e)}">${ctx.__('Show Remaining')}</button>
-  <button @click="${(e) => ctx.filterIncomplete(e)}">${ctx.__('Show Completed')}</button>
+  <button @click="${e => ctx.clearFilter(e)}">${ctx.__("Show All")}</button>
+  <button @click="${e => ctx.filterCompleted(e)}">
+    ${ctx.__("Show Remaining")}
+  </button>
+  <button @click="${e => ctx.filterIncomplete(e)}">
+    ${ctx.__("Show Completed")}
+  </button>
 `;
 ```
 
 ```javascript
 // routes/home/modules/add-todo-form/template.js
 export default (ctx, html) => html`
-<form @submit="${(e) => ctx.insertTodo(e)}">
-  <input name="description" @input="${(e) => ctx.onDescriptionUpdate(e)}" .value="${ctx.description}">
-  <button type="submit" ?disabled="${!ctx.form.valid}">${ctx.__('Add')}</button>
-  ${ctx.form.description.isRequired.valid? '': html`<p>${ctx.__('Description is required')}</p>`}
-</form>
+  <form @submit="${e => ctx.insertTodo(e)}">
+    <input
+      name="description"
+      @input="${e => ctx.onDescriptionUpdate(e)}"
+      .value="${ctx.description}"
+    />
+    <button type="submit" ?disabled="${!ctx.form.valid}">
+      ${ctx.__("Add")}
+    </button>
+    ${
+      ctx.form.description.isRequired.valid
+        ? ""
+        : html`
+            <p>${ctx.__("Description is required")}</p>
+          `
+    }
+  </form>
 `;
 ```
 
@@ -781,37 +874,49 @@ To extend support for other locales you can place a translated version of the tr
   }
 }
 ```
+
 If you copy the content of the translations_es-US.json from here make sure the tt-tags match those of your project.
 
 Run the server again to see the changes...
+
 ```
 npm run start:dev
 ```
 
 The language of the page is controlled by the lang attribute on the html element. Let's place a button on the page to toggle language.
 
-
 ```javascript
 // routes/home/template.js
-import './modules/add-todo-form';
-import './modules/todo-filters';
+import "./modules/add-todo-form";
+import "./modules/todo-filters";
 
 export const template = (ctx, html) => html`
-  <h1>${ctx._r(ctx.__('TODO List - %r1% Remaining'), ctx.todosCount)} <button @click="${() => ctx.toggleLang()}">En/Es</button></h1>
+  <h1>
+    ${ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount)}
+    <button @click="${() => ctx.toggleLang()}">En/Es</button>
+  </h1>
 
   <todo-filters></todo-filters>
 
   <ul>
-    ${ctx.filteredTodos.map((todo) => html`
-    <li>
-      <span class="${todo.completed? 'completed': ''}">${todo.description}</span>
-      <button @click="${(e) => ctx.toggleTodo(e, todo.index)}">${ctx.__('toggle')}</button>
-    </li>`)}
+    ${
+      ctx.filteredTodos.map(
+        todo => html`
+          <li>
+            <span class="${todo.completed ? "completed" : ""}"
+              >${todo.description}</span
+            >
+            <button @click="${e => ctx.toggleTodo(e, todo.index)}">
+              ${ctx.__("toggle")}
+            </button>
+          </li>
+        `
+      )
+    }
     <li><add-todo-form></add-todo-form></li>
   </ul>
 `;
 ```
-
 
 ```javascript
 ...

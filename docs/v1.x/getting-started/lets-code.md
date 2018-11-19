@@ -1,6 +1,6 @@
 # Let's Code
 
-So far you have read about some of the features AofL JS supports and you have installed the starter app. It's time to see some of these features in action.
+So far you have read about some of the features of AofL JS and learned how to install the starter app. It's time to see some of these features in action.
 
 ## Create a new Component
 
@@ -40,9 +40,9 @@ Update `routes/about/index.js` and add the routes annotation to the top of the f
  * @route /about/
  * @title AofL::About
  */
-import styles from './template.css';
-import template from './template';
-import AoflElement from '@aofl/web-components/aofl-element';
+import styles from "./template.css";
+import template from "./template";
+import AoflElement from "@aofl/web-components/aofl-element";
 
 /**
  * @summary About
@@ -61,7 +61,7 @@ class About extends AoflElement {
    * @readonly
    */
   static get is() {
-    return 'about-page';
+    return "about-page";
   }
 
   /**
@@ -78,11 +78,10 @@ window.customElements.define(About.is, About);
 export default About;
 ```
 
-*Note that `Component.is` variable [must contain a dash (-) character](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#High-level_view).*
+_Note that `Component.is` variable [must contain a dash (-) character](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#High-level_view)._
 
 Run `npm run start:dev` and go to http://localhost:8080/about/ to see the newly created page.
 
-
 Now that you have setup the starter app and are able to create components and routes please take the time and read the material under Housekeeping.
 
-At this point you can continue to the Tutorials section or AofL JS Concepts section. We recommend you to go over both.
+_At this point you can continue to the Tutorials section or AofL JS Concepts section._
