@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "1.2.3",
+  "version": "1.2.4-pre.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "MIT",
   "bin": {
-    "aofl": "./bin/aofl-cli.js"
+    "aofl": "./bin/aofl.js"
   },
   "dependencies": {
     "chalk": "^2.4.1",

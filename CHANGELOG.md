@@ -1,5 +1,14 @@
 # aofl changelog
 
+## unreleased
+
+Bugfixes:
+
+- cli
+  - renamed all bin files to aofl-\*
+
+---
+
 ## v1.2.3 (11-20-2018)
 
 Features:
