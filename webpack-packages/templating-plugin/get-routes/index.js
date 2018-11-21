@@ -4,8 +4,10 @@ const glob = require('fast-glob');
 const parseRoute = require('../parse-route');
 
 const DEFAULT_ROTATION = 'routes';
-const TRAILING_SLASH_REGEX = new RegExp(path.sep + '$');
-const LEADING_SLASH_REGEX = new RegExp('^' + path.sep);
+const TRAILING_PATH_SEP_REGEX = new RegExp('\\' + path.sep + '$');
+const LEADING_PAHT_SEP_REGEX = new RegExp('^' + '\\' + path.sep);
+const TRAILING_SLASH_REGEX = /\/$/;
+const LEADING_SLASH_REGEX = /^\//;
 const ALT_ROUTES_REGEX = /\/routes-([^\/]+?)\//;
 
 const getRoutePatterns = (pattern) => {
@@ -18,7 +20,7 @@ const getRoutePatterns = (pattern) => {
 const parseRouteFile = (file, options) => {
  const routeFile = fs.readFileSync(path.resolve(file), 'utf-8');
  const parsedData = parseRoute(routeFile);
- const routePath = parsedData.route.replace(/:.*/, '').replace(TRAILING_SLASH_REGEX, '') + path.sep;
+ const routePath = parsedData.route.replace(/:.*/, '').replace(TRAILING_SLASH_REGEX, '') + '/';
 
  return {
    url: parsedData.route,
@@ -57,8 +59,8 @@ module.exports = async (options, context = process.cwd()) => {
   });
 
   for (let i = 0; i < routeFiles.length; i++) {
-    const routeFile = routeFiles[i];
-    const isMainRoute = routeFile.indexOf(options.routes.mainRoutes.replace(TRAILING_SLASH_REGEX, '') + path.sep) > -1;
+    const routeFile = path.resolve(routeFiles[i]);
+    const isMainRoute = routeFile.indexOf(options.routes.mainRoutes.replace(TRAILING_PATH_SEP_REGEX, '') + path.sep) > -1;
     const rotation = getRotation(routeFile);
 
     if (!isMainRoute && rotation === DEFAULT_ROTATION) {
@@ -82,7 +84,7 @@ module.exports = async (options, context = process.cwd()) => {
       routeConfig: {
         resolve: `() => import('./${routePath}')`,
         rotation,
-        path: (options.publicPath.replace(TRAILING_SLASH_REGEX, '') + path.sep + routeInfo.url.replace(LEADING_SLASH_REGEX, '').replace(TRAILING_SLASH_REGEX, '') + path.sep).replace(new RegExp(path.sep + path.sep, 'g'), path.sep),
+        path: (options.publicPath.replace(TRAILING_SLASH_REGEX, '') + '/' + routeInfo.url.replace(LEADING_SLASH_REGEX, '').replace(TRAILING_SLASH_REGEX, '') + '/').replace(new RegExp('\/\/', 'g'), '/'),
         dynamic: routeInfo.dynamic,
         title: routeInfo.title,
         meta: routeInfo.meta,

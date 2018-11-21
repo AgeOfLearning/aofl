@@ -30,7 +30,7 @@ class InitProject {
       this.repo = repos[base];
     }
 
-    this.cloneDir = os.tmpdir() + md5(this.repo);
+    this.cloneDir = path.resolve(os.tmpdir(), md5(this.repo));
   }
 
   /**

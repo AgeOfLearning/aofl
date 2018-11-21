@@ -1,6 +1,6 @@
 {
   "name": "@aofl/map-state-properties-mixin",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Subscribe mapStateProperties() to storeInstance. Unsubscribes when the component detaches from dom",
   "main": "index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n-mixin",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Adds i18n support to elements",
   "main": "index.js",
   "scripts": {

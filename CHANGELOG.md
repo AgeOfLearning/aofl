@@ -1,6 +1,27 @@
 # aofl changelog
 
-## 1.2.1 (11-18-2018)
+## v1.2.3 (11-20-2018)
+
+Features:
+
+- Build tools compatible with Windows & Ubuntu
+
+Bugfixes:
+
+- cli
+
+  - renamed all bin files to aofl-cli-\*
+  - fixed temp directory path
+
+- webpack-packages
+  - templating-plugin
+    - path.sep fixes to be windows & Ubuntu compatible
+  - webcomponents-css-loader
+    - path.sep fixes to be windows & Ubuntu compatible
+
+---
+
+## v1.2.1 (11-18-2018)
 
 Features:
 

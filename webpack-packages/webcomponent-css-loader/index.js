@@ -30,7 +30,7 @@ module.exports = async function(source) {
   validationOptions(schema, options, 'Web components css loader');
   let globalStyles = fs.readFileSync(options.path);
   let rPath = this.resourcePath;
-  let cssFileName = rPath.substr(rPath.lastIndexOf('/') + 1);
+  let cssFileName = rPath.substr(rPath.lastIndexOf(path.sep) + 1);
   let templateName = cssFileName.replace('css', 'js');
   let templatePath = rPath.replace(cssFileName, templateName);
   let indexPath = rPath.replace(cssFileName, 'index.js');

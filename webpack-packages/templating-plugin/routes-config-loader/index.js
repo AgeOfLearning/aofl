@@ -2,6 +2,8 @@ const getRoutes = require('../get-routes');
 const {getOptions} = require('loader-utils');
 
 module.exports = async function(source) {
+  this.cacheable(false);
+
   const callback = this.async();
   const options = getOptions(this);
   let content = '';

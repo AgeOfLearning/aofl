@@ -8,7 +8,10 @@ const preRender = require('./prerender');
 
 const LOADER_OPTIONS = {
   enforce: 'pre',
-  test: new RegExp(path.resolve(__dirname, 'routes.config.js')),
+  test: new RegExp(
+    path.resolve(__dirname, 'routes.config.js')
+    .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`)
+  ),
   use: {
     loader: path.resolve(__dirname, 'routes-config-loader'),
     options: {
