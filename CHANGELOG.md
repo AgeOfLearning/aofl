@@ -2,6 +2,10 @@
 
 ## unreleased
 
+Features:
+
+- ci pipeline setup
+
 Bugfixes:
 
 - cli
