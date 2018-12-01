@@ -24,8 +24,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@polymer/lit-element": "^0.6.3",
+    "@polymer/lit-element": "0.6.4",
     "@polymer/polymer": "^3.0.5",
+    "lit-html": "0.14.0",
     "tiny-js-md5": "^1.1.2"
   }
 }

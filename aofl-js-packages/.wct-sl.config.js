@@ -3,7 +3,7 @@ const npmPkg = require('./package.json');
 const build = `v${npmPkg.version}`;
 
 const config = {
-  verbose: false,
+  verbose: true,
   plugins: {
     sauce: {
       tunnelOptions: {

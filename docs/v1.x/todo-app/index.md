@@ -774,9 +774,12 @@ Now we can use the `__` and `_r` functions in the template.
 // routes/home/template.js
 import "./modules/add-todo-form";
 import "./modules/todo-filters";
+import { until } from "lit-html/directives/until";
 
 export const template = (ctx, html) => html`
-  <h1>${ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount)}</h1>
+  <h1>
+    ${until(ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount))}
+  </h1>
 
   <todo-filters></todo-filters>
 
@@ -789,7 +792,7 @@ export const template = (ctx, html) => html`
               >${todo.description}</span
             >
             <button @click="${e => ctx.toggleTodo(e, todo.index)}">
-              ${ctx.__("toggle")}
+              ${until(ctx.__("toggle"))}
             </button>
           </li>
         `
@@ -804,19 +807,25 @@ Apply the these changes to todo-filters and add-todo-form components.
 
 ```javascript
 // routes/home/modules/todo-filters/template.js
+import { until } from "lit-html/directives/until";
+
 export default (ctx, html) => html`
-  <button @click="${e => ctx.clearFilter(e)}">${ctx.__("Show All")}</button>
+  <button @click="${e => ctx.clearFilter(e)}">
+    ${until(ctx.__("Show All"))}
+  </button>
   <button @click="${e => ctx.filterCompleted(e)}">
-    ${ctx.__("Show Remaining")}
+    ${until(ctx.__("Show Remaining"))}
   </button>
   <button @click="${e => ctx.filterIncomplete(e)}">
-    ${ctx.__("Show Completed")}
+    ${until(ctx.__("Show Completed"))}
   </button>
 `;
 ```
 
 ```javascript
 // routes/home/modules/add-todo-form/template.js
+import { until } from "lit-html/directives/until";
+
 export default (ctx, html) => html`
   <form @submit="${e => ctx.insertTodo(e)}">
     <input
@@ -825,13 +834,13 @@ export default (ctx, html) => html`
       .value="${ctx.description}"
     />
     <button type="submit" ?disabled="${!ctx.form.valid}">
-      ${ctx.__("Add")}
+      ${until(ctx.__("Add"))}
     </button>
     ${
       ctx.form.description.isRequired.valid
         ? ""
         : html`
-            <p>${ctx.__("Description is required")}</p>
+            <p>${until(ctx.__("Description is required"))}</p>
           `
     }
   </form>
@@ -889,10 +898,11 @@ The language of the page is controlled by the lang attribute on the html element
 // routes/home/template.js
 import "./modules/add-todo-form";
 import "./modules/todo-filters";
+import { until } from "lit-html/directives/until";
 
 export const template = (ctx, html) => html`
   <h1>
-    ${ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount)}
+    ${until(ctx._r(ctx.__("TODO List - %r1% Remaining"), ctx.todosCount))}
     <button @click="${() => ctx.toggleLang()}">En/Es</button>
   </h1>
 
@@ -907,7 +917,7 @@ export const template = (ctx, html) => html`
               >${todo.description}</span
             >
             <button @click="${e => ctx.toggleTodo(e, todo.index)}">
-              ${ctx.__("toggle")}
+              ${until(ctx.__("toggle"))}
             </button>
           </li>
         `
