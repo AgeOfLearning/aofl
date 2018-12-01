@@ -7,6 +7,7 @@ Features:
 - ci pipeline setup
 - upgrade to lit-element@0.6.4
 - upgrade to lit-html@0.14.0
+- moved issue-templates to .github
 
 Bugfixes:
 

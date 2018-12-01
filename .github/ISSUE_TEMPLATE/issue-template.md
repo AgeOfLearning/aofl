@@ -1,3 +1,9 @@
+---
+name: Issue Template
+about: Describe this issue template's purpose here.
+
+---
+
 **I'm submitting a ...** (check one)<br>
 [ ] bug report<br>
 [ ] feature request
