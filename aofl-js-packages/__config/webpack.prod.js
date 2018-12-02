@@ -1,6 +1,6 @@
 /*eslint-disable*/
 const merge = require('webpack-merge');
-const common = require('./__config/webpack.common');
+const common = require('./webpack.common');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
@@ -16,12 +16,13 @@ const config = merge(common('production'), {
         compress: {
           warnings: false
         }
-      }
+      },
+      exclude: /(custom-elements-es5-adapter)/
     })
   ],
   devServer: {
     publicPath: "/",
-    contentBase: path.join(__dirname, '__build'),
+    contentBase: path.join(__dirname, '..', '__build'),
     port: 8080,
     open: true,
     compress: true

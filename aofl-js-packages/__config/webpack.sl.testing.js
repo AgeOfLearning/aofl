@@ -1,5 +1,6 @@
+const path = require('path');
 const merge = require('webpack-merge');
-const common = require('./__config/webpack.common');
+const common = require('./webpack.common');
 const UnitTesting = require('@aofl/unit-testing-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
@@ -9,27 +10,13 @@ const config = merge(common('development'), {
     filename: '[name]-[chunkhash].min.js'
   },
   devtool: 'none',
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'istanbul-instrumenter-loader',
-          options: {
-            esModules: true
-          }
-        },
-        exclude: /(node_modules|\.spec\.|__build|__config)/
-      }
-    ]
-  },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
     }),
     new UglifyJsPlugin({
       sourceMap: false,
-      cache: true,
+      cache: false,
       parallel: true,
       extractComments: true,
       uglifyOptions: {
@@ -42,7 +29,7 @@ const config = merge(common('development'), {
     }),
     new UnitTesting({
       clean: false,
-      config: '.wctrc.json',
+      config: path.join(__dirname, '.wct-sl.config.js'),
       exclude: [
         '**/node_modules',
         '**/node_modules_sourced',
@@ -75,14 +62,12 @@ const config = merge(common('development'), {
         // '**/web-components/aofl-list-option',
         // '**/web-components/aofl-picture',
         // '**/web-components/aofl-select-list',
-        // '**/web-components/aofl-source',
+        '**/web-components/aofl-source',
         '**/router/examples'
       ],
       scripts: [
         'runtime',
-        // 'webcomponents-bundle',
-        'polyfill-service',
-        'custom-elements-es5-adapter'
+        'polyfill-service'
       ]
     })
   ]

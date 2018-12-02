@@ -13,27 +13,15 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
     }
 
     customElements.define('styled-element', StyledElement);
-
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-      <test-fixture id="StyledFixture">
-        <template>
-          <styled-element></styled-element>
-        </template>
-      </test-fixture>
+      <styled-element id="StyledFixture"></styled-element>
     `, this.testContainer);
-    this.styledFixture = fixture('StyledFixture');
-  });
 
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
-
-  it('should create a shadow root', function() {
-    expect(typeof this.styledFixture.shadowRoot).to.equal('object');
+    this.styledFixture = this.testContainer.querySelector('#StyledFixture');
   });
 
   it('should create a shadow root', function() {
@@ -42,24 +30,18 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
 
   it('should have red background', async function() {
     let backgroundColor = '';
-    try {
-      this.styledFixture.requestUpdate();
-      await this.styledFixture.updateComplete;
-      backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
-      expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    await this.styledFixture.updateComplete;
+    backgroundColor = window.getComputedStyle(this.styledFixture).backgroundColor;
+    expect(backgroundColor).to.be.equal('rgb(255, 0, 0)');
   });
 
   it('should have green text color', async function() {
-    try {
-      this.styledFixture.requestUpdate();
-      await this.styledFixture.updateComplete;
-      const color = window.getComputedStyle(this.styledFixture).color;
-      expect(color).to.be.equal('rgb(0, 255, 0)');
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    await this.styledFixture.updateComplete;
+    const color = window.getComputedStyle(this.styledFixture).color;
+    expect(color).to.be.equal('rgb(0, 255, 0)');
+  });
+
+  afterEach(function() {
+    cleanTestContainer(this.testContainer);
   });
 });

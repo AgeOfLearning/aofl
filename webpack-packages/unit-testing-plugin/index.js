@@ -1,5 +1,6 @@
 const glob = require('fast-glob');
 const path = require('path');
+const chalk = require('chalk');
 const {spawn} = require('child_process');
 const defaultsDeep = require('lodash.defaultsdeep');
 const fs = require('fs');
@@ -44,40 +45,18 @@ class UnitTestingPlugin {
     });
 
     this.options.exclude.push(path.join('**', this.options.output, '**'));
-    this.options.output = path.resolve(process.env.PWD, this.options.output);
+    this.options.output = path.resolve(process.cwd(), this.options.output);
+
     let wctConfig = {};
-    try {
-       wctConfig = require(path.resolve(this.options.config));
-    } catch (e) {}
+    wctConfig = require(path.resolve(this.options.config));
 
     this.wctConfig = defaultsDeep(wctConfig, {
-      verbose: false,
-      sauce: null,
-      plugins: {
-        local: null,
-        sauce: null,
-        // istanbul: {
-        //   dir: path.join(process.env.PWD, 'coverage'),
-        //   reporters: ['text-summary', 'lcov'],
-        //   include: this.options.include,
-        //   exclude: this.options.exclude
-        // }
-      },
-      webserver: {
-        port: '8081',
-        hostname: 'localhost'
-      },
-      root: process.env.PWD,
       npm: true,
-      wctPackageName: '@aofl/unit-testing-plugin',
-      skipCleanup: false,
-      persistent: false,
-      expanded: false
+      moduleResolution: 'node',
+      compile: 'never'
     });
+
     this.wctContext = new WctContext(this.wctConfig);
-    if (this.wctContext.options.output) {
-      new CliReporter(this.wctContext, this.wctContext.options.output, this.wctContext.options);
-    }
     this.wctContext.options.suites = [];
     this.runCount = 0;
     this.wctRelPath = '';
@@ -100,8 +79,15 @@ class UnitTestingPlugin {
     });
 
     let allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files], 'all-tests');
+    // let allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files].filter((item) => item.indexOf('.spec.js') === -1), 'all-tests');
 
     const entryPoints = [allJsEntryPath]
+    // for (let i = 0; i < files.length; i++) {
+    //   const file = files[i];
+    //   if (file.indexOf('.spec.js') === -1) continue;
+    //   entryPoints.push(this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), file], file));
+    // }
+
     entryPoints.forEach((item) => {
         let entryPath = path.resolve(item);
         let entryName = UnitTestingPlugin.name + '-' + md5(entryPath);
@@ -113,10 +99,12 @@ class UnitTestingPlugin {
       // await this.createOutputFolder();
       cb(null);
     });
+
     compiler.hooks.watchRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
       this.watchMode = true;
       cb(null);
     });
+
     compiler.hooks.afterEmit.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
       try {
         if (this.runCount === 0) {
@@ -126,12 +114,6 @@ class UnitTestingPlugin {
           if (wctArr.length > 0) {
             wctPath = wctArr[0];
             this.wctRelPath = path.dirname(path.relative(path.join(process.env.PWD, 'node_modules'), wctPath));
-            if (this.wctRelPath !== '') {
-              this.wctContext.options.proxy = {
-                path: '/components/web-component-tester/',
-                target: 'http://' + this.wctContext.options.webserver.hostname + ':' + this.wctContext.options.webserver.port + '/components/' + this.wctRelPath + '/web-component-tester/'
-              };
-            }
           }
         }
 
@@ -148,6 +130,9 @@ class UnitTestingPlugin {
 
         if (this.wctContext.options.suites.length > 0) {
           if (this.runCount === 0) {
+            if (this.wctContext.options.output) {
+              new CliReporter(this.wctContext, this.wctContext.options.output, this.wctContext.options);
+            }
             await steps.setupOverrides(this.wctContext);
             await steps.loadPlugins(this.wctContext);
             await steps.configure(this.wctContext);
@@ -251,7 +236,8 @@ class UnitTestingPlugin {
   getCoverAllEntryPath(files, filename) {
     const context = this.options.output;
     const jsOutputPath = path.resolve(context, md5(filename) + '.spec.js');
-    let content = files.reduce((acc, item) => {
+
+    const content = files.reduce((acc, item) => {
       acc += `import './${path.relative(path.dirname(jsOutputPath), path.resolve(item))}';\n`;
       return acc;
     }, '');
@@ -273,19 +259,13 @@ class UnitTestingPlugin {
     const finalOutputPath = path.resolve(this.options.output, name + '.html');
     let template = fs.readFileSync(path.resolve(__dirname, 'templates', 'sample.html'), 'utf-8');
 
-    template = template
-    .replace('aoflUnitTesting:wct-browser-legacy', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules', relPath, 'web-component-tester', 'browser.js')));
-
-
-    template = template
-    .replace('aoflUnitTesting:fetch-mock', path.relative(this.options.output, path.resolve(process.env.PWD, 'node_modules', relPath, 'fetch-mock', 'dist', 'es5', 'client-bundle.js')));
 
     template = this.replaceTemplatePart(template, 'aoflUnitTesting:additionalScripts', '<script>\n' + otherScripts + '\n</script>');
     template = this.replaceTemplatePart(template, 'aoflUnitTesting:js', '<script>\n' + content + '\n</script>');
 
     fs.writeFileSync(finalOutputPath, template, {encoding: 'utf-8'});
 
-    return path.relative(process.env.PWD, finalOutputPath);
+    return path.relative(process.cwd(), finalOutputPath);
   }
 
 
@@ -298,6 +278,7 @@ class UnitTestingPlugin {
    */
   getAdditionalScripts(compilation, chunksMap) {
     let scripts = '';
+
     for (let i = 0; i < this.options.scripts.length; i++) {
       if (typeof chunksMap[this.options.scripts[i]] !== 'undefined' &&
       typeof compilation.assets[chunksMap[this.options.scripts[i]]] !== 'undefined') {

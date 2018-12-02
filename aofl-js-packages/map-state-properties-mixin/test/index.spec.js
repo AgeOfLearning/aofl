@@ -65,10 +65,10 @@ describe('@aofl/map-state-properties-mixin', function() {
       customElements.define(ParentComp.is, ParentComp);
     }
 
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     storeInstance.replaceState({
       device: {
         device: 'desktop'
@@ -76,15 +76,16 @@ describe('@aofl/map-state-properties-mixin', function() {
     });
 
     render(html`
-      <test-fixture id="MapStatePropertiesMixinTest">
-        <template>
-          <map-state-parent-comp>
-            <map-state-child-comp></map-state-child-comp>
-          </map-state-parent-comp>
-        </template>
-      </test-fixture>
+      <map-state-parent-comp id="MapStatePropertiesMixinTest">
+        <map-state-child-comp></map-state-child-comp>
+      </map-state-parent-comp>
     `, this.testContainer);
-    this.element = fixture('MapStatePropertiesMixinTest');
+
+    this.element = this.testContainer.querySelector('#MapStatePropertiesMixinTest');
+  });
+
+  afterEach(function() {
+    cleanTestContainer(this.testContainer);
   });
 
   context('connectedCallback()', function() {

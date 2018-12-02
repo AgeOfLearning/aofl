@@ -13,26 +13,23 @@ describe('@aofl/web-components/aofl-element >> invalid style', function() {
     }
 
     customElements.define('invalid-style-element', InvalidStyleElement);
-
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-      <test-fixture id="InvalidStyleFixture">
-        <template>
-          <invalid-style-element></invalid-style-element>
-        </template>
-      </test-fixture>
+      <invalid-style-element id="InvalidStyleFixture"></invalid-style-element>
     `, this.testContainer);
-    this.invalidStyleFixture = fixture('InvalidStyleFixture');
+
+    this.invalidStyleFixture = this.testContainer.querySelector('#InvalidStyleFixture');
   });
 
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
 
   it('should skip invalid styles items', function() {
     expect(typeof this.invalidStyleFixture.shadowRoot).to.equal('object');
+  });
+
+  afterEach(function() {
+    cleanTestContainer(this.testContainer);
   });
 });

@@ -43,6 +43,7 @@ export default (superClass) => {
 
       this.isWithinViewport = this.offsetHeight > 0 && this.offsetWidth > 0 &&
       isInViewport(this, this.widthThreshold, this.heightThreshold);
+
       if (!this.onceWithinViewport && this.isWithinViewport === true) {
         this.onceWithinViewport = true;
         this.firstWithinViewport();

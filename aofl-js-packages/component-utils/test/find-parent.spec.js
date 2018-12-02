@@ -23,7 +23,7 @@ describe('@aofl/component-utils', function() {
           this.count += amount;
         }
         render() {
-          return super.render((context, html) => html``);
+          return super.render((context, html) => html`<slot></slot>`);
         }
       }
 
@@ -47,36 +47,29 @@ describe('@aofl/component-utils', function() {
           return super.render((context, html) => html``);
         }
       }
-      if (!customElements.get(ParentComp.is)) {
-        customElements.define(ParentComp.is, ParentComp);
-      }
-      if (!customElements.get(ChildComp.is)) {
-        customElements.define(ChildComp.is, ChildComp);
-      }
 
-
-      this.testContainer = getTestContainer();
+      customElements.define(ParentComp.is, ParentComp);
+      customElements.define(ChildComp.is, ChildComp);
     });
 
     beforeEach(function() {
+      this.testContainer = getTestContainer();
       render(html`
-        <test-fixture id="ComponentUtilsTest-findParent">
-          <template>
-            <find-parent-parent-comp>
-              <find-parent-child-comp></find-parent-child-comp>
-            </find-parent-parent-comp>
-          </template>
-        </test-fixture>
+        <find-parent-parent-comp>
+          <find-parent-child-comp></find-parent-child-comp>
+        </find-parent-parent-comp>
       `, this.testContainer);
-      this.parentElement = fixture('ComponentUtilsTest-findParent');
+
+      this.parentElement = this.testContainer.querySelector('find-parent-parent-comp');
       this.childElement = this.parentElement.querySelector('find-parent-child-comp');
     });
 
-    // after(function() {
-    //   this.testContainer.parentNode.removeChild(this.testContainer);
-    // });
+    afterEach(function() {
+      cleanTestContainer(this.testContainer);
+    });
 
     it('Should find the parent and invoke its method', function () {
+
       this.childElement.incrementParent();
       expect(this.parentElement.count).to.equal(5);
     });

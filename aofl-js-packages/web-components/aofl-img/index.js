@@ -46,7 +46,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    */
   static get properties() {
     return {
-      src: {type: String, attribute: true},
+      src: {type: String},
       imgSrc: {type: String, attribute: false},
       width: {type: String},
       height: {type: String},

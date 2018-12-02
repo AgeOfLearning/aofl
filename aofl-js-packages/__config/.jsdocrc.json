@@ -4,7 +4,7 @@
     "excludePattern": "(node_modules|documentation|api-docs|webpack)"
   },
   "opts": {
-    "template": "node_modules/@aofl/jsdoc-template",
+    "template": "../node_modules/@aofl/jsdoc-template",
     "encoding": "utf8",
     "destination": "../docs/v1.x/api-docs/",
     "recurse": true,

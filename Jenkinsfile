@@ -17,7 +17,7 @@ pipeline {
       stage('Unit Test') {
         steps {
           withCredentials([usernamePassword(credentialsId: 'sauce', usernameVariable: 'SAUCE_USERNAME', passwordVariable: 'SAUCE_ACCESS_KEY')]) {
-            sh 'cd aofl-js-packages && npm test'
+            sh 'cd aofl-js-packages && npm run test:sl'
           }
         }
       }

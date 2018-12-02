@@ -57,6 +57,7 @@ class AoflDrawer extends AoflElement {
     this.cancelOpen = null;
     this.trigger = this.trigger || 'animate';
     this.animated = typeof this.opening !== 'undefined' && typeof this.closing !== 'undefined';
+
     // Initialize class to prepare for next animation
     if (this.animated) {
       if (this.open) {
@@ -80,20 +81,22 @@ class AoflDrawer extends AoflElement {
   }
 
   /**
-   * @param {Map} changedProperties
-   * @return {Boolean}
+   *
+   * @param {*} name
+   * @param {*} oldValue
+   * @param {*} newValue
    */
-  shouldUpdate(changedProperties) {
+  attributeChangedCallback(name, oldValue, newValue) {
+    super.attributeChangedCallback(name, oldValue, newValue);
     /* istanbul ignore else */
-    if (changedProperties.has('open')) {
+    if (name === 'open') {
       if (this.animated) {
         this.openChanged(this.open);
       } else {
-        this.dispatchEvent(new CustomEvent('change', {
+        this.dispatchEvent(new CustomEvent('drawer-toggle', {
           composed: true
         }));
       }
-      return true;
     }
   }
 
@@ -102,6 +105,7 @@ class AoflDrawer extends AoflElement {
    * @private
    */
   openChanged(newVal) {
+    /* istanbul ignore else */
     if (newVal === true) {
       this.cancelOpen = this.startOpeningAnimation(() => {
         this.transitionEndCount = 0;
@@ -110,7 +114,6 @@ class AoflDrawer extends AoflElement {
         this.classList.add(this.trigger);
       });
     } else if (this.classList.contains(this.closing) || this.classList.contains(this.trigger)) {
-      /* istanbul ignore else */
       if (typeof this.cancelOpen === 'function') {
         this.cancelOpen();
         this.cancelOpen = null;
@@ -170,9 +173,11 @@ class AoflDrawer extends AoflElement {
         this.classList.remove('closing');
       }
 
-      this.dispatchEvent(new CustomEvent('change', {
-        composed: true
-      }));
+      setTimeout(() => { // queue micro task
+        this.dispatchEvent(new CustomEvent('drawer-toggle', {
+          composed: true
+        }));
+      });
     }
   }
 
@@ -189,3 +194,5 @@ class AoflDrawer extends AoflElement {
 }
 
 window.customElements.define(AoflDrawer.is, AoflDrawer);
+
+export default AoflDrawer;

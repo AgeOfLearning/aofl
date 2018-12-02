@@ -5,7 +5,7 @@ import {CacheManager, cacheTypeEnumerate, MemoryStorage} from '../';
 describe('@aofl/cache-manager#CacheManager', function() {
   const namespace = 'ns';
 
-  context('dustruct()', function() {
+  context('destruct()', function() {
     it('should set all properties to null', function() {
       const cacheManager = new CacheManager(namespace, cacheTypeEnumerate.Memory);
       cacheManager.setItem('key1', 'value1');

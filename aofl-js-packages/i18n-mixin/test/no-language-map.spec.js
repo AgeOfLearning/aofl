@@ -5,7 +5,7 @@ import {render, html} from 'lit-html';
 import {until} from 'lit-html/directives/until';
 
 describe('@aofl/i18n-mixin', function() {
-  before(function() {
+  before(async function() {
     const templates = {
       default: {
         template(ctx, html) {
@@ -52,98 +52,81 @@ describe('@aofl/i18n-mixin', function() {
 
     customElements.define(MyComp.is, MyComp);
 
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-      <test-fixture id="I18nNoLanguageMapTestFixture">
-        <template>
-          <i18n-mixin-element-no-lang lang="de-DE"></i18n-mixin-element-no-lang>
-        </template>
-      </test-fixture>
-      `, this.testContainer);
-    this.element = fixture('I18nNoLanguageMapTestFixture');
+      <i18n-mixin-element-no-lang id="I18nNoLanguageMapTestFixture" lang="de-DE"></i18n-mixin-element-no-lang>
+    `, this.testContainer);
+
+    this.element = this.testContainer.querySelector('#I18nNoLanguageMapTestFixture');
+    this.element.count = 1;
   });
 
   afterEach(function() {
     document.documentElement.removeAttribute('lang');
+    cleanTestContainer(this.testContainer);
   });
 
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
 
   context('__()', function() {
     it('Should default to source language', async function() {
-      try {
-        await this.element.updateComplete;
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
-            resolve();
-          }, 300);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
+          resolve();
+        }, 100);
+      });
     });
 
     it('Should update to German layout', async function() {
-      try {
-        await this.element.updateComplete;
-        expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          expect(this.element.shadowRoot.querySelector('h1').innerText).to.equal('German version');
+          resolve();
+        }, 100);
+      });
     });
   });
 
   context('_c()', function() {
     it('Should show the default text for one', async function() {
-      try {
-        await this.element.updateComplete;
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There is one person here and that person is Albert Einstein');
-            resolve();
-          }, 300);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There is one person here and that person is Albert Einstein');
+          resolve();
+        }, 100);
+      });
     });
 
     it('Should show the default text for two', async function() {
-      try {
-        await this.element.updateComplete;
-        this.element.count = 2;
-        await this.element.updateComplete;
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There are two people here');
-            resolve();
-          }, 300);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+      this.element.count = 2;
+      this.element.requestUpdate();
+      await this.element.updateComplete;
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There are two people here');
+          resolve();
+        }, 100);
+      });
     });
 
     it('Should show default text for more', async function() {
-      try {
-        await this.element.updateComplete;
-        this.element.count = 3;
-        await this.element.updateComplete;
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There are many people here!');
-            resolve();
-          }, 300);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+      this.element.count = 3;
+      this.element.requestUpdate();
+      await this.element.updateComplete;
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('There are many people here!');
+          resolve();
+        }, 100);
+      });
     });
   });
 });

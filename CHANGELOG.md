@@ -9,6 +9,10 @@ Features:
 - upgrade to lit-html@0.14.0
 - moved issue-templates to .github
 
+- webpack-packages
+  - unit-testing-plugin
+    - upgraded web-component-tester to 6.9.0
+
 Bugfixes:
 
 - cli
