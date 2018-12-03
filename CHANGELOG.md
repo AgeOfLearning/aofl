@@ -15,6 +15,9 @@ Features:
 
 Bugfixes:
 
+- aofl-js-packages
+  - router
+    - update url state is triggered after all 'after' middleware callbacks run successfully
 - cli
   - renamed all bin files to aofl-\*
 

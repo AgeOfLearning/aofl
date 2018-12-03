@@ -8,7 +8,7 @@
 export default (router) => {
   return (request, response, next) => {
     if (request.to !== response.to) {
-      router.applyMiddleware(response, 'beforeEach', Object.assign({}, request));
+      router.applyMiddleware(response);
     } else {
       next(response);
     }
