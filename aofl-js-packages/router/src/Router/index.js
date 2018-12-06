@@ -2,7 +2,6 @@ import PathUtils from '../path-utils';
 import {Middleware} from '@aofl/middleware';
 import matchRouteMiddleware from '../match-route-middleware';
 import redirectMiddleware from '../redirect-middleware';
-import updateStateMiddleware from '../update-state-middleware';
 
 /**
  * @summary router
@@ -45,8 +44,7 @@ class Router {
 
     this
     .beforeEach(matchRouteMiddleware(this))
-    .after(redirectMiddleware(this))
-    .after(updateStateMiddleware);
+    .after(redirectMiddleware(this));
 
     this.removeListener = this.listen();
   }
@@ -98,7 +96,12 @@ class Router {
   async applyMiddleware(request) {
     const beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
     await this.middleware.iterateMiddleware(request, 'afterEach', beforeEachResponse);
-    await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+    const afterResponse = await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+
+    if (!request.popped && afterResponse.matchedRoute !== null) {
+      window.history.pushState(null, null, afterResponse.to);
+    }
+
     this.resolve();
   }
 
