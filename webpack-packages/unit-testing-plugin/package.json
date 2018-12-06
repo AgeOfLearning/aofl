@@ -1,6 +1,6 @@
 {
   "name": "@aofl/unit-testing-plugin",
-  "version": "1.3.0-pre.1",
+  "version": "1.3.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cli": "^1.2.4-pre.1",
+    "@aofl/cli": "^1.3.0",
     "@polymer/test-fixture": "^4.0.2",
     "@webcomponents/webcomponentsjs": "^2.2.1",
     "chai": "^4.2.0",

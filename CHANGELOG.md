@@ -1,6 +1,6 @@
 # aofl changelog
 
-## unreleased
+## 1.3.0 (12-06-2018)
 
 Features:
 
