@@ -26,6 +26,12 @@ const funcs = {
   },
   upperCamelCase(str) {
     return funcs.capitilize(funcs.camelCase(str));
+  },
+  addDash(str) {
+    if (str.indexOf('-') === -1) {
+      return str + '-element';
+    }
+    return str;
   }
 };
 

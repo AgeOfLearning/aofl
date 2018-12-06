@@ -27,6 +27,7 @@ Bugfixes:
     - update url state is triggered after all 'after' middleware callbacks run successfully
 - cli
   - renamed all bin files to aofl-\*
+  - generate component adds "-element" if the component name doesn't include a (-)
 - aofljs-packages
   - aofl-list-option
     - changed string attributes to boolean

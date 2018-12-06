@@ -19,7 +19,7 @@ class __uppercamelcase__placeholder__ extends AoflElement {
    * @readonly
    */
   static get is() {
-    return '__placeholder__';
+    return '__adddash__placeholder__';
   }
 
   /**

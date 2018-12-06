@@ -18,6 +18,10 @@ const replaceRegexs = [
     replace: (val) => templateFunctions.upperCamelCase(val)
   },
   {
+    pattern: new RegExp('__adddash' + REPLACE_STR, 'g'),
+    replace: (val) => templateFunctions.addDash(val)
+  },
+  {
     pattern: REPLACE_REGEX,
     replace: (val) => val
   }
