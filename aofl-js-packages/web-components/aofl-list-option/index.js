@@ -22,7 +22,6 @@ class AoflListOption extends AoflElement {
    */
   constructor() {
     super();
-    this.clickCallback = () => this.select();
   }
 
   /**
@@ -39,7 +38,7 @@ class AoflListOption extends AoflElement {
    */
   static get properties() {
     return {
-      selected: {type: String},
+      selected: {type: Boolean},
       disabled: {type: Boolean},
       value: {type: String}
     };
@@ -57,15 +56,36 @@ class AoflListOption extends AoflElement {
    */
   connectedCallback() {
     super.connectedCallback();
-    this.addEventListener('click', this.clickCallback);
+    this.setAttribute('tabindex', 0);
+    this.addEventListener('click', this.select);
+    this.addEventListener('keydown', this.keydownCallback);
+    this.addEventListener('mouseenter', this.mouseenterCallback);
+
     this.updateComplete.then(() => {
       this.value = this.value || this.textContent;
       this.listElement = findParent(this, 'addOption');
       this.listElement.addOption(this);
-      if (typeof this.selected !== 'undefined' && this.selected !== 'false') {
+
+      if (typeof this.hasAttribute !== 'undefined' && this.hasAttribute('selected')) {
         this.select();
       }
     });
+  }
+
+  /**
+   * @param {Event} e
+   */
+  keydownCallback(e) {
+    if (e.keyCode === 13 || e.keyCode === 32) { // If user hits enter or space
+      this.select();
+    }
+  }
+
+  /**
+   * @param {Event} e
+   */
+  mouseenterCallback(e) {
+    this.focus();
   }
 
   /**
@@ -80,7 +100,9 @@ class AoflListOption extends AoflElement {
    */
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.removeEventListener('click', this.clickCallback);
+    this.removeEventListener('click', this.select);
+    this.removeEventListener('keydown', this.keydownCallback);
+    this.removeEventListener('mouseenter', this.mouseenterCallback);
   }
 }
 

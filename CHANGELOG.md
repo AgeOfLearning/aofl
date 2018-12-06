@@ -12,6 +12,13 @@ Features:
 - webpack-packages
   - unit-testing-plugin
     - upgraded web-component-tester to 6.9.0
+- aofljs-packages
+  - added aofl-multiselect-list
+  - aofl-list-option
+    - updated to be compatible with aofl-multiselect-list
+    - added keyboard interactions
+  - aofl-select-list
+    - added keyboard interactions
 
 Bugfixes:
 
@@ -20,6 +27,11 @@ Bugfixes:
     - update url state is triggered after all 'after' middleware callbacks run successfully
 - cli
   - renamed all bin files to aofl-\*
+- aofljs-packages
+  - aofl-list-option
+    - changed string attributes to boolean
+  - aofl-select-list
+    - changed string attributes to boolean
 
 ---
 
