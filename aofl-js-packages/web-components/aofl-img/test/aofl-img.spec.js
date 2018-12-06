@@ -3,75 +3,63 @@ import '../';
 import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-img', function() {
-  before(function() {
-    this.initalWidth = window.innerWidth;
-    this.initalHeight = window.innerHeight;
-
-    this.testContainer = getTestContainer();
-  });
-
-  beforeEach(function() {
-    const top = 3 * this.initalHeight;
-    const left = 3 * this.initalWidth;
-    render(html`
-      <test-fixture id="ImageVisibleOnLoad">
-        <template>
-          <aofl-img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></aofl-img>
-        </template>
-      </test-fixture>
-
-      <test-fixture id="ImageNotVisibleOnLoad">
-      <template>
-        <aofl-img src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" style="width: 100px; height: 100px; position: absolute; left: ${left}px; top: ${top}px;"></aofl-img>
-      </template>
-    </test-fixture>
-    `, this.testContainer);
-    this.element = fixture('ImageVisibleOnLoad');
-    this.elementOutside = fixture('ImageNotVisibleOnLoad');
-  });
-
-  afterEach(function() {
-    document.documentElement.style.width = this.initialWidth + 'px';
-    document.documentElement.style.height = this.initialHeight + 'px';
-    window.scrollTo(0, 0);
-  });
-
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
-
   context('Image is in viewport on page load', function() {
+    beforeEach(function() {
+      this.testContainer = getTestContainer();
+      render(html`
+        <aofl-img id="ImageVisibleOnLoad" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs="></aofl-img>
+      `, this.testContainer);
+      this.element = this.testContainer.querySelector('#ImageVisibleOnLoad');
+    });
+
     it('should have inner img element with property src matching aofl-img:src', async function() {
-      try {
-        await new Promise((resolve) => {
-          const element = this.element;
-          setTimeout(() => {
-            const renderedSource = element.shadowRoot.querySelector('img').src;
-            expect(renderedSource).to.be.equal(element.src);
-            resolve();
-          }, 1000);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.element.updateComplete;
+
+      await new Promise((resolve) => {
+        setTimeout(() => { // microtask (longer for ie11 :( )
+          const renderedSource = this.element.shadowRoot.querySelector('img').src;
+          expect(renderedSource).to.be.equal(this.element.src);
+          resolve();
+        }, 100);
+      });
+    });
+
+    afterEach(function() {
+      cleanTestContainer(this.testContainer);
     });
   });
 
   context('image is not in viewport on page load', function() {
+    beforeEach(function() {
+      this.testContainer = getTestContainer();
+
+      const left = -10 * window.innerHeight;
+
+      render(html`
+        <aofl-img id="ImageNotVisibleOnLoad" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" style="position: absolute; width: 100px; height: 100px; left: ${left}px; background: blue;"></aofl-img>
+      </div>
+      `, this.testContainer);
+
+      this.elementOutside = this.testContainer.querySelector('#ImageNotVisibleOnLoad');
+    });
+
     it('should not load the image when element is outside the viewport', async function() {
-      try {
-        await new Promise((resolve) => {
-          const element = this.elementOutside;
-          element.updateComplete
-          .then(() => {
-            const renderedSource = element.shadowRoot.querySelector('img').src;
-            expect(renderedSource).to.not.be.equal(element.src);
-            resolve();
-          });
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      await this.elementOutside.updateComplete;
+      return await new Promise((resolve, reject) => {
+        setTimeout(() => { // microtask
+          try {
+            const renderedSource = this.elementOutside.shadowRoot.querySelector('img').src;
+            expect(renderedSource).to.not.be.equal(this.elementOutside.src);
+            return resolve();
+          } catch (e) {
+            return reject(e);
+          }
+        }, 100);
+      });
+    });
+
+    afterEach(function() {
+      cleanTestContainer(this.testContainer);
     });
   });
 });

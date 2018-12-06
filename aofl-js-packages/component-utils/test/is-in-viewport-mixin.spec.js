@@ -24,26 +24,17 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
     /* eslint-enable */
 
     customElements.define(TestElement.is, TestElement);
-
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-    <test-fixture id="ViewportMixinVisibleOnLoad">
-      <template>
-        <is-in-viewport-mixin-element style="position: absolute; top: 0; left: 0; width: 100px; height: 100px; background: blue;"></is-in-viewport-mixin-element>
-      </template>
-    </test-fixture>
-    <test-fixture id="ViewportMixinNotVisibleOnLoad">
-      <template>
-        <is-in-viewport-mixin-element style="width: 100px; height: 100px; position: absolute; left: -10000px; top: -10000px;"></is-in-viewport-mixin-element>
-      </template>
-    </test-fixture>
+        <is-in-viewport-mixin-element id="ViewportMixinVisibleOnLoad" style="position: absolute; top: 0; left: 0; width: 100px; height: 100px; background: blue;"></is-in-viewport-mixin-element>
+        <is-in-viewport-mixin-element id="ViewportMixinNotVisibleOnLoad" style="width: 100px; height: 100px; position: absolute; left: -10000px; top: -10000px;"></is-in-viewport-mixin-element>
     `, this.testContainer);
 
-    this.element = fixture('ViewportMixinVisibleOnLoad');
-    this.elementOutside = fixture('ViewportMixinNotVisibleOnLoad');
+    this.element = this.testContainer.querySelector('#ViewportMixinVisibleOnLoad');
+    this.elementOutside = this.testContainer.querySelector('#ViewportMixinNotVisibleOnLoad');
 
     this.firstWithinViewport = sinon.spy(this.element, 'firstWithinViewport');
     this.withinViewportUpdated = sinon.spy(this.element, 'withinViewportUpdated');
@@ -52,20 +43,17 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
   });
 
   afterEach(function() {
-    this.firstWithinViewport.reset();
-    this.withinViewportUpdated.reset(); ;
-    this.firstWithinViewportOutside.reset();
-    this.withinViewportUpdatedOutside.reset();
+    this.firstWithinViewport.restore();
+    this.withinViewportUpdated.restore(); ;
+    this.firstWithinViewportOutside.restore();
+    this.withinViewportUpdatedOutside.restore();
 
     this.element.style.left = '0';
     this.element.style.top = '0';
     this.elementOutside.style.left = '-10000px';
     this.elementOutside.style.top = '-10000px';
+    cleanTestContainer(this.testContainer);
   });
-
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
 
   context('Element is in viewport on page load', function() {
     it('should have property isWithinViewport with value of true', async function() {

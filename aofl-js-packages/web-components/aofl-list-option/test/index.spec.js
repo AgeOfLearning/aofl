@@ -4,34 +4,26 @@ import '@aofl/web-components/aofl-select-list';
 import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-select-list', function() {
-  before(function() {
-    this.testContainer = getTestContainer();
-  });
-
   beforeEach(function() {
+    this.testContainer = getTestContainer();
+
     render(html`
-      <test-fixture id="ListTestFixture">
-        <template>
-          <aofl-select-list>
-            <aofl-list-option>1</aofl-list-option>
-          </aofl-select-list>
-        </template>
-      </test-fixture>
-      <test-fixture id="ListTestFixture2">
-        <template>
-          <aofl-select-list>
-            <aofl-list-option selected="true">1</aofl-list-option>
-          </aofl-select-list>
-        </template>
-      </test-fixture>
+      <aofl-select-list id="ListTestFixture">
+        <aofl-list-option>1</aofl-list-option>
+      </aofl-select-list>
+
+      <aofl-select-list id="ListTestFixture2">
+        <aofl-list-option selected="true">1</aofl-list-option>
+      </aofl-select-list>
     `, this.testContainer);
-    this.element = fixture('ListTestFixture');
-    this.element2 = fixture('ListTestFixture2');
+
+    this.element = this.testContainer.querySelector('#ListTestFixture');
+    this.element2 = this.testContainer.querySelector('#ListTestFixture2');
   });
 
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
+  afterEach(function() {
+    cleanTestContainer(this.testContainer);
+  });
 
   context('init', function() {
     it('parent should load the component', function() {

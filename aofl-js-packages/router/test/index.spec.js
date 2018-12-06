@@ -5,16 +5,16 @@ describe('@aofl/router/router', function() {
   beforeEach(function() {
     // reset history state
     this.historyState = [];
-    sinon.stub(history, 'pushState', (stateObject, title, to) => {
+    sinon.stub(history, 'pushState').callsFake((stateObject, title, to) => {
       this.historyState.push(to);
     });
 
     this.listeners = [];
-    sinon.stub(window, 'addEventListener', (event, fn) => {
+    sinon.stub(window, 'addEventListener').callsFake((event, fn) => {
       this.listeners.push({event, fn});
     });
 
-    sinon.stub(history, 'back', () => {
+    sinon.stub(history, 'back').callsFake(() => {
       for (let i = 0; i < this.listeners.length; i++) {
         if (this.listeners[i].event === 'popstate') {
           this.historyState.pop();

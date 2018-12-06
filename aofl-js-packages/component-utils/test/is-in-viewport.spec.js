@@ -4,29 +4,20 @@ import {html} from '@polymer/lit-element';
 import {render} from 'lit-html';
 
 describe('@aofl/component-utils/src/is-in-viewport', function() {
-  before(function() {
-    this.testContainer = getTestContainer();
-  });
-
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-      <test-fixture id="InInViewportVisibleOnLoad">
-        <template>
-          <div style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; background: red;"></div>
-        </template>
-      </test-fixture>
+      <div id="InInViewportVisibleOnLoad" style="position: absolute; left: 0; top: 0; width: 100px; height: 100px; background: red;"></div>
     `, this.testContainer);
-    this.element = fixture('InInViewportVisibleOnLoad');
+
+    this.element = this.testContainer.querySelector('#InInViewportVisibleOnLoad');
   });
 
   afterEach(function() {
     this.element.style.left = '0';
     this.element.style.top = '0';
+    cleanTestContainer(this.testContainer);
   });
-
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
 
   it('should return true when element is in within the viewport', function() {
     const isVisible = isInViewport(this.element);

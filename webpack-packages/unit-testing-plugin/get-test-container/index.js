@@ -6,4 +6,11 @@ const getTestContainer = () => {
   return testContainer;
 };
 
+const cleanTestContainer = (container) => {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
 window.getTestContainer = getTestContainer;
+window.cleanTestContainer = cleanTestContainer;

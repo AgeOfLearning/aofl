@@ -96,33 +96,24 @@ describe('@aofl/i18n-mixin', function() {
     customElements.define(MyComp.is, MyComp);
     customElements.define(MyCompNoAttrs.is, MyCompNoAttrs);
 
-    this.testContainer = getTestContainer();
   });
 
   beforeEach(function() {
+    this.testContainer = getTestContainer();
     render(html`
-      <test-fixture id="I18nTestFixture">
-        <template>
-          <i18n-mixin-element lang="de-DE"></i18n-mixin-element>
-        </template>
-      </test-fixture>
-      <test-fixture id="I18nTestFixtureNoAttr">
-        <template>
-          <i18n-mixin-element-no-attrs foo="bar"></i18n-mixin-element-no-attrs>
-        </template>
-      </test-fixture>
+      <i18n-mixin-element id="I18nTestFixture" lang="de-DE"></i18n-mixin-element>
+
+      <i18n-mixin-element-no-attrs id="I18nTestFixtureNoAttr" foo="bar"></i18n-mixin-element-no-attrs>
       `, this.testContainer);
-    this.element = fixture('I18nTestFixture');
-    this.elementNoAttr = fixture('I18nTestFixtureNoAttr');
+
+    this.element = this.testContainer.querySelector('#I18nTestFixture');
+    this.elementNoAttr = this.testContainer.querySelector('#I18nTestFixtureNoAttr');
   });
 
   afterEach(function() {
     document.documentElement.removeAttribute('lang');
+    cleanTestContainer(this.testContainer);
   });
-
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
 
   context('__()', function() {
     it('Should translate the string to German', async function() {
@@ -132,7 +123,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
             resolve();
-          }, 8000);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -148,7 +139,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -173,7 +164,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt eine Person hier und diese Person ist Albert Einstein');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -189,7 +180,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Hier sind zwei Leute');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -205,7 +196,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('p').innerText).to.equal('Es gibt viele Leute hier!');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -225,7 +216,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('Wie geht es dir Albert Einstein');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -242,7 +233,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -258,7 +249,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.element.shadowRoot.querySelector('h2').innerText).to.equal('How are you Albert Einstein');
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -274,7 +265,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.elementNoAttr.getAttribute('lang')).to.be.null;
             resolve();
-          }, 300);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);
@@ -288,7 +279,7 @@ describe('@aofl/i18n-mixin', function() {
           setTimeout(() => {
             expect(this.elementNoAttr.getAttribute('lang')).to.be.null;
             resolve();
-          }, 500);
+          }, 100);
         });
       } catch (e) {
         return Promise.reject(e);

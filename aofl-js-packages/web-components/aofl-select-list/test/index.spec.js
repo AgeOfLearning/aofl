@@ -4,27 +4,22 @@ import '../../aofl-list-option';
 import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-select-list', function() {
-  beforeEach(function() {
+  beforeEach(async function() {
     this.testContainer = getTestContainer();
-  });
 
-  beforeEach(function() {
     render(html`
-      <test-fixture id="ListTestFixtureParent">
-        <template>
-          <aofl-select-list>
-            <aofl-list-option>1</aofl-list-option>
-            <aofl-list-option selected="true">2</aofl-list-option>
-          </aofl-select-list>
-        </template>
-      </test-fixture>
+      <aofl-select-list id="ListTestFixtureParent">
+        <aofl-list-option>1</aofl-list-option>
+        <aofl-list-option selected="true">2</aofl-list-option>
+      </aofl-select-list>
     `, this.testContainer);
-    this.element = fixture('ListTestFixtureParent');
+
+    this.element = this.testContainer.querySelector('#ListTestFixtureParent');
   });
 
-  // after(function() {
-  //   this.testContainer.parentNode.removeChild(this.testContainer);
-  // });
+  afterEach(function() {
+    cleanTestContainer(this.testContainer);
+  });
 
   context('init', function() {
     it('parent should load the component', function() {
