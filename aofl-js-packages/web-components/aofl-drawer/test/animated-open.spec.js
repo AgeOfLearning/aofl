@@ -42,8 +42,8 @@ describe('@aofl/web-components/aofl-drawer#animated-open', function() {
         setTimeout(() => {
           expect(elementDrawerAnimatedOpen.classList.contains('ease-in')).to.be.true;
           resolve();
-        }, 50);
-      }, 50);
+        }, 100);
+      }, 100);
 
     });
   });
