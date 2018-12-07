@@ -7,9 +7,17 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/tag/AgeOfLearning/aofl.svg">
-  <img src="https://travis-ci.org/AgeOfLearning/aofl.svg?branch=master">
-  <img src="https://img.shields.io/github/license/AgeOfLearning/aofl.svg">
+  <a href="https://github.com/AgeOfLearning/aofl">
+    <img src="https://img.shields.io/github/tag/AgeOfLearning/aofl.svg">
+  </a>
+
+  <a href="https://travis-ci.org/AgeOfLearning/aofl">
+    <img src="https://travis-ci.org/AgeOfLearning/aofl.svg?branch=master">
+  </a>
+
+  <a href="https://github.com/AgeOfLearning/aofl/blob/master/LICENSE.md">
+    <img src="https://img.shields.io/github/license/AgeOfLearning/aofl.svg">
+  </a>
 </p>
 
 <p align="center">This mono-repo contains tools and libraries for the AofL JS framework. For documentation visit the <a href="https://ageoflearning.github.io/aofl/">AofL JS documentation website</a>.
