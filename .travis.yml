@@ -18,3 +18,8 @@ jobs:
       script: npm run test:sl
     - stage: coverage-report
       script: cat ../docs/v1.x/coverage/lcov.info | npx coveralls
+stages:
+  - lint
+  - unit-test
+  - name: coverage-report
+    if: branch = master
