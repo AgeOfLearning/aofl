@@ -45,7 +45,7 @@ describe('@aofl/web-components/aofl-drawer#animated-open', function() {
 
       setTimeout(() => {
         elementDrawerAnimatedOpen.removeAttribute('open');
-      }, 20);
+      }, 100);
     });
   });
 
