@@ -13,6 +13,10 @@
     <img src="https://travis-ci.org/AgeOfLearning/aofl.svg?branch=master">
   </a>
 
+  <a href="https://coveralls.io/github/AgeOfLearning/aofl?branch=master">
+    <img src="https://coveralls.io/repos/github/AgeOfLearning/aofl/badge.svg?branch=master" alt="Coverage Status" />
+  </a>
+
   <a href="https://github.com/AgeOfLearning/aofl/blob/master/LICENSE.md">
     <img src="https://img.shields.io/github/license/AgeOfLearning/aofl.svg">
   </a>
