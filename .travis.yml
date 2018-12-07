@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "10"
+cache: npm
+before_install:
+  - cd aofl-js-packages
+install:
+  - npm ci
+script:
+  - npm run lint
+  - npm run test:sl
