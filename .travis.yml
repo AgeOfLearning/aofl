@@ -10,19 +10,25 @@ install:
 jobs:
   include:
     - stage: lint
+      name: Lint
       script: npm run lint
 
     - stage: unit-test-local
+      name: Unit Test
       script: npm test
 
     - stage: unit-test
+      name: Unit Test
+    - if: branch != test-sauce
       script: npm run test:sl
     - if: branch = test-sauce
       env:
         - secure: "G3aoIiZY4vJrxPs3u69ZFFfatozB/RCpljqDdObGCdWvvTg2Y0TBwqTYYxnQiHKqcagQ52FT+VlIWgg93dAbcdhWg/zDJJIVm9LrFT8SFWhKEA5oYlkZ8iLXPQdXE+UmkUGsGVDFZen787MkC0b0GFYi1gKn0LgxjKI/9gsoaZ9jdfeCGJhlWzBG/kjeuRs2nih6ai2tRY3uGwhYunFvL8UdTFbD3ATfyus4YjV/zLOHPcYaWeZPkGtkDnAL0/P6zW9/T7u3M362opvoLhl0BXV1wy/OmsH6s6dLCvQMg96H5YrYrYOado6XRY9QFBlwmL6mIcJx7BOj07QqocFG3VeoSr1vV05S9Kxsh5jMGmIIijsOX5mNTtTWheJbPfqPzU1VP0pPz+ERLAYywnMP4zs0yxhU9rDA0e1/XDdr+R18U6oCajTVgQ+/eMBG5pHw8JeuaEhUJYv5P30db4ZUOEhP0R6qIkL7jXQdatrTkHIPWS/ck6gVFFlotvLuJQBnmTo5oHVIUCSyHXE9TtdbNSgl1E1Gy+ExaaYvBxm9CMXmhg393ugEIcTR6PdaIDXfdH0GmWZ/09+qkGIohjJ/kvqImQPMYh1g1zwEsmPfWHVuMwyMB79CLDnEgyEcJFySyIYoIWOVMBdPOI+D3wniwVRtQNf0fEpum8Bd8a9l1GQ="
         - secure: "rmM3ZeKvEENvMakI5GVK26W02mBchDRupv3ZcxJmsb8W0319jGboP44R5LCwvbcNiPLco/KKL5/PG8PtsK/kEm8PpVYpolSufVYS59u3xqZ9MYHOmKVO+c251/Xs6lOMiFpo9Ei2khh59SuU1bFNoIqMdt2mDgZoMfT/wEyJEAUdh5uMmfkAzXxJbukvnCZl9CxG+9Yi7xtGlCeK0SXjqLACwGG1gDZsCTzGZMuxkATgyBYbuAA2alkjh6ZRkllHZgh7/6XeZoElnXNmBRxwhW3WGvt3/qpxbyqotPyQn2cJ/9Sz+4huSlM3w1Zf2zK5Vc+GIIT1CPsY5GLDp6Lkai81kpWlmDvOtgW81+aqjuXntZkjMBMmmpsr9a5sBlitzrZQ6RLj75j5t41/Q0+a6jmm4u8VGNe7f8TNUY6to03s0zwKKVmrpkgc3S6mGZawHNbQLnma3GcQUr3a1TuOGezg6CaQ8ZYgHKxGJxf0ScyHGyePYtqi2LUOfSy71vGCAYpyptS0CfIxJI4+MOFCrf1rqU4JOPAKFIdlan+dfQA2Gict9Z8VPoEuLK9Ed876bDGO+QLtosCImYL7+XGeWMlzrU+8LTsZROvs2hFOiHwOAIND7Isc5kk5uPc9xw/gLJdtX1QPa6aYDMvH4fCPbxrNniMhphpm0OZFjjpPIhc="
+      script: npm run test:sl
 
     - stage: coveralls
+      name: Coveralls Report
       script: cat ../docs/v1.x/coverage/lcov.info | npx coveralls
 
 stages:
