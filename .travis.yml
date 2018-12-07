@@ -1,4 +1,3 @@
-if: (TRAVIS_PULL_REQUEST != false) OR (branch = master)
 language: node_js
 node_js:
   - "10"
@@ -16,7 +15,7 @@ jobs:
       name: "Lint and Unit Tests"
       script:
         - npm run lint
-        - npm run test:sl
+        # - npm run test:sl
     - stage: coverage-report
       script: cat ../docs/v1.x/coverage/lcov.info | npx coveralls
 stages:
