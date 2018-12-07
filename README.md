@@ -29,4 +29,4 @@
 
 ## Supported Browsers
 
-<img src="https://saucelabs.com/browser-matrix/aoflsauceuser.svg?auth=2a7943c48d585baf8d511149715137a5" alt="Sauce Test Status"/>
+<img src="https://saucelabs.com/browser-matrix/aoflsaucem.svg?auth=c0f586d708f2895cc0c009e385483adb" alt="Sauce Test Status"/>
