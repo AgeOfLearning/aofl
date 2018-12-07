@@ -1,5 +1,3 @@
-# Age of Learning Open Source Collection
-
 <p align="center">
   <a href="https://ageoflearning.github.io/aofl" target="_blank" rel="noopener noreferrer">
     <img width="200" src="https://ageoflearning.github.io/aofl/_assets/manifest/icon-512x512.png" alt="AofL JS Logo">
@@ -20,5 +18,11 @@
   </a>
 </p>
 
+<h1 align="center">AofL JS</h1>
+
 <p align="center">This mono-repo contains tools and libraries for the AofL JS framework. For documentation visit the <a href="https://ageoflearning.github.io/aofl/">AofL JS documentation website</a>.
 </p>
+
+## Supported Browsers
+
+<img src="https://saucelabs.com/browser-matrix/aoflsauceuser.svg?auth=2a7943c48d585baf8d511149715137a5" alt="Sauce Test Status"/>
