@@ -40,8 +40,8 @@ stages:
   - name: local-unit-test
     if: fork = true
   - name: branch-unit-test
-    if: (fork = false) AND (branch != master)
+    if: (fork = false) AND (branch != test-sauce)
   - name: master-unit-test
-    if: (fork = false) AND (branch = master)
+    if: (fork = false) AND (branch = test-sauce)
   - name: coveralls
-    if: branch = master
+    if: branch = test-sauce
