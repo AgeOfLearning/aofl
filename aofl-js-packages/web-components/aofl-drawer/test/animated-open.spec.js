@@ -37,14 +37,15 @@ describe('@aofl/web-components/aofl-drawer#animated-open', function() {
     await elementDrawerAnimatedOpen.updateComplete;
 
     await new Promise((resolve) => {
+      elementDrawerAnimatedOpen.addEventListener('drawer-toggle', function listener() {
+        elementDrawerAnimatedOpen.removeEventListener('drawer-toggle', listener);
+        expect(elementDrawerAnimatedOpen.classList.contains('ease-in')).to.be.true;
+        resolve();
+      });
+
       setTimeout(() => {
         elementDrawerAnimatedOpen.removeAttribute('open');
-        setTimeout(() => {
-          expect(elementDrawerAnimatedOpen.classList.contains('ease-in')).to.be.true;
-          resolve();
-        }, 100);
       }, 100);
-
     });
   });
 
