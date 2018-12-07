@@ -22,4 +22,4 @@ stages:
   - lint
   - unit-test
   - name: coverage-report
-    if: branch = master
+    if: (branch = master) AND (TRAVIS_PULL_REQUEST = false)
