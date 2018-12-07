@@ -9,8 +9,7 @@ const sharedSettings = {
   recordScreenshots: false,
   recordLogs: false,
   webdriverRemoteQuietExceptions: false,
-  videoUploadOnPass: false,
-  build
+  videoUploadOnPass: false
 };
 
 const config = {
