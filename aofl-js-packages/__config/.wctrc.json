@@ -3,10 +3,9 @@
   "persistent": false,
   "plugins": {
     "local": {
-      "browsers": ["firefox", "chrome", "canary", "safari"],
+      "browsers": ["firefox", "chrome"],
       "browserOptions": {
         "chrome": ["headless"],
-        "canary": ["headless"],
         "firefox": ["-headless"]
       }
     },
