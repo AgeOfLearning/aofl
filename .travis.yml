@@ -13,9 +13,9 @@ jobs:
       name: Lint
       script: npm run lint
 
-    - stage: local-unit-test
-      name: "Unit Test"
-      script: npm test
+    # - stage: local-unit-test
+    #   name: "Unit Test"
+    #   script: npm test
 
     - stage: branch-unit-test
       name: "Unit Test"
@@ -37,8 +37,8 @@ jobs:
 
 stages:
   - lint
-  - name: local-unit-test
-    if: fork = true
+  # - name: local-unit-test
+  #   if: fork = true
   - name: branch-unit-test
     if: (fork = false) AND (branch != master)
   - name: master-unit-test
