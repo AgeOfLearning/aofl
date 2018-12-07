@@ -12,7 +12,7 @@
     },
     "istanbul": {
       "dir": "../docs/v1.x/coverage/",
-      "reporters": ["text-summary", "lcov"],
+      "reporters": ["text-summary", "lcovonly"],
       "include": "**/*.js",
       "exclude": [
         "**/node_modules",
