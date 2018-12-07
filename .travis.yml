@@ -33,7 +33,7 @@ jobs:
 
     - stage: coveralls
       name: Coveralls Report
-      script: cat ../docs/v1.x/coverage/lcov.info | npx coveralls
+      script: cat ../docs/v1.x/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 stages:
   - lint

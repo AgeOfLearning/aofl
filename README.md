@@ -5,26 +5,26 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/AgeOfLearning/aofl">
+  <a href="https://github.com/AgeOfLearning/aofl" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/github/tag/AgeOfLearning/aofl.svg">
   </a>
 
-  <a href="https://travis-ci.org/AgeOfLearning/aofl">
+  <a href="https://travis-ci.org/AgeOfLearning/aofl" target="_blank" rel="noopener noreferrer">
     <img src="https://travis-ci.org/AgeOfLearning/aofl.svg?branch=master">
   </a>
 
-  <a href="https://coveralls.io/github/AgeOfLearning/aofl?branch=master">
+  <a href="https://coveralls.io/github/AgeOfLearning/aofl?branch=master" target="_blank" rel="noopener noreferrer">
     <img src="https://coveralls.io/repos/github/AgeOfLearning/aofl/badge.svg?branch=master" alt="Coverage Status" />
   </a>
 
-  <a href="https://github.com/AgeOfLearning/aofl/blob/master/LICENSE.md">
+  <a href="https://github.com/AgeOfLearning/aofl/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/github/license/AgeOfLearning/aofl.svg">
   </a>
 </p>
 
 <h1 align="center">AofL JS</h1>
 
-<p align="center">This mono-repo contains tools and libraries for the AofL JS framework. For documentation visit the <a href="https://ageoflearning.github.io/aofl/">AofL JS documentation website</a>.
+<p align="center">This mono-repo contains tools and libraries for the AofL JS framework. For documentation visit the <a href="https://ageoflearning.github.io/aofl/" target="_blank" rel="noopener noreferrer">AofL JS documentation website</a>.
 </p>
 
 ## Supported Browsers
