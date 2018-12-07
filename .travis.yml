@@ -8,7 +8,7 @@ install:
   - npm ci
 jobs:
   include:
-    - if: (branch = "test-sauce") AND (TRAVIS_PULL_REQUEST = false)
+    - if: branch = test-sauce
       env:
         - secure: "TqWADNntJI4WwAhjS6Wr7Ed77whWupbbeQ4rCISGfHcCoHh8zmHLVdICRxXMl+P9PB/hBGoNlFH3hXP2QBguuOmZsRiOWLvkNPrSqYcXNf0ftP6OqPaLd8ruUOmuA45pFQkzMtdQQ/912lHKS6yVp8pNn8ZPJb8Jsy0vCmBYEAfrp33ia/L61fqDzNrh7sNhth1yF9+XE2QPR3agpAtODpV26lO07WvHYXrhpkuu1l7CU2MJm9fMLEYd5doD53fZfvscZ2JIML/6eK9UKrvS3cREZZzIQuOJkQNEENoHyR6Ihv+df67NvqObuIC2xmhc7mCR+WRCQ7bYeKpGCiAmRVdeMEUdOep+vuEtmDYL/814REfzDNrUcOB7DtbedxAjEiXwKy077yuhYRmHbJHEZv4Lj9gRMar3IjnbwmDutLgNWY16J99THHDwg2ghNiyyH2pGenacRRtNTjZES5CB/RnVJ0pjNtTCzhPqNXe1Y4e4vpx67vEcmDxw0Zsmsy9g6zu05vYaNCBStW0cjRvTdKbUKGUjLHermfApXy1XwTBc87NfAk6qrDA7qGeaKw2CxibbkbOIaMYhxLoEWFkFggdJbkkVseNCSXSbMM8vynfa2REWaLMYz3N+nGXYRronBeSj/U489aCDrJEPzyJ0zXyJJMbCCxf6t0JDs2njPW0="
     - stage: tests
@@ -21,4 +21,4 @@ jobs:
 stages:
   - tests
   - name: coverage-report
-    if: (branch = "test-sauce") AND (TRAVIS_PULL_REQUEST = false)
+    if: branch = test-sauce
