@@ -4,7 +4,9 @@
 
 Features:
 
+- switched to travis
 - ci pipeline setup
+- updated README.md
 - upgrade to lit-element@0.6.4
 - upgrade to lit-html@0.14.0
 - moved issue-templates to .github

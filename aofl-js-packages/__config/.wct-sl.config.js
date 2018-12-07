@@ -15,7 +15,7 @@ const sharedSettings = {
 
 const config = {
   verbose: false,
-  // testTimeout: 300000,
+  testTimeout: 210000,
   // persistent: true,
   plugins: {
     sauce: {
