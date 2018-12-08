@@ -1,4 +1,4 @@
-const npmPkg = require("../package.json");
+const npmPkg = require('../package.json');
 
 const build = `v${npmPkg.version}`;
 
@@ -18,7 +18,7 @@ const config = {
   plugins: {
     sauce: {
       tunnelOptions: {
-        noSslBumpDomains: "all",
+        noSslBumpDomains: 'all',
         noProxyCaching: true
       },
       browsers: [
@@ -93,6 +93,23 @@ const config = {
           platform: 'macOS 10.13',
           version: 'latest',
         }
+      ]
+    },
+    istanbul: {
+      dir: '../docs/v1.x/coverage/',
+      reporters: ['lcovonly'],
+      include: '**/*.js',
+      exclude: [
+        '**/node_modules',
+        '**/node_modules_sourced',
+        '**/documentation{,!(/tests/**)}',
+        '**/__config',
+        '**/cli',
+        '**/*-instance/**',
+        '**/*-loader/**',
+        '**/*-polyfill/**',
+        '**/*-plugin/**',
+        '**/router/examples'
       ]
     }
   }
