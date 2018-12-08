@@ -94,23 +94,6 @@ const config = {
           version: 'latest',
         }
       ]
-    },
-    istanbul: {
-      dir: '../docs/v1.x/coverage/',
-      reporters: ['lcovonly'],
-      include: '**/*.js',
-      exclude: [
-        '**/node_modules',
-        '**/node_modules_sourced',
-        '**/documentation{,!(/tests/**)}',
-        '**/__config',
-        '**/cli',
-        '**/*-instance/**',
-        '**/*-loader/**',
-        '**/*-polyfill/**',
-        '**/*-plugin/**',
-        '**/router/examples'
-      ]
     }
   }
 };

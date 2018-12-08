@@ -33,9 +33,12 @@ jobs:
 
     - stage: coveralls
       name: Coveralls Report
+      addons:
+        chrome: stable
+        firefox: latest
       env:
         - secure: "tRqyCCBE9HE+RR0S0lk8QQo+w94qOZ7VPZ5LfJurLO10DApCwHVEBzGvMy7G5aIAz93aF/saOxUQI/2FXPGGx/28hYxgo4FKzEC9YcnQTbxZaxR0A4kuk+qP+iP6laTUXJgZIhrp3r7SsY92Pl+iQ0JS6CdZjLGXK/pn94QOcNdZLCW49VjAfcI92IfLRjWLIZNpWGgdoCicJQOIAdL+siMd1v/kUbmGAaHDSRJw0AOfdYfIHxZl9Hkri1DglV/y3V08B9zxTXSsJ+51dd7OT27zJXyGIGUOAu25WGqrRBmf2uRZnSWZQyPzwof4Sz64WLVrV4RhiZWC7JpZW3SBRdKcsJD6ls7ilF3gK0wINTa/Yrw2jSu8GF6ZN6t3izmrc3x2qdaRO3IkSXPwqPIxk0K0BCpOT4MVDFfVyqLEuZK9xSAj8PFT8WFusv3Q3QVEAQyUzxnr1Scj9P/28bCiEEtHtpNLt7jGMoguTKJXAA6vA2kVncAFMoOMQ/E3f7MWjvqo+1ktLp++ymwZUS+PJEPmSKjtDsLKv0I6LzquAnfXWw5frWxnRQI4CbAZpBu/Q2hYt+O98y4sts6X67R6kkZGCSa5XkSaljvYdaBQinhhsxEBqjjA1JNbfbdD/1UV4dhvOtJ0EukG5PndaVo51gQjpkCUtIq62qZ1T1PDAok="
-      script: npx codecov -f ../docs/v1.x/coverage/lcov.info
+      script: npm test && npx codecov -f ../docs/v1.x/coverage/lcov.info
 
 stages:
   - lint
