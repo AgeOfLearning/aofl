@@ -31,7 +31,7 @@ jobs:
         - secure: "rmM3ZeKvEENvMakI5GVK26W02mBchDRupv3ZcxJmsb8W0319jGboP44R5LCwvbcNiPLco/KKL5/PG8PtsK/kEm8PpVYpolSufVYS59u3xqZ9MYHOmKVO+c251/Xs6lOMiFpo9Ei2khh59SuU1bFNoIqMdt2mDgZoMfT/wEyJEAUdh5uMmfkAzXxJbukvnCZl9CxG+9Yi7xtGlCeK0SXjqLACwGG1gDZsCTzGZMuxkATgyBYbuAA2alkjh6ZRkllHZgh7/6XeZoElnXNmBRxwhW3WGvt3/qpxbyqotPyQn2cJ/9Sz+4huSlM3w1Zf2zK5Vc+GIIT1CPsY5GLDp6Lkai81kpWlmDvOtgW81+aqjuXntZkjMBMmmpsr9a5sBlitzrZQ6RLj75j5t41/Q0+a6jmm4u8VGNe7f8TNUY6to03s0zwKKVmrpkgc3S6mGZawHNbQLnma3GcQUr3a1TuOGezg6CaQ8ZYgHKxGJxf0ScyHGyePYtqi2LUOfSy71vGCAYpyptS0CfIxJI4+MOFCrf1rqU4JOPAKFIdlan+dfQA2Gict9Z8VPoEuLK9Ed876bDGO+QLtosCImYL7+XGeWMlzrU+8LTsZROvs2hFOiHwOAIND7Isc5kk5uPc9xw/gLJdtX1QPa6aYDMvH4fCPbxrNniMhphpm0OZFjjpPIhc="
       script: npm run test:sl
 
-    - stage: CodeCov
+    - stage: coverage
       name: CodeCov Report
       addons:
         chrome: stable
@@ -48,5 +48,5 @@ stages:
     if: (fork = false) AND (branch != master)
   - name: master-unit-test
     if: (fork = false) AND (branch = master)
-  - name: coveralls
+  - name: coverage
     if: (fork = false) AND (branch = master)
