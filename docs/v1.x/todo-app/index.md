@@ -503,7 +503,7 @@ We have modified version of the `insertTodo` function that validates the form be
 ```javascript
 // routes/home/modules/add-todo-form/template.js
 export default (ctx, html) => html`
-  <form @submit="${e => ctx.addTodo(e)}">
+  <form @submit="${e => ctx.insertTodo(e)}">
     <input
       name="description"
       @input="${e => ctx.onDescriptionUpdate(e)}"
@@ -689,7 +689,7 @@ export const template = (ctx, html) => html`
 ```javascript
 // routes/home/index.js
 ...
-class HomePage extends i18nMixin(mapStatePropertiesMixin(AoflElement)) {
+class HomePage extends mapStatePropertiesMixin(AoflElement) {
   ...
   toggleTodo(e, index) {
     e.preventDefault();

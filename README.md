@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/AgeOfLearning/aofl" target="_blank" rel="noopener noreferrer">
+  <a href="https://github.com/AgeOfLearning/aofl/releases/latest" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/github/tag/AgeOfLearning/aofl.svg">
   </a>
 
