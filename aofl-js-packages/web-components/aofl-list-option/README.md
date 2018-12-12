@@ -23,6 +23,10 @@ import '@aofl/web-components/aofl-select-list';
 </aofl-select-list>
 ```
 
+## Keyboard Interactions
+
+List options will be focused when hovering over them. Selections may be made with enter or space.
+
 ## attributes
 
 | Attributes | Type   | Default   | Description                             |
