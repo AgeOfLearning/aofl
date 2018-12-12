@@ -33,6 +33,18 @@ class InitProject {
     this.cloneDir = path.resolve(os.tmpdir(), md5(this.repo));
   }
 
+  static removeGitFromFiles(files) {
+    const index = files.indexOf('.git');
+    if (index > -1) {
+      return [
+        ...files.slice(0, index),
+        ...files.slice(index + 1)
+      ]
+    }
+
+    return [...files];
+  }
+
   /**
    *
    *
@@ -51,7 +63,9 @@ class InitProject {
   async init() {
     try {
       await new Promise((resolve, reject) => {
-        fs.readdir(this.target, (err, files) => {
+        fs.readdir(this.target, (err, _files) => {
+          const files = InitProject.removeGitFromFiles(_files);
+          console.log(files);
           if (files && files.length) {
             return reject(chalk.red(`fatal: destination path ${this.target} already exists and is not an empty directory.
             `));

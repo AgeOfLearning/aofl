@@ -1,4 +1,4 @@
-const spawn = require('child_process').spawn;
+const spawn = require('cross-spawn');
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 const path = require('path');
