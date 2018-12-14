@@ -22,6 +22,7 @@
 - AofL JS Concepts
 
   - [Web Components, lit-element & lit-html](v1.x/aofl-js-concepts/technologies.md)
+  - [aofl-element](v1.x/aofl-js-concepts/aofl-element.md)
   - [Templating & Routing](v1.x/aofl-js-concepts/templating-routing.md)
   - [API Calls](v1.x/aofl-js-concepts/api-calls.md)
   - [Store](v1.x/aofl-js-concepts/store.md)
