@@ -18,7 +18,8 @@ module: {
           loader: '@aofl/webcomponent-css-loader',
           options: {
             sourceMap: false
-            path: path.resolve(__dirname, '..', 'templates', 'main', 'css', 'index.css')
+            path: path.resolve(__dirname, '..', 'templates', 'main', 'css', 'index.css'),
+            force: false // when true prunes current css file even if no template.js or index.js files exist
           }
         }
       ]

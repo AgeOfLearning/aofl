@@ -10,8 +10,11 @@ const url = require('postcss-url');
 const schema = {
   type: 'object',
   properties: {
-    test: {
+    path: {
       type: 'string'
+    },
+    force: {
+      type: 'boolean'
     }
   }
 };
@@ -23,22 +26,39 @@ const schema = {
  * @param {*} meta
  */
 module.exports = async function(source) {
-  /* eslint-disable */
   const callback = this.async();
-  const options = getOptions(this);
-  /* eslint-enable */
+  const options = Object.assign({
+    force: false,
+    path: ''
+  }, getOptions(this)); // eslint-disable-line
+
   validationOptions(schema, options, 'Web components css loader');
-  const globalStyles = fs.readFileSync(options.path);
-  const rPath = this.resourcePath;
-  const cssFileName = rPath.substr(rPath.lastIndexOf(path.sep) + 1);
+
+  const resourcePath = this.resourcePath;
+  const cssFileName = resourcePath.substr(resourcePath.lastIndexOf(path.sep) + 1);
   const templateName = cssFileName.replace('css', 'js');
-  const templatePath = rPath.replace(cssFileName, templateName);
-  const indexPath = rPath.replace(cssFileName, 'index.js');
-  if (fs.existsSync(templatePath)) {
-    let content = fs.readFileSync(templatePath);
-    const indexContent = fs.existsSync(indexPath).toString() ? fs.readFileSync(indexPath) : '';
-    content = indexContent + content;
-    this.addDependency(templatePath);
+  const templatePath = resourcePath.replace(cssFileName, templateName);
+  const indexPath = resourcePath.replace(cssFileName, 'index.js');
+
+  const globalStylesExists = fs.existsSync(options.path);
+  const templateFileExists = fs.existsSync(templatePath);
+  const indexFileExists = fs.existsSync(indexPath);
+  let content = '';
+
+  if (!templateFileExists && !indexFileExists && !options.force) {
+    return callback(null, source);
+  }
+
+  try {
+    if (templateFileExists) {
+      content += fs.readFileSync(templatePath, {encoding: 'utf-8'});
+      this.addDependency(templatePath);
+    }
+
+    if (indexFileExists) {
+      content += fs.readFileSync(indexPath, {encoding: 'utf-8'});
+      this.addDependency(indexPath);
+    }
 
     const addDependencies = (messages) => {
       if (Array.isArray(messages)) {
@@ -51,7 +71,9 @@ module.exports = async function(source) {
       }
     };
 
-    try {
+    let combinedCss = '';
+    if (globalStylesExists) {
+      const globalStyles = fs.readFileSync(options.path, {encoding: 'utf-8'});
       const globalCss = await postcss()
       .use(atImport({
         root: path.dirname(options.path)
@@ -61,41 +83,41 @@ module.exports = async function(source) {
       }))
       .process(globalStyles.toString(), {
         from: options.path,
-        to: rPath,
+        to: resourcePath,
         map: false
       });
 
       addDependencies(globalCss.messages);
-      const localCss = await postcss()
-      .use(atImport({
-        root: path.dirname(rPath)
-      }))
-      .use(url({
-        url: 'rebase'
-      }))
-      .process(source.toString(), {
-        from: rPath,
-        map: false
+      combinedCss += globalCss.css;
+    }
+
+    const localCss = await postcss()
+    .use(atImport({
+      root: path.dirname(resourcePath)
+    }))
+    .use(url({
+      url: 'rebase'
+    }))
+    .process(source.toString(), {
+      from: resourcePath,
+      map: false
+    });
+
+    addDependencies(localCss.messages);
+    combinedCss += localCss.css;
+
+    if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
+      callback(null, combinedCss);
+    } else {
+      const purified = purify(content.toString(), combinedCss, {
+        info: false,
+        rejected: false,
+        whitelist: []
       });
 
-      addDependencies(localCss.messages);
-      const combinedCss = globalCss.css + localCss.css;
-
-      if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
-        callback(null, combinedCss);
-      } else {
-        const purified = purify(content.toString(), combinedCss, {
-          info: false,
-          rejected: false,
-          whitelist: []
-        });
-
-        callback(null, purified);
-      }
-    } catch (e) {
-      callback(e);
+      callback(null, purified);
     }
-  } else {
-    callback(null, source);
+  } catch (e) {
+    callback(e);
   }
 };
