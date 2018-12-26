@@ -1,4 +1,5 @@
-*.min.js
-node_modules
+**/node_modules
 __build
-language.js
+__build_tests
+coverage
+api-docs
