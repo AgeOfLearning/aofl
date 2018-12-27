@@ -23,7 +23,11 @@ class Npm {
         console.log(chalk.cyan(`running... npm ${params.join(' ')}\n`));
       }
       let res = '';
-      const npm = spawn('npm', params, Object.assign({stdio: 'inherit'}, options));
+      let optionsData = {
+        stdio: 'inherit',
+        shell: process.platform === "win32" ? true : false,
+      }
+      const npm = spawn('npm', params, Object.assign(optionsData, options));
 
       if (npm.stdout !== null) {
         npm.stdout.on('data', (data) => {
