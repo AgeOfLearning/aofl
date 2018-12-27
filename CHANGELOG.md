@@ -11,6 +11,9 @@ Bugfixes:
 
 - lint cli and webpack-packages
 - fixed typo in documentation
+- aofljs-packages
+  - store
+    - Push store instances to window.aoflDevtools.storeInstances, when window.aoflDevtools exsists or the app runs in development mode, instead of exposing a global variable window.storeInstance.
 - cli
   - Fixed issue with child_process.spawn on windows by using cross-spawn. (https://stackoverflow.com/questions/37459717/error-spawn-enoent-on-windows) #11 #12
   - init project ignores .git directory

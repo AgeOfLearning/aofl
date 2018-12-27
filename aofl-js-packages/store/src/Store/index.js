@@ -30,7 +30,11 @@ class Store {
 
     if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
       this.state = deepFreeze(this.state);
-      window.storeInstance = this;
+      window.aoflDevtools = window.aoflDevtools || {};
+      if (!Array.isArray(window.aoflDevtools.storeInstances)) {
+        window.aoflDevtools.storeInstances = [];
+      }
+      window.aoflDevtools.storeInstances.push(this);
     }
   }
 
