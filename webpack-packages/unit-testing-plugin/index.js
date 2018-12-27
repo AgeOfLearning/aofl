@@ -14,8 +14,6 @@ const {getChunksMap} = require('./assets-map');
 const Npm = require('@aofl/cli/lib/npm');
 /**
  *
- *
- * @class UnitTestingPlugin
  */
 class UnitTestingPlugin {
   /**

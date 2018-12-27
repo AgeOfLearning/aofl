@@ -25,12 +25,9 @@ const config = {
       ignoreRegExpLiterals: true
     }],
     'space-in-parens': ['error', 'never'],
-    indent: ['error', 2, {
-      'MemberExpression': 0,
-      "FunctionDeclaration": {"parameters": 0},
-      "FunctionExpression": {"body": 1, "parameters": 0},
-      "CallExpression": {"arguments": 0}
-    }]
+    indent: ['warn'],
+    'valid-jsdoc': 'warn',
+    'require-jsdoc': 'warn'
   }
 };
 

@@ -4,6 +4,7 @@
 
 Features:
 
+- Updated eslint rules to be more lenient
 - webpack-packages
   - html-webpack-purify-internal-css-plugin added
 
