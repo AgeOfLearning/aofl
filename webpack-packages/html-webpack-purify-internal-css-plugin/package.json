@@ -1,0 +1,24 @@
+{
+  "name": "@aofl/html-webpack-purify-internal-css-plugin",
+  "version": "1.0.0-pre.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgeOfLearning/aofl.git"
+  },
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://github.com/AgeOfLearning/aofl#readme",
+  "dependencies": {
+    "lodash.defaultsdeep": "^4.6.0",
+    "parse5": "^5.1.0",
+    "purify-css": "^1.2.5"
+  }
+}
