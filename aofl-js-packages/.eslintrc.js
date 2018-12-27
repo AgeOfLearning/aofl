@@ -3,15 +3,8 @@ const config = {
   parser: 'babel-eslint',
   root: true,
   parserOptions: {
-    ecmaVersion: 8,
-    sourceType: 'module',
-    allowImportExportEverywhere: true,
-    exmaFeatures: {
-      experimentalObjectRestSpread: true
-    },
-    env: {
-      es6: true
-    }
+    ecmaVersion: 2018,
+    sourceType: 'module'
   },
   rules: {
     'comma-dangle': ['error', 'never'],
@@ -25,7 +18,27 @@ const config = {
       ignoreRegExpLiterals: true
     }],
     'space-in-parens': ['error', 'never'],
-    indent: ['warn'],
+    'indent': [
+      'error', 2, {
+        'CallExpression': {
+          'arguments': 2,
+        },
+        'FunctionDeclaration': {
+          'body': 1,
+          'parameters': 2,
+        },
+        'FunctionExpression': {
+          'body': 1,
+          'parameters': 2,
+        },
+        'MemberExpression': 2,
+        'ObjectExpression': 1,
+        'SwitchCase': 1,
+        'ignoredNodes': [
+          'ConditionalExpression',
+        ],
+      },
+    ],
     'valid-jsdoc': 'warn',
     'require-jsdoc': 'warn'
   }
