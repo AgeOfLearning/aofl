@@ -4,7 +4,6 @@ import AoflElement from '@aofl/web-components/aofl-element';
 
 /**
  * @summary __uppercamelcase__placeholder__
- * @class __uppercamelcase__placeholder__
  * @extends {AoflElement}
  */
 class __uppercamelcase__placeholder__ extends AoflElement {

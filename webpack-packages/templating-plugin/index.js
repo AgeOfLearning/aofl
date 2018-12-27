@@ -8,10 +8,8 @@ const preRender = require('./prerender');
 
 const LOADER_OPTIONS = {
   enforce: 'pre',
-  test: new RegExp(
-    path.resolve(__dirname, 'routes.config.js')
-    .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`)
-  ),
+  test: new RegExp(path.resolve(__dirname, 'routes.config.js')
+  .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`)),
   use: {
     loader: path.resolve(__dirname, 'routes-config-loader'),
     options: {
@@ -132,23 +130,23 @@ class TemplatingPlugin {
    * @param {Object} compilation
    */
   async prerender(assets, compiler, compilation) {
-    let promises = [];
+    const promises = [];
     if (compiler.options.mode === 'production') {
-     for (let key in assets) {
-       if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
-       const assetPath = key;
-       let s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath);
-       let body = await preRender(s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''), this.options.preRenderTimeout);
-       let source = compilation.assets[assetPath].source();
-       let t = source.replace(/<body.*<\/body>/, body).replace(/\n/g, ' ');
-       compilation.assets[assetPath] = {
-         source: () => t,
-         size: () => t.length
-       };
-       s.close();
-     }
-   }
-   await Promise.all(promises);
+      for (const key in assets) {
+        if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
+        const assetPath = key;
+        const s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath);
+        const body = await preRender(s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''), this.options.preRenderTimeout);
+        const source = compilation.assets[assetPath].source();
+        const t = source.replace(/<body.*<\/body>/, body).replace(/\n/g, ' ');
+        compilation.assets[assetPath] = {
+          source: () => t,
+          size: () => t.length
+        };
+        s.close();
+      }
+    }
+    await Promise.all(promises);
   }
   /**
    *
@@ -188,7 +186,7 @@ class TemplatingPlugin {
     }
 
     for (let i = 0; i < this.assets.routes.length; i++) {
-      let asset = this.assets.routes[i];
+      const asset = this.assets.routes[i];
       if (asset.routeConfig.url === routeConfig.url) {
         return false;
       }
@@ -211,7 +209,7 @@ class TemplatingPlugin {
       return assets;
     }
 
-    let partialMap = {
+    const partialMap = {
       [`aoflTemplate:title`]: routeInfo.routeConfig.title || '',
       [`aoflTemplate:metaTags`]: routeInfo.metaTags || '',
       [`aoflTemplate:locale`]: routeInfo.routeConfig.locale || this.options.locale
@@ -219,8 +217,8 @@ class TemplatingPlugin {
 
     for (const key in this.assets.partials) {
       if (!this.assets.partials.hasOwnProperty(key)) continue;
-      let partial = this.assets.partials[key];
-      let compiledPartial = compilation.assets[partial.childCompilationOutputName];
+      const partial = this.assets.partials[key];
+      const compiledPartial = compilation.assets[partial.childCompilationOutputName];
       if (typeof compiledPartial === 'undefined') continue;
       partialMap[`aoflTemplate:partial:${key}`] = compiledPartial.source();
     }
@@ -244,7 +242,7 @@ class TemplatingPlugin {
     let assets = {};
     for (let i = 0; i < this.assets.routes.length; i++) {
       const routeInfo = this.assets.routes[i];
-      let tmpAssets = this.getRouteTemplateAssets(compiler, compilation, routeInfo);
+      const tmpAssets = this.getRouteTemplateAssets(compiler, compilation, routeInfo);
       assets = Object.assign(assets, tmpAssets);
     }
 

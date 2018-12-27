@@ -28,15 +28,15 @@ module.exports = async function(source) {
   const options = getOptions(this);
   /* eslint-enable */
   validationOptions(schema, options, 'Web components css loader');
-  let globalStyles = fs.readFileSync(options.path);
-  let rPath = this.resourcePath;
-  let cssFileName = rPath.substr(rPath.lastIndexOf(path.sep) + 1);
-  let templateName = cssFileName.replace('css', 'js');
-  let templatePath = rPath.replace(cssFileName, templateName);
-  let indexPath = rPath.replace(cssFileName, 'index.js');
+  const globalStyles = fs.readFileSync(options.path);
+  const rPath = this.resourcePath;
+  const cssFileName = rPath.substr(rPath.lastIndexOf(path.sep) + 1);
+  const templateName = cssFileName.replace('css', 'js');
+  const templatePath = rPath.replace(cssFileName, templateName);
+  const indexPath = rPath.replace(cssFileName, 'index.js');
   if (fs.existsSync(templatePath)) {
     let content = fs.readFileSync(templatePath);
-    let indexContent = fs.existsSync(indexPath).toString() ? fs.readFileSync(indexPath) : '';
+    const indexContent = fs.existsSync(indexPath).toString() ? fs.readFileSync(indexPath) : '';
     content = indexContent + content;
     this.addDependency(templatePath);
 
@@ -45,7 +45,7 @@ module.exports = async function(source) {
         for (let i = 0; i < messages.length; i++) {
           const message = messages[i];
           if (typeof message.type === 'string' && message.type === 'dependency') {
-              this.addDependency(message.file);
+            this.addDependency(message.file);
           };
         }
       }

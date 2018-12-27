@@ -10,7 +10,7 @@ program
 .option('-E, --exclude-pattern [paths]', 'list of patterns to exclude', CommanderHelper.collect, [])
 .parse(process.argv);
 
-let domScope = new DomScope(program.args, program.pattern, program.exclude, program.excludePattern);
+const domScope = new DomScope(program.args, program.pattern, program.exclude, program.excludePattern);
 
 try {
   domScope.init();

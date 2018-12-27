@@ -15,12 +15,12 @@ module.exports = function(content) {
   const relativePath = this.resourcePath.replace(process.cwd(), '');
   const sourcePath = this.resourcePath;
   let updated = false;
-  let {tags} = Object.assign({}, defaultOptions, loaderUtils.getOptions(this) || {});
+  const {tags} = Object.assign({}, defaultOptions, loaderUtils.getOptions(this) || {});
 
   for (let i = 0; i < tags.length; i++) {
     let match = null;
-    let tag = tags[i];
-    let tagRegex = new RegExp(`<${escapeRegExp(tag)}\\b(?:(?!dom-scope)(.|\\s))*?>`, 'g');
+    const tag = tags[i];
+    const tagRegex = new RegExp(`<${escapeRegExp(tag)}\\b(?:(?!dom-scope)(.|\\s))*?>`, 'g');
     let count = 0;
     while (match = tagRegex.exec(content)) {
       let id = uniki(`${relativePath}-${tag}-${count}`);

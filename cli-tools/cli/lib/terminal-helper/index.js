@@ -19,7 +19,7 @@ class TerminalHelper {
    */
   static cp(from, to, options = {}) {
     return new Promise((resolve, reject) => {
-      let cp = spawn('cp', [
+      const cp = spawn('cp', [
         path.resolve(from),
         path.resolve(to)
       ], Object.assign({stdio: 'inherit'}, options));

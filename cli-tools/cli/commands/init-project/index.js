@@ -72,8 +72,8 @@ class InitProject {
       });
 
       for (let i = 0; i < files.length; i++) {
-        let file = files[i];
-        let target = path.resolve(this.target, file);
+        const file = files[i];
+        const target = path.resolve(this.target, file);
         await fs.ensureDir(path.dirname(target));
         await fs.copy(path.resolve(this.cloneDir, file), target);
       }

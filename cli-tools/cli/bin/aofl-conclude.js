@@ -7,5 +7,5 @@ program
 .option('-r, --revert', 'Conclude module and install original sourced version')
 .parse(process.argv);
 
-let concludeModule = new ConcludeModule(program.args, program.all, program.revert);
+const concludeModule = new ConcludeModule(program.args, program.all, program.revert);
 concludeModule.init();

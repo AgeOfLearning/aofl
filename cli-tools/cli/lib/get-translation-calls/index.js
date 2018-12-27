@@ -2,12 +2,12 @@ const path = require('path');
 const esprima = require('esprima');
 const fs = require('fs');
 const glob = require('fast-glob');
-const chalk = require('chalk');
+// const chalk = require('chalk');
 const addTtTags = require('../tt-tags');
 
 const STRIP_QUOTE_REGEX = /^\(?['`"](.*)['`"]\)?$/;
-const REPLACE_REGEX = /%r(\d+)%/g;
-const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
+// const REPLACE_REGEX = /%r(\d+)%/g;
+// const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
 let translationCalls = {};
 let rCallCount = 0;
 
@@ -28,11 +28,18 @@ const getBlockCounter = (punctuator) => {
   return 0;
 };
 
+
+/**
+ *
+ *
+ * @param {*} tokens
+ * @return {Object}
+ */
 function parseParamAsObject(tokens) {
   let blockCount = 1;
   let param = '';
   let key = '';
-  let params = {};
+  const params = {};
 
   do {
     const token = tokens.pop();
@@ -158,7 +165,7 @@ const supportedIdentifiers = {
       id: params[0],
       method: '_c',
       params
-    }
+    };
 
     addCallToMap(callObject);
     return callObject;
@@ -199,7 +206,7 @@ const supportedIdentifiers = {
       id: '_r-' + rCallCount,
       method: '_r',
       params
-    }
+    };
 
     addCallToMap(callObject);
     rCallCount++;

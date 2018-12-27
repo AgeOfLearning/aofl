@@ -32,24 +32,24 @@ class ConcludeModule {
    * @memberof ConcludeModule
    */
   init() {
-    let modules = [].concat(this.modules);
-    let gen = function* gen() {
+    const modules = [].concat(this.modules);
+    const gen = function* gen() {
       yield* modules;
     }();
 
-    let concludeModule = async () => {
-      let next = gen.next();
+    const concludeModule = async () => {
+      const next = gen.next();
       if (next.done) {
         fs.writeFileSync(this.configPath, JSON.stringify(this.config, null, 2), {encoding: 'utf-8'});
         return;
       }
-      let m = next.value;
+      const m = next.value;
       try {
         let version = '';
         if (this.revert) {
           version = '@' + m.package.version;
         } else {
-          let updatedPackage = this.getModulePackage(m.localPath, m.name);
+          const updatedPackage = this.getModulePackage(m.localPath, m.name);
           if (typeof updatedPackage.version !== 'undefined') {
             version = '@' + updatedPackage.version;
           }
@@ -57,7 +57,7 @@ class ConcludeModule {
         await Npm.removeDependency([m.name], m.type.flag, true);
         await Git.removeSubmodule(m.localPath);
         await Npm.installDependency([m.name + version], m.type.flag, true);
-        let index = this.config.modules.findIndex((item) => item.name === m.name);
+        const index = this.config.modules.findIndex((item) => item.name === m.name);
         this.config.modules.splice(index, 1);
       } catch (e) {
         console.log('caught');
@@ -85,7 +85,7 @@ class ConcludeModule {
     return config;
   }
 
-    /**
+  /**
    *
    * @param {*} _modules
    * @param {*} config
@@ -115,10 +115,10 @@ class ConcludeModule {
    * @memberof ConcludeModule
    */
   getModulePackage(modulePath, name) {
-    let files = glob.sync([path.join(modulePath, '**', 'package.json')]);
+    const files = glob.sync([path.join(modulePath, '**', 'package.json')]);
     for (let i = 0; i < files.length; i++) {
       try {
-        let p = require(path.resolve(files[i]));
+        const p = require(path.resolve(files[i]));
         if (p.name === name) {
           return p;
         }

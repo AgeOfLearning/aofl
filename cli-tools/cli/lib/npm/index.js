@@ -56,7 +56,7 @@ class Npm {
   static findPackageDir(dir) {
     let tempDir = '';
     while (tempDir !== dir) {
-      let packageFile = path.join(dir, 'package.json');
+      const packageFile = path.join(dir, 'package.json');
       try {
         fs.statSync(packageFile);
         return dir;
@@ -116,7 +116,7 @@ class Npm {
    * @memberof Npm
    */
   static install(options = {}) {
-    let packageDir = Npm.findPackageDir(options.cwd || process.env.PWD);
+    const packageDir = Npm.findPackageDir(options.cwd || process.env.PWD);
     let installType = 'i';
     if (packageDir !== '') {
       try {

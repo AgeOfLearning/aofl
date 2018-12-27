@@ -4,6 +4,7 @@
 
 Bugfixes
 
+- lint cli and webpack-packages
 - fixed typo in documentation
 
 ---

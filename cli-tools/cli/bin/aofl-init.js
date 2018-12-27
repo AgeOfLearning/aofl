@@ -18,5 +18,5 @@ program
 .parse(process.argv);
 
 
-let initProject = new InitProject(program.args[0], program.repo, program.base);
+const initProject = new InitProject(program.args[0], program.repo, program.base);
 initProject.init();

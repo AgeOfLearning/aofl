@@ -35,9 +35,9 @@ class DomScope {
 
     this.createGlobPatterns(paths);
     this.exclude = PathHelper
-      .convertToGlobPattern(exclude)
-      .concat(excludePatterns)
-      .concat(excludePattern);
+    .convertToGlobPattern(exclude)
+    .concat(excludePatterns)
+    .concat(excludePattern);
 
     this.directories = null;
     this.domScopes = {};
@@ -62,7 +62,7 @@ class DomScope {
   }
 
   /**
-   *
+   * @return {Promise}
    */
   getFilePaths() {
     return glob(this.globPatterns, {
@@ -80,15 +80,15 @@ class DomScope {
   }
 
   /**
-   *
+   * @return {Promise}
    */
   validateDomScopes() {
     return new Promise((resolve, reject) => {
       for (let i = 0; i < this.files.length; i++) {
         let match = null;
-        let content = fs.readFileSync(this.files[i], {encoding: 'utf-8'});
+        const content = fs.readFileSync(this.files[i], {encoding: 'utf-8'});
         while (match = domScopeRegex.exec(content)) {
-          let ds = match[1];
+          const ds = match[1];
           if (typeof this.domScopes[ds] !== 'undefined') {
             this.domScopes[ds].push(this.files[i]);
           } else {
@@ -109,12 +109,12 @@ class DomScope {
     try {
       await this.getFilePaths();
       await this.validateDomScopes();
-      let table = new Table({
+      const table = new Table({
         head: ['dom-scope id', 'paths']
       });
       let duplicatesFound = false;
 
-      for (let key in this.domScopes) {
+      for (const key in this.domScopes) {
         if (!this.domScopes.hasOwnProperty(key)) continue;
         if (this.domScopes[key].length > 1) {
           table.push([key, this.domScopes[key].join('\n')]);

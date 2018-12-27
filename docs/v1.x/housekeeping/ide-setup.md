@@ -34,8 +34,7 @@ The AofL JS team primarily codes on VS Code. If you would like to include setup 
   "eslint.autoFixOnSave": true,
   "eslint.alwaysShowStatus": true,
 
-  "prettier.disableLanguages": ["js"],
-  "javascript.validate.enable": false,
+  "prettier.disableLanguages": ["javascript"],
 
   "docthis.inferTypesFromNames": true,
   "docthis.includeMemberOfOnClassMembers": false,

@@ -69,7 +69,7 @@ class Generate {
    */
   static supportedType(type) {
     try {
-      let stat = fs.statSync(path.join(__dirname, 'templates', type));
+      const stat = fs.statSync(path.join(__dirname, 'templates', type));
       return stat.isDirectory();
     } catch (e) {
       return false;
@@ -99,7 +99,7 @@ class Generate {
    * @memberof Generate
    */
   getTemplateFiles() {
-    let pattern = path.join(__dirname, 'templates', this.type, '**', '*');
+    const pattern = path.join(__dirname, 'templates', this.type, '**', '*');
     return glob([pattern], {
       nodir: true,
       dot: true
@@ -112,16 +112,16 @@ class Generate {
   generate(files) {
     mkdirp.sync(this.dest);
     for (let i = 0; i < files.length; i++) {
-      let file = files[i];
-      let filename = path.basename(file).replace(REPLACE_REGEX, this.name);
+      const file = files[i];
+      const filename = path.basename(file).replace(REPLACE_REGEX, this.name).replace(/\.sample$/, '');
       fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
           console.log(chalk.red(err));
           return;
         }
 
-        let content = replaceRegexs.reduce((acc, item) => {
-          let out = acc.replace(item.pattern, item.replace(this.name));
+        const content = replaceRegexs.reduce((acc, item) => {
+          const out = acc.replace(item.pattern, item.replace(this.name));
           return out;
         }, data);
 

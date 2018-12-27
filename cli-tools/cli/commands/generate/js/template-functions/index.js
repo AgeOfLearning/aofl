@@ -8,17 +8,17 @@ const funcs = {
     return str.charAt(0).toUpperCase() + str.slice(1);
   },
   camelCase(str) {
-    let words = str.replace(DELIMITER_REGEX, '$1 ').split(/\s+|_|-/);
+    const words = str.replace(DELIMITER_REGEX, '$1 ').split(/\s+|_|-/);
 
     let camelized = [words[0]];
     if (words.length > 1) {
       camelized = camelized
       .concat(
-        words
-        .slice(1)
-        .map(function capitilizeStr(str) {
-          return funcs.capitilize(str);
-        }
+      words
+      .slice(1)
+      .map(function capitilizeStr(str) {
+        return funcs.capitilize(str);
+      }
       ));
     }
 

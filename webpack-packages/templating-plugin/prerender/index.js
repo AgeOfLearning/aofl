@@ -10,8 +10,8 @@ module.exports = async (url, timeout = 0) => {
   `);
 
   await page.goto(url, {waitUntil: 'networkidle2'});
-  let str = await page.evaluate(async (timeout) => {
-    let selfClosingTags = [
+  const str = await page.evaluate(async (timeout) => {
+    const selfClosingTags = [
       'area',
       'base',
       'br',
@@ -31,20 +31,20 @@ module.exports = async (url, timeout = 0) => {
       'wbr'
     ];
 
-    const getDocType = () => {
-      let node = document.doctype;
-      return '<!DOCTYPE '
-         + node.name
-         + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
-         + (!node.publicId && node.systemId ? ' SYSTEM' : '')
-         + (node.systemId ? ' "' + node.systemId + '"' : '')
-         + '>';
-    };
+    // const getDocType = () => {
+    //   const node = document.doctype;
+    //   return '<!DOCTYPE '
+    //      + node.name
+    //      + (node.publicId ? ' PUBLIC "' + node.publicId + '"' : '')
+    //      + (!node.publicId && node.systemId ? ' SYSTEM' : '')
+    //      + (node.systemId ? ' "' + node.systemId + '"' : '')
+    //      + '>';
+    // };
 
     const tagNameWithAttributes = (elem) => {
       if (elem instanceof Text || elem instanceof Comment) return '';
       let str = '<' + elem.localName;
-      let attrs = Array.from(elem.attributes);
+      const attrs = Array.from(elem.attributes);
       for (let i = 0; i < attrs.length; i++) {
         str += ' ' + attrs[i].nodeName + '="' + attrs[i].value + '"';
       }
@@ -66,7 +66,7 @@ module.exports = async (url, timeout = 0) => {
       if (elem.tagName === 'SLOT') {
         children = elem.assignedNodes() || [];
       } else {
-      children = Array.from(elem.childNodes || []);
+        children = Array.from(elem.childNodes || []);
       }
 
       let str = '';
@@ -74,8 +74,8 @@ module.exports = async (url, timeout = 0) => {
         if (skipStyle && children[i] instanceof HTMLStyleElement) {
           continue;
         }
-        let openTag = tagNameWithAttributes(children[i]);
-        let closeTag = closingTag(children[i]);
+        const openTag = tagNameWithAttributes(children[i]);
+        const closeTag = closingTag(children[i]);
         if (customElements.get(children[i].localName)) {
           str += openTag + replaceChildren(children[i].shadowRoot) + closeTag;
         } else if (children[i].tagName === 'SLOT') {
@@ -92,9 +92,10 @@ module.exports = async (url, timeout = 0) => {
     };
 
     return await new Promise((resolve) => {
-      let getContent = () => {
+      const getContent = () => {
         setTimeout(() => {
-          return resolve((tagNameWithAttributes(document.body) + replaceChildren(document.body) + closingTag(document.body)));
+          return resolve((tagNameWithAttributes(document.body) + replaceChildren(document.body) +
+          closingTag(document.body)));
         }, timeout);
       };
 

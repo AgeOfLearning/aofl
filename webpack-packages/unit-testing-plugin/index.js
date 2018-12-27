@@ -23,7 +23,6 @@ class UnitTestingPlugin {
    *
    * @readonly
    * @static
-   * @memberof UnitTestingPlugin
    */
   static get name() {
     return 'AoflUnitTestingPlugin';
@@ -32,7 +31,6 @@ class UnitTestingPlugin {
   /**
    * Creates an instance of UnitTestingPlugin.
    * @param {*} [options={}]
-   * @memberof UnitTestingPlugin
    */
   constructor(options = {}) {
     this.options = defaultsDeep(options, {
@@ -68,20 +66,19 @@ class UnitTestingPlugin {
    *
    *
    * @param {*} compiler
-   * @memberof UnitTestingPlugin
    */
   apply(compiler) {
-    let files = glob.sync([
+    const files = glob.sync([
       '**/*.spec.js',
       '**/index.js'
     ], {
       ignore: this.options.exclude
     });
 
-    let allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files], 'all-tests');
+    const allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files], 'all-tests');
     // let allJsEntryPath = this.getCoverAllEntryPath([path.join(__dirname, 'get-test-container', 'index.js'), ...files].filter((item) => item.indexOf('.spec.js') === -1), 'all-tests');
 
-    const entryPoints = [allJsEntryPath]
+    const entryPoints = [allJsEntryPath];
     // for (let i = 0; i < files.length; i++) {
     //   const file = files[i];
     //   if (file.indexOf('.spec.js') === -1) continue;
@@ -89,9 +86,9 @@ class UnitTestingPlugin {
     // }
 
     entryPoints.forEach((item) => {
-        let entryPath = path.resolve(item);
-        let entryName = UnitTestingPlugin.name + '-' + md5(entryPath);
-        new SingleEntryPlugin(compiler.context, entryPath, entryName).apply(compiler);
+      const entryPath = path.resolve(item);
+      const entryName = UnitTestingPlugin.name + '-' + md5(entryPath);
+      new SingleEntryPlugin(compiler.context, entryPath, entryName).apply(compiler);
     });
 
     compiler.hooks.beforeRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
@@ -108,7 +105,7 @@ class UnitTestingPlugin {
     compiler.hooks.afterEmit.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
       try {
         if (this.runCount === 0) {
-          const wctInstalls = await Npm.list('web-component-tester', false, '', true, false, {stdio: 'pipe'})
+          const wctInstalls = await Npm.list('web-component-tester', false, '', true, false, {stdio: 'pipe'});
           const wctArr = wctInstalls.split('\n');
           let wctPath = '';
           if (wctArr.length > 0) {
@@ -118,11 +115,11 @@ class UnitTestingPlugin {
         }
 
         const chunksMap = getChunksMap(compilation);
-        let additionalScripts = this.getAdditionalScripts(compilation, chunksMap);
-        for (let key in chunksMap) {
+        const additionalScripts = this.getAdditionalScripts(compilation, chunksMap);
+        for (const key in chunksMap) {
           if (!chunksMap.hasOwnProperty(key) || key.indexOf(UnitTestingPlugin.name) !== 0) continue;
           const source = compilation.assets[chunksMap[key]].source();
-          let suite = this.generateSuite(key, source, additionalScripts, this.wctRelPath);
+          const suite = this.generateSuite(key, source, additionalScripts, this.wctRelPath);
           if (this.wctContext.options.suites.indexOf(suite) === -1) {
             this.wctContext.options.suites.push(suite);
           }
@@ -184,11 +181,10 @@ class UnitTestingPlugin {
   /**
    *
    * @return {Promise}
-   * @memberof UnitTestingPlugin
    */
   cleanOutputFolder() {
     return new Promise((resolve, reject) => {
-      let rm = spawn('rm', [
+      const rm = spawn('rm', [
         '-rf',
         this.options.output
       ]);
@@ -207,11 +203,10 @@ class UnitTestingPlugin {
    *
    *
    * @return {Promise}
-   * @memberof UnitTestingPlugin
    */
   createOutputFolder() {
     return new Promise((resolve, reject) => {
-      let mkdir = spawn('mkdir', [
+      const mkdir = spawn('mkdir', [
         '-p',
         '-m',
         777,
@@ -230,8 +225,9 @@ class UnitTestingPlugin {
 
   /**
    * @param {String[]} files
+   * @param {String} filename
+   *
    * @return {String}
-   * @memberof UnitTestingPlugin
    */
   getCoverAllEntryPath(files, filename) {
     const context = this.options.output;
@@ -252,8 +248,8 @@ class UnitTestingPlugin {
    * @param {String} content
    * @param {String} otherScripts
    * @param {String} relPath
+   *
    * @return {String}
-   * @memberof UnitTestingPlugin
    */
   generateSuite(name, content, otherScripts, relPath) {
     const finalOutputPath = path.resolve(this.options.output, name + '.html');
@@ -273,8 +269,8 @@ class UnitTestingPlugin {
    *
    * @param {Object} compilation
    * @param {Object} chunksMap
+   *
    * @return {String}
-   * @memberof UnitTestingPlugin
    */
   getAdditionalScripts(compilation, chunksMap) {
     let scripts = '';
@@ -294,8 +290,8 @@ class UnitTestingPlugin {
    * @param {*} template
    * @param {*} match
    * @param {*} replace
+   *
    * @return {String}
-   * @memberof UnitTestingPlugin
    */
   replaceTemplatePart(template, match, replace) {
     let i = template.indexOf(match);

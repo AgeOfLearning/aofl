@@ -3,7 +3,7 @@ const express = require('express');
 const serveStatic = require('serve-static');
 
 module.exports = (fileMap, rootPath, rootUri) => {
-  let indexes = [
+  const indexes = [
     'index.html',
     'index.htm'
   ];
@@ -16,7 +16,7 @@ module.exports = (fileMap, rootPath, rootUri) => {
 
   app.use(compression());
   app.use((req, res, next)=> {
-    let url = req.url.replace(new RegExp('^' + rootUri), '');
+    const url = req.url.replace(new RegExp('^' + rootUri), '');
     let asset = null;
 
     if (typeof fileMap[url] !== 'undefined') {
@@ -33,9 +33,9 @@ module.exports = (fileMap, rootPath, rootUri) => {
   });
   app.use(serve);
 
-  let listen = (app, port, ip)=> {
+  const listen = (app, port, ip)=> {
     return new Promise((resolve, reject) => {
-      let server = app.listen(port, ip, (err) => { // start app
+      const server = app.listen(port, ip, (err) => { // start app
         if (err) {
           console.trace(err);
           return process.exit(1);

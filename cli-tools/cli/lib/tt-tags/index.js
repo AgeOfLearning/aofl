@@ -1,5 +1,3 @@
-const path = require('path');
-const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const uniki = require('uniki');
 

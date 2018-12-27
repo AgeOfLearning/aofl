@@ -55,7 +55,7 @@ class Git {
   static findGitDir(dir) {
     let tempDir = '';
     while (tempDir !== dir) {
-      let gitDir = path.join(dir, '.git');
+      const gitDir = path.join(dir, '.git');
       try {
         fs.statSync(gitDir);
         console.log('gitDir', dir);
@@ -92,7 +92,7 @@ class Git {
   static lsRemote(repository, heads = false, tags = false, refsFlag = false, uploadPack = '',
   quiet = false, exitCode = false, getUrl = false, sort = '', symref = false,
   refs = [], options = {}) {
-    let params = ['ls-remote'];
+    const params = ['ls-remote'];
     if (heads) params.push('--heads');
     if (tags) params.push('--tags');
     if (refsFlag) params.push('--refs');
@@ -117,7 +117,7 @@ class Git {
    * @memberof Git
    */
   static filterRef(data, ref) {
-    let reg = new RegExp(ref + '$');
+    const reg = new RegExp(ref + '$');
     return data.split('\n').reduce((acc, item) => {
       if (reg.test(item)) {
         acc.push(item.split('\t'));
@@ -153,7 +153,7 @@ class Git {
    * @memberof Git
    */
   static submoduleDeinit(submodulePath, force = false, options = {}) {
-    let params = ['submodule', 'deinit'];
+    const params = ['submodule', 'deinit'];
 
     if (force) params.push('-f');
     params.push('--');
@@ -170,13 +170,13 @@ class Git {
    * @memberof Git
    */
   static async removeSubmodule(submodulePath, options = {}) {
-    let fullPath = path.resolve(submodulePath);
-    let gitDir = Git.findGitDir(process.cwd());
-    let relativePath = path.relative(gitDir, fullPath);
+    const fullPath = path.resolve(submodulePath);
+    const gitDir = Git.findGitDir(process.cwd());
+    const relativePath = path.relative(gitDir, fullPath);
     await Git.submoduleDeinit(submodulePath, true, options);
     await Git.rm([submodulePath], false, true);
     await new Promise((resolve, reject) => {
-      let rmPath = path.join(gitDir, '.git', 'modules', relativePath);
+      const rmPath = path.join(gitDir, '.git', 'modules', relativePath);
       console.log(chalk.cyan(`running... rm -r ${rmPath}\n`));
       rimraf(rmPath, (err) => {
         if (!err) {
@@ -205,7 +205,7 @@ class Git {
    */
   static rm(paths, recursive = false, force = false, cached = false, ignoreUnmatch = false,
   dryrun = false, quiet = false, options = {}) {
-    let params = ['rm'];
+    const params = ['rm'];
     if (force) params.push('-f');
     if (dryrun) params.push('-n');
     if (recursive) params.push('-r');

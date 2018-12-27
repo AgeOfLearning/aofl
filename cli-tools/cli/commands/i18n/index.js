@@ -1,3 +1,5 @@
+/*eslint-disable*/
+/** @todo: fix linting */
 const glob = require('fast-glob');
 const pathHelper = require('../../lib/path-helper');
 const fs = require('fs');

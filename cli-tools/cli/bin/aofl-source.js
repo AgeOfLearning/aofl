@@ -6,5 +6,5 @@ program
 .option('--repo [repo]', 'repo url')
 .parse(process.argv);
 
-let sourceModule = new SourceModule(program.args, program.repo);
+const sourceModule = new SourceModule(program.args, program.repo);
 sourceModule.init();

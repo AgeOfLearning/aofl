@@ -32,32 +32,32 @@ class SourceModule {
    * @memberof SourceModule
    */
   async init() {
-    let modules = this.modules;
-    let sourceFailed = [];
-    let gen = function* gen() {
+    const modules = this.modules;
+    const sourceFailed = [];
+    const gen = function* gen() {
       yield* modules;
     }();
 
-    let addSubmodules = async () => {
-      let next = gen.next();
+    const addSubmodules = async () => {
+      const next = gen.next();
       if (next.done) {
         this.config.modules = this.modules.filter((item) => sourceFailed.indexOf(item.name) === -1);
         fs.writeFileSync(this.configPath, JSON.stringify(this.config, null, 2), {encoding: 'utf-8'});
         return;
       }
 
-      let m = next.value;
-      let inConfig = this.config.modules.some((item) => {
+      const m = next.value;
+      const inConfig = this.config.modules.some((item) => {
         return item.name === m.name;
       });
 
-      let repo = this.repo || m.repository;
+      const repo = this.repo || m.repository;
       if (repo && repo !== '' && !inConfig) {
         try {
-          let lsRemoteData = await Git.lsRemote(repo, false, false, false, '', false, false, false, '', false, [], {stdio: 'pipe'});
-          let fullModulePath = path.join(this.cwd, m.localPath);
+          const lsRemoteData = await Git.lsRemote(repo, false, false, false, '', false, false, false, '', false, [], {stdio: 'pipe'});
+          const fullModulePath = path.join(this.cwd, m.localPath);
           await Git.addSubmodule(m.localPath, repo);
-          let ref = Git.filterRef(lsRemoteData, m.ref);
+          const ref = Git.filterRef(lsRemoteData, m.ref);
           if (ref.length) {
             await Git.checkout(ref[0][0], {
               cwd: fullModulePath
@@ -67,7 +67,7 @@ class SourceModule {
           }
 
           await Npm.removeDependency([m.name], m.type.flag, true);
-          let moduleLocation = this.findModuleLocation(m.name);
+          const moduleLocation = this.findModuleLocation(m.name);
 
           await Npm.installDependency([moduleLocation], m.type.flag, true);
         } catch (e) {
@@ -110,18 +110,18 @@ class SourceModule {
    * @memberof SourceModule
    */
   getModules(_modules) {
-    let modules = [].concat(this.config.modules);
+    const modules = [].concat(this.config.modules);
     for (let i = 0; i < _modules.length; i++) {
-      let currModule = this.parseModuleName(_modules[i]);
-      let packageInfo = this.getModulePagckage(currModule.name);
-      let index = modules.findIndex((item) => {
+      const currModule = this.parseModuleName(_modules[i]);
+      const packageInfo = this.getModulePagckage(currModule.name);
+      const index = modules.findIndex((item) => {
         return item.name === currModule.name;
       });
       if (typeof currModule.ref === 'undefined') {
         currModule.ref = this.cleanPackageVersion(packageInfo.package.version);
       }
       currModule.localPath = path.normalize(path.join('node_modules_sourced', currModule.name));
-      let moduleConfig = Object.assign(currModule, packageInfo);
+      const moduleConfig = Object.assign(currModule, packageInfo);
       if (index > -1) {
         modules.splice(index, 1, moduleConfig);
       } else {
@@ -139,7 +139,7 @@ class SourceModule {
    * @memberof SourceModule
    */
   parseModuleName(moduleName) {
-    let matches = moduleRefRegex.exec(moduleName);
+    const matches = moduleRefRegex.exec(moduleName);
     if (matches !== null) {
       return {
         name: matches[1],
@@ -159,10 +159,10 @@ class SourceModule {
    * @memberof SourceModule
    */
   findModuleLocation(name) {
-    let files = glob.sync([path.join('node_modules_sourced', name, '**', 'package.json')]);
+    const files = glob.sync([path.join('node_modules_sourced', name, '**', 'package.json')]);
     for (let i = 0; i < files.length; i++) {
       try {
-        let p = require(path.resolve(files[i]));
+        const p = require(path.resolve(files[i]));
         if (p.name === name) {
           return path.relative(this.cwd, path.dirname(files[i]));
         }
@@ -179,8 +179,8 @@ class SourceModule {
    * @memberof SourceModule
    */
   cleanPackageVersion(version) {
-    let regex = /^\D?([^\*\n~^]+)$/;
-    let matches = regex.exec(version);
+    const regex = /^\D?([^\*\n~^]+)$/;
+    const matches = regex.exec(version);
     if (matches && matches.length > 1) {
       return matches[1];
     }
@@ -195,14 +195,14 @@ class SourceModule {
    * @memberof SourceModule
    */
   getRepoFromPackage(data) {
-    let repoRegex = /(.*)\/tree\//;
+    const repoRegex = /(.*)\/tree\//;
     let url = '';
     if (typeof data === 'object' && typeof data.url === 'string') {
       url = data.url;
     } else if (typeof data === 'string') {
       url = data;
     }
-    let matches = repoRegex.exec(url);
+    const matches = repoRegex.exec(url);
     if (matches && matches.length > 1) {
       url = matches[1];
     }
@@ -217,22 +217,22 @@ class SourceModule {
    * @memberof SourceModule
    */
   getModulePagckage(moduleName) {
-    let deps = [{
-        name: 'devDependencies',
-        flag: '-D'
-      }, {
-        name: 'dependencies',
-        flag: '-S'
-      }
+    const deps = [{
+      name: 'devDependencies',
+      flag: '-D'
+    }, {
+      name: 'dependencies',
+      flag: '-S'
+    }
     ];
     for (let i = 0; i < deps.length; i++) {
       if (typeof this.targetPackageJson[deps[i].name] !== 'undefined' &&
       typeof this.targetPackageJson[deps[i].name][moduleName] !== 'undefined') {
         try {
-          let modulePackagePath = path.resolve(this.cwd, 'node_modules', ...moduleName.split('/'), 'package.json');
+          const modulePackagePath = path.resolve(this.cwd, 'node_modules', ...moduleName.split('/'), 'package.json');
           fs.statSync(modulePackagePath);
-          let packageConfig = require(modulePackagePath);
-          let repository = this.getRepoFromPackage(packageConfig.repository);
+          const packageConfig = require(modulePackagePath);
+          const repository = this.getRepoFromPackage(packageConfig.repository);
           return {
             type: deps[i],
             repository,

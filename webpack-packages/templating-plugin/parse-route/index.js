@@ -61,7 +61,7 @@ const parseFile = (content) => {
     const docBlock = matches[0];
     const routeData = reader.parse(docBlock);
     for (let i = 0; i < routeData.body.length; i++) {
-      let d = routeData.body[i];
+      const d = routeData.body[i];
       if (d.kind === 'metatag') {
         parsedData.metaTags.push(d.value);
       } else {

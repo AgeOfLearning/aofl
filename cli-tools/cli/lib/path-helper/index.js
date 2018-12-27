@@ -11,7 +11,7 @@ class PathHelper {
    */
   static resolvePaths(_paths) {
     return _paths
-      .map((_path) => path.resolve(_path));
+    .map((_path) => path.resolve(_path));
   }
 
   /**
@@ -20,18 +20,18 @@ class PathHelper {
    */
   static resolvePathDir(_paths) {
     return PathHelper
-      .resolvePaths(_paths)
-      .map((_path) => {
-        try {
-          let stat = fs.statSync(_path);
-          if (stat.isDirectory()) {
-            return _path;
-          }
-        } catch (e) {
-          return path.dirname(_path);
+    .resolvePaths(_paths)
+    .map((_path) => {
+      try {
+        const stat = fs.statSync(_path);
+        if (stat.isDirectory()) {
+          return _path;
         }
+      } catch (e) {
         return path.dirname(_path);
-      });
+      }
+      return path.dirname(_path);
+    });
   }
 
 
@@ -46,8 +46,8 @@ class PathHelper {
    */
   static convertToGlobPattern(_paths, _matchPattern = '*') {
     return PathHelper
-      .resolvePathDir(_paths)
-      .map((_path) => path.join(_path, '**', _matchPattern));
+    .resolvePathDir(_paths)
+    .map((_path) => path.join(_path, '**', _matchPattern));
   }
 }
 

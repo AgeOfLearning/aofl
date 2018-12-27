@@ -20,5 +20,5 @@ if (program.args.length < 2) {
   process.exit(1);
 }
 
-let generate = new Generate(program.args[0], program.args[1]);
+const generate = new Generate(program.args[0], program.args[1]);
 generate.init();

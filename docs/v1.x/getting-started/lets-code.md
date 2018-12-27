@@ -6,16 +6,18 @@ So far you have read about some of the features of AofL JS and learned how to in
 
 Run the generate command from `@aofl/cli` to scaffold a new component.
 
+<!-- prettier-ignore -->
 ```bash
 npx aofl g c routes/home/modules/my-first-component
 ```
 
 Now import `my-first-component` in `routes/home/template.js` and add the component tag to the template.
 
+<!-- prettier-ignore -->
 ```javascript
 import './modules/my-first-component';
 ...
-export const template = (context, html) => html`
+export default (context, html) => html`
   ...
   <my-first-component></my-first-component>
   ...
@@ -35,14 +37,15 @@ npx aofl g c routes/about
 
 Update `routes/about/index.js` and add the routes annotation to the top of the file. AofL JS will automatically generate and maintain the routes configuration object based on the content of this block comment. Check the full documentation on [@aofl/templating-plugin](https://www.npmjs.com/package/@aofl/templating-plugin#route-annotation).
 
+<!-- prettier-ignore -->
 ```javascript
 /**
  * @route /about/
  * @title AofL::About
  */
-import styles from "./template.css";
-import template from "./template";
-import AoflElement from "@aofl/web-components/aofl-element";
+import styles from './template.css';
+import template from './template';
+import AoflElement from '@aofl/web-components/aofl-element';
 
 /**
  * @summary About
@@ -61,7 +64,7 @@ class About extends AoflElement {
    * @readonly
    */
   static get is() {
-    return "about-page";
+    return 'about-page';
   }
 
   /**

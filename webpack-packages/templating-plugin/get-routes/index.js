@@ -5,7 +5,6 @@ const parseRoute = require('../parse-route');
 
 const DEFAULT_ROTATION = 'routes';
 const TRAILING_PATH_SEP_REGEX = new RegExp('\\' + path.sep + '$');
-const LEADING_PAHT_SEP_REGEX = new RegExp('^' + '\\' + path.sep);
 const TRAILING_SLASH_REGEX = /\/$/;
 const LEADING_SLASH_REGEX = /^\//;
 const ALT_ROUTES_REGEX = /\/routes-([^\/]+?)\//;
@@ -18,30 +17,30 @@ const getRoutePatterns = (pattern) => {
 };
 
 const parseRouteFile = (file, options) => {
- const routeFile = fs.readFileSync(path.resolve(file), 'utf-8');
- const parsedData = parseRoute(routeFile);
- const routePath = parsedData.route.replace(/:.*/, '').replace(TRAILING_SLASH_REGEX, '') + '/';
+  const routeFile = fs.readFileSync(path.resolve(file), 'utf-8');
+  const parsedData = parseRoute(routeFile);
+  const routePath = parsedData.route.replace(/:.*/, '').replace(TRAILING_SLASH_REGEX, '') + '/';
 
- return {
-   url: parsedData.route,
-   path: routePath,
-   routeOutputName: (routePath + 'index.html').replace(LEADING_SLASH_REGEX, ''),
-   dynamic: parsedData.route !== routePath,
-   title: parsedData.title,
-   prerender: parsedData.prerender,
-   metaTags: parsedData.metaTags.reduce((acc, item) => {
-     acc += `<meta`;
-     for (let key in item) {
-       if (!item.hasOwnProperty(key)) continue;
-       acc += ` ${key}="${item[key]}"`;
-     }
-     acc += '>\n';
-     return acc;
-   }, ''),
-   meta: parsedData.meta,
-   locale: parsedData.locale || options.locale,
-   template: options.template.name
- };
+  return {
+    url: parsedData.route,
+    path: routePath,
+    routeOutputName: (routePath + 'index.html').replace(LEADING_SLASH_REGEX, ''),
+    dynamic: parsedData.route !== routePath,
+    title: parsedData.title,
+    prerender: parsedData.prerender,
+    metaTags: parsedData.metaTags.reduce((acc, item) => {
+      acc += `<meta`;
+      for (const key in item) {
+        if (!item.hasOwnProperty(key)) continue;
+        acc += ` ${key}="${item[key]}"`;
+      }
+      acc += '>\n';
+      return acc;
+    }, ''),
+    meta: parsedData.meta,
+    locale: parsedData.locale || options.locale,
+    template: options.template.name
+  };
 };
 
 const getRotation = (file) => {
