@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - added force option
 
 ### [Changed]
+- Updated @polymer/lit-element to 0.6.5
+- Updated lit-html to 1.0.0-rc.1
+- Updated web-components-tester to 6.9.2
 - Changelog.md follows keep a changlog guidelines
 - Updated eslint rules to be more lenient
 - lint cli and webpack-packages

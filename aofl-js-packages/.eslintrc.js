@@ -19,19 +19,19 @@ const config = {
     }],
     'space-in-parens': ['error', 'never'],
     'indent': [
-      'error', 2, {
+      'warn', 2, {
         'CallExpression': {
-          'arguments': 2,
+          'arguments': 0,
         },
         'FunctionDeclaration': {
           'body': 1,
-          'parameters': 2,
+          'parameters': 0,
         },
         'FunctionExpression': {
           'body': 1,
-          'parameters': 2,
+          'parameters': 0,
         },
-        'MemberExpression': 2,
+        'MemberExpression': 0,
         'ObjectExpression': 1,
         'SwitchCase': 1,
         'ignoredNodes': [

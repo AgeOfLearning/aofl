@@ -3,15 +3,25 @@
   "persistent": false,
   "plugins": {
     "local": {
-      "browsers": ["firefox", "chrome"],
+      "browsers": [
+        "firefox",
+        "chrome"
+      ],
       "browserOptions": {
-        "chrome": ["headless"],
-        "firefox": ["-headless"]
+        "chrome": [
+          "headless"
+        ],
+        "firefox": [
+          "-headless"
+        ]
       }
     },
     "istanbul": {
       "dir": "../docs/v1.x/coverage/",
-      "reporters": ["text-summary", "lcov"],
+      "reporters": [
+        "text-summary",
+        "lcov"
+      ],
       "include": "**/*.js",
       "exclude": [
         "**/node_modules",

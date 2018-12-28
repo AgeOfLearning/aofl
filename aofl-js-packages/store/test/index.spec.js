@@ -102,7 +102,7 @@ describe('@aofl/store/src/store', function() {
     it('replaceState() to replace the state with the supplied object', function() {
       const state = {};
       this.storeInstance.replaceState(state);
-      expect(storeInstance.state).to.eql(state);
+      expect(this.storeInstance.state).to.eql(state);
     });
   });
 
@@ -258,7 +258,7 @@ describe('@aofl/store/src/store', function() {
     });
 
     it('should assign storeInstance to global variable', function() {
-      expect(window).to.have.property('storeInstance', this.debugStoreInstance);
+      expect(window.aoflDevtools).to.have.property('storeInstances');
     });
 
     it('should call deepFreeze on state', function() {
