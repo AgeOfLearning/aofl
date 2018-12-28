@@ -1,0 +1,25 @@
+{
+  "version": "1.4.1-alpha.0",
+  "packages": [
+    "aofl-js-packages/*",
+    "cli-tools/*",
+    "webpack-packages/*"
+  ],
+  "npmClient": "npm",
+  "npmClientArgs": [
+    "--no-package-lock",
+    "--registry",
+    "http://localhost:4873"
+  ],
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "*.md",
+        "*.txt",
+        "test/**",
+        "codemods/**",
+        "*.json"
+      ]
+    }
+  }
+}

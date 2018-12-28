@@ -25,6 +25,7 @@
     "babel-eslint": "^10.0.1",
     "docsify-cli": "^4.3.0",
     "eslint": "^5.11.0",
-    "eslint-config-google": "^0.11.0"
+    "eslint-config-google": "^0.11.0",
+    "lerna": "^3.8.0"
   }
 }

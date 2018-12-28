@@ -3,6 +3,7 @@
   "version": "1.3.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "env:prod": "cross-env NODE_ENV=production",
     "env:dev": "cross-env NODE_ENV=development",
