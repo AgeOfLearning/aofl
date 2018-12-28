@@ -58,24 +58,26 @@ through the **project history**. But also, we use the git commit messages to
 
 ### Commit Message format
 
-Each commit message should list all performance improvements, feature changes,
-and bugfixes.
+Follow [keep a changelog guidelines](https://keepachangelog.com/en/1.0.0/#how).
 
-```
-feature-branch-name
-
-Performance:
-  - component name:
-    - list of performance improvements
-
-Features:
-  - component name:
-    - list of new features
-
-Bugfixes:
-  - component name:
-    - list of bugfixes
-```
+> Types of changes
+>
+> - `Added` Added for new features.
+> - `Changed` for changes in existing functionality.
+> - `Deprecated` for soon-to-be removed features.
+> - `Removed` for now removed features.
+> - `Fixed` for any bug fixes.
+> - `Security` in case of vulnerabilities.
+> ```
+> ## [unreleased]
+>
+> ### [Added]
+> ### [Changed]
+> ### [Deprecated]
+> ### [Removed]
+> ### [Fixed]
+> ### [Security]
+> ```
 
 ## Issue Submission Guidelines
 

@@ -1,221 +1,241 @@
-# aofl changelog
+# Changelog - AofL JS
+All notable changes to this project will be documented in this file.
 
-## unreleased
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Features:
+## [Unreleased]
 
+### [Added]
+- webpack-packages/html-webpack-purify-internal-css-plugin added
+- webpack-packages/webcomponent-css-loader
+  - added force option
+
+### [Changed]
+- Changelog.md follows keep a changlog guidelines
 - Updated eslint rules to be more lenient
-- webpack-packages
-  - html-webpack-purify-internal-css-plugin added
-
-Bugfixes:
-
 - lint cli and webpack-packages
 - fixed typo in documentation
 - aofljs-packages
   - store
     - Push store instances to window.aoflDevtools.storeInstances, when window.aoflDevtools exsists or the app runs in development mode, instead of exposing a global variable window.storeInstance.
+
+### [Deprecated]
+
+### [Removed]
+
+### [Fixed]
 - cli
   - Fixed issue with child_process.spawn on windows by using cross-spawn. (https://stackoverflow.com/questions/37459717/error-spawn-enoent-on-windows) #11 #12
   - init project ignores .git directory
-- webpack-packages
-  - html-webpack-purify-internal-css-plugin
-  - webcomponent-css-loader
-    - added force option
+
+### [Security]
 
 ---
 
-## v1.3.0 (12-06-2018)
+## [1.3.0] - 2018-12-06
 
-Features:
-
-- switched to travis
+### [Added]
 - ci pipeline setup
+- aofljs-packages/aofl-multiselect-list
+- aofljs-packages/aofl-list-option
+  - added keyboard interactions
+- aofljs-packages/aofl-select-list
+    - added keyboard interactions
+
+### [Changed]
+- switched to travis
 - updated README.md
 - upgrade to lit-element@0.6.4
 - upgrade to lit-html@0.14.0
 - moved issue-templates to .github
-
-- webpack-packages
-  - unit-testing-plugin
+- webpack-packages/unit-testing-plugin
     - upgraded web-component-tester to 6.9.0
-- aofljs-packages
-  - added aofl-multiselect-list
-  - aofl-list-option
-    - updated to be compatible with aofl-multiselect-list
-    - added keyboard interactions
-  - aofl-select-list
-    - added keyboard interactions
-
-Bugfixes:
-
-- aofl-js-packages
-  - router
-    - update url state is triggered after all 'after' middleware callbacks run successfully
+- aofljs-packages/aofl-list-option
+  - updated to be compatible with aofl-multiselect-list
+  - changed string attributes to boolean
+- aofl-js-packages/router
+  - update url state is triggered after all 'after' middleware callbacks run successfully
 - cli
   - renamed all bin files to aofl-\*
   - generate component adds "-element" if the component name doesn't include a (-)
-- aofljs-packages
-  - aofl-list-option
-    - changed string attributes to boolean
-  - aofl-select-list
-    - changed string attributes to boolean
+- aofljs-packages/aofl-select-list
+  - changed string attributes to boolean
+
+### [Deprecated]
+
+### [Removed]
+- node container to run automation
+- jenkins file added
+
+### [Fixed]
+### [Security]
 
 ---
 
-## v1.2.3 (11-20-2018)
+## [1.2.3] - 2018-11-20
 
-Features:
+### [Added]
 
-- Build tools compatible with Windows & Ubuntu
-
-Bugfixes:
-
+### [Changed]
 - cli
-
   - renamed all bin files to aofl-cli-\*
+
+### [Deprecated]
+
+### [Removed]
+
+### [Fixed]
+- Build tools compatible with Windows & Ubuntu
+- cli
   - fixed temp directory path
+- webpack-packages/templating-plugin
+    - path.sep fixes to be windows & Ubuntu compatible
+- webpack-packages/webcomponents-css-loader
+    - path.sep fixes to be windows & Ubuntu compatible
 
-- webpack-packages
-  - templating-plugin
-    - path.sep fixes to be windows & Ubuntu compatible
-  - webcomponents-css-loader
-    - path.sep fixes to be windows & Ubuntu compatible
+### [Security]
 
 ---
 
-## v1.2.1 (11-18-2018)
+## [1.2.1] - 2018-11-18
 
-Features:
-
+### [Added]
 - gh-pages docs created
+- webpack-packages/unit-testing-plugin
+  - accepts .wtcrc.js file
+- aofl-js-packages/map-state-properties-mixin
+  - calls mapStateProperties function on connectedCallback automatically
+
+### [Changed]
 - decreased SauceLabs browsers to 10
-- webpack-packages
-  - unit-testing-plugin
-    - accepts .wtcrc.js file
-- aofl-js-packages
-  - map-state-properties-mixin
-    - calls mapStateProperties function on connectedCallback automatically
 
-Bugfixes:
+### [Deprecated]
 
-- webpack-packages
-  - i18n-loader
-    - Set cacheable to false
+### [Removed]
+
+### [Fixed]
+- webpack-packages/i18n-loader
+  - Set cacheable to false
+
+### [Security]
 
 ---
 
-## v1.2.0 (11-06-2018)
+## [1.2.0] - 2018-11-06
 
-Features:
-
-- Updated node packages
-- Adjusted eslint config for indentation
-- Fixed linting issues
-- Moved babel config out of webpack config
-- Updated saucelabs config
+### [Added]
 - Added CODE_OF_CONDUCT.md
 - 100% coverage
 - node container to run automation
 - jenkins file added
-- cli-tools
-  - cli
-    - Updated generate component to match v1.1.0 standards
-    - Added icons template
+- cli-tools/cli
+  - Added icons template
+- webpack-packages/webcomponent-css-loader
+  - Add @import paths the modules dependencies.
+  - skip pruning on dev
+- webpack-packages/templating-plugin
+  - added support for variable webpackConfig.output.publicPath
+  - Skip index.js files that do not contain a valid route doc block
+
+### [Changed]
+- Updated node packages
+- Adjusted eslint config for indentation
+- Moved babel config out of webpack config
+- Updated saucelabs config
+- cli-tools/cli
+  - Updated generate component to match v1.1.0 standards
 - aofl-js-packages
   - Replaced babel-plugin-istanbul with istanbul-instrumenter-loader
   - SauceLabs webpack config does not instrument and .wctrc-ls.json does not include istunbul plugin.
   - Moved wct-istunbul plugin config to .wctrc.json
-  - web-components
-    - aofl-drawer
-      - refactored and added transition-count attribute. Instead of trying to detect multiple transitions.
-  - RegisterCallback
-    - Removed error functions. Next expect an error object or null as the first argument.
-- webpack-packages
-  - unit-testing-plugin
-    - Replaced web-components-tester-istanbul with wct-instanbul
-    - removed istanbul plugin from default list
-    - Bundle all tests into 1 suite
-  - templating-plugin
-    - complete refactor
-    - added getTestContainer()
+- webpack-packages/unit-testing-plugin
+  - Replaced web-components-tester-istanbul with wct-instanbul
+  - Bundle all tests into 1 suite
+- webpack-packages/templating-plugin
+  - complete refactor
+  - added getTestContainer()
 
-Bugfixes:
+### [Deprecated]
 
-- webpack-packages
-  - webcomponent-css-loader
-    - removed logs
-    - Add @import paths the modules dependencies.
-    - skip pruning on dev
-    - Fixed hard crashes
-  - templating-plugin
-    - added support for variable webpackConfig.output.publicPath
-    - Skip index.js files that do not contain a valid route doc block
-    - Fixed double build issue
-    - Fixed issue with new routes or changes to route docBlock required 2 builds
-  - unit-testing-plugin
-    - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
+### [Removed]
+- RegisterCallback
+  - Removed error functions. Next expect an error object or null as the first argument.
+- webpack-packages/unit-testing-plugin
+  - removed istanbul plugin from default list
+  - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
+- webpack-packages/webcomponent-css-loader
+  - removed logs
+
+### [Fixed]
+- Fixed linting issues
+- web-components/aofl-drawer
+  - refactored and added transition-count attribute. Instead of trying to detect multiple transitions.
+- webpack-packages/webcomponent-css-loader
+  - Fixed hard crashes
+- webpack-packages/templating-plugin
+  - Fixed double build issue
+  - Fixed issue with new routes or changes to route docBlock required 2 builds
+
+### [Security]
 
 ---
 
-## v1.1.0 (10-17-2019)
+## [1.1.0] - 2018-10-17
 
-Features:
-
+### [Added]
 - aofl-js-packages
+  - ready for saucelabs integration
+- aofl-js-packages/polyfill-service
+  - config object accepts a {test, load} object to do custom checking
+- aofl-js-packages/i18n-mixin
+  - Support for multi plural sentences
+- aofl-js-packages/router
+  - Router holds reference to matchedRoute
+- webpack-packages/i18n-auto-id-loader
+- webpack-packages/webcomponent-css-loader
+- webpack-packages/templating-plugin
+  - added support for baseurl and webpack output dir
+- aofl-js-packages/rotations
+  - Adds several more unit tests covering all methods, w/minor refactoring
 
+### [Changed]
+- aofl-js-packages
   - upgraded lit-element to 0.6.2
   - moved tests to root of each module
   - transfered documentation examples to stackblitz and removed documentation projects
   - Updated jsdoc comments and new jsdoc theme
-  - fix and updated unit tests for all browsers
-  - ready for saucelabs integration
-  - resource-enumerate
-    - moved tests to the root project
-    - Config object no longer supports local/stageRegex. Instead environment is passed to constructor.
-  - polyfill-service
-    - moved tests to the root project
-    - config object accepts a {test, load} object to do custom checking
-  - i18n-mixin
-    - Refactored to cover all requirements from the translators
-    - Support for multi plural sentences
-  - router
-    - Router holds reference to matchedRoute
-  - rotations
-    - Allows qualify functions to return primitive values or promises, adds unit test for qualify order
+- aofl-js-packages/i18n-mixin
+  - Refactored to cover all requirements from the translators
+- aofl-js-packages/rotations
+  - Allows qualify functions to return primitive values or promises, adds unit test for qualify order
+- webpack-packages/i18n-loader
+  - Refactored to work with the updated system
+- cli/cli-tools
+  - Refactored i18n. Now uses lexical analysis to find translation strings
 
-- webpack-packages
+### [Deprecated]
 
-  - templating-plugin
-    - added support for baseurl and webpack output dir
-  - i18n-loader
-    - Refactored to work with the updated system
-  - i18n-auto-id-loader
-    - Added
-  - webcomponent-css-loader
-    - Added
+### [Removed]
+- aofl-js-packages/resource-enumerate
+  - Config object no longer supports local/stageRegex. Instead environment is passed to constructor.
 
-- cli-tools
-  - i18n
-    - refactored. Now uses lexical analysis to find translation strings
-
-Bugfixes:
-
+### [Fixed]
 - aofl-js-packages
-  - rotations
-    - Fixes bug causing erratic weighted rotations
-    - Adds several more unit tests covering all methods, w/minor refactoring
-- webpack-packages
-  - templating-plugin
-    - Fixed prod builds
+  - fix and updated unit tests for all browsers
+- aofl-js-packages/rotations
+  - Fixes bug causing erratic weighted rotations
+- webpack-packages/templating-plugin
+  - Fixed prod builds
+
+### [Security]
+
 
 ---
 
-## v1.0.0-beta.28 (09-27-2018)
+## [1.0.0-beta.28] - 2018-09-27
 
-Features:
-
-- Refactord and seperated components
+### [Added]
 - added ISSUE_TEMPLATE.md
 - api-request
   - documentation
@@ -264,19 +284,15 @@ Features:
   - unit testing
   - added is-in-viewport
   - added is-in-viewport-mixin
-- parent-dep-mixin
-  - removed
 - cli
-  - readme.md added
-  - license added
-  - dom-scope
-    - fixed pattern bug
-  - sw
-    - removed
-  - generate
-    - changed aofl to c
-    - removed lit
-    - updated templates
+  - readme.md
+  - license
+
+### [Changed]
+- generate
+  - changed aofl to c
+  - removed lit
+  - updated templates
 - templating-plugin
   - README.md added
   - prerender injects \_\_prerender\_\_ before page load
@@ -291,8 +307,16 @@ Features:
   - supports .wtcrc.json and wtc-conf.json
   - adds fetch-mock to test suite automatically
 
-Bugfixes:
+### [Deprecated]
 
+### [Removed]
+- parent-dep-mixin
+- cli/sw
+
+### [Fixed]
+- cli
+  - dom-scope
+    - fixed pattern bug
 - api-request
   - getCacheManager() fix issue with returning new cacheManager
   - changed cache argument to fromCache.
@@ -304,12 +328,14 @@ Bugfixes:
   - run inital unit test once when watch mode enabled
   - clean coverage report between runs
 
+### [Security]
+
+
 ---
 
-## v1.0.0-beta.27 (09-11-2018)
+## [1.0.0-beta.27] - 2018-09-11
 
-Features:
-
+### [Added]
 - Unit Testing
 - uuid
   - documentation
@@ -355,27 +381,14 @@ Features:
   - Support for pending status
 - cli
   - added default init repo
-- api-request
-  - version up
-- dom-scope-loader
-  - version up
-- form-validate
-  - version up
-- map-state-properties-mixin
-  - version up
-- parent-dep-mixin
-  - version up
-- resource-enumerate
-  - version up
-- templating-plugin
-  - version up
-- unit-testing-plugin
-  - version up
-- web-components
-  - version up
 
-Bugfixes:
+### [Changed]
 
+### [Deprecated]
+
+### [Removed]
+
+### [Fixed]
 - cache-manager
   - fixed issue with expired keys
   - fixed issues with json.parse when storage is not memoryStorage
@@ -385,55 +398,77 @@ Bugfixes:
 - router
   - Fixes typo for removing popState listener
 
+### [Security]
+
 ---
 
-## v1.0.0-beta.26 (8-27-2018)
+## [1.0.0-beta.26] - 2018-8-27
 
-Features:
-
+### [Added]
 - License and github repo
 - Store
   - commit takes variadic arguments
 
+### [Changed]
+
+### [Deprecated]
+
+### [Removed]
+
+### [Fixed]
+
+### [Security]
+
 ---
 
-## v1.0.0-beta.25 (08-23-2018)
+## [1.0.0-beta.25] - 2018-08-23
 
-Features:
-
+### [Added]
 - cli
   - added aofl init command
 
-Bugfix:
-
+### [Changed]
+### [Deprecated]
+### [Removed]
+### [Fixed]
 - aofl-list-option
   - changed selected from boolean to string
   - fixed checking selected attribute value to match selected|selected=true|selected=false
+### [Security]
+
 
 ---
 
-## v1.0.0-beta.24 (08-22-2018)
+## [1.0.0-beta.24] - 2018-08-22
 
-Features:
-
+### [Added]
 - cli
   - added -f to npm commands
+
+### [Changed]
+- unit-testing-plugin
+  - refactor unit-testing (removed childcompiler)
+
+### [Deprecated]
+
+### [Removed]
 - templating-plugin
   - removed child compiler from templating plugin
 - unit-testing-plugin
   - removed hardcoded browser options
-  - refactor unit-testing (removed childcompiler)
 
-Bugfixes:
-
+### [Fixed]
 - rotation
   - compatiblility with unit-testing
 - AoflElement
   - fixed css rendering for firefox
 
+### [Security]
+
+
 ---
 
-## v1.0.0-beta.23
+## [1.0.0-beta.23] - 2018-08-16
 
 Features:
 
@@ -456,32 +491,44 @@ Bugfixes:
 
 ---
 
-## v1.0.0-beta.22
+## [1.0.0-beta.22] - 2018-08-10
 
-Features:
-
-- added sw command
+### [Added]
+- cli added sw command
 - rotations
-  - added
 - templating plugin
   - added locale, meta and refactored router doc block parser
 - polyfill-service
   - added object-assign-polyfill
+- unit-testing-plugin
+- i18n-mixin
+- i18n-loader
+- map-state-properties-mixin
+- cli
+  - Adds i18n cli for pot generation
+### [Changed]
 - cache-manager
   - renamed MemoryStorage.length to size due to Function.length not being configurable on all browsers
-- unit-testing-plugin
-  - added
-- i18n-mixin
-  - added
-- i18n-loader
-  - added
-- map-state-properties-mixin
-  - added
-
-Bugfixes:
-
+### [Deprecated]
+### [Removed]
+### [Fixed]
 - cli
   - fixed conclude and renamed aofl-source.json to aofl.json
-  - Adds i18n cli for pot generation
+### [Security]
 
 ---
+
+
+[unreleased]:https://github.com/AgeOfLearning/aofl/compare/v1.3.0...rc-15
+[1.3.0]:https://github.com/AgeOfLearning/aofl/compare/v1.2.3...v1.3.0
+[1.2.3]:https://github.com/AgeOfLearning/aofl/compare/v1.2.1...v1.2.3
+[1.2.1]:https://github.com/AgeOfLearning/aofl/compare/v1.2.0...v1.2.1
+[1.2.0]:https://github.com/AgeOfLearning/aofl/compare/v1.1.0...v1.2.0
+[1.1.0]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.28...v1.1.0
+[1.0.0-beta.28]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.27...v1.0.0-beta.28
+[1.0.0-beta.27]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.26...v1.0.0-beta.27
+[1.0.0-beta.26]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.25...v1.0.0-beta.26
+[1.0.0-beta.25]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.24...v1.0.0-beta.25
+[1.0.0-beta.24]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.23...v1.0.0-beta.24
+[1.0.0-beta.23]:https://github.com/AgeOfLearning/aofl/compare/v1.0.0-beta.22...v1.0.0-beta.23
+[1.0.0-beta.22]:https://github.com/AgeOfLearning/aofl/compare/c5321f0...v1.0.0-beta.22

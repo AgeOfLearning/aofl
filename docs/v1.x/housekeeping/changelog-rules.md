@@ -18,7 +18,7 @@ All the information needed to generate a changelog is already captured in the co
 
 ## Git rebase and squash
 
-1.  Developers should cut a new branch from each feature or bugfix in the project.
+1.  Developers should cut a new branch for each feature or bugfix in the project.
 1.  They can work on their branch and make multiple commits with short messages.
 1.  When they are ready to submit their changes for release they should rebase and squash their commits against the branch they cut from
 1.  While rebasing generate a well formatted commit message, as described below, based on the smaller commits along the way
@@ -39,45 +39,50 @@ $ git push -f origin <feature-branch> # push your changes. Now we can $ git merg
 
 ## Commit Message format
 
-Each commit message should list all performance improvements, feature changes,
-and bugfixes.
+Follow [keep a changelog guidelines](https://keepachangelog.com/en/1.0.0/#how) for this section.
 
-```
-feature-branch-name
+Once youre changes are ready to be reviewed and included in the next release rebase and squash your commits and update the README.md's unreleased section based on your commit messages.
 
-Performance:
-  - component name:
-    - list of performance improvements
-
-Features:
-  - component name:
-    - list of new features
-
-Bugfixes:
-  - component name:
-    - list of bugfixes
-```
-
+> Types of changes
+>
+> - `Added` Added for new features.
+> - `Changed` for changes in existing functionality.
+> - `Deprecated` for soon-to-be removed features.
+> - `Removed` for now removed features.
+> - `Fixed` for any bug fixes.
+> - `Security` in case of vulnerabilities.
+> ```
+> ## [unreleased]
+>
+> ### [Added]
+> ### [Changed]
+> ### [Deprecated]
+> ### [Removed]
+> ### [Fixed]
+> ### [Security]
+> ```
 ## Sample CHANGELOG.md
 
-> # changelog - Project A
+> # Changelog - Project A
 >
-> ## v1.0.0-alpha.2 (11-09-2016)
+> ## [1.0.0] - 2016-11-09
 >
-> Features:
+> ### [Added]
 >
 > - User Profile
 >   - Implemented add user modal
-> - Replaced textareas with wysiwyg
 > - Added API documentation
 >
-> Bugfixes:
+> ### [Changed]
+> - Replaced textareas with wysiwyg
+>
+> ### [Fixed]
 >
 > - Relative application path support
 >
 > ---
 >
-> ## v1.0.0-alpha.1 (08-03-2016)
+> ## [1.0.0-alpha.1] - 2016-08-03
 >
 > Features:
 >
@@ -85,6 +90,9 @@ Bugfixes:
 >   - Added user profile page
 >
 > ---
+>
+> [1.0.0]: link/to/diff
+> [1.0.0-alpha.1]: link/to/diff
 
 ## Simple Demo
 
