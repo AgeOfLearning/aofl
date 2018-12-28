@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - aofl-js-packages/resource-enumerate - added a new property ready that is a promise that resolves when init() is done fetching config files. get() awaits this promise.
 
 ### [Changed]
+- issue template
+
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
