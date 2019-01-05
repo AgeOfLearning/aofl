@@ -25,6 +25,7 @@ class ResourceEnumerate {
    */
   constructor(environment) {
     this.environment = environment;
+    this.ready = new Promise((resolve) => this.resolve = resolve);
     this.middlewareInstance = new Middleware('before', 'after');
     this.apiRequestInstance = new ApiRequest();
   }
@@ -45,7 +46,7 @@ class ResourceEnumerate {
    * @param {Boolean} [skipEnvironmentCheck=true] skip dev/stage config process
    * @return {Promise}
    */
-  init({apis, developmentConfig, stageConfig}, skipEnvironmentCheck = false) {
+  async init({apis, developmentConfig, stageConfig}, skipEnvironmentCheck = false) {
     this.apis = apis;
 
     for (const apiNs in this.apis) {
@@ -63,10 +64,13 @@ class ResourceEnumerate {
     }
 
     if (skipEnvironmentCheck === false && this.environment !== environmentTypeEnumerate.PROD) {
-      return this.updateApis(developmentConfig, stageConfig);
+      await this.updateApis(developmentConfig, stageConfig);
+      this.resolve();
+      return this.ready;
     }
 
-    return Promise.resolve();
+    this.resolve();
+    return this.ready;
   }
 
   /* istanbul ignore next */
@@ -98,6 +102,7 @@ class ResourceEnumerate {
    * @return {Promise}
    */
   async get(apiNs, _fromCache = true) {
+    await this.ready;
     const api = this.apis[apiNs];
     let fromCache = _fromCache;
 
