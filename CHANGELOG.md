@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Changed]
 - issue template
+- cli-tools/cli - generate c changed context to ctx in template.js
 
 ### [Deprecated]
 ### [Removed]
