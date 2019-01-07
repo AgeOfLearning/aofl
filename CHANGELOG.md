@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Removed]
 ### [Fixed]
 - cli-tools/cli fixed `aofl init new/directory`
+- Add chrome and firefox addons in travis config for pull requests coming from forked repos
 
 ### [Security]
 

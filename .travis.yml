@@ -15,6 +15,9 @@ jobs:
 
     - stage: local-unit-test
       name: "Unit Test"
+      addons:
+        chrome: stable
+        firefox: latest
       script: npm test
 
     - stage: branch-unit-test
