@@ -7,3 +7,5 @@ coverage
 
 api-docs
 !docs/**/api-docs
+
+package-lock.json

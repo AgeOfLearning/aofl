@@ -5,7 +5,7 @@ cache: npm
 before_install:
   - cd aofl-js-packages
 install:
-  - npm ci
+  - npm i
 
 jobs:
   include:
