@@ -9,7 +9,7 @@
   "npmClientArgs": [
     "--no-package-lock",
     "--registry",
-    "http://localhost:4873"
+    "https://registry.npmjs.org"
   ],
   "command": {
     "publish": {
