@@ -26,6 +26,8 @@ const schema = {
  * @param {*} meta
  */
 module.exports = async function(source) {
+  this.cacheable(false);
+
   const callback = this.async();
   const options = Object.assign({
     force: false,

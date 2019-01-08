@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## unreleased
 
 ### [Added]
+- webpack-packages/webcomponent-css-loader - Set cacheable to false
+
 ### [Changed]
 - webpack-packages/templating-plugin - Changed str.replace algorithm when prerendering to deal with large strings.
 
