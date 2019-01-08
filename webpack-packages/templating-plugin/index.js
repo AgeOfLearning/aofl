@@ -138,7 +138,13 @@ class TemplatingPlugin {
         const s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath);
         const body = await preRender(s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''), this.options.preRenderTimeout);
         const source = compilation.assets[assetPath].source();
-        const t = source.replace(/<body.*<\/body>/, body).replace(/\n/g, ' ');
+
+        let t = source; // str.replace is not consistent on large strings
+        const bodyMatch = /<body.*<\/body>/.exec(source);
+        if (bodyMatch !== null) {
+          t = replaceTemplateFiles(source, bodyMatch[0], body);
+        }
+        t.replace(/\n/g, ' ');
         compilation.assets[assetPath] = {
           source: () => t,
           size: () => t.length
