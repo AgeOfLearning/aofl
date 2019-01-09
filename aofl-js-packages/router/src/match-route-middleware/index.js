@@ -57,11 +57,13 @@ const matchBestPath = (_path, routes) => {
  */
 export default (router) => (request, response, next) => {
   const matchedRoute = matchBestPath(request.to, request.routes);
+  let currentRoute = null;
   if (matchedRoute !== null) {
     matchedRoute.props = matchedRoute.parse(request.to);
-    router.matchedRoute = matchedRoute; // add MatchedRoute to the router instance
-    next(Object.assign({}, response, {matchedRoute}));
+    currentRoute = Object.assign({}, response, {matchedRoute});
   } else {
-    next(Object.assign({}, response, {matchedRoute: null}));
+    currentRoute = Object.assign({}, response, {matchedRoute: null});
   }
+  router.currentRoute = currentRoute; // add MatchedRoute to the router instance
+  next(currentRoute);
 };

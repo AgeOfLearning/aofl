@@ -109,7 +109,7 @@ describe('@aofl/router/router', function() {
       try {
         await new Promise((resolve) => {
           this.router.after((request, response, next) => {
-            expect(this.router.matchedRoute).to.have.property('path', '/home')
+            expect(this.router.currentRoute.matchedRoute).to.have.property('path', '/home')
             resolve();
           });
           this.router.navigate('/home');

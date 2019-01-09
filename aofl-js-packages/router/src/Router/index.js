@@ -148,11 +148,11 @@ class Router {
       this.resolve = resolve;
       const request = {
         to: path,
-        from: location.pathname,
+        from: this.currentRoute? this.currentRoute.to: document.referrer,
         routes: this.config.routes,
         popped
       };
-      if (path !== location.pathname || force) {
+      if (path !== location.href.replace(location.origin, '') || force) {
         this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
         .then(() => {
           this.applyMiddleware(request, popped);
