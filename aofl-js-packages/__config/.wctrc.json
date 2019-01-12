@@ -17,7 +17,7 @@
       }
     },
     "istanbul": {
-      "dir": "../docs/v1.x/coverage/",
+      "dir": "./coverage/",
       "reporters": [
         "text-summary",
         "lcov"

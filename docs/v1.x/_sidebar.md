@@ -34,5 +34,5 @@
 - [Ecosystem](v1.x/ecosystem/index.md)
 - [Browser devtools](v1.x/devtools/index.md)
 - <a href="v1.x/api-docs/index.html" target="_blank">Api Reference</a>
-- <a href="v1.x/coverage/lcov-report/index.html" target="_blank">Coverage Report</a>
+- <a href="https://codecov.io/gh/AgeOfLearning/aofl" target="_blank">Coverage Report</a>
 - Performance Bechmarks <small>(WIP...)</small>
