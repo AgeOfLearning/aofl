@@ -56,7 +56,7 @@ module.exports = (mode) => {
             loader: 'babel-loader',
             options: {
               'cacheDirectory': true,
-              ...require('./.babelrc.json')
+              ...require('./.babelrc.js')
             }
           }
         },

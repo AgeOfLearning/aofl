@@ -8,7 +8,7 @@ Aofl unit testing plugin makes it easy to setup [web-components-tester](https://
 npm i -D @aofl/unit-testing-plugin
 ```
 
-If you plan on generating coverage report `babel-plugin-istanbul` is needed to instrument transpiled code.
+If you plan on generating coverage report `babel-plugin-istanbul` is needed to instrument transpiled code. We recommend using [babel-plugin-istanbul](https://www.npmjs.com/package/babel-plugin-istanbul)
 
 ## Usage
 ```javascript
@@ -19,21 +19,6 @@ module.export = {
     'custom-elements-es5-adapter': 'path/to/custom-e...',
     'init-polyfill-service': 'path/to/...'
   }.
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        use: {
-          loader: 'istanbul-instrumenter-loader',
-          options: {
-            esModules: true
-          }
-        },
-        exclude: /(node_modules|\.spec\.|__build|__config)/
-      }
-    ]
-  },
-  ...
   plugins: [
     new UnitTesting({
       exclude: [
