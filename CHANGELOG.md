@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## unreleased
 ### [Added]
 ### [Changed]
+- Replaced babel-instrumenter-loader with babel-plugin-istanbul.
 - @aofl/router - match-route-middleware caches the response after matching the route instead of the route.
 
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
 - @aofl/router - fixed request from link
-- @aofl/web-components/aofl-img - Delay checkInViewport by a microtask to fix issue with images not loading when aofl-img is a child of another custom component
+- @aofl/web-components/aofl-img - Delay checkInViewport by a microtask to fix issue with images not loading when aofl-img is a child of another custom component.
+- @aofl/cache-manager - getCollection updates storedKeys before returning the collection in case it changed within the context of another document.
 
 ### [Security]
 

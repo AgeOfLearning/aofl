@@ -136,6 +136,7 @@ class CacheManager {
    */
   getCollection() {
     const collection = {};
+    this.storedKeys = this.getStoredKeys();
     for (let i = 0; i < this.storedKeys.length; i++) {
       if (this.isExpired(this.storedKeys[i])) continue;
       collection[this.storedKeys[i]] = this.getItem(this.storedKeys[i]);
