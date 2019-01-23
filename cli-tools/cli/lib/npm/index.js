@@ -83,7 +83,11 @@ class Npm {
     if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
       return Promise.reject(new Error('you need to pass modules to installDependency'));
     }
-    return Npm.__run(['i', type, ...moduleNames], options);
+    const params = ['i', type, ...moduleNames];
+    if (force) {
+      params.push('-f');
+    }
+    return Npm.__run(params, options);
   }
 
   /**
@@ -117,7 +121,7 @@ class Npm {
    */
   static install(options = {}) {
     const packageDir = Npm.findPackageDir(options.cwd || process.env.PWD);
-    let installType = 'i';
+    let installType = 'install';
     if (packageDir !== '') {
       try {
         fs.statSync(path.join(packageDir, 'package-lock.json'));

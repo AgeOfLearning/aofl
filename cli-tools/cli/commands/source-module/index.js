@@ -69,7 +69,18 @@ class SourceModule {
           await Npm.removeDependency([m.name], m.type.flag, true);
           const moduleLocation = this.findModuleLocation(m.name);
 
-          await Npm.installDependency([moduleLocation], m.type.flag, true);
+          await Npm.install({
+            cwd: moduleLocation
+          });
+          try {
+            await Npm.installDependency([moduleLocation], m.type.flag, true);
+          } catch (e) {
+            console.log(chalk.red(`Something went wrong :(`))
+            console.log(chalk.cyan(`Reverting ${m.name}...`));
+            await Npm.installDependency([m.name], m.type.flag, true);
+            await Git.removeSubmodule(m.localPath);
+            throw e;
+          }
         } catch (e) {
           sourceFailed.push(m.name);
           console.log(e);

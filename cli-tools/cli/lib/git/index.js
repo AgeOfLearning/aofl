@@ -57,9 +57,13 @@ class Git {
     while (tempDir !== dir) {
       const gitDir = path.join(dir, '.git');
       try {
-        fs.statSync(gitDir);
-        console.log('gitDir', dir);
-        return dir;
+        const stats = fs.statSync(gitDir);
+        if (stats.isDirectory()) {
+          return dir;
+        }
+        const content = fs.readFileSync(dir);
+        const path = content.exec(/gitdir:\s*(.*)/)[1];
+        return path.resolve(path.join(dir, path));
       } catch (e) {}
 
       tempDir = dir;
@@ -171,7 +175,7 @@ class Git {
    */
   static async removeSubmodule(submodulePath, options = {}) {
     const fullPath = path.resolve(submodulePath);
-    const gitDir = Git.findGitDir(process.cwd());
+    const gitDir = Git.findGitDir(fullPath);
     const relativePath = path.relative(gitDir, fullPath);
     await Git.submoduleDeinit(submodulePath, true, options);
     await Git.rm([submodulePath], false, true);
