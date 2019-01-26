@@ -30,3 +30,7 @@
 ## Supported Browsers
 
 <img src="https://saucelabs.com/browser-matrix/aoflsaucem.svg?auth=c0f586d708f2895cc0c009e385483adb" alt="Sauce Test Status"/>
+
+### Big Thanks
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
