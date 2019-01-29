@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "@aofl/html-webpack-purify-internal-css-plugin": "^1.4.1",
     "@aofl/i18n-loader": "^1.4.1",
     "@aofl/templating-plugin": "^2.0.0-alpha.1",
+    "@aofl/unit-testing-plugin": "^1.4.2",
     "@aofl/webcomponent-css-loader": "^1.4.2",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
@@ -43,6 +44,8 @@
     "cross-spawn": "^6.0.5",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
+    "eslint": "^5.12.1",
+    "eslint-config-google": "^0.11.0",
     "eslint-loader": "^2.1.1",
     "esprima": "^4.0.1",
     "fast-glob": "^2.2.2",

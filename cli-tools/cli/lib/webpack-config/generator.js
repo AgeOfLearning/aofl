@@ -45,7 +45,6 @@ const getCssRules = (build) => {
       loader: 'css-loader',
       options: {
         sourceMap: false,
-        cache: build.cache,
         importLoaders: build.css.component.length + 1,
         ...build.css.cssLoader
       }
@@ -194,7 +193,7 @@ const getConfig = (root, configObject) => {
     })
   ];
 
-  let config = {
+  const config = {
     entry: getEntry(root),
     output,
     mode,
