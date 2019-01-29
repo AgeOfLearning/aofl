@@ -30,7 +30,7 @@ module.exports = async function(source) {
     const resolveRegex = /(resolve":\s)"(.*)"/g;
     const quoteRegex = /"/g;
 
-    content = 'export default ' + JSON.stringify(routeConfigObj, null, 2).replace(resolveRegex, (match, p1, p2) => {
+    content = '/* eslint-disable */\nexport default ' + JSON.stringify(routeConfigObj, null, 2).replace(resolveRegex, (match, p1, p2) => {
       return p1 + p2;
     }).replace(quoteRegex, '\'') + ';';
 
