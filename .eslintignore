@@ -3,3 +3,4 @@ __build
 __build_tests
 coverage
 api-docs
+modules/__config/routes.js

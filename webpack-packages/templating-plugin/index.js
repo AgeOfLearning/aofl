@@ -103,13 +103,17 @@ class TemplatingPlugin {
     this.options.publicPath = compiler.options.output.publicPath || '/';
     TemplatingPlugin.addLoader(compiler);
 
-    const templateHWP = new HtmlWebpackPlugin(this.options.template);
+    const templateHWP = new HtmlWebpackPlugin({
+      ...this.options.template
+    });
     templateHWP.apply(compiler);
 
     for (const key in this.options.partials) {
       if (!this.options.partials.hasOwnProperty(key)) continue;
       const partial = this.options.partials[key];
-      const partialHWP = new HtmlWebpackPlugin(partial);
+      const partialHWP = new HtmlWebpackPlugin({
+        ...partial
+      });
       partialHWP.apply(compiler);
       this.assets.partials[key] = partialHWP;
     }

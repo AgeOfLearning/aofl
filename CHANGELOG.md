@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Added]
 - @aofl/cli - source will remove the added submodule if an error occurs.
 - @aofl/templating-plugin - added support for @linkTag
+- @aofl/cli - build command
+- @aofl/cli - test command
+- @aofl/cli - serve command
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.

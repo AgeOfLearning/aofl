@@ -1,0 +1,291 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "root": {
+      "type": "string"
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "publicPath": {
+          "type": "string"
+        },
+        "devtool": {
+          "type": "string"
+        },
+        "cache": {
+          "type": "boolean"
+        },
+        "hardSourceCache": {
+          "type": "boolean"
+        },
+        "css": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "component": {
+              "type": "array"
+            },
+            "global": {
+              "type": "object"
+            },
+            "cssLoader": {
+              "type": "object"
+            },
+            "postCssLoader": {
+              "type": "object"
+            }
+          }
+        },
+        "images": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "fileLoader": {
+              "type": "object"
+            },
+            "imgLoader": {
+              "type": "object"
+            }
+          }
+        },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "fileLoader": {
+              "type": "object"
+            }
+          }
+        },
+        "eslint": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            }
+          }
+        },
+        "js": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "babel": {
+              "type": "object"
+            }
+          }
+        },
+        "templating": {
+          "type": "object"
+        },
+        "terser": {
+          "type": "object"
+        },
+        "serviceworker": {
+          "type": "object"
+        },
+        "favicon": {
+          "type": "object"
+        },
+        "pwaManifest": {
+          "type": "object"
+        },
+        "middleware": {
+          "type": "array"
+        },
+        "extend": {
+          "instanceof": "Function"
+        }
+      }
+    },
+    "devServer": {
+      "type": "object"
+    },
+    "unitTesting": {
+      "type": "object",
+      "properties": {
+        "config": {
+          "type": "string"
+        },
+        "maxChunks": {
+          "type": "number"
+        },
+        "include": {
+          "type": "array"
+        },
+        "exclude": {
+          "type": "array"
+        },
+        "output": {
+          "type": "string"
+        },
+        "clean": {
+          "type": "boolean"
+        },
+        "scripts": {
+          "type": "array"
+        }
+      }
+    }
+  }
+}
