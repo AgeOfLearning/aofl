@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "pattern": {
+      "type": "array"
+    },
+    "ignore": {
+      "type": "array"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "static": {
+      "type": "boolean"
+    }
+  }
+}

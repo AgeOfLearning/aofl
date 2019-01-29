@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "template": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "template": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        }
+      }
+    },
+    "routes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "mainRoutes": {
+          "type": "string"
+        },
+        "pattern": {
+          "type": "array"
+        },
+        "ignore": {
+          "type": "array"
+        }
+      }
+    },
+    "partials": {
+      "type": "object"
+    },
+    "locale": {
+      "type": "string"
+    },
+    "prerenderTimeout": {
+      "type": "number"
+    },
+    "loaderOptions": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

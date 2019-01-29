@@ -30,6 +30,13 @@ const reader = new DocParser({
       optional: true
     }
   ],
+  linktag: [
+    {
+      property: 'value',
+      parser: 'object',
+      optional: true
+    }
+  ],
   meta: [
     {
       property: 'value',
@@ -52,6 +59,7 @@ const parseFile = (content) => {
     route: '',
     title: '',
     metaTags: [],
+    linkTags: [],
     mata: {},
     locale: '',
     prerender: false
@@ -64,11 +72,14 @@ const parseFile = (content) => {
       const d = routeData.body[i];
       if (d.kind === 'metatag') {
         parsedData.metaTags.push(d.value);
+      } else if (d.kind === 'linktag') {
+        parsedData.linkTags.push(d.value);
       } else {
         parsedData[d.kind] = d.value;
       }
     }
   }
+
   return parsedData;
 };
 

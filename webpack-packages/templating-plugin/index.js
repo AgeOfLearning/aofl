@@ -5,11 +5,12 @@ const getRoutes = require('./get-routes');
 const replaceTemplateFiles = require('./replace-template-parts');
 const server = require('./server');
 const preRender = require('./prerender');
+const validateOptions = require('schema-utils');
+const schema = require('./__config/schema.json');
+const partialsSchema = require('./__config/partials-schema.json');
 
 const LOADER_OPTIONS = {
   enforce: 'pre',
-  test: new RegExp(path.resolve(__dirname, 'routes.config.js')
-  .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`)),
   use: {
     loader: path.resolve(__dirname, 'routes-config-loader'),
     options: {
@@ -41,6 +42,15 @@ class TemplatingPlugin {
    * @memberof TemplatingPlugin
    */
   constructor(options = {}) {
+    validateOptions(schema, options, TemplatingPlugin.name);
+
+    if (typeof options.partials !== 'undefined') {
+      for (const key in options.partials) {
+        if (!options.partials.hasOwnProperty(key)) continue;
+        validateOptions(partialsSchema, options.partials[key], TemplatingPlugin.name);
+      }
+    }
+
     this.options = defaultsDeep(options, {
       template: {
         // name: '',
@@ -61,8 +71,10 @@ class TemplatingPlugin {
         // }
       },
       locale: 'en-US',
-      publicPath: '/',
-      preRenderTimeout: 0
+      preRenderTimeout: 0,
+      loaderOptions: {
+        path: new RegExp(path.resolve(__dirname, 'routes.config.js'))
+      }
     });
 
     this.assets = {
@@ -74,7 +86,11 @@ class TemplatingPlugin {
       partials: {}
     };
 
+    LOADER_OPTIONS.test = (this.options.loaderOptions.path || new RegExp(path.resolve(__dirname, 'routes.config.js'))
+    .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`));
+
     LOADER_OPTIONS.use.options.configs.push(this.options);
+    LOADER_OPTIONS.use.options.cache = this.options.loaderOptions.cache || true;
   }
 
   /**
@@ -217,8 +233,14 @@ class TemplatingPlugin {
 
     const partialMap = {
       [`aoflTemplate:title`]: routeInfo.routeConfig.title || '',
+      [`<template>aoflTemplate:title</template>`]: routeInfo.routeConfig.title || '',
+      [`<template>aoflTemplate:metaTags</template>`]: routeInfo.metaTags || '',
       [`aoflTemplate:metaTags`]: routeInfo.metaTags || '',
-      [`aoflTemplate:locale`]: routeInfo.routeConfig.locale || this.options.locale
+      [`<template>aoflTemplate:linkTags</template>`]: routeInfo.linkTags || '',
+      [`aoflTemplate:linkTags`]: routeInfo.linkTags || '',
+      [`<template>aoflTemplate:locale</template>`]: routeInfo.routeConfig.locale || this.options.locale,
+      [`aoflTemplate:locale`]: routeInfo.routeConfig.locale || this.options.locale,
+      'sourceMappingURL=': 'sourceMappingURL=' + path.relative(routeInfo.routeConfig.path, this.options.publicPath) + '/'
     };
 
     for (const key in this.assets.partials) {
@@ -226,6 +248,7 @@ class TemplatingPlugin {
       const partial = this.assets.partials[key];
       const compiledPartial = compilation.assets[partial.childCompilationOutputName];
       if (typeof compiledPartial === 'undefined') continue;
+      partialMap[`<template>aoflTemplate:partial:${key}</template>`] = compiledPartial.source();
       partialMap[`aoflTemplate:partial:${key}`] = compiledPartial.source();
     }
 
@@ -249,6 +272,7 @@ class TemplatingPlugin {
     for (let i = 0; i < this.assets.routes.length; i++) {
       const routeInfo = this.assets.routes[i];
       const tmpAssets = this.getRouteTemplateAssets(compiler, compilation, routeInfo);
+
       assets = Object.assign(assets, tmpAssets);
     }
 

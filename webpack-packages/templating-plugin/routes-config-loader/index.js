@@ -2,10 +2,13 @@ const getRoutes = require('../get-routes');
 const {getOptions} = require('loader-utils');
 
 module.exports = async function(source) {
-  this.cacheable(false);
-
   const callback = this.async();
   const options = getOptions(this);
+
+  if (options.cache === false) {
+    this.cacheable(false);
+  }
+
   let content = '';
 
   try {
@@ -29,7 +32,7 @@ module.exports = async function(source) {
 
     content = 'export default ' + JSON.stringify(routeConfigObj, null, 2).replace(resolveRegex, (match, p1, p2) => {
       return p1 + p2;
-    }).replace(quoteRegex, '\'');
+    }).replace(quoteRegex, '\'') + ';';
 
     callback(null, content);
   } catch (e) {

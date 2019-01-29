@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## unreleased
 ### [Added]
 - @aofl/cli - source will remove the added submodule if an error occurs.
+- @aofl/templating-plugin - added support for @linkTag
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/web-components/aofl-img - Delay checkInViewport by a microtask to fix issue with images not loading when aofl-img is a child of another custom component.
 - @aofl/cache-manager - getCollection updates storedKeys before returning the collection in case it changed within the context of another document.
 - @aofl/cli - Npm.installDependency force option fixed.
+- @aofl/templating - fixed issue with meta tags getting injected into body due to invalid aoflTemplate string in head. The plugin will accept template replace keys wrapped in template tags.
 
 ### [Security]
 

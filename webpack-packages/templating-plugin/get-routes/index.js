@@ -37,6 +37,15 @@ const parseRouteFile = (file, options) => {
       acc += '>\n';
       return acc;
     }, ''),
+    linkTags: parsedData.linkTags.reduce((acc, item) => {
+      acc += `<link`;
+      for (const key in item) {
+        if (!item.hasOwnProperty(key)) continue;
+        acc += ` ${key}="${item[key]}"`;
+      }
+      acc += '>\n';
+      return acc;
+    }, ''),
     meta: parsedData.meta,
     locale: parsedData.locale || options.locale,
     template: options.template.name
@@ -79,6 +88,7 @@ module.exports = async (options, context = process.cwd()) => {
       partialName: 'main',
       rotation,
       metaTags: routeInfo.metaTags,
+      linkTags: routeInfo.linkTags,
       prerender: routeInfo.prerender,
       routeConfig: {
         resolve: `() => import('./${routePath}')`,
