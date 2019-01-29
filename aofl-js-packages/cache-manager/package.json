@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cache-manager",
-  "version": "1.5.0-alpha.2",
+  "version": "2.0.0-alpha.1",
   "description": "Provides a unified class for storing objects in Storage-like Objects",
   "main": "index.js",
   "keywords": [
