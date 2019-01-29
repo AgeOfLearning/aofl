@@ -10,6 +10,9 @@ const url = require('postcss-url');
 const schema = {
   type: 'object',
   properties: {
+    cache: {
+      type: 'boolean'
+    },
     path: {
       type: 'string'
     },
@@ -26,15 +29,17 @@ const schema = {
  * @param {*} meta
  */
 module.exports = async function(source) {
-  this.cacheable(false);
-
   const callback = this.async();
   const options = Object.assign({
+    cache: true,
     force: false,
     path: ''
   }, getOptions(this)); // eslint-disable-line
 
   validationOptions(schema, options, 'Web components css loader');
+  if (options.cache === false) {
+    this.cacheable(true);
+  }
 
   const resourcePath = this.resourcePath;
   const cssFileName = resourcePath.substr(resourcePath.lastIndexOf(path.sep) + 1);

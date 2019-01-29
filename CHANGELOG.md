@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - test command
 - @aofl/cli - serve command
 - @aofl/templating-plugin - eslint-disable routes-config-loader
+- @aofl/webcomponent-css-loader - added cache option
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
