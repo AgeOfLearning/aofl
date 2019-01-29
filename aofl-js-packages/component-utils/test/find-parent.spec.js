@@ -1,6 +1,6 @@
 /* eslint-disable */
 import findParent from '../src/find-parent';
-import AoflElement from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/web-components/aofl-element';
 import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils', function() {

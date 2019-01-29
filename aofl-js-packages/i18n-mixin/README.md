@@ -64,7 +64,7 @@ return super._render({
 ## code example
 ```javascript
 import i18nMixin from '@aofl/i18n-mixin';
-import AoflElement from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/web-components/aofl-element';
 import styles from './styles.css';
 
 class MyComp extends i18nMixin(AoflElement) {

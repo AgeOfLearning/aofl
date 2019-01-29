@@ -8,7 +8,7 @@
  * @requires AoflElement
  */
 import {template} from './template';
-import AoflElement from '../aofl-element';
+import {AoflElement} from '../aofl-element';
 
 /**
  * @extends {AoflElement}

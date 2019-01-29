@@ -8,7 +8,7 @@
  *
  * @requires AoflElement
  */
-import AoflElement from '../aofl-element';
+import {AoflElement} from '../aofl-element';
 import {findParent} from '@aofl/component-utils';
 
 /**

@@ -11,7 +11,7 @@
 
 ## code example
 ```javascript
-import AoflElement from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/web-components/aofl-element';
 import template from './template.js',
 import styles from 'index.css'
 

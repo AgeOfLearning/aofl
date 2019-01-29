@@ -8,7 +8,7 @@
  * @requires AoflElement
  */
 import {template} from './template';
-import AoflElement from '../aofl-element';
+import {AoflElement} from '../aofl-element';
 
 /**
  * <aofl-picture> serves as a container for zero or more <aofl-source> and one <aofl-img> elements

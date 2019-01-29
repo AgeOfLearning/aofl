@@ -1,6 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import isInViewportMixin from '../src/is-in-viewport-mixin';
-import AoflElement from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/web-components/aofl-element';
 import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {

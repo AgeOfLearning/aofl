@@ -10,7 +10,7 @@
  * @requires aofl-js/ComponentUtils:findParent
  */
 import {template} from './template';
-import AoflElement from '../aofl-element';
+import {AoflElement} from '../aofl-element';
 import {findParent} from '@aofl/component-utils';
 
 /**
