@@ -38,7 +38,7 @@ module.exports = async function(source) {
 
   validationOptions(schema, options, 'Web components css loader');
   if (options.cache === false) {
-    this.cacheable(true);
+    this.cacheable(false);
   }
 
   const resourcePath = this.resourcePath;
