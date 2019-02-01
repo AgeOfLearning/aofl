@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - serve command
 - @aofl/templating-plugin - eslint-disable routes-config-loader
 - @aofl/webcomponent-css-loader - added cache option
+- @aofl/store - auto generates setter mutations based on init() mutation
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.

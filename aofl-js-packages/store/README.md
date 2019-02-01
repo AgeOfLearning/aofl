@@ -65,7 +65,7 @@ sub-states are keyed by namespace. Additionally mutations can only be invoked us
 ```
 
 ##### mutations
-mutations must include an `init()` method. This function is invoked when SDO is added to store using `addState(SDO, [payload])` and sets the inital state of the sub-state.
+mutations must include an `init()` method. This function is invoked when SDO is added to store using `addState(SDO, [payload])` and sets the inital state of the sub-state. In addition to initializing the state object, the data returned from `init()` is used to automatically generate setter mutations for all the properties of the sub state.
 
 When a mutation function is invoked; the sub-state pertaining to the mutation's namespace is passed to the mutation function. This means, a mutation function can only modify the sub-state it's attached to.
 
@@ -85,13 +85,17 @@ const accountsMutations = {
       selectedAccountId: 0
     };
   },
-  setActiveAccount(subState, {selectedAccountId}) {
+  insertAccount(subState, account) {
     return Object.assign({}, subState, {
-      selectedAccountId
+      accounts: [
+        ...subState.accounts,
+        account
+      ]
     });
   }
 };
 ```
+*The above example will include the auto generated mutations `setAccounts`, `setLastLogin`, and `setSelectedAccountId`*
 
 ##### decorators
 Decorators are used to derive new information based on the state of the application. E.g. formatting timestamps to formatted date strings or calculating number of pages based on pagination data (limit per page and total results).

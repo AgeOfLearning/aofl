@@ -1,5 +1,6 @@
 import {deepFreeze} from '@aofl/object-utils';
 import {RegisterCallback} from '@aofl/register-callback';
+import {generateMutations} from '../generate-basic-mutations';
 
 /**
  * Store is a built on the same principles as redux and attempts to simplify some of Redux's
@@ -186,10 +187,11 @@ class Store {
    */
   addState(sdo, payload) {
     if (typeof this.namespaces[sdo.namespace] !== 'undefined') return;
-
+    const initState = sdo.mutations.init(payload);
+    const mutations = Object.assign(generateMutations(initState), sdo.mutations);
     this.namespaces[sdo.namespace] = {
       namespace: sdo.namespace,
-      mutations: sdo.mutations,
+      mutations: mutations,
       asyncMutations: {}
     };
 
@@ -202,7 +204,7 @@ class Store {
     }
 
     this.state = Object.assign({}, this.state, {
-      [sdo.namespace]: sdo.mutations.init(payload)
+      [sdo.namespace]: initState
     });
 
     if (Array.isArray(sdo.decorators)) {
