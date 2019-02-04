@@ -2,25 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const purify = require('purify-css');
 const {getOptions} = require('loader-utils');
+const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
 const postcss = require('postcss');
 const atImport = require('postcss-import');
 const url = require('postcss-url');
-
-const schema = {
-  type: 'object',
-  properties: {
-    cache: {
-      type: 'boolean'
-    },
-    path: {
-      type: 'string'
-    },
-    force: {
-      type: 'boolean'
-    }
-  }
-};
 
 /**
  *
@@ -33,10 +19,11 @@ module.exports = async function(source) {
   const options = Object.assign({
     cache: true,
     force: false,
-    path: ''
+    path: '',
+    whitelist: []
   }, getOptions(this)); // eslint-disable-line
 
-  validationOptions(schema, options, 'Web components css loader');
+  validationOptions(schema, options, '@aofl/webcomponent-css-loader');
   if (options.cache === false) {
     this.cacheable(false);
   }
@@ -119,7 +106,7 @@ module.exports = async function(source) {
       const purified = purify(content.toString(), combinedCss, {
         info: false,
         rejected: false,
-        whitelist: []
+        whitelist: options.whitelist
       });
 
       callback(null, purified);

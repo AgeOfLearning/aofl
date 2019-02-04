@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "cache": {
+      "type": "boolean"
+    },
+    "path": {
+      "type": "string"
+    },
+    "force": {
+      "type": "boolean"
+    },
+    "whitelist": {
+      "type": "array"
+    }
+  }
+}
