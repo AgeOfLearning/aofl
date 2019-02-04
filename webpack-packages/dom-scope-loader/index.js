@@ -1,25 +1,31 @@
 const fs = require('fs');
-const loaderUtils = require('loader-utils');
+const {getOptions} = require('loader-utils');
 const uniki = require('uniki');
-
-const defaultOptions = {
-  tags: []
-};
+const schema = require('./__config/schema.json');
+const validationOptions = require('schema-utils');
 
 const escapeRegExp = (str) => {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
 };
 
 module.exports = function(content) {
-  this.cacheable(true);
   const relativePath = this.resourcePath.replace(process.cwd(), '');
   const sourcePath = this.resourcePath;
+  const options = Object.assign({
+    tags: [],
+    cache: false
+  }, getOptions(this));
   let updated = false;
-  const {tags} = Object.assign({}, defaultOptions, loaderUtils.getOptions(this) || {});
 
-  for (let i = 0; i < tags.length; i++) {
+  validationOptions(schema, options, 'Web components css loader');
+
+  if (options.cache === false) {
+    this.cacheable(false);
+  }
+
+  for (let i = 0; i < options.tags.length; i++) {
     let match = null;
-    const tag = tags[i];
+    const tag = options.tags[i];
     const tagRegex = new RegExp(`<${escapeRegExp(tag)}\\b(?:(?!dom-scope)(.|\\s))*?>`, 'g');
     let count = 0;
     while (match = tagRegex.exec(content)) {

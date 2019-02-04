@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "loader-utils": "^1.1.0",
+    "schema-utils": "^1.0.0",
     "uniki": "^1.0.3"
   },
   "repository": {

@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/templating-plugin - eslint-disable routes-config-loader
 - @aofl/webcomponent-css-loader - added cache option
 - @aofl/store - auto generates setter mutations based on init() mutation
+- @aofl/dom-scope - added README.md
+- @aofl/dom-scope - added cache option
+- @aofl/dom-scope - added schema utils validation
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
