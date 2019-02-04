@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
 - @aofl/router - match-route-middleware caches the response after matching the route instead of the route.
-- @aofl/web-components/aofl-element export an object containing AoflElement and customElement and property decorators
+- @aofl/web-components/aofl-element export an object containing AoflElement and all lit-element exports
 - Updated all references to AoflElement to reflect updated module export
 
 ### [Deprecated]
