@@ -13,7 +13,14 @@ module: {
   rules: [
     {
       test: /\.js$/,
-      use: '@aofl/i18n-auto-id-loader',
+      use: [
+        {
+          loader: '@aofl/i18n-auto-id-loader',
+          options: {
+            cache: true
+          }
+        }
+      ],
       enforce: 'pre'
     }
   ]
