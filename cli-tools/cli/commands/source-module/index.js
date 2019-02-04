@@ -15,15 +15,17 @@ class SourceModule {
    * Creates an instance of SourceModule.
    * @param {*} modules
    * @param {String} repo
+   * @param {Boolean} list
    * @memberof SourceModule
    */
-  constructor(modules = [], repo) {
+  constructor(modules = [], repo, list) {
     this.cwd = process.cwd();
     this.configPath = path.resolve(this.cwd, '.aofl.json');
     this.targetPackageJson = require(path.resolve(this.cwd, 'package.json'));
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
     this.repo = modules.length === 1? repo: undefined;
+    this.list = list;
   }
 
   /**
@@ -32,6 +34,10 @@ class SourceModule {
    * @memberof SourceModule
    */
   async init() {
+    if (this.list) {
+      this.listModules();
+      return;
+    }
     const modules = this.modules;
     const sourceFailed = [];
     const gen = function* gen() {
@@ -75,7 +81,7 @@ class SourceModule {
           try {
             await Npm.installDependency([moduleLocation], m.type.flag, true);
           } catch (e) {
-            console.log(chalk.red(`Something went wrong :(`))
+            console.log(chalk.red(`Something went wrong :(`));
             console.log(chalk.cyan(`Reverting ${m.name}...`));
             await Npm.installDependency([m.name], m.type.flag, true);
             await Git.removeSubmodule(m.localPath);
@@ -256,6 +262,20 @@ class SourceModule {
       }
     }
     return {};
+  }
+
+  /**
+   * list sourced packages
+   */
+  listModules() {
+    const modules = this.config.modules || [];
+    for (let i = 0; i < modules.length; i++) {
+      console.log(modules[i].name + '@' + modules[i].ref);
+    }
+
+    console.log();
+    console.log(modules.length + ' package(s) sourced');
+    console.log();
   }
 }
 

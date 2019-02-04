@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - build command
 - @aofl/cli - test command
 - @aofl/cli - serve command
+- @aofl/cli - source --list option added
 - @aofl/templating-plugin - eslint-disable routes-config-loader
 - @aofl/webcomponent-css-loader - added cache option
 - @aofl/webcomponent-css-loader - added whitelist option
