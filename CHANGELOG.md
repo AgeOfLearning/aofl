@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/dom-scope - added README.md
 - @aofl/dom-scope - added cache option
 - @aofl/dom-scope - added schema utils validation
+- @aofl/i18n-loader - added cache option
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.

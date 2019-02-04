@@ -13,7 +13,7 @@ module.exports = function(content) {
   const sourcePath = this.resourcePath;
   const options = Object.assign({
     tags: [],
-    cache: false
+    cache: true
   }, getOptions(this));
   let updated = false;
 

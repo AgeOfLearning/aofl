@@ -1,8 +1,19 @@
 const glob = require('fast-glob');
 const LANG_CODE_REGEX = /translations_(.*)\.json/;
+const schema = require('./__config/schema.json');
+const validationOptions = require('schema-utils');
+const {getOptions} = require('loader-utils');
 
 module.exports = function(content, map, meta) {
-  this.cacheable(false);
+  const options = Object.assign({
+    cache: true,
+  }, getOptions(this));
+
+  validationOptions(schema, options, '@aofl/i18n-loader');
+
+  if (options.cache === false) {
+    this.cacheable(false);
+  }
 
   let out = 'export default {';
   const dirname = this.resourcePath.substr(0, this.resourcePath.lastIndexOf('/')); ;

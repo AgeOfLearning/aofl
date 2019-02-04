@@ -13,7 +13,14 @@ module: {
   rules: [
     {
       test: /language\.js$/,
-      use: '@aofl/i18n-loader'
+      use: [
+        {
+          loader: '@aofl/i18n-loader',
+          options: {
+            cache: true
+          }
+        }
+      ]
     }
   ]
 }

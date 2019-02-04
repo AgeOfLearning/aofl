@@ -1,6 +1,6 @@
 # @aofl/webcomponent-css-loader
 
-The **\@aofl/webcomponent-css-loader** A loader that shares pruned global styles between web components.
+The **\@aofl/webcomponent-css-loader** is a webpack loader that shares pruned global styles between web components.
 
 ## Getting started
 
