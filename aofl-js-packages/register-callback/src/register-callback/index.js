@@ -25,7 +25,7 @@ class RegisterCallback {
     this.callbacks.push(cb);
 
     const unsubscribe = () => {
-      if (unsubscribe.executed) return;
+      if (unsubscribe.executed) { return; }
       Object.defineProperty(unsubscribe, 'executed', {
         value: true
       });

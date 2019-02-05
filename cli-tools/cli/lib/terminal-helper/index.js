@@ -27,9 +27,8 @@ class TerminalHelper {
       cp.on('close', (err) => {
         if (err) {
           return reject(err);
-        } else {
-          return resolve();
         }
+        return resolve();
       });
     });
   }

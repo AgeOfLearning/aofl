@@ -1,5 +1,5 @@
 const config = {
-  extends: ['aofl'],
+  extends: ['eslint:recommended'],
   parser: 'babel-eslint',
   root: true,
   parserOptions: {
@@ -7,10 +7,12 @@ const config = {
     sourceType: 'module'
   },
   env: {
-    browser: true,
-    node: true,
-    mocha: true,
-    jasmine: true
+    node: true
+  },
+  rules: {
+    'no-await-in-loop': 1,
+    'no-console': 1,
+    'no-empty': [2, {allowEmptyCatch: true}]
   },
   globals: {
     getTestContainer: true,

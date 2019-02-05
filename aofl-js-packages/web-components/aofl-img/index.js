@@ -107,7 +107,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    * @param {String} src
    */
   loadImage(src) {
-    if (this.onceWithinViewport !== true) return;
+    if (this.onceWithinViewport !== true) { return; }
     this.imgSrc = src;
     this.requestUpdate();
   }

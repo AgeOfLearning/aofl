@@ -42,7 +42,7 @@ export default dedupingMixin((superClass) => {
      */
     langListener() {
       const observer = new MutationObserver((mutationList) => {
-        if (this.getAttribute('lang')) return;
+        if (this.getAttribute('lang')) { return; }
         this.__lang = mutationList[0].target.lang;
         this.requestUpdate();
       });
@@ -59,10 +59,9 @@ export default dedupingMixin((superClass) => {
     getTranslationMap(lang) {
       if (typeof this.translations !== 'undefined' && typeof this.translations[lang] === 'function') {
         return this.translations[lang]()
-        .then((langModule) => langModule.default);
-      } else {
-        return Promise.resolve({});
+          .then((langModule) => langModule.default);
       }
+      return Promise.resolve({});
     }
 
     /**

@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/i18n-auto-id-loader - added cache option
 - @aofl/component-utils - traverseParents() takes a callback function and traverses ancestors of the provided node.
 - @aofl/component-utils - findParentByAttribute() utilizez traverseParents and looks for a specific parnt containing a set of attributes.
+- eslint-config-aofl
 
 ### [Changed]
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.

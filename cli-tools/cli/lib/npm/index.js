@@ -20,7 +20,7 @@ class Npm {
   static __run(params = [], options = {}) {
     return new Promise((resolve, reject) => {
       if (typeof options.stdio === 'undefined' || options.stdio === 'inherit') {
-        console.log(chalk.cyan(`running... npm ${params.join(' ')}\n`));
+        process.stdout.write(chalk.cyan(`running... npm ${params.join(' ')}\n`) + '\n');
       }
       let res = '';
       const npm = spawn('npm', params, Object.assign({stdio: 'inherit'}, options));

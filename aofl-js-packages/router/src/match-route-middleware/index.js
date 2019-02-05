@@ -40,7 +40,7 @@ const matchBestPath = (_path, routes) => {
     }
   }
   const match = stack.shift();
-  if (!match) return null;
+  if (!match) { return null; }
   return Object.assign({}, match);
 };
 

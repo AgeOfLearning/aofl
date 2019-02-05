@@ -155,10 +155,9 @@ class AoflDrawer extends AoflElement {
   /**
    * Removes closed after drawer closes so display: none can be applied
    *
-   * @param {EventTarget} e
    * @private
    */
-  animationEndHandler(e) {
+  animationEndHandler() {
     this.transitionEndCount += 1;
     if (this.transitionEndCount === this['transition-count']) {
       this.transitionEndCount = 0;

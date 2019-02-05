@@ -1,5 +1,6 @@
+/* global workbox */
 workbox.setConfig({
-  debug: false
+  debug: false,
 });
 
 workbox.skipWaiting();

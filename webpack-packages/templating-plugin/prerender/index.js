@@ -10,7 +10,7 @@ module.exports = async (url, timeout = 0) => {
   `);
 
   await page.goto(url, {waitUntil: 'networkidle2'});
-  const str = await page.evaluate(async (timeout) => {
+  const str = await page.evaluate((timeout) => {
     const selfClosingTags = [
       'area',
       'base',
@@ -42,7 +42,7 @@ module.exports = async (url, timeout = 0) => {
     // };
 
     const tagNameWithAttributes = (elem) => {
-      if (elem instanceof Text || elem instanceof Comment) return '';
+      if (elem instanceof Text || elem instanceof Comment) { return ''; }
       let str = '<' + elem.localName;
       const attrs = Array.from(elem.attributes);
       for (let i = 0; i < attrs.length; i++) {
@@ -52,13 +52,13 @@ module.exports = async (url, timeout = 0) => {
     };
 
     const closingTag = (elem) => {
-      if (elem instanceof Text || elem instanceof Comment || selfClosingTags.indexOf(elem.localName) > -1) return '';
+      if (elem instanceof Text || elem instanceof Comment || selfClosingTags.indexOf(elem.localName) > -1) { return ''; }
       return '</' + elem.localName + '>';
     };
 
     let skipStyle = false;
 
-    replaceChildren = (elem) => {
+    const replaceChildren = (elem) => {
       let children = [];
       if (elem.tagName === 'BODY') {
         skipStyle = true;
@@ -91,7 +91,7 @@ module.exports = async (url, timeout = 0) => {
       return str;
     };
 
-    return await new Promise((resolve) => {
+    return new Promise((resolve) => {
       const getContent = () => {
         setTimeout(() => {
           return resolve((tagNameWithAttributes(document.body) + replaceChildren(document.body) +

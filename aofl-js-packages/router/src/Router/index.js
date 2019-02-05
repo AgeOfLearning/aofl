@@ -43,8 +43,8 @@ class Router {
     };
 
     this
-    .beforeEach(matchRouteMiddleware(this))
-    .after(redirectMiddleware(this));
+      .beforeEach(matchRouteMiddleware(this))
+      .after(redirectMiddleware(this));
 
     this.removeListener = this.listen();
   }
@@ -154,9 +154,9 @@ class Router {
       };
       if (path !== location.href.replace(location.origin, '') || force) {
         this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
-        .then(() => {
-          this.applyMiddleware(request, popped);
-        });
+          .then(() => {
+            this.applyMiddleware(request, popped);
+          });
       } else {
         reject('Can\'t navigate to current path');
       }

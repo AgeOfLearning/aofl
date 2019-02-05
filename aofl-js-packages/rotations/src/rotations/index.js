@@ -1,5 +1,6 @@
 import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
+const EXPIRE_90_DAYS = 7776000000;
 /**
  * Produces an updated route config based on a rotation config
  * @summary rotations
@@ -20,7 +21,7 @@ class Rotations {
     this.routeConfig = Object.assign({}, routeConfig);
     this.rotationConfig = Object.assign({}, rotationConfig);
     this.rotationConditions = Object.assign({}, rotationConditions);
-    this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, 7776000000); // expires in 90 days
+    this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, EXPIRE_90_DAYS); // expires in 90 days
   }
 
   /**
@@ -101,10 +102,10 @@ class Rotations {
     let rotationIds = [];
     let selectedRotationId = null;
     return new Promise((resolve, reject) => {
-      rotationIds = this.rotationConfig['page_rotations'][route.path];
+      rotationIds = this.rotationConfig.page_rotations[route.path];
       if (rotationIds) {
         for (let i = 0; i < rotationIds.length; i++) {
-          promises.push(this.qualifies(this.rotationConfig['rotation_id_keyname_map'][rotationIds[i]]));
+          promises.push(this.qualifies(this.rotationConfig.rotation_id_keyname_map[rotationIds[i]]));
         }
         Promise.all(promises).then((results) => {
           for (let i = 0; i < results.length; i++) {
@@ -129,7 +130,7 @@ class Rotations {
    */
   chooseWeightedVariant(selectedRotationId) {
     let selectedRotation;
-    const versions = this.createVersionRanges(this.rotationConfig['rotation_versions'][selectedRotationId]);
+    const versions = this.createVersionRanges(this.rotationConfig.rotation_versions[selectedRotationId]);
     const randomVal = Math.round(Math.random()*100);
     for (let i = 0; i < versions.length; i++) {
       if ((randomVal < versions[i].range) || (i + 1 === versions.length)) {
@@ -204,8 +205,8 @@ class Rotations {
    *
    * @return {Promise} resolves to a route configuration Array of route objects
    */
-  async getRoutes() {
-    return new Promise((resolve, reject) => {
+  getRoutes() {
+    return new Promise((resolve) => {
       if (window.aofljsConfig && window.aofljsConfig.prerender) { // @todo: find better solution
         return resolve(this.routeConfig.routes);
       }
@@ -232,10 +233,10 @@ class Rotations {
             routeConfig = this.replaceRoute(routeConfig, rotationId, route.path);
             pushRoutes(routeConfig);
           })
-          .catch((e) => {
+            .catch(() => {
             // no matching rotation, pass on, also catches errors
-            pushRoutes(routeConfig);
-          });
+              pushRoutes(routeConfig);
+            });
         }
       };
       pushRoutes(routeConfig);

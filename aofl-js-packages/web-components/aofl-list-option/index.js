@@ -82,9 +82,9 @@ class AoflListOption extends AoflElement {
   }
 
   /**
-   * @param {Event} e
+   *
    */
-  mouseenterCallback(e) {
+  mouseenterCallback() {
     this.focus();
   }
 

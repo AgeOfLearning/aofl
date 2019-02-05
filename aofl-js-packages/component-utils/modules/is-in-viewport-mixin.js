@@ -78,7 +78,7 @@ const isInViewportMixin = (superClass) => {
         } else {
           break;
         }
-      };
+      }
 
       window.addEventListener('resize', this.checkInViewport, true);
       for (let i = 0; i < this.trackScrollHosts.length; i++) {
@@ -106,9 +106,7 @@ const isInViewportMixin = (superClass) => {
      * @param {Boolean} newValue
      * @param {Boolean} oldValue
      */
-    withinViewportUpdated(newValue, oldValue) {
-
-    }
+    withinViewportUpdated() {}
 
     /**
      * When stopiIsInViewportCheck() is invoked it removes the event listeners and stops invoking
@@ -133,7 +131,7 @@ const isInViewportMixin = (superClass) => {
     disconnectedCallback(...args) {
       this.stopIsInViewportCheck();
       super.disconnectedCallback(...args);
-    };
+    }
   }
 
   return IsInViewportClass;

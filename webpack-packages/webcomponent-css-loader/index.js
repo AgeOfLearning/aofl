@@ -28,11 +28,10 @@ module.exports = async function(source) {
     this.cacheable(false);
   }
 
-  const resourcePath = this.resourcePath;
-  const cssFileName = resourcePath.substr(resourcePath.lastIndexOf(path.sep) + 1);
+  const cssFileName = this.resourcePath.substr(this.resourcePath.lastIndexOf(path.sep) + 1);
   const templateName = cssFileName.replace('css', 'js');
-  const templatePath = resourcePath.replace(cssFileName, templateName);
-  const indexPath = resourcePath.replace(cssFileName, 'index.js');
+  const templatePath = this.resourcePath.replace(cssFileName, templateName);
+  const indexPath = this.resourcePath.replace(cssFileName, 'index.js');
 
   const globalStylesExists = fs.existsSync(options.path);
   const templateFileExists = fs.existsSync(templatePath);
@@ -60,7 +59,7 @@ module.exports = async function(source) {
           const message = messages[i];
           if (typeof message.type === 'string' && message.type === 'dependency') {
             this.addDependency(message.file);
-          };
+          }
         }
       }
     };
@@ -69,33 +68,33 @@ module.exports = async function(source) {
     if (globalStylesExists) {
       const globalStyles = fs.readFileSync(options.path, {encoding: 'utf-8'});
       const globalCss = await postcss()
-      .use(atImport({
-        root: path.dirname(options.path)
-      }))
-      .use(url({
-        url: 'rebase'
-      }))
-      .process(globalStyles.toString(), {
-        from: options.path,
-        to: resourcePath,
-        map: false
-      });
+        .use(atImport({
+          root: path.dirname(options.path)
+        }))
+        .use(url({
+          url: 'rebase'
+        }))
+        .process(globalStyles.toString(), {
+          from: options.path,
+          to: this.resourcePath,
+          map: false
+        });
 
       addDependencies(globalCss.messages);
       combinedCss += globalCss.css;
     }
 
     const localCss = await postcss()
-    .use(atImport({
-      root: path.dirname(resourcePath)
-    }))
-    .use(url({
-      url: 'rebase'
-    }))
-    .process(source.toString(), {
-      from: resourcePath,
-      map: false
-    });
+      .use(atImport({
+        root: path.dirname(this.resourcePath)
+      }))
+      .use(url({
+        url: 'rebase'
+      }))
+      .process(source.toString(), {
+        from: this.resourcePath,
+        map: false
+      });
 
     addDependencies(localCss.messages);
     combinedCss += localCss.css;

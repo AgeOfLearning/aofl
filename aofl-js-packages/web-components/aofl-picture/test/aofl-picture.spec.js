@@ -17,13 +17,12 @@ describe('@aofl/web-components/aofl-picture', function() {
         return 'https://via.placeholder.com/500x250';
       } else if (windowWidth <= 700) {
         return 'https://via.placeholder.com/700x350';
-      } else {
-        return 'https://via.placeholder.com/1000x500';
       }
+      return 'https://via.placeholder.com/1000x500';
     };
   });
 
-  beforeEach(async function() {
+  beforeEach(function() {
     this.testContainer = getTestContainer();
     render(html`
       <aofl-picture id="BasicPicture">
@@ -128,17 +127,14 @@ describe('@aofl/web-components/aofl-picture', function() {
 
   it('should not update source when window size changes to 200px and sources-disabled', async function() {
     try {
-      await new Promise(async (resolve) => {
-        const element = this.sourcesDisabledElement;
-        window.parent.document.querySelector('iframe').width = 200;
+      const element = this.sourcesDisabledElement;
+      window.parent.document.querySelector('iframe').width = 200;
 
-        element.requestUpdate();
-        await element.updateComplete;
-        const src = element.querySelector('aofl-img').src;
+      element.requestUpdate();
+      await element.updateComplete;
+      const src = element.querySelector('aofl-img').src;
 
-        expect(src).to.be.equal(this.getSource(1000));
-        resolve();
-      });
+      expect(src).to.be.equal(this.getSource(1000));
     } catch (e) {
       return Promise.reject(e);
     }

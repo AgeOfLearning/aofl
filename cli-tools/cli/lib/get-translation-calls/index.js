@@ -44,7 +44,7 @@ function parseParamAsObject(tokens) {
   do {
     const token = tokens.pop();
     if (typeof parseResult === 'undefined') {
-      parseResult = parseSupportedIdentifiers(tokens, token);
+      const parseResult = parseSupportedIdentifiers(tokens, token);
       if (typeof parseResult !== 'undefined' && parseResult.method === '_r') {
         params[key] = {target: parseResult.id};
         param = '';
@@ -70,7 +70,7 @@ function parseParamAsObject(tokens) {
   } while (blockCount > 0);
 
   return params;
-};
+}
 
 const addCallToMap = (callObject) => {
   if (typeof translationCalls[callObject.id] !== 'undefined') {
@@ -228,7 +228,7 @@ function parseSupportedIdentifiers(tokens, token) {
       return supportedIdentifiers[token.value](tokens);
     }
   }
-};
+}
 
 const parse = (tokens) => {
   while (tokens.length) {

@@ -19,7 +19,7 @@ describe('@aofl/aofl-validate/is-equal', function() {
       }
 
       requestUpdate() {}
-    };
+    }
     this.ValidationTest = ValidationTest;
   });
 

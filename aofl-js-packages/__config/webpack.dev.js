@@ -17,9 +17,7 @@ const config = merge(common('development'), {
     maxEntrypointSize: 500000,
     maxAssetSize: 500000
   },
-  plugins: [
-    new HardSourceWebpackPlugin()
-  ]
+  plugins: [new HardSourceWebpackPlugin()]
 });
 
 module.exports = config;

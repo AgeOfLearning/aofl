@@ -29,7 +29,7 @@ const scripts = {
 
 /* istanbul ignore next */
 const load = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let polyfillsLoaded = false;
     const whenLoadedFns = [];
     let allowUpgrades = false;
@@ -60,16 +60,14 @@ const load = () => {
         flushFn && flushFn();
       };
       return Promise.all(
-      whenLoadedFns.map(function(fn) {
-        return fn instanceof Function ? fn() : fn;
-      })
+        whenLoadedFns.map((fn) => {
+          return fn instanceof Function ? fn() : fn;
+        })
       )
-      .then(function() {
-        done();
-      })
-      .catch(function(err) {
-        console.error(err);
-      });
+        .then(() => {
+          done();
+        })
+        .catch((err) => {});
     };
 
     const ready = () => {
@@ -90,7 +88,7 @@ const load = () => {
     window.WebComponents = window.WebComponents || {
       ready: false,
       _batchCustomElements: batchCustomElements,
-      waitFor: function(waitFn) {
+      waitFor(waitFn) {
         if (!waitFn) {
           return;
         }
@@ -140,22 +138,22 @@ const load = () => {
         if (document.readyState === 'loading') {
           // make sure custom elements are batched whenever parser gets to the injected script
           scripts[replacement]()
-          .then(function() {
-            window.WebComponents._batchCustomElements();
-            ready();
-          })
-          .catch(function(e) {
-            throw e;
+            .then(() => {
+              window.WebComponents._batchCustomElements();
+              ready();
+            })
+            .catch((e) => {
+              throw e;
             // throw new Error('Could not load polyfill bundle ' + replacement);
-          });
+            });
         } else {
           scripts[replacement]()
-          .then(function() {
-            asyncReady();
-          })
-          .catch(function(e) {
-            throw new Error('Could not load async polyfill bundle ' + replacement);
-          });
+            .then(() => {
+              asyncReady();
+            })
+            .catch(() => {
+              throw new Error('Could not load async polyfill bundle ' + replacement);
+            });
         }
       }
     } else {
@@ -165,7 +163,7 @@ const load = () => {
       } else {
         // this script may come between DCL and load, so listen for both, and cancel load listener if DCL fires
         window.addEventListener('load', ready);
-        window.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('DOMContentLoaded', () => {
           window.removeEventListener('load', ready);
           ready();
         });

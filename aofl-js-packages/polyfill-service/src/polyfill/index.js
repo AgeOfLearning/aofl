@@ -25,7 +25,7 @@ class Polyfill {
     const modulePath = property.split('.');
     let obj = window;
     for (let i = 0; i < modulePath.length; i++) {
-      if (typeof obj[modulePath[i]] === 'undefined') return false;
+      if (typeof obj[modulePath[i]] === 'undefined') { return false; }
       obj = obj[modulePath[i]];
     }
     return true;
@@ -65,13 +65,13 @@ class Polyfill {
     }
 
     return Promise.all(promises)
-    .then(webcomponentsLoader)
-    .then(/* istanbul ignore next */() => {
-      document.dispatchEvent(new CustomEvent('WebComponentsReady', {
-        bubbles: true
-      }));
-    });
+      .then(webcomponentsLoader)
+      .then(/* istanbul ignore next */() => {
+        document.dispatchEvent(new CustomEvent('WebComponentsReady', {
+          bubbles: true
+        }));
+      });
   }
-};
+}
 
 export default Polyfill;

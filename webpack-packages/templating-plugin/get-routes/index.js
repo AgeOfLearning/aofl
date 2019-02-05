@@ -7,7 +7,7 @@ const DEFAULT_ROTATION = 'routes';
 const TRAILING_PATH_SEP_REGEX = new RegExp('\\' + path.sep + '$');
 const TRAILING_SLASH_REGEX = /\/$/;
 const LEADING_SLASH_REGEX = /^\//;
-const ALT_ROUTES_REGEX = /\/routes-([^\/]+?)\//;
+const ALT_ROUTES_REGEX = /\/routes-([^/]+?)\//;
 
 const getRoutePatterns = (pattern) => {
   if (pattern instanceof RegExp) {
@@ -93,7 +93,7 @@ module.exports = async (options, context = process.cwd()) => {
       routeConfig: {
         resolve: `() => import('./${routePath}')`,
         rotation,
-        path: (options.publicPath.replace(TRAILING_SLASH_REGEX, '') + '/' + routeInfo.url.replace(LEADING_SLASH_REGEX, '').replace(TRAILING_SLASH_REGEX, '') + '/').replace(new RegExp('\/\/', 'g'), '/'),
+        path: (options.publicPath.replace(TRAILING_SLASH_REGEX, '') + '/' + routeInfo.url.replace(LEADING_SLASH_REGEX, '').replace(TRAILING_SLASH_REGEX, '') + '/').replace(new RegExp('//', 'g'), '/'),
         dynamic: routeInfo.dynamic,
         title: routeInfo.title,
         meta: routeInfo.meta,

@@ -5,9 +5,9 @@ import {CacheManager} from '@aofl/cache-manager';
 describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
   beforeEach(function() {
     sinon.stub(window, 'fetch')
-    .returns(Promise.resolve({
-      json: () => Promise.resolve({})
-    }));
+      .returns(Promise.resolve({
+        json: () => Promise.resolve({})
+      }));
 
     this.config = {
       apis: {
@@ -85,7 +85,7 @@ describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
       config.apis.apins.developmentVariables = void 0;
       const resourceEnumerateInstance = new ResourceEnumerate('development');
       config.developmentConfig = () => Promise.resolve({
-        default(ns, {host}) {
+        default() {
           return 'stageHost';
         }
       });

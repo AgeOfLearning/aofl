@@ -87,7 +87,7 @@ class TemplatingPlugin {
     };
 
     LOADER_OPTIONS.test = (this.options.loaderOptions.path || new RegExp(path.resolve(__dirname, 'routes.config.js'))
-    .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`));
+      .replace(new RegExp('\\' + path.sep, 'g'), `\\${path.sep}`));
 
     LOADER_OPTIONS.use.options.configs.push(this.options);
     LOADER_OPTIONS.use.options.cache = this.options.loaderOptions.cache || true;

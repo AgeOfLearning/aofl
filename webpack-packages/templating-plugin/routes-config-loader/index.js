@@ -1,7 +1,7 @@
 const getRoutes = require('../get-routes');
 const {getOptions} = require('loader-utils');
 
-module.exports = async function(source) {
+module.exports = async function() {
   const callback = this.async();
   const options = getOptions(this);
 
@@ -32,7 +32,8 @@ module.exports = async function(source) {
 
     content = '/* eslint-disable */\nexport default ' + JSON.stringify(routeConfigObj, null, 2).replace(resolveRegex, (match, p1, p2) => {
       return p1 + p2;
-    }).replace(quoteRegex, '\'') + ';';
+    })
+      .replace(quoteRegex, '\'') + ';';
 
     callback(null, content);
   } catch (e) {

@@ -48,13 +48,13 @@ class BuildProject {
   /**
    *
    */
-  async init() {
+  init() {
     const compiler = webpack(this.config.webpack);
     const errorHandler = (err, stats) => {
       if (err) {
-        console.error(err.stack || err);
+        process.stdout.write((err.stack || err) + '\n');
         if (err.details) {
-          console.error(err.details);
+          process.stdout.write(err.details + '\n');
         }
         return;
       }
@@ -62,24 +62,22 @@ class BuildProject {
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
-        console.error(info.errors);
+        process.stdout.write(info.errors + '\n');
       }
 
       if (stats.hasWarnings()) {
-        console.warn(info.warnings);
+        process.stdout.write(info.warnings + '\n');
       }
     };
 
-    await new Promise((resolve, reject) => {
-      if (this.watch) {
-        compiler.watch({
-          aggregateTimeout: 300,
-          poll: void(0)
-        }, this.debug? errorHandler: () => {});
-      } else {
-        compiler.run(this.debug? errorHandler: () => {});
-      }
-    });
+    if (this.watch) {
+      compiler.watch({
+        aggregateTimeout: 300,
+        poll: void(0)
+      }, this.debug? errorHandler: () => {});
+    } else {
+      compiler.run(this.debug? errorHandler: () => {});
+    }
   }
 }
 

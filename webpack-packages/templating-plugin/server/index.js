@@ -34,10 +34,10 @@ module.exports = (fileMap, rootPath, rootUri) => {
   app.use(serve);
 
   const listen = (app, port, ip)=> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const server = app.listen(port, ip, (err) => { // start app
         if (err) {
-          console.trace(err);
+          process.stdout.write(err + '\n');
           return process.exit(1);
         }
         // console.log('App listening on %s:%s', ip, port);

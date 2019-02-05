@@ -13,13 +13,13 @@ const funcs = {
     let camelized = [words[0]];
     if (words.length > 1) {
       camelized = camelized
-      .concat(
-      words
-      .slice(1)
-      .map(function capitilizeStr(str) {
-        return funcs.capitilize(str);
-      }
-      ));
+        .concat(
+          words
+            .slice(1)
+            .map(function capitilizeStr(str) {
+              return funcs.capitilize(str);
+            }
+            ));
     }
 
     return camelized.join('');

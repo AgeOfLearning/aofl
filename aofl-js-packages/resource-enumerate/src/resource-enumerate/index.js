@@ -25,7 +25,7 @@ class ResourceEnumerate {
    */
   constructor(environment) {
     this.environment = environment;
-    this.ready = new Promise((resolve) => this.resolve = resolve);
+    this.ready = new Promise((resolve) => { this.resolve = resolve; });
     this.middlewareInstance = new Middleware('before', 'after');
     this.apiRequestInstance = new ApiRequest();
   }
@@ -129,7 +129,7 @@ class ResourceEnumerate {
       reResp = re;
     } else {
       reResp = this.apiRequestInstance
-      .request(api.url, '', apiNs, fromCache, ResourceEnumerate.NAMESPACE);
+        .request(api.url, '', apiNs, fromCache, ResourceEnumerate.NAMESPACE);
     }
 
     return reResp.then((response) => this.middlewareInstance.iterateMiddleware(request, 'after', response));
@@ -150,19 +150,19 @@ class ResourceEnumerate {
     }
 
     return configFn()
-    .then((configModule) => {
-      for (const apiNs in this.apis) {
+      .then((configModule) => {
+        for (const apiNs in this.apis) {
         /* istanbul ignore next */
-        if (!this.apis.hasOwnProperty(apiNs)) continue;
-        const api = this.apis[apiNs];
-        let variables = {};
-        if (typeof api[this.environment + 'Variables'] === 'function') {
-          variables = api[this.environment + 'Variables'].call(null);
+          if (!this.apis.hasOwnProperty(apiNs)) continue;
+          const api = this.apis[apiNs];
+          let variables = {};
+          if (typeof api[this.environment + 'Variables'] === 'function') {
+            variables = api[this.environment + 'Variables'].call(null);
+          }
+          api.url = configModule.default(apiNs, variables);
         }
-        api.url = configModule.default(apiNs, variables);
-      }
-    });
+      });
   }
-};
+}
 
 export default ResourceEnumerate;

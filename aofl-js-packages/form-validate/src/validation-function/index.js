@@ -84,14 +84,14 @@ class ValidationFunction {
 
     this.pending = true;
     promise
-    .then((valid) => {
-      if (this.cachedPromise === promise) { // latest update
-        this.valid = valid;
-        this.pending = false;
-        this.resolve();
-        this.target.requestUpdate();
-      }
-    });
+      .then((valid) => {
+        if (this.cachedPromise === promise) { // latest update
+          this.valid = valid;
+          this.pending = false;
+          this.resolve();
+          this.target.requestUpdate();
+        }
+      });
   }
 
   /**

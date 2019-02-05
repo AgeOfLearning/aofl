@@ -22,8 +22,8 @@ class Middleware {
    * @param {String} hook
    */
   use(callback, hook) {
-    if (typeof callback !== 'function') throw new Error('callback must be a function');
-    if (typeof this.middleware[hook] === 'undefined') throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`);
+    if (typeof callback !== 'function') { throw new Error('callback must be a function'); }
+    if (typeof this.middleware[hook] === 'undefined') { throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`); }
     this.middleware[hook].push({
       callback,
       hook
@@ -61,7 +61,7 @@ class Middleware {
    * @return {Promise}
    */
   iterateMiddleware(request, hook, response = null) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const iterator = this.getMiddlewareIterator(hook);
       let mw = null;
       const next = (/* istanbul ignore next */response = null) => {

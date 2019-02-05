@@ -41,109 +41,127 @@ const getCssRules = (build) => {
     exclude: build.css.exclude,
     issuer: build.css.issuer,
     enforce: build.css.enforce,
-    use: [{
-      loader: 'css-loader',
-      options: {
-        sourceMap: false,
-        importLoaders: build.css.component.length + 1,
-        ...build.css.cssLoader
-      }
-    },
-    {
-      loader: 'postcss-loader',
-      options: {
-        sourceMap: false,
-        cache: build.cache,
-        ...build.css.postCssLoader
-      }
-    },
-    ...build.css.component.reduce((acc, item) => {
-      acc.push({
-        loader: '@aofl/webcomponent-css-loader',
+    use: [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: false,
+          importLoaders: build.css.component.length + 1,
+          ...build.css.cssLoader
+        }
+      },
+      {
+        loader: 'postcss-loader',
         options: {
           sourceMap: false,
           cache: build.cache,
-          path: item
+          ...build.css.postCssLoader
         }
-      });
-      return acc;
-    }, [])]
+      },
+      ...build.css.component.reduce((acc, item) => {
+        acc.push({
+          loader: '@aofl/webcomponent-css-loader',
+          options: {
+            sourceMap: false,
+            cache: build.cache,
+            path: item
+          }
+        });
+        return acc;
+      }, [])
+    ]
   };
 
   return css;
 };
 
-getEsLintRules = (build) => {
-  if (build.eslint === false) return [];
+const getEsLintRules = (build) => {
+  if (build.eslint === false) { return []; }
 
-  return [{
-    test: build.eslint.test,
-    include: build.eslint.include,
-    exclude: build.eslint.exclude,
-    issuer: build.eslint.issuer,
-    enforce: build.eslint.enforce,
-    use: [{
-      loader: 'eslint-loader',
-      options: {
-        cache: build.cache,
-        ...build.eslint.options
-      }
-    }]
-  }];
+  return [
+    {
+      test: build.eslint.test,
+      include: build.eslint.include,
+      exclude: build.eslint.exclude,
+      issuer: build.eslint.issuer,
+      enforce: build.eslint.enforce,
+      use: [
+        {
+          loader: 'eslint-loader',
+          options: {
+            cache: build.cache,
+            ...build.eslint.options
+          }
+        }
+      ]
+    }
+  ];
 };
 
 const getJsRules = (build) => {
-  return [{
-    test: build.js.test,
-    include: build.js.include,
-    exclude: build.js.exclude,
-    issuer: build.js.issuer,
-    enforce: build.js.enforce,
-    use: [{
-      loader: 'babel-loader',
-      options: {
-        cacheDirectory: build.cache,
-        ...build.js.babel
-      }
-    }]
-  }];
+  return [
+    {
+      test: build.js.test,
+      include: build.js.include,
+      exclude: build.js.exclude,
+      issuer: build.js.issuer,
+      enforce: build.js.enforce,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: build.cache,
+            ...build.js.babel
+          }
+        }
+      ]
+    }
+  ];
 };
 
 const getImageRules = (build) => {
-  return [{
-    test: build.images.test,
-    include: build.images.include,
-    exclude: build.images.exclude,
-    issuer: build.images.issuer,
-    enforce: build.images.enforce,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        ...build.images.fileLoader
-      }
-    }, {
-      loader: 'img-loader',
-      options: {
-        ...build.images.imgLoader
-      }
-    }]
-  }];
+  return [
+    {
+      test: build.images.test,
+      include: build.images.include,
+      exclude: build.images.exclude,
+      issuer: build.images.issuer,
+      enforce: build.images.enforce,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            ...build.images.fileLoader
+          }
+        }, {
+          loader: 'img-loader',
+          options: {
+            ...build.images.imgLoader
+          }
+        }
+      ]
+    }
+  ];
 };
 
 const getFontsRules = (build) => {
-  return [{
-    test: build.fonts.test,
-    include: build.fonts.include,
-    exclude: build.fonts.exclude,
-    issuer: build.fonts.issuer,
-    enforce: build.fonts.enforce,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        ...build.fonts.fileLoader
-      }
-    }]
-  }];
+  return [
+    {
+      test: build.fonts.test,
+      include: build.fonts.include,
+      exclude: build.fonts.exclude,
+      issuer: build.fonts.issuer,
+      enforce: build.fonts.enforce,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            ...build.fonts.fileLoader
+          }
+        }
+      ]
+    }
+  ];
 };
 
 const getTemplatingPluginOptions = (config, cache) => {
@@ -233,9 +251,7 @@ const getConfig = (root, configObject) => {
 
   if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
     config.plugins.push(new InjectManifest(configObject.build.serviceworker));
-    config.optimization.minimizer = [
-      new TerserPlugin(configObject.build.terser)
-    ];
+    config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environmentEnumerate.TEST) {
     config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: configObject.unitTesting.maxChunks

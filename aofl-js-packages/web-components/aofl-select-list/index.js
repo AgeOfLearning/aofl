@@ -63,7 +63,7 @@ class AoflSelectList extends AoflElement {
    * @param {Event} e
    */
   focusoutCallback(e) {
-    if (e.relatedTarget && e.relatedTarget.parentNode === this) return;
+    if (e.relatedTarget && e.relatedTarget.parentNode === this) { return; }
 
     this.focusIndex = 0;
   }
@@ -73,7 +73,7 @@ class AoflSelectList extends AoflElement {
    */
   keydownCallback(e) {
     e.preventDefault();
-    if (e.keyCode === 38 || (e.shiftKey && e.keyCode == 9)) { // up arrow or shift tab
+    if (e.keyCode === 38 || (e.shiftKey && e.keyCode === 9)) { // up arrow or shift tab
       if (this.focusIndex > 0) {
         this.options[--this.focusIndex].focus();
       }

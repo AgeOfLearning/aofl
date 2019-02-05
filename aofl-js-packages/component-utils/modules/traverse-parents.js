@@ -24,7 +24,7 @@ const traverseParents = (node, cb) => {
       return parent;
     }
     return false;
-  };
+  }
 };
 
 /**
@@ -59,10 +59,8 @@ const findParent = (node, ...args) => {
  */
 const findParentByAttributes = (node, ...args) => {
   return traverseParents(node, (parent) => {
-    console.log(parent, args);
     let found = true;
     for (let i = 0; i < args.length; i++) {
-      console.log(typeof parent.hasAttribute === 'undefined', !parent.hasAttribute(args[i]));
       if (typeof parent.hasAttribute === 'undefined' || !parent.hasAttribute(args[i])) {
         found = false;
         break;

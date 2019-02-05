@@ -20,4 +20,4 @@ export function deepFreeze(source) {
   });
 
   return source;
-};
+}

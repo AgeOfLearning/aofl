@@ -14,9 +14,9 @@ describe('@aofl/api-request/src/api-request', function() {
 
   beforeEach(function() {
     sinon.stub(window, 'fetch')
-    .returns(Promise.resolve({
-      json: () => Promise.resolve({})
-    }));
+      .returns(Promise.resolve({
+        json: () => Promise.resolve({})
+      }));
     this.apiRequest = new ApiRequest();
     this.apiRequest.addFormatter('test', this.formatter);
   });
@@ -37,10 +37,10 @@ describe('@aofl/api-request/src/api-request', function() {
     });
 
     it('should return cached result', async function() {
-      const apiRequest = this.apiRequest;
+      const {request} = this.apiRequest;
       try {
-        await apiRequest.request('http://example.org', '', 'test');
-        await apiRequest.request('http://example.org', '', 'test');
+        await request('http://example.org', '', 'test');
+        await request('http://example.org', '', 'test');
 
         expect(window.fetch.calledOnce).to.be.true;
       } catch (e) {
@@ -49,10 +49,10 @@ describe('@aofl/api-request/src/api-request', function() {
     });
 
     it('should invoke fetch when cache is disabled', async function() {
-      const apiRequest = this.apiRequest;
+      const {request} = this.apiRequest;
       try {
-        await apiRequest.request('http://example.org', '', 'test');
-        await apiRequest.request('http://example.org', '', 'test', false);
+        await request('http://example.org', '', 'test');
+        await request('http://example.org', '', 'test', false);
 
         expect(window.fetch.calledTwice).to.be.true;
       } catch (e) {
@@ -62,10 +62,10 @@ describe('@aofl/api-request/src/api-request', function() {
 
     it('should invoke fetch when cache is cleared', async function() {
       try {
-        const apiRequest = this.apiRequest;
-        await apiRequest.request('http://example.org', '', 'test');
-        apiRequest.clearCache('default');
-        await apiRequest.request('http://example.org', '', 'test');
+        const {request, clearCache} = this.apiRequest;
+        await request('http://example.org', '', 'test');
+        clearCache('default');
+        await request('http://example.org', '', 'test');
 
         expect(window.fetch.calledTwice).to.be.true;
       } catch (e) {
@@ -75,9 +75,9 @@ describe('@aofl/api-request/src/api-request', function() {
 
     it('should invoke fetch when a deffirent cache namespace is used', async function() {
       try {
-        const apiRequest = this.apiRequest;
-        await apiRequest.request('http://example.org', '', 'test', true);
-        await apiRequest.request('http://example.org', '', 'test', true, 'test');
+        const {request} = this.apiRequest;
+        await request('http://example.org', '', 'test', true);
+        await request('http://example.org', '', 'test', true, 'test');
 
         expect(window.fetch.calledTwice).to.be.true;
       } catch (e) {

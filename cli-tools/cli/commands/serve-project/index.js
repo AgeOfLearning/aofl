@@ -3,17 +3,12 @@ const {loadConfig} = require('../../lib/webpack-config');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const WebpackBar = require('webpackbar');
-const chalk = require('chalk');
 const addEntries = require('webpack-dev-server/lib/utils/addEntries');
 const createDomain = require('webpack-dev-server/lib/utils/createDomain');
 const createLogger = require('webpack-dev-server/lib/utils/createLogger');
 
 const {
-  colors,
-  status,
-  version,
-  bonjour,
-  defaultTo
+  status
 } = require('webpack-dev-server/bin/utils');
 
 
@@ -73,9 +68,9 @@ class ServeProject {
 
     server.listen(port, host, (err) => {
       if (err && this.debug) {
-        console.error(err.stack || err);
+        process.stdout.write(err.stack || err + '\n');
         if (err.details) {
-          console.error(err.details);
+          process.stdout.write(err.details + '\n');
         }
         return;
       }

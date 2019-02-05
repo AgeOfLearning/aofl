@@ -9,7 +9,7 @@ describe('@aofl/web-components/aofl-element >> invalid style', function() {
       /** @return {Object} */
       render() {
         return super.render((context, html) => html``, ['']);
-      };
+      }
     }
 
     customElements.define('invalid-style-element', InvalidStyleElement);

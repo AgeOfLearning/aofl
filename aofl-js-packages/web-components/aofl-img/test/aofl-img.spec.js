@@ -45,7 +45,7 @@ describe('@aofl/web-components/aofl-img', function() {
 
     it('should not load the image when element is outside the viewport', async function() {
       await this.elementOutside.updateComplete;
-      return await new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         setTimeout(() => { // microtask
           try {
             const renderedSource = this.elementOutside.shadowRoot.querySelector('img').src;

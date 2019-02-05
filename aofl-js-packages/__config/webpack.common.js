@@ -101,9 +101,7 @@ module.exports = (mode) => {
     watchOptions: {
       ignored: [/node_modules\//]
     },
-    externals: [
-      'globalStyles'
-    ],
+    externals: ['globalStyles'],
     stats: 'minimal',
     optimization: {
       runtimeChunk: 'single',

@@ -154,14 +154,14 @@ class ValidationProperty {
     const checkPendingPromises = () => {
       const promises = Object.keys(this).map((item) => this[item].validateComplete);
       Promise.all(promises)
-      .then(() => {
-        if (this.pending) {
-          return checkPendingPromises();
-        }
+        .then(() => {
+          if (this.pending) {
+            return checkPendingPromises();
+          }
 
-        this.resolve();
-        this.validateCompleteResolved = true;
-      });
+          this.resolve();
+          this.validateCompleteResolved = true;
+        });
     };
 
     checkPendingPromises();

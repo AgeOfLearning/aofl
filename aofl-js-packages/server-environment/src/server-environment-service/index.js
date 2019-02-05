@@ -22,4 +22,4 @@ export function getServerEnvironment(devRegex, stageRegex) {
   }
 
   return environmentTypeEnumerate.PROD;
-};
+}

@@ -89,13 +89,13 @@ class UnitTestingPlugin {
       new SingleEntryPlugin(compiler.context, entryPath, entryName).apply(compiler);
     });
 
-    compiler.hooks.beforeRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
+    compiler.hooks.beforeRun.tapAsync(UnitTestingPlugin.name, (compilation, cb) => {
       // await this.cleanOutputFolder();
       // await this.createOutputFolder();
       cb(null);
     });
 
-    compiler.hooks.watchRun.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
+    compiler.hooks.watchRun.tapAsync(UnitTestingPlugin.name, (compilation, cb) => {
       this.watchMode = true;
       cb(null);
     });
@@ -107,7 +107,7 @@ class UnitTestingPlugin {
           const wctArr = wctInstalls.split('\n');
           let wctPath = '';
           if (wctArr.length > 0) {
-            wctPath = wctArr[0];
+            [wctPath] = wctArr;
             this.wctRelPath = path.dirname(path.relative(path.join(process.env.PWD, 'node_modules'), wctPath));
           }
         }
@@ -138,7 +138,7 @@ class UnitTestingPlugin {
             await steps.runTests(this.wctContext);
           }
         } else {
-          console.log(chalk.red('no tests were supplied to wct'));
+          process.stdout.write(chalk.red('no tests were supplied to wct') + '\n');
         }
       } catch (e) {
         compilation.errors.push(e);
@@ -249,7 +249,7 @@ class UnitTestingPlugin {
    *
    * @return {String}
    */
-  generateSuite(name, content, otherScripts, relPath) {
+  generateSuite(name, content, otherScripts) {
     const finalOutputPath = path.resolve(this.options.output, name + '.html');
     let template = fs.readFileSync(path.resolve(__dirname, 'templates', 'sample.html'), 'utf-8');
 

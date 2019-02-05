@@ -25,12 +25,12 @@ module.exports = (environment = 'production') => {
         };
       }
       return {
-        compilation: compilation,
+        compilation,
         webpack: compilation.getStats().toJson(),
         webpackConfig: compilation.options,
         htmlWebpackPlugin: {
           files: assets,
-          options: options
+          options
         },
         assetsMap
       };

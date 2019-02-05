@@ -20,7 +20,7 @@ class Git {
    */
   static __run(params = [], options = {}) {
     return new Promise((resolve, reject) => {
-      console.log(chalk.cyan(`running... git ${params.join(' ')}\n`));
+      process.stdout.write(chalk.cyan(`running... git ${params.join(' ')}\n`) + '\n');
       let res = '';
       const git = spawn('git', params, Object.assign({stdio: 'inherit'}, options));
 
@@ -97,17 +97,17 @@ class Git {
   quiet = false, exitCode = false, getUrl = false, sort = '', symref = false,
   refs = [], options = {}) {
     const params = ['ls-remote'];
-    if (heads) params.push('--heads');
-    if (tags) params.push('--tags');
-    if (refsFlag) params.push('--refs');
-    if (uploadPack && uploadPack !== '') params.push(`--upload-pack=${uploadPack}`);
-    if (quiet) params.push('--quiet');
-    if (exitCode) params.push('--exitCode');
-    if (getUrl) params.push('--get-url');
-    if (sort && sort !== '') params.push(`--sort=${sort}`);
-    if (symref) params.push('--symref');
+    if (heads) { params.push('--heads'); }
+    if (tags) { params.push('--tags'); }
+    if (refsFlag) { params.push('--refs'); }
+    if (uploadPack && uploadPack !== '') { params.push(`--upload-pack=${uploadPack}`); }
+    if (quiet) { params.push('--quiet'); }
+    if (exitCode) { params.push('--exitCode'); }
+    if (getUrl) { params.push('--get-url'); }
+    if (sort && sort !== '') { params.push(`--sort=${sort}`); }
+    if (symref) { params.push('--symref'); }
     params.push(repository);
-    if (refs && refs.length) params.push(...refs);
+    if (refs && refs.length) { params.push(...refs); }
 
     return Git.__run(params, options);
   }
@@ -159,7 +159,7 @@ class Git {
   static submoduleDeinit(submodulePath, force = false, options = {}) {
     const params = ['submodule', 'deinit'];
 
-    if (force) params.push('-f');
+    if (force) { params.push('-f'); }
     params.push('--');
     params.push(submodulePath);
     return Git.__run(params, options);
@@ -181,7 +181,7 @@ class Git {
     await Git.rm([submodulePath], false, true);
     await new Promise((resolve, reject) => {
       const rmPath = path.join(gitDir, '.git', 'modules', relativePath);
-      console.log(chalk.cyan(`running... rm -r ${rmPath}\n`));
+      process.stdout.write(chalk.cyan(`running... rm -r ${rmPath}\n`) + '\n');
       rimraf(rmPath, (err) => {
         if (!err) {
           resolve();
@@ -210,12 +210,12 @@ class Git {
   static rm(paths, recursive = false, force = false, cached = false, ignoreUnmatch = false,
   dryrun = false, quiet = false, options = {}) {
     const params = ['rm'];
-    if (force) params.push('-f');
-    if (dryrun) params.push('-n');
-    if (recursive) params.push('-r');
-    if (cached) params.push('--cached');
-    if (ignoreUnmatch) params.push('--ignore-unmatch');
-    if (quiet) params.push('--quiet');
+    if (force) { params.push('-f'); }
+    if (dryrun) { params.push('-n'); }
+    if (recursive) { params.push('-r'); }
+    if (cached) { params.push('--cached'); }
+    if (ignoreUnmatch) { params.push('--ignore-unmatch'); }
+    if (quiet) { params.push('--quiet'); }
     params.push('--');
     params.push(...paths);
 

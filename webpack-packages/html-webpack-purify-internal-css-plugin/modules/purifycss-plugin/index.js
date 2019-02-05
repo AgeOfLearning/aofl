@@ -54,25 +54,25 @@ class PurifycssPlugin {
    */
   apply(compiler) {
     compiler.hooks.compilation.tap(PurifycssPlugin.name,
-    (compilation) => {
-      compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing
-      .tapAsync(PurifycssPlugin.name + '#befeHtmlGeneration', async (data, cb) => {
-        const document = parse5.parse(data.html);
+      (compilation) => {
+        compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing
+          .tapAsync(PurifycssPlugin.name + '#befeHtmlGeneration', async (data, cb) => {
+            const document = parse5.parse(data.html);
 
-        if (this.options.level !== 'none') {
-          const styles = await getStyleNodes(document);
-          let html = '';
-          if (this.options.level === 'auto') {
-            html = getStlyeFreeHtml(document, styles);
-          }
+            if (this.options.level !== 'none') {
+              const styles = await getStyleNodes(document);
+              let html = '';
+              if (this.options.level === 'auto') {
+                html = getStlyeFreeHtml(document, styles);
+              }
 
-          await purifyStyles(html, styles, this.options.purifyCSS);
-        }
+              await purifyStyles(html, styles, this.options.purifyCSS);
+            }
 
-        data.html = parse5.serialize(document);
-        cb(null, data);
+            data.html = parse5.serialize(document);
+            cb(null, data);
+          });
       });
-    });
   }
 }
 

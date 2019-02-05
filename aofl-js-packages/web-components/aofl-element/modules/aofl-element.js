@@ -29,7 +29,7 @@ class AoflElement extends LitElement {
 
     return html`${s} ${template(this, html)}`;
   }
-};
+}
 
 export {
   AoflElement

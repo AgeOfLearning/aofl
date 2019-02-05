@@ -4,7 +4,7 @@ const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
 const {getOptions} = require('loader-utils');
 
-module.exports = function(content, map, meta) {
+module.exports = function() {
   const options = Object.assign({
     cache: true,
   }, getOptions(this));
@@ -16,7 +16,7 @@ module.exports = function(content, map, meta) {
   }
 
   let out = 'export default {';
-  const dirname = this.resourcePath.substr(0, this.resourcePath.lastIndexOf('/')); ;
+  const dirname = this.resourcePath.substr(0, this.resourcePath.lastIndexOf('/'));
   const files = glob.sync(['translations_*.json'], {
     cwd: dirname
   });

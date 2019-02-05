@@ -63,22 +63,22 @@ describe('@aofl/rotations/rotation', function() {
 
     it('"getWeightsTotal()" should return the correct sum of weights', function() {
       const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const total = rotations.getWeightsTotal(this.rotationsConfig['rotation_versions']['1']);
+      const total = rotations.getWeightsTotal(this.rotationsConfig.rotation_versions['1']);
       expect(total).to.equal(4);
     });
 
     it('"createVersionRanges" should create the correct weight based pct ranges', function() {
       const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const versions = rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
+      const versions = rotations.createVersionRanges(this.rotationsConfig.rotation_versions['1']);
       expect(versions[0].range).to.equal(75);
       expect(versions[1].range).to.equal(100);
     });
 
     it('"createVersionRanges" should not mutate versions argument', function() {
       const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const originalVersions = Object.assign({}, this.rotationsConfig['rotation_versions']['1']);
-      rotations.createVersionRanges(this.rotationsConfig['rotation_versions']['1']);
-      expect(this.rotationsConfig['rotation_versions']['1']).to.eql(originalVersions);
+      const originalVersions = Object.assign({}, this.rotationsConfig.rotation_versions['1']);
+      rotations.createVersionRanges(this.rotationsConfig.rotation_versions['1']);
+      expect(this.rotationsConfig.rotation_versions['1']).to.eql(originalVersions);
     });
 
     it('"chooseWeightedVariant()" should select rotations based on weighted distribution', function() {
@@ -87,7 +87,7 @@ describe('@aofl/rotations/rotation', function() {
       const limit = 500;
       for (let i = 0; i < limit; i++) {
         const version = rotations.chooseWeightedVariant('1');
-        if (version === '1000') routesCount++;
+        if (version === '1000') { routesCount++; }
       }
       expect(routesCount/limit).to.be.within(0.65, 0.85);
     });
@@ -315,7 +315,7 @@ describe('@aofl/rotations/rotation', function() {
                 resolve();
               });
             } else {
-              if (rotations) rotations.clearCache();
+              if (rotations) { rotations.clearCache(); }
               rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
 
               const p = rotations.getRoutes();

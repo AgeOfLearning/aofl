@@ -4,7 +4,7 @@ const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
 const {getOptions} = require('loader-utils');
 
-module.exports = function(content, map, meta) {
+module.exports = function(content) {
   const options = Object.assign({
     cache: true,
   }, getOptions(this));

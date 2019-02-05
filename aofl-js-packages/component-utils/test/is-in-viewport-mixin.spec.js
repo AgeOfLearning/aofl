@@ -44,7 +44,7 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
 
   afterEach(function() {
     this.firstWithinViewport.restore();
-    this.withinViewportUpdated.restore(); ;
+    this.withinViewportUpdated.restore();
     this.firstWithinViewportOutside.restore();
     this.withinViewportUpdatedOutside.restore();
 
@@ -75,79 +75,79 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
     });
 
     it('should invoke withinViewPortUpdated with newVal=true, oldVal=undefined',
-    async function() {
-      try {
-        await this.element.updateComplete;
-        expect(this.withinViewportUpdated.withArgs(true, void 0).calledOnce).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          await this.element.updateComplete;
+          expect(this.withinViewportUpdated.withArgs(true, void 0).calledOnce).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should invoke withinViewPortUpdated with newVal=false, oldVal=true when element scrolls outside of visible area along the x axis',
-    async function() {
-      try {
-        await this.element.updateComplete;
-        this.element.style.left = '-10000px';
-        window.dispatchEvent(new CustomEvent('scroll'));
-        await this.element.updateComplete;
-        expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          await this.element.updateComplete;
+          this.element.style.left = '-10000px';
+          window.dispatchEvent(new CustomEvent('scroll'));
+          await this.element.updateComplete;
+          expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should invoke withinViewPortUpdated with newVal=false, oldVal=true when element scrolls outside of visible area along the y axis',
-    async function() {
-      try {
-        await this.element.updateComplete;
-        this.element.style.top = '-10000px';
+      async function() {
+        try {
+          await this.element.updateComplete;
+          this.element.style.top = '-10000px';
 
-        window.dispatchEvent(new CustomEvent('scroll'));
-        await this.element.updateComplete;
-        expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+          window.dispatchEvent(new CustomEvent('scroll'));
+          await this.element.updateComplete;
+          expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should invoke withinViewPortUpdated with newVal=false, oldVal=true when element scrolls outside of visible area along both x and y axis',
-    async function() {
-      try {
-        await this.element.updateComplete;
+      async function() {
+        try {
+          await this.element.updateComplete;
 
-        this.element.style.left = '-10000px';
-        this.element.style.top = '-10000px';
+          this.element.style.left = '-10000px';
+          this.element.style.top = '-10000px';
 
-        window.dispatchEvent(new CustomEvent('scroll'));
-        await this.element.updateComplete;
-        expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+          window.dispatchEvent(new CustomEvent('scroll'));
+          await this.element.updateComplete;
+          expect(this.withinViewportUpdated.withArgs(false, true).called).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should invoke withinViewPortUpdated once for each time element changes from being in the visible area to not',
-    async function() {
-      try {
-        await this.element.updateComplete;
+      async function() {
+        try {
+          await this.element.updateComplete;
 
-        this.element.style.left = '-10000px';
-        this.element.style.top = '-10000px';
-        window.dispatchEvent(new CustomEvent('scroll')); ;
+          this.element.style.left = '-10000px';
+          this.element.style.top = '-10000px';
+          window.dispatchEvent(new CustomEvent('scroll'));
 
-        await this.element.updateComplete;
+          await this.element.updateComplete;
 
-        this.element.style.left = '0';
-        this.element.style.top = '0';
-        window.dispatchEvent(new CustomEvent('scroll')); ;
+          this.element.style.left = '0';
+          this.element.style.top = '0';
+          window.dispatchEvent(new CustomEvent('scroll'));
 
-        await this.element.updateComplete;
-        expect(this.withinViewportUpdated.calledThrice).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+          await this.element.updateComplete;
+          expect(this.withinViewportUpdated.calledThrice).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
   });
 
   context('Element is outside of the viewport on page load', function() {
@@ -170,30 +170,30 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
     });
 
     it('should invoke withinViewPortUpdated with newVal=false, oldVal=undefined',
-    async function() {
-      try {
-        await this.elementOutside.updateComplete;
-        expect(this.withinViewportUpdatedOutside.withArgs(false, void 0).calledOnce).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          await this.elementOutside.updateComplete;
+          expect(this.withinViewportUpdatedOutside.withArgs(false, void 0).calledOnce).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should invoke withinViewPortUpdated with newVal=true, oldVal=false when element scrolls inside of visible area',
-    async function() {
-      try {
-        await this.elementOutside.updateComplete;
+      async function() {
+        try {
+          await this.elementOutside.updateComplete;
 
-        this.elementOutside.style.left = '0';
-        this.elementOutside.style.top = '0';
-        window.dispatchEvent(new CustomEvent('scroll'));
+          this.elementOutside.style.left = '0';
+          this.elementOutside.style.top = '0';
+          window.dispatchEvent(new CustomEvent('scroll'));
 
-        await this.elementOutside.updateComplete;
+          await this.elementOutside.updateComplete;
 
-        expect(this.withinViewportUpdatedOutside.withArgs(true, false).called).to.be.true;
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+          expect(this.withinViewportUpdatedOutside.withArgs(true, false).called).to.be.true;
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
   });
 });

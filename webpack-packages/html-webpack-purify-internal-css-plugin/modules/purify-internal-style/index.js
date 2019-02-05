@@ -70,7 +70,7 @@ const getStlyeFreeHtml = (document, styles) => {
 const purifyStyles = async (html, styles, options) => {
   for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       purify(html, style.value, options, (purified) => {
         style.value = purified;
         resolve();

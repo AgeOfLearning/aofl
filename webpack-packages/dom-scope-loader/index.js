@@ -5,7 +5,7 @@ const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
 
 const escapeRegExp = (str) => {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 };
 
 module.exports = function(content) {
@@ -24,11 +24,11 @@ module.exports = function(content) {
   }
 
   for (let i = 0; i < options.tags.length; i++) {
-    let match = null;
     const tag = options.tags[i];
     const tagRegex = new RegExp(`<${escapeRegExp(tag)}\\b(?:(?!dom-scope)(.|\\s))*?>`, 'g');
+    let match = tagRegex.exec(content);
     let count = 0;
-    while (match = tagRegex.exec(content)) {
+    while (match) {
       let id = uniki(`${relativePath}-${tag}-${count}`);
       let idRegex = new RegExp(escapeRegExp(id), 'g');
       while (idRegex.exec(content)) {
@@ -39,6 +39,7 @@ module.exports = function(content) {
       content = content.substring(0, match.index + tag.length + 1) + ` dom-scope="${id}"` + content.substring(match.index + tag.length + 1);
       count++;
       updated = true;
+      match = tagRegex.exec(content);
     }
   }
 

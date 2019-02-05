@@ -74,6 +74,6 @@ class MemoryStorage {
     MemoryStorage[key] = null;
     delete MemoryStorage[key];
   }
-};
+}
 
 export default MemoryStorage;

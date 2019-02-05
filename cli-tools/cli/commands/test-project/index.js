@@ -50,9 +50,9 @@ class TestProject {
     const compiler = webpack(this.config.webpack);
     const errorHandler = (err, stats) => {
       if (err) {
-        console.error(err.stack || err);
+        process.stdout.write(err.stack || err + '\n');
         if (err.details) {
-          console.error(err.details);
+          process.stdout.write(err.details + '\n');
         }
         return;
       }
@@ -60,11 +60,11 @@ class TestProject {
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
-        console.error(info.errors);
+        process.stdout.write(info.errors + '\n');
       }
 
       if (stats.hasWarnings()) {
-        console.warn(info.warnings);
+        process.stdout.write(info.warnings + '\n');
       }
     };
 

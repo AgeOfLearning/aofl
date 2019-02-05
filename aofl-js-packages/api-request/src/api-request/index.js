@@ -18,7 +18,7 @@ class ApiRequest {
    */
   static get DEFAULT_CACHE_NAMESPACE() {
     return 'ApiRequest';
-  };
+  }
 
   /**
    * Creates an instance of ApiRequest.
@@ -73,7 +73,7 @@ class ApiRequest {
     }
 
     const requestPromise = fetch(url, formatter.pack(payload))
-    .then(formatter.unpack);
+      .then(formatter.unpack);
 
     cacheManager.setItem(cacheKey, requestPromise);
     return requestPromise;

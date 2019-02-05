@@ -41,12 +41,12 @@ class Generate {
     this.dest = path.resolve(dest);
 
     if (!Generate.supportedType(type)) {
-      console.error(chalk.red(`unsupported type: ${type}`));
+      process.stdout.write(chalk.red(`unsupported type: ${type}`) + '\n');
       process.exit(1);
     }
 
     if (Generate.destExists(this.dest)) {
-      console.error(chalk.red(`target already exsits ${this.dest}`));
+      process.stdout.write(chalk.red(`target already exsits ${this.dest}`) + '\n');
       process.exit(1);
     }
   }
@@ -113,10 +113,11 @@ class Generate {
     mkdirp.sync(this.dest);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const filename = path.basename(file).replace(REPLACE_REGEX, this.name).replace(/\.sample$/, '');
+      const filename = path.basename(file).replace(REPLACE_REGEX, this.name)
+        .replace(/\.sample$/, '');
       fs.readFile(file, 'utf8', (err, data) => {
         if (err) {
-          console.log(chalk.red(err));
+          process.stdout.write(chalk.red(err) + '\n');
           return;
         }
 
@@ -126,7 +127,7 @@ class Generate {
         }, data);
 
         fs.writeFile(path.join(this.dest, filename), content, 'utf8', (err) => {
-          if (err) console.log(chalk.red(err));
+          if (err) { process.stdout.write(chalk.red(err) + '\n'); }
         });
       });
     }
@@ -137,13 +138,13 @@ class Generate {
    */
   init() {
     this.getTemplateFiles()
-    .then((files) => {
-      this.generate(files);
-      console.log(chalk.green(`${this.name} created :)`));
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+      .then((files) => {
+        this.generate(files);
+        process.stdout.write(chalk.green(`${this.name} created :)`) + '\n');
+      })
+      .catch((e) => {
+        process.stdout.write(e + '\n');
+      });
   }
 }
 

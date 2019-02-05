@@ -157,8 +157,8 @@ describe('@aofl/store/src/store', function() {
               const state = this.storeInstance.getState();
               return nextState['unit-test'].key !== state['unit-test'].key;
             },
-            method(_nextState) {
-              return new Promise((resolve, reject) => {
+            method() {
+              return new Promise((resolve) => {
                 setTimeout(() => {
                   return resolve('Async Name');
                 }, 10);
@@ -170,7 +170,7 @@ describe('@aofl/store/src/store', function() {
               const state = this.storeInstance.getState();
               return nextState['unit-test'].key !== state['unit-test'].key;
             },
-            method(_nextState) {
+            method() {
               return new Promise((resolve, reject) => {
                 setTimeout(() => {
                   return reject();

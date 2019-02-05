@@ -24,7 +24,7 @@ describe('@aofl/aofl-validate/validationMixin', function() {
       }
 
       requestUpdate() {}
-    };
+    }
     this.ValidationTest = ValidationTest;
   });
 
@@ -32,7 +32,7 @@ describe('@aofl/aofl-validate/validationMixin', function() {
     this.testForm = new this.ValidationTest();
   });
 
-  it('should have a property \'form\`', function() {
+  it('should have a property \'form\'', function() {
     expect(this.testForm).to.have.property('form');
   });
 
@@ -43,55 +43,55 @@ describe('@aofl/aofl-validate/validationMixin', function() {
     expect(this.testForm.validators).to.be.equal(cachedValidators);
   });
 
-  it('should have a property \'form\` with valid',
-  function() {
-    expect(this.testForm.form).to.have.property('valid', true);
-  });
+  it('should have a property \'form\' with valid',
+    function() {
+      expect(this.testForm.form).to.have.property('valid', true);
+    });
 
-  it('should have a property \'form\` with pending',
-  function() {
-    expect(this.testForm.form).to.have.property('pending', false);
-  });
+  it('should have a property \'form\' with pending',
+    function() {
+      expect(this.testForm.form).to.have.property('pending', false);
+    });
 
-  it('should have a property \'form\` with observed',
-  function() {
-    expect(this.testForm.form).to.have.property('observed', false);
-  });
+  it('should have a property \'form\' with observed',
+    function() {
+      expect(this.testForm.form).to.have.property('observed', false);
+    });
 
-  it('should have a property \'form\` with firstname',
-  function() {
-    expect(this.testForm.form).to.have.property('firstname');
-  });
+  it('should have a property \'form\' with firstname',
+    function() {
+      expect(this.testForm.form).to.have.property('firstname');
+    });
 
-  it('should have a property \'form\` with firstname with isRequired',
-  function() {
-    expect(this.testForm.form.firstname).to.have.property('isRequired');
-  });
+  it('should have a property \'form\' with firstname with isRequired',
+    function() {
+      expect(this.testForm.form.firstname).to.have.property('isRequired');
+    });
 
-  it('should have a property \'form\` with firstname with isRequired width valid',
-  function() {
-    expect(this.testForm.form.firstname.isRequired).to.have.property('valid', true);
-  });
+  it('should have a property \'form\' with firstname with isRequired width valid',
+    function() {
+      expect(this.testForm.form.firstname.isRequired).to.have.property('valid', true);
+    });
 
-  it('should have a property \'form\` with firstname with isRequired width pending',
-  function() {
-    expect(this.testForm.form.firstname.isRequired).to.have.property('pending', false);
-  });
+  it('should have a property \'form\' with firstname with isRequired width pending',
+    function() {
+      expect(this.testForm.form.firstname.isRequired).to.have.property('pending', false);
+    });
 
-  it('should have a property \'form\` with firstname with isRequired width observed',
-  function() {
-    expect(this.testForm.form.firstname.isRequired).to.have.property('observed', false);
-  });
+  it('should have a property \'form\' with firstname with isRequired width observed',
+    function() {
+      expect(this.testForm.form.firstname.isRequired).to.have.property('observed', false);
+    });
 
-  it('should have a property \'form\` with lastname',
-  function() {
-    expect(this.testForm.form).to.have.property('lastname');
-  });
+  it('should have a property \'form\' with lastname',
+    function() {
+      expect(this.testForm.form).to.have.property('lastname');
+    });
 
-  it('should have a property \'form\` with password',
-  function() {
-    expect(this.testForm.form).to.have.property('password');
-  });
+  it('should have a property \'form\' with password',
+    function() {
+      expect(this.testForm.form).to.have.property('password');
+    });
 
 
   context('invoke validate on form', function() {
@@ -185,37 +185,37 @@ describe('@aofl/aofl-validate/validationMixin', function() {
 
     // observe
     it('should have property form.firstname.isrequired.observe = true',
-    async function() {
-      try {
-        this.testForm.form.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.firstname.observe = true',
-    async function() {
-      try {
-        this.testForm.form.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.observe = true',
-    async function() {
-      try {
-        this.testForm.form.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
   });
 
   context('invoke validate on form.firstname', function() {
@@ -296,37 +296,37 @@ describe('@aofl/aofl-validate/validationMixin', function() {
 
     // observe
     it('should have property form.firstname.isrequired.observe = true',
-    async function() {
-      try {
-        this.testForm.form.firstname.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.firstname.observe = true',
-    async function() {
-      try {
-        this.testForm.form.firstname.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.observe = false',
-    async function() {
-      try {
-        this.testForm.form.firstname.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form).to.have.property('observed', false);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form).to.have.property('observed', false);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
   });
 
   context('invoke validate on form.firstname.isRequired', function() {
@@ -384,36 +384,36 @@ describe('@aofl/aofl-validate/validationMixin', function() {
 
     // observe
     it('should have property form.firstname.isrequired.observe = true',
-    async function() {
-      try {
-        this.testForm.form.firstname.isRequired.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.isRequired.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname.isRequired).to.have.property('observed', true);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.firstname.observe = false',
-    async function() {
-      try {
-        this.testForm.form.firstname.isRequired.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form.firstname).to.have.property('observed', false);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.isRequired.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form.firstname).to.have.property('observed', false);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
 
     it('should have property form.observe = false',
-    async function() {
-      try {
-        this.testForm.form.firstname.isRequired.validate();
-        await this.testForm.form.validateComplete;
-        expect(this.testForm.form).to.have.property('observed', false);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
+      async function() {
+        try {
+          this.testForm.form.firstname.isRequired.validate();
+          await this.testForm.form.validateComplete;
+          expect(this.testForm.form).to.have.property('observed', false);
+        } catch (e) {
+          return Promise.reject(e);
+        }
+      });
   });
 });

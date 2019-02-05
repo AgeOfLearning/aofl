@@ -39,7 +39,7 @@ class InitProject {
       return [
         ...files.slice(0, index),
         ...files.slice(index + 1)
-      ]
+      ];
     }
 
     return [...files];
@@ -69,9 +69,8 @@ class InitProject {
           if (files && files.length) {
             return reject(chalk.red(`fatal: destination path ${this.target} already exists and is not an empty directory.
             `));
-          } else {
-            return resolve();
           }
+          return resolve();
         });
       });
       await fs.emptyDir(this.target);
@@ -92,13 +91,13 @@ class InitProject {
         await fs.copy(path.resolve(this.cloneDir, file), target);
       }
       await Npm.install({cwd: this.target});
-      console.log(chalk.green(`
+      process.stdout.write(chalk.green(`
 Success :)
 
   cd ${this.target} && npm start
       `));
     } catch (e) {
-      console.log(e);
+      process.stdout.write(e + '\n');
     } finally {
       await fs.remove(this.cloneDir);
     }

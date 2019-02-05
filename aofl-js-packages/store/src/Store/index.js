@@ -26,14 +26,16 @@ class Store {
     this.namespaces = {};
     this.registerCallbackInstance = new RegisterCallback();
     this.pending = {
-      any: false
+      any: false,
     };
 
     if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
       this.state = deepFreeze(this.state);
       window.aoflDevtools = window.aoflDevtools || {};
       if (!Array.isArray(window.aoflDevtools.storeInstances)) {
-        window.aoflDevtools.storeInstances = [];
+        window
+          .aoflDevtools
+          .storeInstances = [];
       }
       window.aoflDevtools.storeInstances.push(this);
     }
@@ -133,18 +135,18 @@ class Store {
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
           this.setPending(key, mutationId);
           ns[key].asyncMutations[mutationId].method(nextState)
-          .then(function(mutationId, namespace, payload) {
-            this.setPending(namespace, mutationId, false);
-            this.commit({
-              namespace,
-              mutationId,
-              payload
-            });
-          }.bind(this, mutationId, key))
-          .catch(function(mutationId, namespace) {
-            this.setPending(namespace, mutationId, false);
-            this.forceCommit();
-          }.bind(this, mutationId, key));
+            .then(function(mutationId, namespace, payload) {
+              this.setPending(namespace, mutationId, false);
+              this.commit({
+                namespace,
+                mutationId,
+                payload,
+              });
+            }.bind(this, mutationId, key))
+            .catch(function(mutationId, namespace) {
+              this.setPending(namespace, mutationId, false);
+              this.forceCommit();
+            }.bind(this, mutationId, key));
         }
       }
     }
@@ -164,13 +166,13 @@ class Store {
     for (let i = 0; i < mutations.length; i++) {
       if (typeof this.namespaces[mutations[i].namespace] === 'undefined') {
         throw new TypeError(`${mutations[i].namespace} is not a valid namespace`);
-      };
+      }
 
       const mutation = mutations[i];
       const ns = this.namespaces[mutation.namespace];
 
       nextState = Object.assign({}, nextState, {
-        [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload)
+        [ns.namespace]: ns.mutations[mutation.mutationId](nextState[ns.namespace], mutation.payload),
       });
     }
 
@@ -191,8 +193,8 @@ class Store {
     const mutations = Object.assign(generateMutations(initState), sdo.mutations);
     this.namespaces[sdo.namespace] = {
       namespace: sdo.namespace,
-      mutations: mutations,
-      asyncMutations: {}
+      mutations,
+      asyncMutations: {},
     };
 
     if (sdo.hasOwnProperty('asyncMutations')) {
@@ -204,7 +206,7 @@ class Store {
     }
 
     this.state = Object.assign({}, this.state, {
-      [sdo.namespace]: initState
+      [sdo.namespace]: initState,
     });
 
     if (Array.isArray(sdo.decorators)) {

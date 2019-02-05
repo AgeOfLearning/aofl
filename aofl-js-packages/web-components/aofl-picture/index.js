@@ -63,7 +63,7 @@ class AoflPicture extends AoflElement {
    * @param {HTMLElement} img
    */
   setImg(img) {
-    if (this.img !== null) return;
+    if (this.img !== null) { return; }
     this.img = img;
     this.defaultSrc = {
       src: this.img.src,
@@ -81,7 +81,7 @@ class AoflPicture extends AoflElement {
    * @param {String} source
    */
   addSource(source) {
-    if (typeof this['disable-sources'] !== 'undefined' && this['disable-sources'] !== 'false') return;
+    if (typeof this['disable-sources'] !== 'undefined' && this['disable-sources'] !== 'false') { return; }
     const mediaQuery = window.matchMedia(source.getAttribute('media'));
     const sourceAttributes = {
       src: source.getAttribute('srcset'),
@@ -101,7 +101,7 @@ class AoflPicture extends AoflElement {
    * @param {String} [source=this.defaultSrc]
    */
   setMediaSrc(source = this.defaultSrc) {
-    if (!this.img) return;
+    if (!this.img) { return; }
     const imgSrc = this.img.src;
 
     if (imgSrc !== source.src) {

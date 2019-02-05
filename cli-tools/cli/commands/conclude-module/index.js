@@ -60,8 +60,8 @@ class ConcludeModule {
         const index = this.config.modules.findIndex((item) => item.name === m.name);
         this.config.modules.splice(index, 1);
       } catch (e) {
-        console.log('caught');
-        console.log(e);
+        process.stdout.write('caught' + '\n');
+        process.stdout.write(e + '\n');
       }
       concludeModule();
     };
@@ -79,7 +79,7 @@ class ConcludeModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      console.log(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
+      process.stdout.write(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`) + '\n');
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;
@@ -98,12 +98,12 @@ class ConcludeModule {
     }
 
     return this.config.modules
-    .reduce((curr, item) => {
-      if (_modules.indexOf(item.name) > -1) {
-        curr.push(item);
-      }
-      return curr;
-    }, []);
+      .reduce((curr, item) => {
+        if (_modules.indexOf(item.name) > -1) {
+          curr.push(item);
+        }
+        return curr;
+      }, []);
   }
 
   /**

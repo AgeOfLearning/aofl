@@ -24,7 +24,7 @@ class SourceModule {
     this.targetPackageJson = require(path.resolve(this.cwd, 'package.json'));
     this.config = this.getConfig();
     this.modules = this.getModules(modules);
-    this.repo = modules.length === 1? repo: undefined;
+    this.repo = modules.length === 1? repo: void 0;
     this.list = list;
   }
 
@@ -33,7 +33,7 @@ class SourceModule {
    *
    * @memberof SourceModule
    */
-  async init() {
+  init() {
     if (this.list) {
       this.listModules();
       return;
@@ -69,7 +69,7 @@ class SourceModule {
               cwd: fullModulePath
             });
           } else {
-            console.log(chalk.bgYellow.black.underline(`Could not match ref ${m.ref}. Make sure to checkout correct branch/tag in ${m.localPath}`));
+            process.stdout.write(chalk.bgYellow.black.underline(`Could not match ref ${m.ref}. Make sure to checkout correct branch/tag in ${m.localPath}`) + '\n');
           }
 
           await Npm.removeDependency([m.name], m.type.flag, true);
@@ -81,23 +81,23 @@ class SourceModule {
           try {
             await Npm.installDependency([moduleLocation], m.type.flag, true);
           } catch (e) {
-            console.log(chalk.red(`Something went wrong :(`));
-            console.log(chalk.cyan(`Reverting ${m.name}...`));
+            process.stdout.write(chalk.red(`Something went wrong :(`) + '\n');
+            process.stdout.write(chalk.cyan(`Reverting ${m.name}...`) + '\n');
             await Npm.installDependency([m.name], m.type.flag, true);
             await Git.removeSubmodule(m.localPath);
             throw e;
           }
         } catch (e) {
           sourceFailed.push(m.name);
-          console.log(e);
-          console.log(chalk.red(`Could not source ${m.name}`));
+          process.stdout.write(e + '\n');
+          process.stdout.write(chalk.red(`Could not source ${m.name}`) + '\n');
           if (e.command === 'git' && e.subCommand === 'ls-remote') {
-            console.log(chalk.yellow(`Failed to talk to repo [${repo}]`));
-            console.log(chalk.yellow(`try`));
-            console.log(chalk.yellow(`\t$ aofl source ${m.name} --repo [url]\n`));
+            process.stdout.write(chalk.yellow(`Failed to talk to repo [${repo}]`) + '\n');
+            process.stdout.write(chalk.yellow(`try`) + '\n');
+            process.stdout.write(chalk.yellow(`\t$ aofl source ${m.name} --repo [url]\n\n`));
           }
         }
-      };
+      }
       addSubmodules();
     };
     addSubmodules();
@@ -113,7 +113,7 @@ class SourceModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      console.log(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`));
+      process.stdout.write(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`) + '\n');
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;
@@ -196,7 +196,7 @@ class SourceModule {
    * @memberof SourceModule
    */
   cleanPackageVersion(version) {
-    const regex = /^\D?([^\*\n~^]+)$/;
+    const regex = /^\D?([^*\n~^]+)$/;
     const matches = regex.exec(version);
     if (matches && matches.length > 1) {
       return matches[1];
@@ -234,13 +234,14 @@ class SourceModule {
    * @memberof SourceModule
    */
   getModulePagckage(moduleName) {
-    const deps = [{
-      name: 'devDependencies',
-      flag: '-D'
-    }, {
-      name: 'dependencies',
-      flag: '-S'
-    }
+    const deps = [
+      {
+        name: 'devDependencies',
+        flag: '-D'
+      }, {
+        name: 'dependencies',
+        flag: '-S'
+      }
     ];
     for (let i = 0; i < deps.length; i++) {
       if (typeof this.targetPackageJson[deps[i].name] !== 'undefined' &&
@@ -257,7 +258,7 @@ class SourceModule {
             package: packageConfig
           };
         } catch (e) {
-          console.log(e);
+          process.stdout.write(e + '\n');
         }
       }
     }
@@ -270,12 +271,12 @@ class SourceModule {
   listModules() {
     const modules = this.config.modules || [];
     for (let i = 0; i < modules.length; i++) {
-      console.log(modules[i].name + '@' + modules[i].ref);
+      process.stdout.write(modules[i].name + '@' + modules[i].ref + '\n');
     }
 
-    console.log();
-    console.log(modules.length + ' package(s) sourced');
-    console.log();
+    process.stdout.write('\n');
+    process.stdout.write(modules.length + ' package(s) sourced' + '\n');
+    process.stdout.write('\n');
   }
 }
 

@@ -9,7 +9,7 @@ describe('@aofl/web-components/aofl-element >> valid style', function() {
       /** @return {Object} */
       render() {
         return super.render((context, html) => html``, [':host {background: rgb(255, 0, 0);}', ':host {color: rgb(0, 255, 0);}']);
-      };
+      }
     }
 
     customElements.define('styled-element', StyledElement);

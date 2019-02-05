@@ -54,10 +54,10 @@ document.onreadystatechange = function documentListener() {
 
     router.after((request, response, next) => {
       response.matchedRoute.resolve()
-      .then((content) => {
-        pageContent.innerHTML = content.default;
-        next(response);
-      });
+        .then((content) => {
+          pageContent.innerHTML = content.default;
+          next(response);
+        });
     });
 
     router.after((request, response, next) => {
@@ -66,18 +66,18 @@ document.onreadystatechange = function documentListener() {
         currentPath.innerText = location.pathname || '/';
       }
       if (/about/.test(response.to)) {
-        if (response.matchedRoute.props !== undefined) {
+        if (typeof response.matchedRoute.props !== 'undefined') {
           const person = document.getElementById('person');
           const occupation = document.getElementById('occupation');
-          if (person) person.innerText = response.matchedRoute.props.person;
-          if (occupation) occupation.innerText = response.matchedRoute.props.occupation;
+          if (person) { person.innerText = response.matchedRoute.props.person; }
+          if (occupation) { occupation.innerText = response.matchedRoute.props.occupation; }
         }
       }
       next(response);
     });
 
     menu.addEventListener('click', (evt) => {
-      if (evt.target.localName !== 'a') return;
+      if (evt.target.localName !== 'a') { return; }
       router.navigate(evt.target.dataset.path);
     });
   }

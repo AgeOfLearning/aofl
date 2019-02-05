@@ -35,9 +35,9 @@ class DomScope {
 
     this.createGlobPatterns(paths);
     this.exclude = PathHelper
-    .convertToGlobPattern(exclude)
-    .concat(excludePatterns)
-    .concat(excludePattern);
+      .convertToGlobPattern(exclude)
+      .concat(excludePatterns)
+      .concat(excludePattern);
 
     this.directories = null;
     this.domScopes = {};
@@ -69,31 +69,33 @@ class DomScope {
       ignore: this.exclude,
       nodir: true
     })
-    .then((files) => {
-      this.files = files;
-      return files;
-    })
-    .catch((err) => {
-      console.log(chalk.red(err));
-      process.exit(err.errno);
-    });
+      .then((files) => {
+        this.files = files;
+        return files;
+      })
+      .catch((err) => {
+        process.stdout.write(chalk.red(err) + '\n');
+        process.exit(err.errno);
+      });
   }
 
   /**
    * @return {Promise}
    */
   validateDomScopes() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       for (let i = 0; i < this.files.length; i++) {
-        let match = null;
         const content = fs.readFileSync(this.files[i], {encoding: 'utf-8'});
-        while (match = domScopeRegex.exec(content)) {
+        let match = domScopeRegex.exec(content);
+        while (match) {
           const ds = match[1];
           if (typeof this.domScopes[ds] !== 'undefined') {
             this.domScopes[ds].push(this.files[i]);
           } else {
             this.domScopes[ds] = [this.files[i]];
           }
+
+          match = domScopeRegex.exec(content);
         }
       }
       resolve(this.domScopes);
@@ -123,13 +125,13 @@ class DomScope {
       }
 
       if (duplicatesFound) {
-        console.log(chalk.red('Duplicates dom-scope ids were found'));
-        console.log(table.toString());
+        process.stdout.write(chalk.red('Duplicates dom-scope ids were found') + '\n');
+        process.stdout.write(table.toString() + '\n');
       } else {
-        console.log(chalk.green('No duplicates found :)'));
+        process.stdout.write(chalk.green('No duplicates found :)') + '\n');
       }
     } catch (e) {
-      console.log(e);
+      process.stdout.write(e + '\n');
     }
   }
 }

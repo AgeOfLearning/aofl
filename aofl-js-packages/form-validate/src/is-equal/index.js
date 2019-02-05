@@ -14,7 +14,7 @@
  */
 const isEqual = (propName) => {
   return function isEqualValidator(value) {
-    if (typeof this.target[propName] === 'undefined') return false;
+    if (typeof this.target[propName] === 'undefined') { return false; }
     return this.target[propName] === value;
   };
 };

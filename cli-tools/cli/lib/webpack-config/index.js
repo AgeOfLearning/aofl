@@ -7,13 +7,13 @@ const defaults = require('./__config/defaults');
 const defaultsDeep = require('lodash.defaultsdeep');
 
 
-const loadConfig = (configPath, sauce = false) => {
+const loadConfig = (configPath) => {
   const absConfigPath = path.resolve(configPath);
   let aoflConfig = {};
   try {
     aoflConfig = require(absConfigPath);
   } catch (e) {
-    console.log(chalk.yellow('Bootstraping application using default settings :)'));
+    process.stdout.write(chalk.yellow('Bootstraping application using default settings :)') + '\n');
   }
 
   const root = aoflConfig.root || path.dirname(configPath);
