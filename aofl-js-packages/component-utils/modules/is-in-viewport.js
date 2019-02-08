@@ -12,7 +12,7 @@
  * @memberof module:aofl-js/component-utils-package
  * @return {Boolean}
  */
-const isInViewPort = (node, widthThreshold = 0, heightThreshold = 0) => {
+const isInViewport = (node, widthThreshold = 0, heightThreshold = 0) => {
   const {top, right, bottom, left} = node.getBoundingClientRect();
   const vWidth = window.innerWidth;
   const vHeight = window.innerHeight;
@@ -23,4 +23,6 @@ const isInViewPort = (node, widthThreshold = 0, heightThreshold = 0) => {
     left < (vWidth + wThreshold) && top < (vHeight + hThreshold);
 };
 
-export default isInViewPort;
+export {
+  isInViewport
+};

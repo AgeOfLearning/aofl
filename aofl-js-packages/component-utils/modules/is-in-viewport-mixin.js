@@ -1,6 +1,6 @@
-import isInViewport from '../is-in-viewport';
+import {isInViewport} from './is-in-viewport';
 
-export default (superClass) => {
+const isInViewportMixin = (superClass) => {
   /**
    * Mixes the superClass with functions necessary to detect if the element is within the visible
    * area of the page.
@@ -11,9 +11,9 @@ export default (superClass) => {
    *
    * @requires module:aofl-js/component-utils-package/src/is-in-viewport
    */
-  class IsInViewport extends superClass {
+  class IsInViewportClass extends superClass {
     /**
-     * Creates an instance of IsInViewport.
+     * Creates an instance of IsInViewportClass.
      * @param {*} args
      */
     constructor(...args) {
@@ -136,6 +136,9 @@ export default (superClass) => {
     };
   }
 
-  return IsInViewport;
+  return IsInViewportClass;
 };
 
+export {
+  isInViewportMixin
+};

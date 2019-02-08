@@ -26,6 +26,14 @@ connectedCallback() {
 ```
 
 ## Methods
+### `traverseParents()`
+Finds a parent component which has all the matching attributes
+
+#### Arguments
+| Name        | Type        | Description                                      |
+|-------------|-------------|--------------------------------------------------|
+| node        | HTMLElement | The child component                              |
+| ...args     | String      | Attribute names that must be found on the parent |
 
 ### `findParent()`
 Finds a parent component which matches the method signature provided
@@ -35,6 +43,16 @@ Finds a parent component which matches the method signature provided
 |-------------|-------------|-----------------------------------------------|
 | node        | HTMLElement | The child component                           |
 | ...args     | String      | Method names that must be found on the parent |
+
+### `findParentByAttributes()`
+Finds a parent component which has all the matching attributes
+
+#### Arguments
+| Name        | Type        | Description                                      |
+|-------------|-------------|--------------------------------------------------|
+| node        | HTMLElement | The child component                              |
+| ...args     | String      | Attribute names that must be found on the parent |
+
 
 ### `isInViewport()`
 Check whether or not the supplied element is within the visible area of the screen. The threshold values are multipliers of their respective dimension. 0 means the exact viewport dimensions and .5 means viewport + half of viewport.
