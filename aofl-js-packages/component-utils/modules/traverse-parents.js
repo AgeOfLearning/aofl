@@ -23,8 +23,8 @@ const traverseParents = (node, cb) => {
     if (cb(parent)) {
       return parent;
     }
-    return false;
   }
+  return false;
 };
 
 /**
@@ -38,6 +38,7 @@ const traverseParents = (node, cb) => {
 const findParent = (node, ...args) => {
   return traverseParents(node, (parent) => {
     let found = true;
+
     for (let i = 0; i < args.length; i++) {
       if (typeof parent[args[i]] === 'undefined') {
         found = false;

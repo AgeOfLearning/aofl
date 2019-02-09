@@ -22,10 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/i18n-loader - added cache option
 - @aofl/i18n-auto-id-loader - added cache option
 - @aofl/component-utils - traverseParents() takes a callback function and traverses ancestors of the provided node.
-- @aofl/component-utils - findParentByAttribute() utilizez traverseParents and looks for a specific parnt containing a set of attributes.
+- @aofl/component-utils - findParentByAttribute() utilizes traverseParents and looks for a specific parnt containing a set of attributes.
 - eslint-config-aofl
 
 ### [Changed]
+- Updated LitElement to 2.0.1
+- Updated lit-html to 1.0.0
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
 - @aofl/router - match-route-middleware caches the response after matching the route instead of the route.
 - @aofl/web-components/aofl-element export an object containing AoflElement and all lit-element exports
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
+- Fixed bugs introduced by refactoring and linting
 - @aofl/router - fixed request from link
 - @aofl/web-components/aofl-img - Delay checkInViewport by a microtask to fix issue with images not loading when aofl-img is a child of another custom component.
 - @aofl/cache-manager - getCollection updates storedKeys before returning the collection in case it changed within the context of another document.

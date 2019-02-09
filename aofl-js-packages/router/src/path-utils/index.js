@@ -9,7 +9,7 @@
 /**
  * @memberof PathUtils
  */
-const DYNAMIC_PATH_REGEX = /:([^\\s]*)(\/?)/g;
+const DYNAMIC_PATH_REGEX = /:([^/\s]*)(\/?)/g;
 const CLEAN_PATH_REGEX = /^([^#?\s]+)/;
 const TRAILING_SLASH_REGEX = /\/$/;
 
@@ -44,7 +44,7 @@ class PathUtils {
     return {
       regex,
       parse(path) {
-        if (keys.length === 0) { return {}; }
+        if (keys.length === 0) return {};
         const matches = regex.exec(path);
         return keys.reduce((acc, key, index) => {
           acc[key] = matches[index + 1];
@@ -75,7 +75,7 @@ class PathUtils {
    * @return {String}
    */
   static removeTrailingSlash(str) {
-    if (str === '/') { return str; }
+    if (str === '/') return str;
     return str && str.replace(TRAILING_SLASH_REGEX, '');
   }
 

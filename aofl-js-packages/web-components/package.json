@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@aofl/component-utils": "^2.0.0-alpha.1",
-    "@polymer/lit-element": "0.6.5",
-    "lit-element": "^2.0.0-rc.5"
+    "lit-element": "^2.0.1"
   }
 }

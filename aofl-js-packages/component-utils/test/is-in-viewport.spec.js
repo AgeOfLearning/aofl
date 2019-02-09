@@ -1,6 +1,6 @@
 /* eslint no-invalid-this: "off" */
-import isInViewport from '../src/is-in-viewport';
-import {html} from '@polymer/lit-element';
+import {isInViewport} from '../modules/is-in-viewport';
+import {html} from 'lit-element';
 import {render} from 'lit-html';
 
 describe('@aofl/component-utils/src/is-in-viewport', function() {

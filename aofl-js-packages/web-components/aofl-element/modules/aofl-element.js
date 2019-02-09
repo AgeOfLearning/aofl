@@ -6,7 +6,7 @@
  * @requires polymer/lit-element:LitElement
  * @requires polymer/lit-element:html
  */
-import {LitElement, html} from '@polymer/lit-element';
+import {LitElement, html} from 'lit-element';
 
 /**
  * Base class for all aofl-js elements.

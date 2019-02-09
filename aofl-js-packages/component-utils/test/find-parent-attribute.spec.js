@@ -1,19 +1,25 @@
 /* eslint-disable */
-import {findParent} from '../modules/traverse-parents';
+import {findParentByAttributes} from '../modules/traverse-parents';
 import {AoflElement} from '@aofl/web-components/aofl-element';
 import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils', function() {
-  context('findParent()', function() {
+  context('findParentByAttribute()', function() {
     before(function() {
       class ParentComp extends AoflElement {
         constructor() {
           super();
+          this.count = 0;
+        }
+        static get properties() {
+          return {
+            count: {type: Number}
+          }
         }
         static get is() {
-          return 'find-parent-parent-comp';
+          return 'find-parent-parent-attribute-comp';
         }
-        increment() {}
+
         render() {
           return super.render((context, html) => html`<slot></slot>`);
         }
@@ -24,7 +30,7 @@ describe('@aofl/component-utils', function() {
           super();
         }
         static get is() {
-          return 'find-parent-child-comp';
+          return 'find-parent-attribute-child-comp';
         }
         render() {
           return super.render((context, html) => html``);
@@ -38,25 +44,26 @@ describe('@aofl/component-utils', function() {
     beforeEach(function() {
       this.testContainer = getTestContainer();
       render(html`
-        <find-parent-parent-comp>
-          <find-parent-child-comp></find-parent-child-comp>
-        </find-parent-parent-comp>
+        <find-parent-parent-attribute-comp my-attribute>
+          <find-parent-attribute-child-comp></find-parent-attribute-child-comp>
+        </find-parent-parent-attribute-comp>
       `, this.testContainer);
 
-      this.parentElement = this.testContainer.querySelector('find-parent-parent-comp');
-      this.childElement = this.parentElement.querySelector('find-parent-child-comp');
+      this.parentElement = this.testContainer.querySelector('find-parent-parent-attribute-comp');
+      this.childElement = this.parentElement.querySelector('find-parent-attribute-child-comp');
     });
 
     afterEach(function() {
       cleanTestContainer(this.testContainer);
     });
 
-    it('Should find the parent with specific functions', function () {
-      expect(findParent(this.childElement, 'increment')).to.not.be.false;
+    it('Should find the parent', function () {
+      expect(findParentByAttributes(this.childElement, 'my-attribute')).to.not.be.false;
     });
 
+
     it('Should not find parent with signature and throw error', function() {
-      expect(findParent(this.childElement, 'not-found')).to.be.false;
+      expect(findParentByAttributes(this.childElement, 'not-my-attribute')).to.be.false;
     });
   });
 });

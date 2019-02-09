@@ -37,47 +37,47 @@ describe('@aofl/router/router', function() {
     beforeEach(function() {
       const routeConfig = [
         {
-          'resolve': () => fetch('./routes/home/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/home'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
-          'path': '/about/'
+          'path': '/about'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/:user/title/:title'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/:user'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/:user/profile'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/:user/:title'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/:user/profileAfterDynamic'
         },
         {
-          'resolve': () => fetch('./routes/about/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/about/team'
         },
         {
-          'resolve': () => fetch('./routes/login/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/login'
         }
@@ -92,75 +92,57 @@ describe('@aofl/router/router', function() {
     });
 
     it('Should match "/home" route and navigate to it', async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.after((request, response, next) => {
-            expect(response.matchedRoute).to.have.property('path', '/home')
-            resolve();
-          });
-          this.router.navigate('/home');
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          expect(response.matchedRoute).to.have.property('path', '/home')
+          resolve();
         });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+        console.log(this.router);
+        this.router.navigate('/home');
+      });
     });
 
     it('Should have matchedRoute on routerInstance', async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.after((request, response, next) => {
-            expect(this.router.currentRoute.matchedRoute).to.have.property('path', '/home')
-            resolve();
-          });
-          this.router.navigate('/home');
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          expect(this.router.currentRoute.matchedRoute).to.have.property('path', '/home')
+          resolve();
         });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+        this.router.navigate('/home');
+      });
     });
 
-    it('Should match dynamic "/about/mike" route and navigate to it', async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.after((request, response, next) => {
-            expect(response.matchedRoute).to.have.property('path', '/about/:user')
-            resolve();
-          });
-          this.router.navigate('/about/mike');
+    it('Should match dynamic "/about/mike/" route and navigate to it', async function() {
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          console.log(response);
+          expect(response.matchedRoute).to.have.property('path', '/about/:user')
+          resolve();
         });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+        this.router.navigate('/about/mike');
+      });
     });
 
     it('Should match static "/about/team" route and navigate to it event when there is /about/:user',
     async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.after((request, response, next) => {
-            expect(response.matchedRoute).to.have.property('path', '/about/team');
-            resolve();
-          });
-          this.router.navigate('/about/team');
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          expect(response.matchedRoute).to.have.property('path', '/about/team');
+          resolve();
         });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+        this.router.navigate('/about/team');
+      });
     });
 
     it('Should match static "/about/team?hello=world" route and navigate to it event when there is /about/:user',
     async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.after((request, response, next) => {
-            expect(response.matchedRoute).to.have.property('path', '/about/team')
-            resolve();
-          });
-          this.router.navigate('/about/team?hello=world');
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          expect(response.matchedRoute).to.have.property('path', '/about/team')
+          resolve();
         });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+        this.router.navigate('/about/team?hello=world');
+      });
     });
 
     it('Should match nested dynamic "/about/mike/title/programmer" route and navigate to it', async function() {
@@ -307,7 +289,7 @@ describe('@aofl/router/router', function() {
     beforeEach(function() {
       const routeConfig = [
         {
-          'resolve': () => fetch('./routes/home/index.js'),
+          'resolve': () => Promise.resolve(),
           'rotation': 'routes',
           'path': '/home'
         }

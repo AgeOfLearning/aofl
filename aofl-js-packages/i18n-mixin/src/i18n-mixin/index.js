@@ -1,5 +1,5 @@
 import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin';
-import {html} from '@polymer/lit-element';
+import {html} from 'lit-element';
 import md5 from 'tiny-js-md5';
 
 const REPLACE_REGEX = /%%?r(\d+)(?:%|::.*?%%)/g;

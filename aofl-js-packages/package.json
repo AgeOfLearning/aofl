@@ -87,10 +87,10 @@
     "@aofl/web-components": "file:web-components",
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.2",
-    "@polymer/lit-element": "0.6.5",
     "@webcomponents/webcomponentsjs": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
-    "lit-html": "1.0.0-rc.1",
+    "lit-element": "^2.0.1",
+    "lit-html": "^1.0.0",
     "weakmap-polyfill": "^2.0.0"
   }
 }
