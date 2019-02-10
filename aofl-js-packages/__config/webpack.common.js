@@ -51,7 +51,7 @@ module.exports = (mode) => {
         },
         {
           test: /\.js$/,
-          exclude: /node_modules\/(?!@aofl|lit-element|lit-html).*/,
+          exclude: /node_modules\/(?!@aofl|@polymer|lit-element|lit-html).*/,
           use: {
             loader: 'babel-loader',
             options: {
