@@ -141,16 +141,18 @@ class Router {
    * @param {String} path
    * @param {Boolean} force
    * @param {Boolean} popped
+   * @param {Object} meta
    * @return {Promise}
    */
-  navigate(path, force = false, popped = false) {
+  navigate(path, force = false, popped = false, meta = {}) {
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       const request = {
         to: path,
         from: this.currentRoute? this.currentRoute.to: document.referrer,
         routes: this.config.routes,
-        popped
+        popped,
+        meta
       };
       if (path !== location.href.replace(location.origin, '') || force) {
         this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))

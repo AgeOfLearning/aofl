@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/component-utils - traverseParents() takes a callback function and traverses ancestors of the provided node.
 - @aofl/component-utils - findParentByAttribute() utilizes traverseParents and looks for a specific parnt containing a set of attributes.
 - eslint-config-aofl
+- @aofl/router - Added an additional parameter "meta" to `router.navigate()` method that gets added to the request object.
 
 ### [Changed]
 - Updated LitElement to 2.0.1

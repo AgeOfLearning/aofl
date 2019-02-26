@@ -55,6 +55,6 @@ none
 | Name | Arguments  | Description                  |
 | ---- | ---------- | ---------------------------- |
 | init | `config[Object]` | Initialize the router with the router configuration object |
-| navigate | `path[String]`, `force[Boolean]`  | performs path match and applies middleware |
+| navigate | `path[String]`, `force[Boolean]`, `popped[Boolean]`, `meta[Object]`  | performs path match and applies middleware |
 
 \*\* See middelware hooks for middleware methods

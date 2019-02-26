@@ -6,8 +6,8 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Router from './src/Router';
-import routerInstance from './src/router-instance';
+import Router from './modules/Router';
+import routerInstance from './modules/router-instance';
 
 export {
   Router,
