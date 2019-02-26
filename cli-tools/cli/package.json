@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,11 +19,11 @@
     "aofl": "./bin/aofl.js"
   },
   "dependencies": {
-    "@aofl/html-webpack-purify-internal-css-plugin": "^1.4.1",
-    "@aofl/i18n-loader": "^1.4.1",
-    "@aofl/templating-plugin": "^2.0.0-alpha.1",
+    "@aofl/html-webpack-purify-internal-css-plugin": "^2.0.0-alpha.5",
+    "@aofl/i18n-loader": "^2.0.0-alpha.5",
+    "@aofl/templating-plugin": "^2.0.0-alpha.5",
     "@aofl/unit-testing-plugin": "^1.4.2",
-    "@aofl/webcomponent-css-loader": "^2.0.0-alpha.4",
+    "@aofl/webcomponent-css-loader": "^2.0.0-alpha.5",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/plugin-proposal-decorators": "^7.3.0",

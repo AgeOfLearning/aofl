@@ -1,6 +1,6 @@
 {
   "name": "@aofl/store",
-  "version": "2.0.0-alpha.4",
+  "version": "2.0.0-alpha.5",
   "description": "Centralized state management for aofljs applications",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@aofl/object-utils": "^1.4.1",
-    "@aofl/register-callback": "^1.4.1"
+    "@aofl/object-utils": "^2.0.0-alpha.5",
+    "@aofl/register-callback": "^2.0.0-alpha.5"
   }
 }

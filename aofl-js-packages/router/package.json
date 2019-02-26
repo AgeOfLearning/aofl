@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.5",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,6 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "@aofl/middleware": "^1.4.1"
+    "@aofl/middleware": "^2.0.0-alpha.5"
   }
 }
