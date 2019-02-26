@@ -15,8 +15,8 @@ $ npm i -S @aofl/router
 | Name         | Arguments                     | Description                  |
 | ------------ | ----------------------------- | ---------------------------- |
 | before       |  fn[Function]  | Executes before a route has even been matched. Middleware here should be any prep work that needs to happen before a route begins to resolve. It will note be provided a matched route at this point. |
-| beforeEach   |  fn[Function]  | Exectues after all "before" middleware. At this point a `matchedRoute` will be available in the `response` object passed to the middleware callback. Redirects can occur here. |
-| afterEach    |  fn[Function]  | Exectues after all "beforeEach" middleware. Again a `matchedRoute` will be available in the `response` object passed to the middleware callback. The response body may also indicate a redirected route from a `beforeEach` middeleware; this allows afterEach middleware to act on that information. No redirects however, are allowed at this point. So any changes to `redirect.to` will be ignored. |
+| beforeEach   |  fn[Function]  | Executes after all "before" middleware. At this point a `matchedRoute` will be available in the `response` object passed to the middleware callback. Redirects can occur here. |
+| afterEach    |  fn[Function]  | Executes after all "beforeEach" middleware. Again a `matchedRoute` will be available in the `response` object passed to the middleware callback. The response body may also indicate a redirected route from a `beforeEach` middleware; this allows afterEach middleware to act on that information. No redirects however, are allowed at this point. So any changes to `redirect.to` will be ignored. |
 | after        |  fn[Function]  | Middleware here executes after the route has been updated in the browser. At least one middleware function is required here to call the `resolve |
 
 #### Middleware fn signature
@@ -57,4 +57,4 @@ none
 | init | `config[Object]` | Initialize the router with the router configuration object |
 | navigate | `path[String]`, `force[Boolean]`, `popped[Boolean]`, `meta[Object]`  | performs path match and applies middleware |
 
-\*\* See middelware hooks for middleware methods
+\*\* See middleware hooks for middleware methods

@@ -14,15 +14,15 @@ aofl --help
 aofl source
 `);
   })
-  .command('init <path>', 'Initializes an aofl project')
+  .command('init <path>', 'Initializes an AofL JS project')
   .command('source <moduleName>', 'Download an npm module into your project')
   .command('conclude <moduleName>', 'conclude module')
-  .command('g [type] [name]', 'scoffold component')
+  .command('g [type] [name]', 'scaffold component')
   .command('i18n <path>', 'Generates translation.json based on provided pattern and scoped by the presence of an i18n directory anywhere in the project.')
   .command('dom-scope [path]', 'validate generated dom-scope')
-  .command('build', 'Builds your aofl project.')
+  .command('build', 'Builds your AofL JS project.')
   .command('test', 'Runs unit tests')
-  .command('serve', 'Builds and servers your aofl project.');
+  .command('serve', 'Builds and servers your AofL JS project.');
 
 program
   .parse(process.argv);

@@ -1,6 +1,6 @@
 # @aofl/cli
 
-`@aofl/cli` is a command line tool that provides some essential tools to help the develpoment process of aofl-js apps. It supports scaffolding new projects and components, generating .pot files for i18n, and probably it's most useful feature is, allowing the programmers to source (clone into the project) installed node modules, update them and reinstall from npm once the updates have been merged and deployed to npm.
+`@aofl/cli` is a command line tool that provides some essential tools to help the development process of aofl-js apps. It supports scaffolding new projects and components, generating .pot files for i18n, and probably it's most useful feature is, allowing the programmers to source (clone into the project) installed node modules, update them and reinstall from npm once the updates have been merged and deployed to npm.
 
 ## Installation
 We prefer to install `@aofl/cli` at project level and use it through `npm run ...`.
@@ -30,7 +30,7 @@ You can use the help command at program level and at command level.
 #    init <path>            Initializes an aofl project
 #    source <moduleName>    Download an npm module into your project
 #    conclude <moduleName>  conclude module
-#    g [type] [name]        scoffold component
+#    g [type] [name]        scaffold component
 #    i18n <moduleName>      Generates .pot files from source
 #    dom-scope [path]       validate generated dom-scope
 #    help [cmd]             display help for [cmd]
@@ -85,8 +85,8 @@ Repo can be used to initialize an application from any repo. You can create your
 #  Examples:
 #
 #    aofl help init
-#    aofl init path/to/project ## generate a barebone aofl project
-#    aofl init --base doc ## generate a documentation project just like @aofl compononets example projects
+#    aofl init path/to/project ## generate a bare bone aofl project
+#    aofl init --base doc ## generate a documentation project just like @aofl components example projects
 ```
 
 ## g
@@ -101,9 +101,9 @@ Type is always required and it denotes the type of the component. `c` and `mixin
 #### name
 Name can be used to specify the where we want to create the new component and it's name. The default value is the current working directory and it can be omitted.
 
-Consider `$ aofl g c js/my-component`. This will create a componont in the js directory relative to the current directory (`./js/my-component/{index.js, template.js, index.css}`). I will create js if it doesn't already exist.
+Consider `$ aofl g c js/my-component`. This will create a component in the js directory relative to the current directory (`./js/my-component/{index.js, template.js, index.css}`). I will create js if it doesn't already exist.
 
-The base name `my-component` is components tag name and also camelcased and used as the class name.
+The base name `my-component` is components tag name and also camelCased and used as the class name.
 
 Generated ./js/my-component/index.js file...
 ```javascript
@@ -158,7 +158,7 @@ This command checks the project files and reports any duplicated dom-scope attri
 ```
 
 ## source & conclude
-There's no easy way to modify installed node modules when we find bugs or need to add functionality. The source command enables us to clone an installed node moudule into our project as a git submodule and links it back to the node_modules folder. Hence, all our imports continue working as before.
+There's no easy way to modify installed node modules when we find bugs or need to add functionality. The source command enables us to clone an installed node module into our project as a git submodule and links it back to the node_modules folder. Hence, all our imports continue working as before.
 
 Once we source a module we can cut a new branch, introduce our modifications and send a pull request to the maintainer. We can commit the submodule with our code and push it to the repo and even push our changes to production.
 
@@ -177,7 +177,7 @@ In addition to cloning the package repo aofl source tries to match the installed
 Optionally you can specify a version or a git reference as part of the module name. E.g. `$ aofl source @aofl/web-components@1.0.0`.
 
 #### repo
-Sometimes automatic sourcing of a module fails. This could be due to missing information in the package.json or the program cannot connect to the specifed repo. Or we would like to clone from a forked copy of a module. The repo option allows us to specify a repo for a single module.
+Sometimes automatic sourcing of a module fails. This could be due to missing information in the package.json or the program cannot connect to the specified repo. Or we would like to clone from a forked copy of a module. The repo option allows us to specify a repo for a single module.
 
 `$ aofl source @aofl/web-components --repo git@github.com:AgeOfLearning/aofl.git`
 

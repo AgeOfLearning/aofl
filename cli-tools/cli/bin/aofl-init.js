@@ -11,8 +11,8 @@ program
   Examples:
 
     aofl help init
-    aofl init path/to/project ${chalk.dim('## generate a barebone aofl project')}
-    aofl init --base doc ${chalk.dim('## generate a documentation project just like @aofl compononets example projects')}
+    aofl init path/to/project ${chalk.dim('## generate a bare bone aofl project')}
+    aofl init --base doc ${chalk.dim('## generate a documentation project just like @aofl components example projects')}
 `);
   })
   .parse(process.argv);

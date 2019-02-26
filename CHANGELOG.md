@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/i18n-loader - added cache option
 - @aofl/i18n-auto-id-loader - added cache option
 - @aofl/component-utils - traverseParents() takes a callback function and traverses ancestors of the provided node.
-- @aofl/component-utils - findParentByAttribute() utilizes traverseParents and looks for a specific parnt containing a set of attributes.
+- @aofl/component-utils - findParentByAttribute() utilizes traverseParents and looks for a specific parent containing a set of attributes.
 - eslint-config-aofl
 - @aofl/router - Added an additional parameter "meta" to `router.navigate()` method that gets added to the request object.
 
@@ -102,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fixed typo in documentation
 - aofljs-packages
   - store
-    - Push store instances to window.aoflDevtools.storeInstances, when window.aoflDevtools exsists or the app runs in development mode, instead of exposing a global variable window.storeInstance.
+    - Push store instances to window.aoflDevtools.storeInstances, when window.aoflDevtools exists or the app runs in development mode, instead of exposing a global variable window.storeInstance.
 
 ### [Deprecated]
 
@@ -247,7 +247,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed error functions. Next expect an error object or null as the first argument.
 - webpack-packages/unit-testing-plugin
   - removed istanbul plugin from default list
-  - moved coverage report assignement to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
+  - moved coverage report assignment to WCT to the top of the test file to fix fatal WCT error when a tests throws a fatal error.
 - webpack-packages/webcomponent-css-loader
   - removed logs
 
@@ -287,7 +287,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - aofl-js-packages
   - upgraded lit-element to 0.6.2
   - moved tests to root of each module
-  - transfered documentation examples to stackblitz and removed documentation projects
+  - transferred documentation examples to stackblitz and removed documentation projects
   - Updated jsdoc comments and new jsdoc theme
 - aofl-js-packages/i18n-mixin
   - Refactored to cover all requirements from the translators
@@ -409,7 +409,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Fixes reject case in navigate method
   - router.navigate resolve after redirects
 - unit-testing-plugin
-  - run inital unit test once when watch mode enabled
+  - run initial unit test once when watch mode enabled
   - clean coverage report between runs
 
 ### [Security]
@@ -431,7 +431,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - documentation
   - unit testing
 - polyfill-service
-  - added and refactored webpcomponents loader for dynamic import
+  - added and refactored webcomponents-loader for dynamic import
   - documentation
   - unit testing
   - Refactored to static class
@@ -539,11 +539,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - templating-plugin
   - removed child compiler from templating plugin
 - unit-testing-plugin
-  - removed hardcoded browser options
+  - removed hard coded browser options
 
 ### [Fixed]
 - rotation
-  - compatiblility with unit-testing
+  - compatibility with unit-testing
 - AoflElement
   - fixed css rendering for firefox
 
@@ -554,7 +554,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0-beta.23] - 2018-08-16
 
-Features:
+### [Added]
 
 - parent-dep-mixin
   - added
@@ -568,7 +568,7 @@ Features:
   - aofl-drawer
     - refactored
 
-Bugfixes:
+### [Fixed]
 
 - unit-testing-plugin
   - replaces istanbul plugin with wct-istanbul
