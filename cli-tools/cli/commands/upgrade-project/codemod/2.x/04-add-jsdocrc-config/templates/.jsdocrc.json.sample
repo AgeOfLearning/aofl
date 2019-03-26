@@ -1,0 +1,21 @@
+{
+  "source": {
+    "include": ".",
+    "includePattern": "\\.js$",
+    "excludePattern": "(node_modules/|api-docs|__build|__build_tests|coverage)"
+  },
+  "opts": {
+    "template": "node_modules/@aofl/jsdoc-template",
+    "encoding": "utf8",
+    "destination": "api-docs/",
+    "recurse": true,
+    "verbose": true
+  },
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

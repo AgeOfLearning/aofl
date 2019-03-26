@@ -79,13 +79,16 @@ class Npm {
    * @return {Promise}
    * @memberof Npm
    */
-  static installDependency(moduleNames, type = '-D', force = false, options = {}) {
+  static installDependency(moduleNames, type = '-D', force = false, exact = false, options = {}) {
     if (!Array.isArray(moduleNames) && moduleNames.length === 0) {
       return Promise.reject(new Error('you need to pass modules to installDependency'));
     }
     const params = ['i', type, ...moduleNames];
     if (force) {
       params.push('-f');
+    }
+    if (exact) {
+      params.push('-E');
     }
     return Npm.__run(params, options);
   }

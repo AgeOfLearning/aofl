@@ -1,5 +1,5 @@
 const config = {
-  extends: ['eslint:recommended'],
+  extends: ['aofl'],
   parser: 'babel-eslint',
   root: true,
   parserOptions: {
@@ -7,18 +7,19 @@ const config = {
     sourceType: 'module'
   },
   env: {
-    node: true
-  },
-  rules: {
-    'no-await-in-loop': 1,
-    'no-console': 1,
-    'no-empty': [2, {allowEmptyCatch: true}]
+    browser: true,
+    node: true,
+    mocha: true,
+    jasmine: true
   },
   globals: {
     getTestContainer: true,
     cleanTestContainer: true,
     sinon: true,
-    Promise: true
+    Promise: true,
+    fixture: true,
+    __webpack_public_path__: true,
+    aofljsConfig: true
   }
 };
 

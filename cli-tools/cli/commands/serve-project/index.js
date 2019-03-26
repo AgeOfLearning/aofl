@@ -6,11 +6,7 @@ const WebpackBar = require('webpackbar');
 const addEntries = require('webpack-dev-server/lib/utils/addEntries');
 const createDomain = require('webpack-dev-server/lib/utils/createDomain');
 const createLogger = require('webpack-dev-server/lib/utils/createLogger');
-
-const {
-  status
-} = require('webpack-dev-server/bin/utils');
-
+const status = require('webpack-dev-server/lib/utils/status');
 
 /**
  *

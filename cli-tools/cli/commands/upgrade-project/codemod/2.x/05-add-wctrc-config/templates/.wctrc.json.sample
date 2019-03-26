@@ -1,0 +1,35 @@
+{
+  "verbose": true,
+  "persistent": false,
+  "plugins": {
+    "local": {
+      "browsers": [
+        "chrome"
+      ],
+      "browserOptions": {
+        "chrome": [
+          "headless"
+        ]
+      }
+    },
+    "istanbul": {
+      "dir": "./coverage",
+      "reporters": [
+        "text-summary",
+        "lcov"
+      ],
+      "include": "**/*.js",
+      "exclude": [
+        "**/node_modules",
+        "**/node_modules_sourced",
+        "**/documentation{,!(/tests/**)}",
+        "**/__config",
+        "**/cli",
+        "**/*-instance/**",
+        "**/*-loader/**",
+        "**/*-polyfill/**",
+        "**/*-plugin/**"
+      ]
+    }
+  }
+}
