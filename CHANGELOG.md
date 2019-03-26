@@ -26,9 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - eslint-config-aofl
 - @aofl/router - Added an additional parameter "meta" to `router.navigate()` method that gets added to the request object.
 - @aofl/cli - upgrade command
+- @aofl/webcomponents/aofl-element - export render from lit-html
 
 ### [Changed]
-- Updated LitElement to 2.0.1
+- Updated lit-element to 2.1.0
 - Updated lit-html to 1.0.0
 - Replaced babel-instrumenter-loader with babel-plugin-istanbul.
 - @aofl/router - match-route-middleware caches the response after matching the route instead of the route.
