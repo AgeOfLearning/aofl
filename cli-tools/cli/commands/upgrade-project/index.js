@@ -4,6 +4,7 @@ const semver = require('semver');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const Npm = require('../../lib/npm');
+const runner = require('./codemod');
 
 const upgradeConfig = require('./upgrade-config');
 
@@ -30,18 +31,21 @@ class UpgradeProject {
     }, []);
 
     if (this.eligibleUpgrades.length === 0) {
-      process.stdout.write(chalk.green('Nothing to upgrade...') + '\n');
+      process.stdout.write(chalk.green('No new upgrades available...') + '\n');
       process.exit(0);
     }
   }
 
   async init() {
     const upgradeObject = await this.promptUpgradeVersion();
+    const {analyze, upgrade} = runner(upgradeObject.path);
+    const globalRunner = runner(path.join(__dirname, 'codemod', 'global'));
 
     process.stdout.write(chalk.green(`Analyzing required changes...`) + '\n');
-    const upgradeAvailable = await upgradeObject.runner.analyze(this.projectRoot, this.projectInfo);
+    const upgradeAvailable = await analyze(this.projectRoot, this.projectInfo);
+    const globalUpgradeAvailable = await globalRunner.analyze(this.projectRoot, this.projectInfo);
 
-    if (upgradeAvailable) {
+    if (upgradeAvailable || globalUpgradeAvailable) {
       const answer = await inquirer.prompt([
         {
           type: 'confirm',
@@ -52,13 +56,14 @@ class UpgradeProject {
       process.stdout.write(chalk.cyan(`Applying changes...`) + '\n');
       process.stdout.write('\n');
       if (answer.doUpgrade) {
-        await upgradeObject.runner.upgrade(this.projectRoot, this.projectInfo);
+        await upgrade(this.projectRoot, this.projectInfo);
+        await globalRunner.upgrade(this.projectRoot, this.projectInfo);
         process.stdout.write(chalk.green(`Upgrade to ${upgradeObject.to} was successful :)`) + '\n');
       } else {
         process.stdout.write(chalk.red('upgrade canceled') + '\n');
       }
     } else {
-      process.stdout.write(chalk.green('Nothing to upgrade...') + '\n');
+      process.stdout.write(chalk.green('No new upgrades available...') + '\n');
     }
   }
 
