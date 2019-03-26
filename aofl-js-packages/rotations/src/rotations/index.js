@@ -207,7 +207,7 @@ class Rotations {
    */
   getRoutes() {
     return new Promise((resolve) => {
-      if (window.aofljsConfig && window.aofljsConfig.prerender) { // @todo: find better solution
+      if (window.aofljsConfig && window.aofljsConfig.__prerender__) { // @todo: find better solution
         return resolve(this.routeConfig.routes);
       }
       const routes = this.uniqueRoutes();
