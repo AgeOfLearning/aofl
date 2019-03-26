@@ -4,6 +4,13 @@ const plugins = [
   '@babel/plugin-syntax-dynamic-import',
   '@babel/plugin-proposal-optional-chaining',
   [
+    '@babel/plugin-proposal-decorators',
+    {
+      'decoratorsBeforeExport': true
+    }
+  ],
+  '@babel/plugin-proposal-class-properties',
+  [
     '@babel/plugin-transform-runtime',
     {
       'corejs': false,
@@ -14,7 +21,7 @@ const plugins = [
   ]
 ];
 
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test' && typeof process.env.SAUCE_USERNAME !== 'string') {
   plugins.unshift([
     'istanbul', {
       'exclude': [

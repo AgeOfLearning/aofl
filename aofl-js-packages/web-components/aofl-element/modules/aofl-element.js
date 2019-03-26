@@ -6,12 +6,36 @@
  * @requires polymer/lit-element:LitElement
  * @requires polymer/lit-element:html
  */
-import {LitElement, html} from 'lit-element';
+import {LitElement, html, css} from 'lit-element';
 
+const cachedStyles = Symbol('cachedStyles');
 /**
  * Base class for all aofl-js elements.
  */
 class AoflElement extends LitElement {
+  [cachedStyles] = [];
+
+  /**
+   * Check if styles have been updated
+   *
+   * @private
+   * @param {Array} styles
+   * @return {Boolean}
+   */
+  stylesUpdated(styles) {
+    if (this[cachedStyles].length !== styles.length) {
+      return true;
+    }
+
+    for (let i = 0; i < styles.length; i++) {
+      if (styles[i] !== this[cachedStyles][i]) {
+        return true;
+      }
+    }
+
+
+    return false;
+  }
   /**
    *
    * @param {Function} template
@@ -20,14 +44,30 @@ class AoflElement extends LitElement {
    * @return {Object}
    */
   render(template, styles = []) {
-    const s = html`<style>${styles.reduce((acc, item) => {
-      if (item && item.length) {
-        acc += `${String(item)}`;
-      }
-      return acc;
-    }, '')}</style>`;
+    if (this.stylesUpdated(styles)) {
+      this[cachedStyles] = styles;
+      const s = [
+        css([
+          styles.reduce((acc, item) => {
+            acc = acc + item;
+            return acc;
+          }, '')
+        ])
+      ];
 
-    return html`${s} ${template(this, html)}`;
+      this.constructor._styles = s;
+      const renderedStyles = this.renderRoot.querySelectorAll('style');
+
+      for (const rStyle of renderedStyles) {
+        if (rStyle.parentNode === this.renderRoot) {
+          rStyle.parentNode.removeChild(rStyle);
+        }
+      }
+
+      this.adoptStyles();
+    }
+
+    return template(this, html);
   }
 }
 

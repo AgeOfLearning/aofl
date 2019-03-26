@@ -114,7 +114,7 @@ describe('@aofl/web-components/aofl-select-list', function() {
   context('mouseoverCallback', function() {
     it('should focus list options on hover', function() {
       const e = {
-        target: this.element.querySelector('aofl-list-option')
+        target: this.element.querySelectorAll('aofl-list-option')[1]
       }
       this.element.mouseoverCallback(e);
       this.element.dispatchEvent(new Event('mouseover'));

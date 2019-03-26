@@ -9,7 +9,7 @@ describe('@aofl/web-components/aofl-multiselect-list', function() {
 
     render(html`
       <aofl-multiselect-list id="ListTestFixtureParent">
-        <aofl-list-option>1</aofl-list-option>
+        <aofl-list-option>0</aofl-list-option>
         <aofl-list-option>1</aofl-list-option>
         <aofl-list-option selected>2</aofl-list-option>
       </aofl-multiselect-list>
@@ -120,7 +120,7 @@ describe('@aofl/web-components/aofl-multiselect-list', function() {
   context('mouseoverCallback', function() {
     it('should focus list options on hover', function() {
       const e = {
-        target: this.element.querySelector('aofl-list-option')
+        target: this.element.querySelectorAll('aofl-list-option')[1]
       }
       this.element.mouseoverCallback(e);
 
