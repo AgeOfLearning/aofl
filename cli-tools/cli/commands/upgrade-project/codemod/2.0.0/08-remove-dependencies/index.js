@@ -3,12 +3,13 @@ const Npm = require('../../../../../lib/npm');
 
 module.exports = async (projectRoot, projectInfo, commit = false) => {
   const prodDependencies = [
-    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && item !== '@aofl/jsdoc-template'),
+    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && ['@aofl/jsdoc-template', '@aofl/html-webpack-purify-internal-css-plugin'].indexOf(item) === -1),
     'svg-inline-loader',
     'ajv'
   ];
   const dependencies = [
     ...prodDependencies,
+    '@aofl/html-webpack-purify-internal-css-plugin',
     '@babel/core',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-optional-chaining',
@@ -16,6 +17,7 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
     '@babel/plugin-transform-regenerator',
     '@babel/plugin-transform-runtime',
     '@babel/preset-env',
+    '@polymer/lit-element',
     'ajv',
     'autoprefixer',
     'babel-eslint',
@@ -41,6 +43,8 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
     'imports-loader',
     'istanbul-instrumenter-loader',
     'js-string-escape',
+    'lit-element',
+    'lit-html',
     'postcss-loader',
     'raw-loader',
     'svg-inline-loader',

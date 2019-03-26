@@ -6,7 +6,7 @@ module.exports = (dir) => {
   const files = fs.readdirSync(dir);
   const mods = files.reduce((acc, item) => {
     const itemPath = path.join(dir, item);
-    // if (item.indexOf('10') !== 0) return acc;
+    // if (item.indexOf('13') !== 0) return acc;
     if (fs.lstatSync(itemPath).isDirectory()) {
       const codeMod = require(itemPath);
       acc.push({

@@ -73,7 +73,8 @@ class BuildProject {
     if (this.watch) {
       compiler.watch({
         aggregateTimeout: 300,
-        poll: void(0)
+        poll: void(0),
+        ...this.config.webpack.watchOptions
       }, this.debug? errorHandler: () => {});
     } else {
       compiler.run(this.debug? errorHandler: () => {});

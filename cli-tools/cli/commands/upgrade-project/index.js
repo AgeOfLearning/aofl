@@ -50,7 +50,7 @@ class UpgradeProject {
         {
           type: 'confirm',
           name: 'doUpgrade',
-          message: 'Continue with the upgrade?'
+          message: 'Continue with the upgrade? (yes)'
         }
       ]);
       process.stdout.write(chalk.cyan(`Applying changes...`) + '\n');

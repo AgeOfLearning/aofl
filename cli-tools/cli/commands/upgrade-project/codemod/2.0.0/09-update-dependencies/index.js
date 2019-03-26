@@ -3,8 +3,8 @@ const Npm = require('../../../../../lib/npm');
 
 module.exports = async (projectRoot, projectInfo, commit = false) => {
   const aoflDependencies = [
-    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && item !== '@aofl/jsdoc-template'),
-    ...Object.keys(projectInfo.package.dependencies).filter((item) => item.indexOf('@aofl/') === 0 && item !== '@aofl/jsdoc-template'),
+    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && ['@aofl/jsdoc-template', '@aofl/html-webpack-purify-internal-css-plugin'].indexOf(item) === -1),
+    ...Object.keys(projectInfo.package.dependencies).filter((item) => item.indexOf('@aofl/') === 0 && ['@aofl/jsdoc-template', '@aofl/html-webpack-purify-internal-css-plugin'].indexOf(item) === -1),
     '@aofl/cli'
   ];
   const prodDependencies = [

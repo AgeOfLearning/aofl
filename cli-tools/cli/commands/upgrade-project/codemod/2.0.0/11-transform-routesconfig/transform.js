@@ -11,8 +11,8 @@ module.exports = (file, api, options) => {
 
   let defaultVarName = 'routesConfig';
 
-  routesImport.find(j.ImportDefaultSpecifier).forEach((x) => {
-    defaultVarName = x.node.local.name;
+  routesImport.find(j.ImportDefaultSpecifier).forEach((item) => {
+    defaultVarName = item.node.local.name;
   });
 
   const newImport = j.importDeclaration([j.importDefaultSpecifier(j.identifier(defaultVarName))], j.literal('./__config/routes'));

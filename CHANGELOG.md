@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - Npm.installDependency force option fixed.
 - @aofl/templating - fixed issue with meta tags getting injected into body due to invalid aoflTemplate string in head. The plugin will accept template replace keys wrapped in template tags.
 - @aofl/rotations - changed window.aofljsConfig.__prerender__ reference
+- @aofl/cli/build - uses watchOptions in webpack config
 
 ### [Security]
 

@@ -4,7 +4,7 @@ const fs = require('fs');
 
 module.exports = (projectRoot, projectInfo, commit = false) => {
   const configPath = path.join(projectRoot, '.eslintrc.js');
-  const templateFilePath = path.join(__dirname, 'templates', '.eslintrc.js.sample');
+  const templateFilePath = path.join(__dirname, '..', '..', '..', '..', '..', 'lib', 'webpack-config', '__config', '.eslintrc.js');
   const template = fs.readFileSync(templateFilePath, {encoding: 'utf-8'});
 
   const result = {
