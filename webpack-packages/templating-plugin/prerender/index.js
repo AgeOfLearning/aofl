@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-module.exports = async (url, timeout = 0) => {
+module.exports = async (url, config) => {
   const browser = await puppeteer.launch({headless: true});
   const page = await browser.newPage();
 
@@ -101,7 +101,7 @@ module.exports = async (url, timeout = 0) => {
 
       return getContent();
     });
-  }, timeout);
+  }, config.timeout);
   await browser.close();
   return str;
 };

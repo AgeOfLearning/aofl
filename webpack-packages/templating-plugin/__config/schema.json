@@ -37,8 +37,26 @@
     "locale": {
       "type": "string"
     },
-    "prerenderTimeout": {
-      "type": "number"
+    "prerender": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "timeout": {
+          "type": "number"
+        },
+        "externalServer": {
+          "type": "boolean"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        }
+      }
     },
     "loaderOptions": {
       "type": "object",

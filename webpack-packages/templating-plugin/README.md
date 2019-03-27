@@ -35,13 +35,13 @@ const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 ```
 
 ## Options
-| Name             | Type   | Default | Description                                                                                                                         |
-|------------------|--------|---------|-------------------------------------------------------------------------------------------------------------------------------------|
-| template         | Object | {}      | html-webpack-plugin options plus a `name` attribute that will be part of the route object.                                            |
-| routes           | Object | {}      | Define route entry points. `mainRoutes`, `pattern` and optional `ignore`.                                                           |
-| partials         | Object | {}      | Used to define static partial templates object where the keys are the partials name and the values are html-webpack-plugin options. |
-| locale           | String | en-US   | Default locale for entry points.                                                                                                    |
-| preRenderTimeout | Number | 0       | Add timeout in ms on top of the when there are no more than 2 network connections for at least 500 ms.                              |
+| Name      | Type   | Default                                                                                                          | Description                                                                                                                         |
+|-----------|--------|------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| template  | Object | {}                                                                                                               | html-webpack-plugin options plus a `name` attribute that will be part of the route object.                                          |
+| routes    | Object | {}                                                                                                               | Define route entry points. `mainRoutes`, `pattern` and optional `ignore`.                                                           |
+| partials  | Object | {}                                                                                                               | Used to define static partial templates object where the keys are the partials name and the values are html-webpack-plugin options. |
+| locale    | String | en-US                                                                                                            | Default locale for entry points.                                                                                                    |
+| prerender | Object | ` {   timeout: 0,   externalServer: false,   schema: 'http',   host: 'localhost',   port: 8090 }` | Add timeout in ms on top of the when there are no more than 2 network connections for at least 500 ms.                              |
 
 ### template
 The `template` object is used with html-webpack-plugin to generate the html for the entry points. In addition to the html-webpack-plugin options you must specify a name for the template. This attribute will be part of the generated routes config object.
@@ -100,6 +100,9 @@ Static parial templates can be defined using partials key and can be added to te
   aoflTemplate:partial:header
   ...
 ```
+
+### prerender
+`options.prerender` allows for customizing the prerender server.
 
 ## Template Keywords
 

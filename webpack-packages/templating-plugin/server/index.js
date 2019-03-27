@@ -2,7 +2,16 @@ const compression = require('compression');
 const express = require('express');
 const serveStatic = require('serve-static');
 
-module.exports = (fileMap, rootPath, rootUri) => {
+module.exports = (fileMap, rootPath, rootUri, config) => {
+  const url = `${config.schema}://${config.host}:${config.port}`;
+
+  if (config.externalServer) {
+    return {
+      url,
+      close: () => {}
+    };
+  }
+
   const indexes = [
     'index.html',
     'index.htm'
@@ -16,13 +25,13 @@ module.exports = (fileMap, rootPath, rootUri) => {
 
   app.use(compression());
   app.use((req, res, next)=> {
-    const url = req.url.replace(new RegExp('^' + rootUri), '');
+    const requestUrl = req.url.replace(new RegExp('^' + rootUri), '');
     let asset = null;
 
-    if (typeof fileMap[url] !== 'undefined') {
-      asset = fileMap[url];
-    } else if (typeof fileMap[url + 'index.html'] !== 'undefined') {
-      asset = fileMap[url + 'index.html'];
+    if (typeof fileMap[requestUrl] !== 'undefined') {
+      asset = fileMap[requestUrl];
+    } else if (typeof fileMap[requestUrl + 'index.html'] !== 'undefined') {
+      asset = fileMap[requestUrl + 'index.html'];
     }
 
     if (asset && typeof asset.source === 'function') {
@@ -42,7 +51,7 @@ module.exports = (fileMap, rootPath, rootUri) => {
         }
         // console.log('App listening on %s:%s', ip, port);
         return resolve({
-          url: 'http://localhost:8090',
+          url,
           close() {
             server.close();
           }
@@ -51,7 +60,7 @@ module.exports = (fileMap, rootPath, rootUri) => {
     });
   };
 
-  return listen(app, 8090, 'localhost');
+  return listen(app, config.port, config.host);
 };
 // listen(app, 8080, '10.0.192.141');
 

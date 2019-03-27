@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const getRoutes = require('./get-routes');
 const replaceTemplateFiles = require('./replace-template-parts');
 const server = require('./server');
-const preRender = require('./prerender');
+const prerender = require('./prerender');
 const validateOptions = require('schema-utils');
 const schema = require('./__config/schema.json');
 const partialsSchema = require('./__config/partials-schema.json');
@@ -71,7 +71,13 @@ class TemplatingPlugin {
         // }
       },
       locale: 'en-US',
-      preRenderTimeout: 0,
+      prerender: {
+        timeout: 0,
+        externalServer: false,
+        schema: 'http',
+        host: 'localhost',
+        port: 8090
+      },
       loaderOptions: {
         path: new RegExp(path.resolve(__dirname, 'routes.config.js'))
       }
@@ -155,8 +161,11 @@ class TemplatingPlugin {
       for (const key in assets) {
         if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
         const assetPath = key;
-        const s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath);
-        const body = await preRender(s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''), this.options.preRenderTimeout);
+        const s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath, this.options.prerender);
+        const body = await prerender(
+          s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''),
+          this.options.prerender
+        );
         const source = compilation.assets[assetPath].source();
 
         let t = source; // str.replace is not consistent on large strings

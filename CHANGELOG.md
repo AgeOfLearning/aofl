@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/router - Added an additional parameter "meta" to `router.navigate()` method that gets added to the request object.
 - @aofl/cli - upgrade command
 - @aofl/webcomponents/aofl-element - export render from lit-html
+- @aofl/templating-plugin - added prerender options
 
 ### [Changed]
 - Updated lit-element to 2.1.0
@@ -40,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Deprecated]
 ### [Removed]
+- @aofl/templating-plugin - prerenderTimeout
+
 ### [Fixed]
 - Fixed bugs introduced by refactoring and linting
 - @aofl/router - fixed request from link
