@@ -3,13 +3,16 @@ const express = require('express');
 const serveStatic = require('serve-static');
 
 module.exports = (fileMap, rootPath, rootUri, config) => {
-  const url = `${config.schema}://${config.host}:${config.port}`;
+  let url = `${config.schema}://${config.host}:${config.port}`;
+  if (config.port === 80) {
+    url = `${config.schema}://${config.host}`;
+  }
 
   if (config.externalServer) {
-    return {
+    return Promise.resolve({
       url,
       close: () => {}
-    };
+    });
   }
 
   const indexes = [
@@ -62,5 +65,4 @@ module.exports = (fileMap, rootPath, rootUri, config) => {
 
   return listen(app, config.port, config.host);
 };
-// listen(app, 8080, '10.0.192.141');
 

@@ -2,9 +2,17 @@ const chalk = require('chalk');
 const Npm = require('../../../../../lib/npm');
 
 module.exports = async (projectRoot, projectInfo, commit = false) => {
+  const toRemove = [
+    '@aofl/jsdoc-template',
+    '@aofl/html-webpack-purify-internal-css-plugin',
+    '@aofl/i18n-loader',
+    '@aofl/templating-plugin',
+    '@aofl/unit-testing-plugin',
+    '@aofl/webcomponent-css-loader'
+  ];
   const aoflDependencies = [
-    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && ['@aofl/jsdoc-template', '@aofl/html-webpack-purify-internal-css-plugin'].indexOf(item) === -1),
-    ...Object.keys(projectInfo.package.dependencies).filter((item) => item.indexOf('@aofl/') === 0 && ['@aofl/jsdoc-template', '@aofl/html-webpack-purify-internal-css-plugin'].indexOf(item) === -1),
+    ...Object.keys(projectInfo.package.devDependencies).filter((item) => item.indexOf('@aofl/') === 0 && toRemove.indexOf(item) === -1),
+    ...Object.keys(projectInfo.package.dependencies).filter((item) => item.indexOf('@aofl/') === 0 && toRemove.indexOf(item) === -1),
     '@aofl/cli'
   ];
   const prodDependencies = [
