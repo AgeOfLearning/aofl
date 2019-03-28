@@ -1,0 +1,20 @@
+{
+  "name": "aofl-async-form-validation-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "aofl async form validation example",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "dependencies": {
+    "@aofl/form-validate": "^2.0.0-alpha.5",
+    "@aofl/web-components": "^2.0.0-alpha.15"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.0",
+    "parcel-bundler": "^1.12.3"
+  },
+  "browserslist": "last 2 Chrome versions"
+}

@@ -6,7 +6,7 @@
   "opts": {
     "template": "../node_modules/@aofl/jsdoc-template",
     "encoding": "utf8",
-    "destination": "../docs/v1.x/api-docs/",
+    "destination": "../docs/v2.x/api-docs/",
     "recurse": true,
     "verbose": true
   },

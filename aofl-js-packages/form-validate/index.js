@@ -6,11 +6,11 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import validationMixin from './src/validation-mixin';
-import isAllDigits from './src/is-all-digits';
-import isEqual from './src/is-equal';
-import {minLength, maxLength} from './src/length';
-import isRequired from './src/is-required';
+import validationMixin from './modules/validation-mixin';
+import isAllDigits from './modules/is-all-digits';
+import isEqual from './modules/is-equal';
+import {minLength, maxLength} from './modules/length';
+import isRequired from './modules/is-required';
 
 export {
   validationMixin,

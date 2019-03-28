@@ -6,9 +6,9 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import CacheManager from './src/cache-manager';
-import {cacheTypeEnumerate} from './src/cache-type-enumerate';
-import MemoryStorage from './src/memory-storage';
+import CacheManager from './modules/cache-manager';
+import {cacheTypeEnumerate} from './modules/cache-type-enumerate';
+import MemoryStorage from './modules/memory-storage';
 
 export {
   CacheManager,

@@ -1,6 +1,6 @@
 /* eslint no-invalid-this: "off" */
-import ApiRequest from '../src/api-request';
-describe('@aofl/api-request/src/api-request', function() {
+import ApiRequest from '../modules/api-request';
+describe('@aofl/api-request/modules/api-request', function() {
   before(function() {
     this.formatter = {
       pack() {

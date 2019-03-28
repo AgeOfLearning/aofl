@@ -6,4 +6,4 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-export {default as ResourceEnumerate} from './src/resource-enumerate';
+export {default as ResourceEnumerate} from './modules/resource-enumerate';

@@ -6,7 +6,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Polyfill from './src/polyfill';
+import Polyfill from './modules/polyfill';
 
 export {
   Polyfill

@@ -6,4 +6,4 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-export {default as ApiRequest} from './src/api-request';
+export {default as ApiRequest} from './modules/api-request';

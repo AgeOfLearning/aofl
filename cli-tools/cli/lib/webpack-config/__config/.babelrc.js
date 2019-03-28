@@ -39,3 +39,8 @@ module.exports = {
   presets,
   plugins
 };
+
+
+if (!/bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent) && typeof window.MutationObserver === 'undefined') {
+  window.location = '/s/update-browser';
+}

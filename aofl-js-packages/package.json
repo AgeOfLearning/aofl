@@ -14,7 +14,7 @@
     "dev": "npm run env:dev -- webpack --config __config/webpack.dev.js --progress",
     "start": "npm run env:prod -- webpack-dev-server --config __config/webpack.prod.js --progress",
     "stats": "webpack --profile --config __config/webpack.prod.js --json > stats.json",
-    "docs": "rm -rf ../docs/v1.x/api-docs && jsdoc -c __config/.jsdocrc.json .",
+    "docs": "rm -rf ../docs/v2.x/api-docs && jsdoc -c __config/.jsdocrc.json .",
     "lint": "eslint ."
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",

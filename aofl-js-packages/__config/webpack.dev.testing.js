@@ -21,6 +21,7 @@ const config = merge(common('development'), {
         '**/node_modules_sourced',
         '**/documentation{,!(/tests/**)}',
         '**/__config',
+        '**/examples',
         '**/cli',
         '**/*-instance/**',
         '**/*-loader/**',

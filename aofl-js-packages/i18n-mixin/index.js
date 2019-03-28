@@ -6,7 +6,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import i18nMixin from './src/i18n-mixin';
+import i18nMixin from './modules/i18n-mixin';
 
 export {
   i18nMixin

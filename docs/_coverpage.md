@@ -2,14 +2,14 @@
 
 ![logo](_assets/manifest/icon-512x512.png)
 
-# AofL JS <small>v1.x</small>
+# AofL JS <small>v2.x</small>
 
 > An unopinionated web component based framework
 
 - Easy to learn
 - Zero configuration
-- :rocket: fast <small>[(see for yourself)]()</small>
-- Featherweight ~20kB gzipped (including client-side router)
+- :rocket: fast <small><a href="/benchmark-results/" target="_blank" rel="noopener noreferrer">(see for yourself)</a></small>
+- Featherweight - Under 20kB gzipped
 
 [GitHub](https://github.com/AgeOfLearning/aofl)
-[Get Started](v1.x/getting-started/index.md)
+[Get Started](v2.x/getting-started/index.md)

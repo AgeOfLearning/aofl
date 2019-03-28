@@ -6,5 +6,5 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-export {environmentTypeEnumerate} from './src/environment-type-enumerate';
-export {getServerEnvironment} from './src/server-environment-service';
+export {environmentTypeEnumerate} from './modules/environment-type-enumerate';
+export {getServerEnvironment} from './modules/server-environment-service';

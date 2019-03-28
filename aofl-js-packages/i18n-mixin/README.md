@@ -4,7 +4,7 @@ The **AOFL i18nMixin element** decorates any element with **i18n** support.
 
 
 ## Examples
-* https://stackblitz.com/edit/1-0-0-i18n-mixin?embed=1&file=index.js
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/i18n-mixin/examples/basics
 
 
 ## Requirements

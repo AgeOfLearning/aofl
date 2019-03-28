@@ -6,8 +6,8 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Store from './src/Store';
-import storeInstance from './src/instance';
+import Store from './modules/Store';
+import storeInstance from './modules/instance';
 
 export {
   Store,

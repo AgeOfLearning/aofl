@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - upgrade command
 - @aofl/webcomponents/aofl-element - export render from lit-html
 - @aofl/templating-plugin - added prerender options
+- docsify for v2
+- benchmark results
 
 ### [Changed]
 - Updated lit-element to 2.1.0
@@ -49,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/router - fixed request from link
 - @aofl/web-components/aofl-img - Delay checkInViewport by a microtask to fix issue with images not loading when aofl-img is a child of another custom component.
 - @aofl/cache-manager - getCollection updates storedKeys before returning the collection in case it changed within the context of another document.
+- @aofl/cache-manager - limit expire to max 32bit signed integer
 - @aofl/cli - Npm.installDependency force option fixed.
 - @aofl/templating - fixed issue with meta tags getting injected into body due to invalid aoflTemplate string in head. The plugin will accept template replace keys wrapped in template tags.
 - @aofl/rotations - changed window.aofljsConfig.__prerender__ reference
@@ -307,6 +310,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Refactored to work with the updated system
 - cli/cli-tools
   - Refactored i18n. Now uses lexical analysis to find translation strings
+- @aofl/rotations
+  - Complete refactor
 
 ### [Deprecated]
 

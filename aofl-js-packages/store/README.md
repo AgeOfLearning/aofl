@@ -4,7 +4,7 @@
 
 ---
 ## Examples
-* https://stackblitz.com/edit/1-0-0-store?embed=1
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/store/examples/
 
 ---
 ## Installation

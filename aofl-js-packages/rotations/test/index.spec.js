@@ -2,445 +2,462 @@
 import {Rotations} from '../';
 
 describe('@aofl/rotations/rotation', function() {
-  context('Methods', function() {
+  beforeEach(function() {
+    this.routeConfig = {
+      'routes': [
+        {
+          'resolve': () => Promise.resolve('routes homepage'), // import('component') in a real app
+          'rotation': 'routes',
+          'path': '/',
+          'dynamic': false,
+          'title': 'AofL::Home'
+        },
+        {
+          'resolve': () => Promise.resolve('routes about'), // import('component') in a real app
+          'rotation': 'routes',
+          'path': '/about',
+          'dynamic': false,
+          'title': 'AofL::About'
+        },
+        {
+          'resolve': () => Promise.resolve('routes subscribe'), // import('component') in a real app
+          'rotation': 'routes',
+          'path': '/subscribe',
+          'dynamic': false,
+          'title': 'AofL::Subscribe'
+        }
+      ],
+      'routes-homepage_design_test': [
+        {
+          'resolve': () => Promise.resolve('routesB homepage'),
+          'rotation': 'routes-homepage_design_test',
+          'path': '/',
+          'dynamic': false,
+          'title': 'AofL::Home',
+          'locale': ''
+        },
+        {
+          'resolve': () => Promise.resolve('routes about'), // import('component') in a real app
+          'rotation': 'routes-homepage_design_test',
+          'path': '/about',
+          'dynamic': false,
+          'title': 'AofL::About'
+        },
+        {
+          'resolve': () => Promise.resolve('routes subscribe'), // import('component') in a real app
+          'rotation': 'routes-homepage_design_test',
+          'path': '/subscribe',
+          'dynamic': false,
+          'title': 'AofL::Subscribe'
+        }
+      ],
+      'routes-price_test_1': [
+        {
+          'resolve': () => Promise.resolve('routesB homepage'),
+          'rotation': 'routes-price_test_1',
+          'path': '/',
+          'dynamic': false,
+          'title': 'AofL::Home',
+          'locale': ''
+        },
+        {
+          'resolve': () => Promise.resolve('routes about'), // import('component') in a real app
+          'rotation': 'routes-price_test_1',
+          'path': '/about',
+          'dynamic': false,
+          'title': 'AofL::About'
+        },
+        {
+          'resolve': () => Promise.resolve('routes subscribe'), // import('component') in a real app
+          'rotation': 'routes-price_test_1',
+          'path': '/subscribe',
+          'dynamic': false,
+          'title': 'AofL::Subscribe'
+        }
+      ],
+      'routes-price_test_2': [
+        {
+          'resolve': () => Promise.resolve('routesB homepage'),
+          'rotation': 'routes-price_test_2',
+          'path': '/',
+          'dynamic': false,
+          'title': 'AofL::Home',
+          'locale': ''
+        },
+        {
+          'resolve': () => Promise.resolve('routes about'), // import('component') in a real app
+          'rotation': 'routes-price_test_2',
+          'path': '/about',
+          'dynamic': false,
+          'title': 'AofL::About'
+        },
+        {
+          'resolve': () => Promise.resolve('routes subscribe'), // import('component') in a real app
+          'rotation': 'routes-price_test_2',
+          'path': '/subscribe',
+          'dynamic': false,
+          'title': 'AofL::Subscribe'
+        }
+      ],
+      'routes-price_test_3': [
+        {
+          'resolve': () => Promise.resolve('routesB homepage'),
+          'rotation': 'routes-price_test_3',
+          'path': '/',
+          'dynamic': false,
+          'title': 'AofL::Home',
+          'locale': ''
+        },
+        {
+          'resolve': () => Promise.resolve('routes about'), // import('component') in a real app
+          'rotation': 'routes-price_test_3',
+          'path': '/about',
+          'dynamic': false,
+          'title': 'AofL::About'
+        },
+        {
+          'resolve': () => Promise.resolve('routes subscribe'), // import('component') in a real app
+          'rotation': 'routes-price_test_3',
+          'path': '/subscribe',
+          'dynamic': false,
+          'title': 'AofL::Subscribe'
+        }
+      ]
+    };
+  });
+  context('qualifies()', function() {
     beforeEach(function() {
-      this.routeConfig = {
-        'routes': [
-          {
-            'resolve': () => fetch('./routes/home/index.js'),
-            'rotation': 'routes',
-            'path': '/home'
-          },
-          {
-            'resolve': () => fetch('./routes/login/index.js'),
-            'rotation': 'routes',
-            'path': '/login'
-          }
-        ],
-        'routes-b': [
-          {
-            'resolve': () => fetch('./routes-b/home-b/index.js  '),
-            'rotation': 'routes-b',
-            'path': '/home'
-          },
-          {
-            'resolve': () => fetch('./routes/login/index.js'),
-            'rotation': 'routes-b',
-            'path': '/login'
-          }
-        ]
+      this.rotationConfig = {
+        'conditions': {
+          '1': 'boolean_true',
+          '2': 'boolean_false',
+          '3': 'promise_true',
+          '4': 'promise_false'
+        },
+        'qualification_order': {},
+        'versions': {},
+        'weights': {}
       };
-      this.rotationsConfig = {
-        'page_rotations': {
-          '/': [1, 2],
-          '/about': [1, 2],
-          '/contact': [2, 1]
+      this.rotationConditions = {
+        boolean_true: () => true,
+        boolean_false: () => false,
+        promise_true: () => Promise.resolve(true),
+        promise_false: () => Promise.resolve(false)
+      };
+      this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
+    });
+
+    it('Should return true when condition returns boolean true', async function() {
+      const qualifies = await this.rotation.qualifies('1');
+      expect(qualifies).to.be.true;
+    });
+    it('Should return false when condition returns boolean false', async function() {
+      const qualifies = await this.rotation.qualifies('2');
+      expect(qualifies).to.be.false;
+    });
+    it('Should return true if condition returns a promise that resolves with true', async function() {
+      const qualifies = await this.rotation.qualifies('3');
+      expect(qualifies).to.be.true;
+    });
+    it('Should return true if condition returns a promise that resolves with false', async function() {
+      const qualifies = await this.rotation.qualifies('4');
+      expect(qualifies).to.be.false;
+    });
+    it('Should return false if condition does\'nt exist', async function() {
+      const qualifies = await this.rotation.qualifies('5');
+      expect(qualifies).to.be.false;
+    });
+    it('Should return cached results when called with the same id', async function() {
+      await this.rotation.qualifies('1');
+      const qualifies = await this.rotation.qualifies('1');
+      expect(qualifies).to.be.true;
+    });
+  });
+
+  context('getQualifyingId()', function() {
+    beforeEach(function() {
+      this.rotationConfig = {
+        'conditions': {
+          '1': 'boolean_true',
+          '2': 'boolean_false',
+          '3': 'promise_true',
+          '4': 'promise_false'
         },
-        'rotation_id_keyname_map': {
-          '1': 'routes',
-          '2': 'routes-b'
+        'qualification_order': {},
+        'versions': {},
+        'weights': {}
+      };
+      this.rotationConditions = {
+        boolean_true: () => true,
+        boolean_false: () => false,
+        promise_true: () => Promise.resolve(true),
+        promise_false: () => Promise.resolve(false)
+      };
+      this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
+    });
+
+    it('Should return the first qualifying condition Id', async function() {
+      const qualifyingId = await this.rotation.getQualifyingId(['1', '2', '3', '4']);
+      expect(qualifyingId).to.be.equal('1');
+    });
+
+    it('Should return the first qualifying condition Id', async function() {
+      const qualifyingId = await this.rotation.getQualifyingId(['4', '3']);
+      expect(qualifyingId).to.be.equal('3');
+    });
+
+    it('Should throw an error when no conditions qualify', async function() {
+      try {
+        await this.rotation.getQualifyingId(['2', '4']);
+        throw new Error();
+      } catch (e) {
+        expect(e).to.have.property('message', 'No matching conditions');
+      }
+    });
+
+    it('Should throw an error when no params are passed', async function() {
+      try {
+        await this.rotation.getQualifyingId();
+        throw new Error();
+      } catch (e) {
+        expect(e).to.have.property('message', 'No matching conditions');
+      }
+    });
+  });
+
+  context('getVersion()', function() {
+    beforeEach(function() {
+      this.rotationConfig = {
+        'conditions': {
+          '1': 'baseline',
+          '2': 'price',
+          '3': 'homepage_design'
         },
-        'rotation_version_page_group_version_map': {
+        'qualification_order': {
+          '/': ['3', '1'],
+          '/about': ['1'],
+          '/subscribe': ['2', '1'],
+        },
+        'versions': {
           '1000': 'routes',
-          '2000': 'routes-b'
+          '1001': 'routes-price_test_1',
+          '1002': 'routes-price_test_2',
+          '1003': 'routes-price_test_3',
+          '1004': 'routes',
+          '1005': 'routes-homepage_design_test',
+          '1006': 'routes'
         },
-        'rotation_versions': {
+        'weights': {
           '1': {
-            '1000': '3',
-            '2000': '1'
+            '1000': 1
           },
           '2': {
-            '1000': '1',
-            '2000': '1'
+            '1001': 1,
+            '1002': 1,
+            '1003': 1,
+            '1004': 1
+          },
+          '3': {
+            '1005': 1,
+            '1006': 1
           }
         }
       };
       this.rotationConditions = {
-        'routes': () => false,
-        'routes-b': () => true
+        baseline: () => true,
+        price: () => true,
+        homepage_design: () => true
       };
+      this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
     });
 
-    it('"getWeightsTotal()" should return the correct sum of weights', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const total = rotations.getWeightsTotal(this.rotationsConfig.rotation_versions['1']);
-      expect(total).to.equal(4);
-    });
-
-    it('"createVersionRanges" should create the correct weight based pct ranges', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const versions = rotations.createVersionRanges(this.rotationsConfig.rotation_versions['1']);
-      expect(versions[0].range).to.equal(75);
-      expect(versions[1].range).to.equal(100);
-    });
-
-    it('"createVersionRanges" should not mutate versions argument', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const originalVersions = Object.assign({}, this.rotationsConfig.rotation_versions['1']);
-      rotations.createVersionRanges(this.rotationsConfig.rotation_versions['1']);
-      expect(this.rotationsConfig.rotation_versions['1']).to.eql(originalVersions);
-    });
-
-    it('"chooseWeightedVariant()" should select rotations based on weighted distribution', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      let routesCount = 0;
-      const limit = 500;
+    it('Should should return a random version depending on qualifyingId', function() {
+      const limit = 1000;
+      const versions = {
+        '1005': 0,
+        '1006': 0
+      };
       for (let i = 0; i < limit; i++) {
-        const version = rotations.chooseWeightedVariant('1');
-        if (version === '1000') { routesCount++; }
+        const version = this.rotation.getVersion('3');
+        versions[version] += 1;
       }
-      expect(routesCount/limit).to.be.within(0.65, 0.85);
+
+      expect(versions['1005']/limit).to.be.within(0.45, 0.55);
+      expect(versions['1006']/limit).to.be.within(0.45, 0.55);
     });
 
-    it('"replaceRoute()" should replace routes correctly', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const routes = rotations.replaceRoute(this.routeConfig.routes, 'routes-b', '/login');
-      expect(routes[1].rotation).to.equal('routes-b');
-    });
-
-    it('"getQualifyingRotation()" should qualify in the correct order', async function() {
-      try {
-        const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-        const selectedRotationId = await rotations.getQualifyingRotation({path: '/about'});
-        expect(selectedRotationId).to.equal(2);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-
-    it('"uniqueRoutes()" should provide unique routes', function() {
-      const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-      const routes = rotations.uniqueRoutes();
-      expect(routes.length).to.equal(2);
+    it('Should throw error if qualifyingId does not map to weights', function() {
+      const badFn = () => this.rotation.getVersion('5');
+      expect(badFn).to.throw();
     });
   });
-  context('No Match', function() {
+
+  context('findRotationRoute()', function() {
     beforeEach(function() {
-      this.routeConfig = {
-        'routes': [
-          {
-            'resolve': () => fetch('./routes/home/index.js'),
-            'rotation': 'routes',
-            'path': '/home'
-          },
-          {
-            'resolve': () => fetch('./routes/login/index.js'),
-            'rotation': 'routes',
-            'path': '/login'
-          }
-        ],
-        'routes-b': [
-          {
-            'resolve': () => fetch('./routes-b/home-b/index.js  '),
-            'rotation': 'routes-b',
-            'path': '/home'
-          },
-          {
-            'resolve': () => fetch('./routes/login/index.js'),
-            'rotation': 'routes-b',
-            'path': '/login'
-          }
-        ]
-      };
-      this.rotationsConfig = {
-        'page_rotations': {
-          '/': [1, 2],
-          '/about': [1, 2],
-          '/contact': [2, 1]
+      this.rotation = new Rotations('rotations', this.routeConfig, {}, {});
+    });
+
+    it('Should find matching route', function() {
+      const route = this.rotation.findRotationRoute('routes', '/');
+      expect(route).to.equal(this.routeConfig.routes[0]);
+    });
+
+    it('Should find matching rotation route', function() {
+      const route = this.rotation.findRotationRoute('routes-homepage_design_test', '/about');
+      expect(route).to.equal(this.routeConfig['routes-homepage_design_test'][1]);
+    });
+
+    it('Should throw an error if rotation not defined', function() {
+      const badFn = () => this.rotation.findRotationRoute('no-routes', '/');
+      expect(badFn).to.throw(Error, 'Rotation not found');
+    });
+
+    it('Should throw an error if route does not exist for given rotation', function() {
+      const badFn = () => this.rotation.findRotationRoute('routes', '/no-route');
+      expect(badFn).to.throw(Error, 'Rotation route not found');
+    });
+  });
+
+  context('getRoutes()', function() {
+    beforeEach(function() {
+      this.rotationConfig = {
+        'conditions': {
+          '1': 'baseline',
+          '2': 'price',
+          '3': 'homepage_design'
         },
-        'rotation_id_keyname_map': {
-          '1': 'routes',
-          '2': 'routes-b'
+        'qualification_order': {
+          '/': ['3', '1'],
+          '/about': ['1'],
+          '/subscribe': ['2', '1'],
         },
-        'rotation_version_page_group_version_map': {
+        'versions': {
           '1000': 'routes',
-          '2000': 'routes-b'
+          '1001': 'routes-price_test_1',
+          '1002': 'routes-price_test_2',
+          '1003': 'routes-price_test_3',
+          '1004': 'routes',
+          '1005': 'routes-homepage_design_test',
+          '1006': 'routes'
         },
-        'rotation_versions': {
+        'weights': {
           '1': {
-            '1000': '2',
-            '2000': '1'
+            '1000': 1
           },
           '2': {
-            '1000': '1',
-            '2000': '1'
+            '1001': 1,
+            '1002': 1,
+            '1003': 1,
+            '1004': 1
+          },
+          '3': {
+            '1005': 1,
+            '1006': 0
           }
         }
       };
       this.rotationConditions = {
-        'routes': () => false,
-        'routes-b': () => true
+        baseline: () => true,
+        price: () => false,
+        homepage_design: () => Promise.resolve(true)
       };
+      this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
     });
 
-    it('Should return the defualt routes with no matched rotations', async function() {
-      try {
-        const rotations = new Rotations('my-rotations-c', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-        const routes = await rotations.getRoutes();
-        expect(routes[0].rotation).to.equal('routes'); // default
-        expect(routes).to.eql(this.routeConfig.routes);
-      } catch (e) {
-        return Promise.reject(e);
-      }
+    it('Should return array of routes', async function() {
+      const routes = await this.rotation.getRoutes();
+      expect(routes).to.be.an('array');
     });
 
-    it('Should handle empty routeConfig, returning empty array without error', async function() {
-      try {
-        const rotations = new Rotations('my-rotations-c', {}, this.rotationsConfigOne, this.rotationConditionsFirstFalse);
-        const routes = await rotations.getRoutes();
-        expect(routes).to.be.a('array');
-        expect(routes).to.have.lengthOf(0);
-      } catch (e) {
-        return Promise.reject(e);
-      }
+    it('Should return the same routes after qualification has been cached', async function() {
+      const routes = await this.rotation.getRoutes();
+      const routes1 = await this.rotation.getRoutes();
+      expect(routes1).to.be.eql(routes);
     });
-  });
+    it('Should return the same routes after qualification has been cached but no longer qualifies', async function() {
+      const routes = await this.rotation.getRoutes();
+      const rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, {
+        baseline: () => true,
+        price: () => false,
+        homepage_design: () => Promise.resolve(false)
+      });
+      const routes1 = await rotation.getRoutes();
+      expect(routes1).to.be.eql(routes);
+    });
 
-  context('Weights are respected', function() {
-    beforeEach(function() {
-      this.routeConfig = {
-        'routes': [
-          {
-            'resolve': () => fetch('./routes/home/index.js'),
-            'rotation': 'routes',
-            'path': '/'
-          }
-        ],
-        'routes-b': [
-          {
-            'resolve': () => fetch('./routes-b/home-b/index.js'),
-            'rotation': 'routes-b',
-            'path': '/'
-          }
-        ]
-      };
-      this.rotationsConfig = {
-        'page_rotations': {
-          '/': [1, 2]
+    it('Should return the new routes after qualification has been cached but rotation is removed', async function() {
+      const routes = await this.rotation.getRoutes();
+      const rotation = new Rotations('rotations', this.routeConfig, {
+        'conditions': {
+          '1': 'baseline',
+          '2': 'price',
         },
-        'rotation_id_keyname_map': {
-          '1': 'routes',
-          '2': 'routes-b'
+        'qualification_order': {
+          '/': ['1'],
+          '/about': ['1'],
+          '/subscribe': ['2', '1'],
         },
-        'rotation_version_page_group_version_map': {
+        'versions': {
           '1000': 'routes',
-          '2000': 'routes-b'
+          '1001': 'routes-price_test_1',
+          '1002': 'routes-price_test_2',
+          '1003': 'routes-price_test_3',
+          '1004': 'routes',
         },
-        'rotation_versions': {
+        'weights': {
           '1': {
-            '1000': '2',
-            '2000': '1'
+            '1000': 1
           },
           '2': {
-            '1000': '1',
-            '2000': '1'
+            '1001': 1,
+            '1002': 1,
+            '1003': 1,
+            '1004': 1
           }
         }
-      };
-      this.rotationConditions = {
-        'routes': () => new Promise((resolve) => resolve(true)),
-        'routes-b': () => true
-      };
+      }, {
+        baseline: () => true,
+        price: () => false
+      });
+      const routes1 = await rotation.getRoutes();
+      expect(routes1).to.not.be.eql(routes);
     });
 
-    it('Should generate routes-b ~33%  of the time', async function() {
-      try {
-        await new Promise((resolve) => {
-          const rotations = new Rotations('my-rotations-a2', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-          let totalCount = 0;
-          let routesBCount = 0;
-
-          const genRoutes = () => {
-            rotations.clearCache();
-            rotations.getRoutes().then((routes) => {
-              expect(routes).to.be.a('array');
-              // expect(routes.rotation).to.equal('routes-b');
-              if (routes.rotation === 'routes-b') {
-                routesBCount++;
-              }
-              if (totalCount++ < 100) {
-                genRoutes();
-              } else {
-                // we're all done
-                expect(Math.abs(routesBCount/100 - .33)).to.be.within(.28, .38);
-                resolve();
-              }
-            });
-          };
-          genRoutes();
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-
-    it('Should generate routes-b 100%', async function() {
-      try {
-        await new Promise((resolve) => {
-          const limit = 20;
-          const promises = [];
-          let i = 0;
-          const matches = {'routes': 0, 'routes-b': 0};
-          const rotationsConfig = {
-            'page_rotations': {
-              '/': [1, 2]
-            },
-            'rotation_id_keyname_map': {
-              '1': 'routes',
-              '2': 'routes-b'
-            },
-            'rotation_version_page_group_version_map': {
-              '1000': 'routes',
-              '2000': 'routes-b'
-            },
-            'rotation_versions': {
-              '1': {
-                '1000': '0',
-                '2000': '1'
-              },
-              '2': {
-                '1000': '0',
-                '2000': '1'
-              }
-            }
-          };
-
-          let rotations;
-          const interval = setInterval(() => {
-            if (i++ === limit) {
-              clearInterval(interval);
-              Promise.all(promises).then(() => {
-                expect(matches.routes).to.equal(0);
-                expect(matches['routes-b'] / limit).to.equal(1);
-                resolve();
-              });
-            } else {
-              if (rotations) { rotations.clearCache(); }
-              rotations = new Rotations('my-rotations-' + i, this.routeConfig, rotationsConfig, this.rotationConditions);
-
-              const p = rotations.getRoutes();
-              promises.push(p);
-              p.then((routes) => {
-                matches[routes[0].rotation] += 1;
-              });
-            }
-          }, 10);
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-  });
-  context('Cache / Prerender', function() {
-    beforeEach(function() {
-      this.routeConfig = {
-        'routes': [
-          {
-            'resolve': () => fetch('./routes/about/index.js'),
-            'rotation': 'routes',
-            'path': '/about'
-          },
-          {
-            'resolve': () => fetch('./routes/home/index.js'),
-            'rotation': 'routes',
-            'path': '/'
-          },
-          {
-            'resolve': () => fetch('./routes/contact/index.js'),
-            'rotation': 'routes',
-            'path': '/contact'
-          }
-        ],
-        'routes-b': [
-          {
-            'resolve': () => fetch('./routes-b/about-b/index.js'),
-            'rotation': 'routes-b',
-            'path': '/about'
-          },
-          {
-            'resolve': () => fetch('./routes/home/index.js'),
-            'rotation': 'routes',
-            'path': '/'
-          },
-          {
-            'resolve': () => fetch('./routes/contact-us/index.js'),
-            'rotation': 'routes',
-            'path': '/contact-us'
-          }
-        ]
-      };
-      this.rotationsConfig = {
-        'page_rotations': {
-          '/': [1, 2],
-          '/about': [2, 1],
-          '/contact-us': [1, 2]
+    it('Should use base routed when rotation version does not exist', async function() {
+      const rotation = new Rotations('rotations', this.routeConfig, {
+        'conditions': {
+          '1': 'baseline',
+          '2': 'price',
+          '3': 'homepage_design'
         },
-        'rotation_id_keyname_map': {
-          '1': 'routes',
-          '2': 'routes-b'
+        'qualification_order': {
+          '/': ['3', '1'],
+          '/about': ['1'],
+          '/subscribe': ['2', '1'],
         },
-        'rotation_version_page_group_version_map': {
-          '1000': 'routes',
-          '2000': 'routes-b'
-        },
-        'rotation_versions': {
+        'versions': {},
+        'weights': {
           '1': {
-            '1000': '2',
-            '2000': '1'
+            '1000': 1
           },
           '2': {
-            '1000': '1',
-            '2000': '1'
+            '1001': 1,
+            '1002': 1,
+            '1003': 1,
+            '1004': 1
+          },
+          '3': {
+            '1005': 1,
+            '1006': 1
           }
         }
-      };
-      this.rotationConditions = {
-        'routes': () => true,
-        'routes-b': () => new Promise((resolve) => resolve(true))
-      };
-    });
-
-    beforeEach(function() {
-      window.aofljsConfig = {
-        prerender: false
-      };
-    });
-
-    it('Should generate the original routes on prerender true', async function() {
-      try {
-        await new Promise((resolve) => {
-          window.aofljsConfig = {
-            prerender: true
-          };
-
-          const rotations = new Rotations('my-rotations-b', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-          rotations.getRoutes().then((routes) => {
-            expect(routes).to.be.a('array');
-            expect(routes).to.have.lengthOf(3);
-            resolve();
-          });
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-
-    it('Should serve a cached route', async function() {
-      try {
-        await new Promise((resolve) => {
-          const rotations = new Rotations('my-rotations-d', this.routeConfig, this.rotationsConfig, this.rotationConditions);
-          rotations.getRoutes().then((origRoutes) => {
-            rotations.getRoutes().then((routes) => {
-              expect(routes).have.lengthOf(3);
-              expect(routes).to.be.a('array');
-              expect(routes).to.eql(origRoutes);
-              resolve();
-            });
-          });
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
+      }, {
+        baseline: () => true,
+        price: () => false,
+        homepage_design: () => true
+      });
+      const routes = await rotation.getRoutes();
+      expect(routes).to.be.eql(this.routeConfig.routes);
     });
   });
 });

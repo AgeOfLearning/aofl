@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+      web-components/aofl-select-list/index.js - Documentation
+  </title>
+
+  <link href="https://www.braintreepayments.com/images/favicon-ccda0b14.png" rel="icon" type="image/png">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+  <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+  <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+  
+  <link type="text/css" rel="stylesheet" href="styles/collapse.css">
+  
+
+  
+
+  <!-- start Mixpanel -->
+  <script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+  0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+  for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+  mixpanel.init("1919205b2da72e4da3b9b6639b444d59");</script>
+  <!-- end Mixpanel -->
+</head>
+
+<body>
+  <svg style="display: none;">
+    <defs>
+      <symbol id="linkIcon" fill="#706d77" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+  <label for="nav-trigger" class="navicon-button x">
+    <div class="navicon"></div>
+  </label>
+
+  <label for="nav-trigger" class="overlay"></label>
+
+  <div class="top-nav-wrapper">
+    <ul>
+      <li >
+        <a href="index.html">
+          
+            <svg fill="#6D6D6D" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          
+          
+        </a>
+      </li>
+
+      
+
+    </ul>
+  </div>
+
+  <nav>
+    <h3 class="reference-title">
+      Age Of Learning JavaScript SDK
+    </h3>
+
+    
+      <h3>
+        Resources
+      </h3>
+      
+        <a href="https://ageoflearning.github.io/aofl">AofL JS Documentation</a>
+      
+    
+
+    <h3>Classes</h3><ul><li id="AoflDrawer-nav"><a href="AoflDrawer.html">AoflDrawer</a><ul class='methods'><li data-type="method" id="AoflDrawer-attributeChangedCallback-nav"><a href="AoflDrawer.html#attributeChangedCallback">attributeChangedCallback</a></li><li data-type="method" id="AoflDrawer-connectedCallback-nav"><a href="AoflDrawer.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflDrawer-disconnectedCallback-nav"><a href="AoflDrawer.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="AoflDrawer-render-nav"><a href="AoflDrawer.html#render">render</a></li></ul></li><li id="AoflImg-nav"><a href="AoflImg.html">AoflImg</a><ul class='methods'><li data-type="method" id="AoflImg-connectedCallback-nav"><a href="AoflImg.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflImg-firstWithinViewport-nav"><a href="AoflImg.html#firstWithinViewport">firstWithinViewport</a></li><li data-type="method" id="AoflImg-imageLoaded-nav"><a href="AoflImg.html#imageLoaded">imageLoaded</a></li><li data-type="method" id="AoflImg-loadImage-nav"><a href="AoflImg.html#loadImage">loadImage</a></li><li data-type="method" id="AoflImg-render-nav"><a href="AoflImg.html#render">render</a></li><li data-type="method" id="AoflImg-shouldUpdate-nav"><a href="AoflImg.html#shouldUpdate">shouldUpdate</a></li></ul></li><li id="AoflListOption-nav"><a href="AoflListOption.html">AoflListOption</a><ul class='methods'><li data-type="method" id="AoflListOption-connectedCallback-nav"><a href="AoflListOption.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflListOption-disconnectedCallback-nav"><a href="AoflListOption.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="AoflListOption-keydownCallback-nav"><a href="AoflListOption.html#keydownCallback">keydownCallback</a></li><li data-type="method" id="AoflListOption-mouseenterCallback-nav"><a href="AoflListOption.html#mouseenterCallback">mouseenterCallback</a></li><li data-type="method" id="AoflListOption-render-nav"><a href="AoflListOption.html#render">render</a></li><li data-type="method" id="AoflListOption-select-nav"><a href="AoflListOption.html#select">select</a></li></ul></li><li id="AoflMultiselectList-nav"><a href="AoflMultiselectList.html">AoflMultiselectList</a><ul class='methods'><li data-type="method" id="AoflMultiselectList-addOption-nav"><a href="AoflMultiselectList.html#addOption">addOption</a></li><li data-type="method" id="AoflMultiselectList-clearSelected-nav"><a href="AoflMultiselectList.html#clearSelected">clearSelected</a></li><li data-type="method" id="AoflMultiselectList-connectedCallback-nav"><a href="AoflMultiselectList.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflMultiselectList-disconnectedCallback-nav"><a href="AoflMultiselectList.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="AoflMultiselectList-focusoutCallback-nav"><a href="AoflMultiselectList.html#focusoutCallback">focusoutCallback</a></li><li data-type="method" id="AoflMultiselectList-keydownCallback-nav"><a href="AoflMultiselectList.html#keydownCallback">keydownCallback</a></li><li data-type="method" id="AoflMultiselectList-mouseoverCallback-nav"><a href="AoflMultiselectList.html#mouseoverCallback">mouseoverCallback</a></li><li data-type="method" id="AoflMultiselectList-render-nav"><a href="AoflMultiselectList.html#render">render</a></li><li data-type="method" id="AoflMultiselectList-updateSelected-nav"><a href="AoflMultiselectList.html#updateSelected">updateSelected</a></li></ul></li><li id="AoflPicture-nav"><a href="AoflPicture.html">AoflPicture</a><ul class='methods'><li data-type="method" id="AoflPicture-findMatchingSource-nav"><a href="AoflPicture.html#.findMatchingSource">findMatchingSource</a></li><li data-type="method" id="AoflPicture-addSource-nav"><a href="AoflPicture.html#addSource">addSource</a></li><li data-type="method" id="AoflPicture-disconnectedCallback-nav"><a href="AoflPicture.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="AoflPicture-render-nav"><a href="AoflPicture.html#render">render</a></li><li data-type="method" id="AoflPicture-setImg-nav"><a href="AoflPicture.html#setImg">setImg</a></li><li data-type="method" id="AoflPicture-setMediaSrc-nav"><a href="AoflPicture.html#setMediaSrc">setMediaSrc</a></li></ul></li><li id="AoflSelectList-nav"><a href="AoflSelectList.html">AoflSelectList</a><ul class='methods'><li data-type="method" id="AoflSelectList-addOption-nav"><a href="AoflSelectList.html#addOption">addOption</a></li><li data-type="method" id="AoflSelectList-connectedCallback-nav"><a href="AoflSelectList.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflSelectList-disconnectedCallback-nav"><a href="AoflSelectList.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="AoflSelectList-focusoutCallback-nav"><a href="AoflSelectList.html#focusoutCallback">focusoutCallback</a></li><li data-type="method" id="AoflSelectList-keydownCallback-nav"><a href="AoflSelectList.html#keydownCallback">keydownCallback</a></li><li data-type="method" id="AoflSelectList-mouseoverCallback-nav"><a href="AoflSelectList.html#mouseoverCallback">mouseoverCallback</a></li><li data-type="method" id="AoflSelectList-render-nav"><a href="AoflSelectList.html#render">render</a></li><li data-type="method" id="AoflSelectList-updateSelected-nav"><a href="AoflSelectList.html#updateSelected">updateSelected</a></li></ul></li><li id="AoflSource-nav"><a href="AoflSource.html">AoflSource</a><ul class='methods'><li data-type="method" id="AoflSource-connectedCallback-nav"><a href="AoflSource.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="AoflSource-render-nav"><a href="AoflSource.html#render">render</a></li></ul></li><li id="FormatterManager-nav"><a href="FormatterManager.html">FormatterManager</a><ul class='methods'><li data-type="method" id="FormatterManager-addFormatter-nav"><a href="FormatterManager.html#addFormatter">addFormatter</a></li><li data-type="method" id="FormatterManager-getFormatter-nav"><a href="FormatterManager.html#getFormatter">getFormatter</a></li></ul></li><li id="MapStatePropertiesMixin-nav"><a href="MapStatePropertiesMixin.html">MapStatePropertiesMixin</a><ul class='methods'><li data-type="method" id="MapStatePropertiesMixin-connectedCallback-nav"><a href="MapStatePropertiesMixin.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="MapStatePropertiesMixin-disconnectedCallback-nav"><a href="MapStatePropertiesMixin.html#disconnectedCallback">disconnectedCallback</a></li></ul></li><li id="ApiRequest-nav"><a href="module-aofl-js_api-request-package.ApiRequest.html">ApiRequest</a><ul class='methods'><li data-type="method" id="ApiRequest-addFormatter-nav"><a href="module-aofl-js_api-request-package.ApiRequest.html#addFormatter">addFormatter</a></li><li data-type="method" id="ApiRequest-clearCache-nav"><a href="module-aofl-js_api-request-package.ApiRequest.html#clearCache">clearCache</a></li><li data-type="method" id="ApiRequest-getCacheManager-nav"><a href="module-aofl-js_api-request-package.ApiRequest.html#getCacheManager">getCacheManager</a></li><li data-type="method" id="ApiRequest-request-nav"><a href="module-aofl-js_api-request-package.ApiRequest.html#request">request</a></li></ul></li><li id="CacheManager-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html">CacheManager</a><ul class='methods'><li data-type="method" id="CacheManager-clear-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#clear">clear</a></li><li data-type="method" id="CacheManager-destruct-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#destruct">destruct</a></li><li data-type="method" id="CacheManager-getCollection-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#getCollection">getCollection</a></li><li data-type="method" id="CacheManager-getItem-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#getItem">getItem</a></li><li data-type="method" id="CacheManager-getNamespaceKey-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#getNamespaceKey">getNamespaceKey</a></li><li data-type="method" id="CacheManager-getStoredKeys-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#getStoredKeys">getStoredKeys</a></li><li data-type="method" id="CacheManager-isExpired-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#isExpired">isExpired</a></li><li data-type="method" id="CacheManager-removeExpired-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#removeExpired">removeExpired</a></li><li data-type="method" id="CacheManager-removeItem-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#removeItem">removeItem</a></li><li data-type="method" id="CacheManager-setItem-nav"><a href="module-aofl-js_cache-manager-package.CacheManager.html#setItem">setItem</a></li></ul></li><li id="MemoryStorage-nav"><a href="module-aofl-js_cache-manager-package.MemoryStorage.html">MemoryStorage</a><ul class='methods'><li data-type="method" id="MemoryStorage-clear-nav"><a href="module-aofl-js_cache-manager-package.MemoryStorage.html#.clear">clear</a></li><li data-type="method" id="MemoryStorage-getItem-nav"><a href="module-aofl-js_cache-manager-package.MemoryStorage.html#.getItem">getItem</a></li><li data-type="method" id="MemoryStorage-removeItem-nav"><a href="module-aofl-js_cache-manager-package.MemoryStorage.html#.removeItem">removeItem</a></li><li data-type="method" id="MemoryStorage-setItem-nav"><a href="module-aofl-js_cache-manager-package.MemoryStorage.html#.setItem">setItem</a></li></ul></li><li id="I18nMixin-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html">I18nMixin</a><ul class='methods'><li data-type="method" id="I18nMixin-__-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#__">__</a></li><li data-type="method" id="I18nMixin-_c-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#_c">_c</a></li><li data-type="method" id="I18nMixin-_r-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#_r">_r</a></li><li data-type="method" id="I18nMixin-connectedCallback-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#connectedCallback">connectedCallback</a></li><li data-type="method" id="I18nMixin-disconnectedCallback-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#disconnectedCallback">disconnectedCallback</a></li><li data-type="method" id="I18nMixin-getTranslationMap-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#getTranslationMap">getTranslationMap</a></li><li data-type="method" id="I18nMixin-langListener-nav"><a href="module-aofl-js_i18n-mixin-package.I18nMixin.html#langListener">langListener</a></li></ul></li><li id="Middleware-nav"><a href="module-aofl-js_middleware-package.Middleware.html">Middleware</a><ul class='methods'><li data-type="method" id="Middleware-getMiddlewareIterator-nav"><a href="module-aofl-js_middleware-package.Middleware.html#getMiddlewareIterator">getMiddlewareIterator</a></li><li data-type="method" id="Middleware-iterateMiddleware-nav"><a href="module-aofl-js_middleware-package.Middleware.html#iterateMiddleware">iterateMiddleware</a></li><li data-type="method" id="Middleware-use-nav"><a href="module-aofl-js_middleware-package.Middleware.html#use">use</a></li></ul></li><li id="Polyfill-nav"><a href="module-aofl-js_polyfill-service-package.Polyfill.html">Polyfill</a><ul class='methods'><li data-type="method" id="Polyfill-load-nav"><a href="module-aofl-js_polyfill-service-package.Polyfill.html#.load">load</a></li><li data-type="method" id="Polyfill-loadAll-nav"><a href="module-aofl-js_polyfill-service-package.Polyfill.html#.loadAll">loadAll</a></li><li data-type="method" id="Polyfill-supported-nav"><a href="module-aofl-js_polyfill-service-package.Polyfill.html#.supported">supported</a></li></ul></li><li id="RegisterCallback-nav"><a href="module-aofl-js_register-callback-package.RegisterCallback.html">RegisterCallback</a><ul class='methods'><li data-type="method" id="RegisterCallback-next-nav"><a href="module-aofl-js_register-callback-package.RegisterCallback.html#next">next</a></li><li data-type="method" id="RegisterCallback-register-nav"><a href="module-aofl-js_register-callback-package.RegisterCallback.html#register">register</a></li></ul></li><li id="ResourceEnumerate-nav"><a href="module-aofl-js_resource-enumerate-package.ResourceEnumerate.html">ResourceEnumerate</a><ul class='methods'><li data-type="method" id="ResourceEnumerate-after-nav"><a href="module-aofl-js_resource-enumerate-package.ResourceEnumerate.html#after">after</a></li><li data-type="method" id="ResourceEnumerate-before-nav"><a href="module-aofl-js_resource-enumerate-package.ResourceEnumerate.html#before">before</a></li><li data-type="method" id="ResourceEnumerate-get-nav"><a href="module-aofl-js_resource-enumerate-package.ResourceEnumerate.html#get">get</a></li><li data-type="method" id="ResourceEnumerate-init-nav"><a href="module-aofl-js_resource-enumerate-package.ResourceEnumerate.html#init">init</a></li></ul></li><li id="Rotations-nav"><a href="module-aofl-js_rotations-package.Rotations.html">Rotations</a><ul class='methods'><li data-type="method" id="Rotations-chooseWeightedVariant-nav"><a href="module-aofl-js_rotations-package.Rotations.html#chooseWeightedVariant">chooseWeightedVariant</a></li><li data-type="method" id="Rotations-clearCache-nav"><a href="module-aofl-js_rotations-package.Rotations.html#clearCache">clearCache</a></li><li data-type="method" id="Rotations-createVersionRanges-nav"><a href="module-aofl-js_rotations-package.Rotations.html#createVersionRanges">createVersionRanges</a></li><li data-type="method" id="Rotations-gen-nav"><a href="module-aofl-js_rotations-package.Rotations.html#gen">gen</a></li><li data-type="method" id="Rotations-getQualifyingRotation-nav"><a href="module-aofl-js_rotations-package.Rotations.html#getQualifyingRotation">getQualifyingRotation</a></li><li data-type="method" id="Rotations-getRoutes-nav"><a href="module-aofl-js_rotations-package.Rotations.html#getRoutes">getRoutes</a></li><li data-type="method" id="Rotations-getWeightsTotal-nav"><a href="module-aofl-js_rotations-package.Rotations.html#getWeightsTotal">getWeightsTotal</a></li><li data-type="method" id="Rotations-qualifies-nav"><a href="module-aofl-js_rotations-package.Rotations.html#qualifies">qualifies</a></li><li data-type="method" id="Rotations-replaceRoute-nav"><a href="module-aofl-js_rotations-package.Rotations.html#replaceRoute">replaceRoute</a></li><li data-type="method" id="Rotations-uniqueRoutes-nav"><a href="module-aofl-js_rotations-package.Rotations.html#uniqueRoutes">uniqueRoutes</a></li></ul></li><li id="Router-nav"><a href="module-aofl-js_router-package.Router.html">Router</a><ul class='methods'><li data-type="method" id="Router-addRegexRoutes-nav"><a href="module-aofl-js_router-package.Router.html#addRegexRoutes">addRegexRoutes</a></li><li data-type="method" id="Router-after-nav"><a href="module-aofl-js_router-package.Router.html#after">after</a></li><li data-type="method" id="Router-afterEach-nav"><a href="module-aofl-js_router-package.Router.html#afterEach">afterEach</a></li><li data-type="method" id="Router-applyMiddleware-nav"><a href="module-aofl-js_router-package.Router.html#applyMiddleware">applyMiddleware</a></li><li data-type="method" id="Router-before-nav"><a href="module-aofl-js_router-package.Router.html#before">before</a></li><li data-type="method" id="Router-beforeEach-nav"><a href="module-aofl-js_router-package.Router.html#beforeEach">beforeEach</a></li><li data-type="method" id="Router-init-nav"><a href="module-aofl-js_router-package.Router.html#init">init</a></li><li data-type="method" id="Router-listen-nav"><a href="module-aofl-js_router-package.Router.html#listen">listen</a></li><li data-type="method" id="Router-navigate-nav"><a href="module-aofl-js_router-package.Router.html#navigate">navigate</a></li></ul></li><li id="Store-nav"><a href="module-aofl-js_store-package.Store.html">Store</a><ul class='methods'><li data-type="method" id="Store-addDecorators-nav"><a href="module-aofl-js_store-package.Store.html#addDecorators">addDecorators</a></li><li data-type="method" id="Store-addState-nav"><a href="module-aofl-js_store-package.Store.html#addState">addState</a></li><li data-type="method" id="Store-commit-nav"><a href="module-aofl-js_store-package.Store.html#commit">commit</a></li><li data-type="method" id="Store-forceCommit-nav"><a href="module-aofl-js_store-package.Store.html#forceCommit">forceCommit</a></li><li data-type="method" id="Store-getState-nav"><a href="module-aofl-js_store-package.Store.html#getState">getState</a></li><li data-type="method" id="Store-replaceState-nav"><a href="module-aofl-js_store-package.Store.html#replaceState">replaceState</a></li><li data-type="method" id="Store-subscribe-nav"><a href="module-aofl-js_store-package.Store.html#subscribe">subscribe</a></li></ul></li><li id="PathUtils-nav"><a href="PathUtils.html">PathUtils</a><ul class='methods'><li data-type="method" id="PathUtils-cleanPath-nav"><a href="PathUtils.html#.cleanPath">cleanPath</a></li><li data-type="method" id="PathUtils-getPathSegments-nav"><a href="PathUtils.html#.getPathSegments">getPathSegments</a></li><li data-type="method" id="PathUtils-getRegex-nav"><a href="PathUtils.html#.getRegex">getRegex</a></li><li data-type="method" id="PathUtils-isDynamicSegment-nav"><a href="PathUtils.html#.isDynamicSegment">isDynamicSegment</a></li><li data-type="method" id="PathUtils-matchingSegmentsCount-nav"><a href="PathUtils.html#.matchingSegmentsCount">matchingSegmentsCount</a></li><li data-type="method" id="PathUtils-removeTrailingSlash-nav"><a href="PathUtils.html#.removeTrailingSlash">removeTrailingSlash</a></li></ul></li><li id="ValidationFunction-nav"><a href="ValidationFunction.html">ValidationFunction</a><ul class='methods'><li data-type="method" id="ValidationFunction-getKeys-nav"><a href="ValidationFunction.html#getKeys">getKeys</a></li><li data-type="method" id="ValidationFunction-reset-nav"><a href="ValidationFunction.html#reset">reset</a></li><li data-type="method" id="ValidationFunction-toString-nav"><a href="ValidationFunction.html#toString">toString</a></li><li data-type="method" id="ValidationFunction-validate-nav"><a href="ValidationFunction.html#validate">validate</a></li></ul></li><li id="ValidationMixin-nav"><a href="ValidationMixin.html">ValidationMixin</a></li><li id="ValidationProperty-nav"><a href="ValidationProperty.html">ValidationProperty</a><ul class='methods'><li data-type="method" id="ValidationProperty-getKeys-nav"><a href="ValidationProperty.html#getKeys">getKeys</a></li><li data-type="method" id="ValidationProperty-reset-nav"><a href="ValidationProperty.html#reset">reset</a></li><li data-type="method" id="ValidationProperty-toString-nav"><a href="ValidationProperty.html#toString">toString</a></li><li data-type="method" id="ValidationProperty-validate-nav"><a href="ValidationProperty.html#validate">validate</a></li></ul></li></ul><h3>Modules</h3><ul><li id="aofl-js_api-request-package-nav"><a href="module-aofl-js_api-request-package.html">aofl-js/api-request-package</a></li><li id="aofl-js_cache-manager-package-nav"><a href="module-aofl-js_cache-manager-package.html">aofl-js/cache-manager-package</a></li><li id="aofl-js_component-utils-package-nav"><a href="module-aofl-js_component-utils-package.html">aofl-js/component-utils-package</a></li><li id="aofl-js_form-validate-package-nav"><a href="module-aofl-js_form-validate-package.html">aofl-js/form-validate-package</a><ul class='methods'><li data-type="method" id="aofl-js_form-validate-package-isAllDigits-nav"><a href="module-aofl-js_form-validate-package.html#.isAllDigits">isAllDigits</a></li><li data-type="method" id="aofl-js_form-validate-package-isEqual-nav"><a href="module-aofl-js_form-validate-package.html#.isEqual">isEqual</a></li><li data-type="method" id="aofl-js_form-validate-package-isRequired-nav"><a href="module-aofl-js_form-validate-package.html#.isRequired">isRequired</a></li><li data-type="method" id="aofl-js_form-validate-package-maxLength-nav"><a href="module-aofl-js_form-validate-package.html#.maxLength">maxLength</a></li><li data-type="method" id="aofl-js_form-validate-package-minLength-nav"><a href="module-aofl-js_form-validate-package.html#.minLength">minLength</a></li><li data-type="method" id="aofl-js_form-validate-package-module.exports-nav"><a href="module-aofl-js_form-validate-package.html#.module.exports">module.exports</a></li></ul></li><li id="aofl-js_i18n-mixin-package-nav"><a href="module-aofl-js_i18n-mixin-package.html">aofl-js/i18n-mixin-package</a></li><li id="aofl-js_map-state-properties-mixin-package-nav"><a href="module-aofl-js_map-state-properties-mixin-package.html">aofl-js/map-state-properties-mixin-package</a></li><li id="aofl-js_middleware-package-nav"><a href="module-aofl-js_middleware-package.html">aofl-js/middleware-package</a></li><li id="aofl-js_object-utils-package-nav"><a href="module-aofl-js_object-utils-package.html">aofl-js/object-utils-package</a><ul class='methods'><li data-type="method" id="aofl-js_object-utils-package-exports.deepAssign-nav"><a href="module-aofl-js_object-utils-package.html#.exports.deepAssign">exports.deepAssign</a></li><li data-type="method" id="aofl-js_object-utils-package-exports.deepFreeze-nav"><a href="module-aofl-js_object-utils-package.html#.exports.deepFreeze">exports.deepFreeze</a></li></ul></li><li id="aofl-js_polyfill-service-package-nav"><a href="module-aofl-js_polyfill-service-package.html">aofl-js/polyfill-service-package</a></li><li id="aofl-js_register-callback-package-nav"><a href="module-aofl-js_register-callback-package.html">aofl-js/register-callback-package</a></li><li id="aofl-js_resource-enumerate-package-nav"><a href="module-aofl-js_resource-enumerate-package.html">aofl-js/resource-enumerate-package</a></li><li id="aofl-js_rotations-package-nav"><a href="module-aofl-js_rotations-package.html">aofl-js/rotations-package</a></li><li id="aofl-js_router-package-nav"><a href="module-aofl-js_router-package.html">aofl-js/router-package</a></li><li id="aofl-js_server-environment-package-nav"><a href="module-aofl-js_server-environment-package.html">aofl-js/server-environment-package</a><ul class='methods'><li data-type="method" id="aofl-js_server-environment-package-exports.getServerEnvironment-nav"><a href="module-aofl-js_server-environment-package.html#.exports.getServerEnvironment">exports.getServerEnvironment</a></li></ul></li><li id="aofl-js_store-package-nav"><a href="module-aofl-js_store-package.html">aofl-js/store-package</a></li><li id="aofl-js_uuid-package-nav"><a href="module-aofl-js_uuid-package.html">aofl-js/uuid-package</a></li></ul>
+  </nav>
+
+  <div id="main">
+    
+      <h1 class="page-title">
+        web-components/aofl-select-list/index.js
+      </h1>
+    
+
+    
+      
+
+<section>
+  <article>
+    <pre class="prettyprint source linenums"><code>/**
+ * Implements AoflSelectList
+ *
+ * @summary aofl-select-list
+ * @version 1.0.0
+ * @author Daniel Belisle &lt;daniel.belisle@aofl.com>
+ *
+ * @requires AoflElement
+ */
+import {template} from './template';
+import {AoflElement} from '../aofl-element';
+
+/**
+ * @extends {AoflElement}
+ * @fires AoflSelectList.change
+ */
+class AoflSelectList extends AoflElement {
+  /**
+   * @readonly
+   */
+  static get is() {
+    return 'aofl-select-list';
+  }
+
+  /**
+   * @readonly
+   */
+  static get properties() {
+    return {};
+  }
+
+  /**
+   *
+   */
+  constructor() {
+    super();
+    this.options = [];
+    this.value = '';
+    this.focusIndex = 0;
+  }
+
+
+  /**
+   *
+   */
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('keydown', this.keydownCallback);
+    this.addEventListener('focusout', this.focusoutCallback);
+    this.addEventListener('mouseover', this.mouseoverCallback);
+  }
+
+  /**
+   * @return {Object}
+   */
+  render() {
+    return super.render(template);
+  }
+
+  /**
+   * If the element losing focus is not a child of the list reset the focusIndex
+   *
+   * @param {Event} e
+   */
+  focusoutCallback(e) {
+    if (e.relatedTarget &amp;&amp; e.relatedTarget.parentNode === this) { return; }
+
+    this.focusIndex = 0;
+  }
+
+  /**
+   * @param {Event} e
+   */
+  keydownCallback(e) {
+    e.preventDefault();
+    if (e.keyCode === 38 || (e.shiftKey &amp;&amp; e.keyCode === 9)) { // up arrow or shift tab
+      if (this.focusIndex > 0) {
+        this.options[--this.focusIndex].focus();
+      }
+    } else if (e.keyCode === 40 || e.keyCode === 9) { // down arrow or tab
+      if (this.focusIndex &lt; this.options.length - 1) {
+        this.options[++this.focusIndex].focus();
+      }
+    }
+  }
+
+  /**
+   * @param {Event} e
+   */
+  mouseoverCallback(e) {
+    const index = this.options.indexOf(e.target);
+    if (index > -1) {
+      this.focusIndex = index;
+    }
+  }
+
+  /**
+   * Updated selected value and dispatches a custom event with that value
+   *
+   * @param {String} newValue
+   */
+  updateSelected(newValue) {
+    for (let i = 0; i &lt; this.options.length; i++) {
+      this.options[i].removeAttribute('selected');
+      if (this.options[i].value === newValue) {
+        const selected = this.options[i];
+        selected.setAttribute('selected', '');
+        this.value = selected.value;
+      }
+    }
+    this.dispatchEvent(new CustomEvent('change'));
+  }
+
+  /**
+   * Add an option to be selected
+   *
+   * @param {String} option
+   */
+  addOption(option) {
+    this.options.push(option);
+    if (option.hasAttribute('selected')) {
+      this.updateSelected(option.value);
+    }
+  }
+
+  /**
+   *
+   */
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.removeEventListener('keydown', this.keydownCallback);
+    this.removeEventListener('focusout', this.focusoutCallback);
+    this.removeEventListener('mouseover', this.mouseoverCallback);
+  }
+}
+
+window.customElements.define(AoflSelectList.is, AoflSelectList);
+</code></pre>
+  </article>
+</section>
+
+    
+
+
+  </div>
+
+  <br class="clear">
+
+  <footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+  </footer>
+
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/pagelocation.js"></script>
+
+  
+
+</body>
+</html>

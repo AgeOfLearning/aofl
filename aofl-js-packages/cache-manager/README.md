@@ -3,7 +3,7 @@
 Provides a unified class for storing objects in Storage-like Objects. You can choose from localStorage, sessionStorage and memoryStorage.
 
 ## Examples
-* [Basic Example](https://stackblitz.com/edit/1-0-0-cache-manager?embed=1)
+* [Basic Example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/cache-manager/examples/simple)
 
 
 ## Installation

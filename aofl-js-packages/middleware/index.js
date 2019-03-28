@@ -4,7 +4,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Middleware from './src/Middleware';
+import Middleware from './modules/Middleware';
 
 export {
   Middleware

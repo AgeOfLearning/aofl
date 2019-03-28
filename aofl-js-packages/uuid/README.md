@@ -5,7 +5,7 @@ An ultra-light (192b gzip) uuid like random value generator.
 > Note: this service does not generate actual uuids and does not guarantee uniqueness. Do not use it to enforce data integrity
 
 ## Exmaples
-* https://stackblitz.com/edit/1-0-0-uuid?embed=1
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/uuid/examples/generate
 
 ## Installation
 ```bash

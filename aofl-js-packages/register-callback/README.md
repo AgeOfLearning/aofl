@@ -3,10 +3,6 @@
 It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called.
 
 
-## Examples
-https://stackblitz.com/edit/1-0-0-register-callback?embed=1
-
----
 ## Installation
 ```bash
 npm i -S @aofl/register-callback
@@ -28,7 +24,7 @@ rc.next(); // expected results: hello \n world
 // invoke error
 rc.error('uh oh'); // expected results: error function of "world" is invoked printing 'uh oh' to console
 
-// usubscribe a callback
+// unsubscribe a callback
 unsubscribeHello();
 rc.next(); // expected results: world
 ```
