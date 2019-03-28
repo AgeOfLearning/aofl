@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/web-components/aofl-element uses css`` to render styles
 - Updated all references to AoflElement to reflect updated module export
 - babel settings
+- @aofl/cli - generate component template updated to use decorators
 
 ### [Deprecated]
 ### [Removed]
