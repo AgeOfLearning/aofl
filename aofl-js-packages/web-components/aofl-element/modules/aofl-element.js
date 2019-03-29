@@ -13,7 +13,13 @@ const cachedStyles = Symbol('cachedStyles');
  * Base class for all aofl-js elements.
  */
 class AoflElement extends LitElement {
-  [cachedStyles] = [];
+  /**
+   * Creates an instance of AoflElement.
+   */
+  constructor() {
+    super();
+    this[cachedStyles] = [];
+  }
 
   /**
    * Check if styles have been updated
