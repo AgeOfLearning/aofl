@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "2.0.0-alpha.16",
+  "version": "2.0.0-alpha.17",
   "description": "A module for simplifying api calls",
   "keywords": [
     "aofljs",
@@ -24,6 +24,6 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cache-manager": "^2.0.0-alpha.16"
+    "@aofl/cache-manager": "^2.0.0-alpha.17"
   }
 }
