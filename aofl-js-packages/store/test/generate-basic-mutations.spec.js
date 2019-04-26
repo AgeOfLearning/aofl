@@ -10,7 +10,7 @@ describe('@aofl/store/modules/generate-basic-mutations', function() {
     this.mutations = generateMutations(this.state);
   });
   it('Should add set[Key] mutations to config', function() {
-    expect(this.mutations).to.be.an('object').to.have.all.keys('setFirstName', 'setLastName');
+    expect(this.mutations).to.have.all.keys('setFirstName', 'setLastName');
   });
 
   it('Should return a new state object', function() {

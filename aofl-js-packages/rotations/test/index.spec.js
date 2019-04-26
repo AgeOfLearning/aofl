@@ -125,6 +125,7 @@ describe('@aofl/rotations/rotation', function() {
       ]
     };
   });
+
   context('qualifies()', function() {
     beforeEach(function() {
       this.rotationConfig = {
@@ -145,6 +146,10 @@ describe('@aofl/rotations/rotation', function() {
         promise_false: () => Promise.resolve(false)
       };
       this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
+    });
+
+    afterEach(function() {
+      this.rotation.cache.clear();
     });
 
     it('Should return true when condition returns boolean true', async function() {
@@ -194,6 +199,10 @@ describe('@aofl/rotations/rotation', function() {
         promise_false: () => Promise.resolve(false)
       };
       this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
+    });
+
+    afterEach(function() {
+      this.rotation.cache.clear();
     });
 
     it('Should return the first qualifying condition Id', async function() {
@@ -271,6 +280,10 @@ describe('@aofl/rotations/rotation', function() {
       this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
     });
 
+    afterEach(function() {
+      this.rotation.cache.clear();
+    });
+
     it('Should should return a random version depending on qualifyingId', function() {
       const limit = 1000;
       const versions = {
@@ -297,6 +310,9 @@ describe('@aofl/rotations/rotation', function() {
       this.rotation = new Rotations('rotations', this.routeConfig, {}, {});
     });
 
+    afterEach(function() {
+      this.rotation.cache.clear();
+    });
     it('Should find matching route', function() {
       const route = this.rotation.findRotationRoute('routes', '/');
       expect(route).to.equal(this.routeConfig.routes[0]);
@@ -362,6 +378,10 @@ describe('@aofl/rotations/rotation', function() {
         homepage_design: () => Promise.resolve(true)
       };
       this.rotation = new Rotations('rotations', this.routeConfig, this.rotationConfig, this.rotationConditions);
+    });
+
+    afterEach(function() {
+      this.rotation.cache.clear();
     });
 
     it('Should return array of routes', async function() {
