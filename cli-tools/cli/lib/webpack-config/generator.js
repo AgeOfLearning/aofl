@@ -1,4 +1,3 @@
-const path = require('path');
 const environmentEnumerate = require('../environment-enumerate');
 const webpack = require('webpack');
 const AofLTemplatingPlugin = require('@aofl/templating-plugin');
@@ -12,16 +11,6 @@ const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const UnitTesting = require('@aofl/unit-testing-plugin');
-
-const getEntry = (root) => {
-  const entry = {
-    'custom-elements-es5-adapter':
-      path.resolve(__dirname, 'custom-elements-es5-adapter.js'),
-    'main': path.resolve(root, 'modules', 'index.js')
-  };
-
-  return entry;
-};
 
 const getOutput = (path, publicPath, filename) => {
   const output = {
@@ -212,7 +201,7 @@ const getConfig = (root, configObject) => {
   ];
 
   const config = {
-    entry: getEntry(root),
+    entry: configObject.build.entry,
     output,
     mode,
     devtool,

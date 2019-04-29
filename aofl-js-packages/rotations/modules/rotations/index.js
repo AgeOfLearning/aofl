@@ -1,9 +1,12 @@
 import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
 const EXPIRE_90_DAYS = 7776000000;
+const TRAILING_SLASH_REGEX = /\/$/;
 const gen = function* gen(arr) {
   yield* arr;
 };
+const PUBLIC_PATH = (__webpack_public_path__).replace(TRAILING_SLASH_REGEX, ''); // eslint-disable-line
+const PUBLIC_PATH_REGEX = new RegExp(`^${PUBLIC_PATH}`);
 
 /**
  * Produces an updated route config based on a rotation config
@@ -17,12 +20,12 @@ const gen = function* gen(arr) {
 class Rotations {
   /**
    * @param {String} cacheNamespace
-   * @param {Object} routeConfig
+   * @param {Object} routesConfig
    * @param {Object} rotationConfig
    * @param {Object} rotationConditions
    */
-  constructor(cacheNamespace, routeConfig, rotationConfig, rotationConditions, expires = EXPIRE_90_DAYS) {
-    this.routeConfig = routeConfig;
+  constructor(cacheNamespace, routesConfig, rotationConfig, rotationConditions, expires = EXPIRE_90_DAYS) {
+    this.routesConfig = routesConfig;
     this.rotationConfig = rotationConfig;
     this.rotationConditions = rotationConditions;
     this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, expires);
@@ -116,7 +119,7 @@ class Rotations {
    * @return {Object}
    */
   findRotationRoute(rotation, path) {
-    const routes = this.routeConfig[rotation];
+    const routes = this.routesConfig[rotation];
     if (typeof routes === 'undefined') {
       throw new Error('Rotation not found');
     }
@@ -147,7 +150,7 @@ class Rotations {
     const rotation = this.rotationConfig.versions[version];
 
     if (typeof weights !== 'undefined' && typeof rotation !== 'undefined' &&
-    typeof this.routeConfig[rotation] !== 'undefined') {
+    typeof this.routesConfig[rotation] !== 'undefined') {
       try {
         this.findRotationRoute(rotation, path);
         return {
@@ -165,7 +168,7 @@ class Rotations {
    */
   async getRoutes(mainRoutes = 'routes') {
     const routes = [];
-    const routesIterator = gen(this.routeConfig[mainRoutes]);
+    const routesIterator = gen(this.routesConfig[mainRoutes]);
 
     const qualifyRoutes = async () => {
       const next = routesIterator.next();
@@ -174,7 +177,15 @@ class Rotations {
       }
 
       const route = next.value;
-      const qualificationOrder = this.rotationConfig.qualification_order[route.path];
+      const routePath = route.path.replace(PUBLIC_PATH_REGEX, '').replace(TRAILING_SLASH_REGEX, '');
+      const qualificationOrder = this.rotationConfig.qualification_order[routePath] ||
+        this.rotationConfig.qualification_order[routePath + '/'];
+
+      if (typeof qualificationOrder === 'undefined') {
+        const qr = await qualifyRoutes();
+        return qr;
+      }
+
       try {
         let qualifyingId = 0;
         let version = '';

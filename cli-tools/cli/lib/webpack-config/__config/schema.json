@@ -15,6 +15,13 @@
         "filename": {
           "type": "string"
         },
+        "entry": {
+          "anyOf": [
+            {"type": "string"},
+            {"type": "array"},
+            {"type": "object"}
+          ]
+        },
         "path": {
           "type": "string"
         },

@@ -11,6 +11,10 @@ module.exports = (root) => {
     root,
     build: {
       filename: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[name]-[chunkhash].js': '[name]-[chunkhash].js',
+      entry: {
+        'custom-elements-es5-adapter': path.resolve(__dirname, 'custom-elements-es5-adapter.js'),
+        'main': path.resolve(root, 'modules', 'index.js')
+      },
       path: path.join(root, '__build'),
       publicPath: '/',
       devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'source-map'),
