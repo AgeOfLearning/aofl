@@ -153,6 +153,7 @@ class Rotations {
     typeof this.routesConfig[rotation] !== 'undefined') {
       try {
         this.findRotationRoute(rotation, path);
+
         return {
           qualifyingId,
           version
@@ -190,6 +191,7 @@ class Rotations {
         let qualifyingId = 0;
         let version = '';
         const cachedRotation = this.getCachedRotation(route.path);
+
         if (cachedRotation !== null) {
           qualifyingId = cachedRotation.qualifyingId;
           version = cachedRotation.version;
@@ -202,7 +204,9 @@ class Rotations {
           throw new Error('Version does not exist');
         }
         routes.push(this.findRotationRoute(rotation, route.path));
-        this.cache.setItem(route.path, {path: route.path, qualifyingId, version});
+        if (cachedRotation === null) {
+          this.cache.setItem(route.path, {qualifyingId, version});
+        }
       } catch (e) { // no qualifying rotation
         routes.push(route);
       }
