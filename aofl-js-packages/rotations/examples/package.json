@@ -9,8 +9,8 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "@aofl/rotations": "^2.0.0-alpha.20",
-    "@aofl/web-components": "^2.0.0-alpha.15"
+    "@aofl/rotations": "^2.0.0",
+    "@aofl/web-components": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",

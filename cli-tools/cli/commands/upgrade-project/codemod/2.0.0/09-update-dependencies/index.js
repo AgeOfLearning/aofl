@@ -16,7 +16,7 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
     '@aofl/cli'
   ];
   const prodDependencies = [
-    ...aoflDependencies.map((item) => item + '@next'),
+    ...aoflDependencies.map((item) => item + '@2.0.0'),
     '@babel/polyfill@7.4.0',
     '@babel/runtime@7.4.2',
     'isomorphic-fetch@2.2.1',
