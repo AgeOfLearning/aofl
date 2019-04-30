@@ -212,7 +212,7 @@ class Rotations {
           this.cache.setItem(route.path, {qualifyingId, version});
         }
       } catch (e) { // no qualifying rotation
-        route.rotationInfo = {version: this.rotationConfig.baseline_id};
+        route.rotationInfo = {version: this.rotationConfig.baseline_version};
         routes.push(route);
         this.cache.removeItem(route.path);
       }

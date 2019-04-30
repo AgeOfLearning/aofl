@@ -17,7 +17,7 @@ $ npm i -S @aofl/rotations
 
 ```javascript
 {
-  'baseline_id': '1000',
+  'baseline_version': '1000',
   'conditions': {
     '2': 'homepage_design'
   },
