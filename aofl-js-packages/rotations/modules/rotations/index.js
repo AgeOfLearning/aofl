@@ -5,8 +5,6 @@ const TRAILING_SLASH_REGEX = /\/$/;
 const gen = function* gen(arr) {
   yield* arr;
 };
-const PUBLIC_PATH = (__webpack_public_path__).replace(TRAILING_SLASH_REGEX, ''); // eslint-disable-line
-const PUBLIC_PATH_REGEX = new RegExp(`^${PUBLIC_PATH}`);
 
 /**
  * Produces an updated route config based on a rotation config
@@ -23,14 +21,18 @@ class Rotations {
    * @param {Object} routesConfig
    * @param {Object} rotationConfig
    * @param {Object} rotationConditions
+   * @param {Object} publicPath
    */
-  constructor(cacheNamespace, routesConfig, rotationConfig, rotationConditions, expires = EXPIRE_90_DAYS) {
+  constructor(cacheNamespace, routesConfig, rotationConfig, rotationConditions, publicPath = '/', expires = EXPIRE_90_DAYS) {
     this.routesConfig = routesConfig;
     this.rotationConfig = rotationConfig;
     this.rotationConditions = rotationConditions;
     this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, expires);
     this.qualification = {};
     this.weightRanges = {};
+
+    this.PUBLIC_PATH = publicPath.replace(TRAILING_SLASH_REGEX, ''); // eslint-disable-line
+    this.PUBLIC_PATH_REGEX = new RegExp(`^${this.PUBLIC_PATH}`);
   }
   /**
    * @private
@@ -178,16 +180,15 @@ class Rotations {
       }
 
       const route = next.value;
-      const routePath = route.path.replace(PUBLIC_PATH_REGEX, '').replace(TRAILING_SLASH_REGEX, '');
+      const routePath = route.path.replace(this.PUBLIC_PATH_REGEX, '').replace(TRAILING_SLASH_REGEX, '');
       const qualificationOrder = this.rotationConfig.qualification_order[routePath] ||
         this.rotationConfig.qualification_order[routePath + '/'];
 
-      if (typeof qualificationOrder === 'undefined') {
-        const qr = await qualifyRoutes();
-        return qr;
-      }
-
       try {
+        if (typeof qualificationOrder === 'undefined') {
+          throw new Error('No qualification order for giver route');
+        }
+
         let qualifyingId = 0;
         let version = '';
         const cachedRotation = this.getCachedRotation(route.path);
@@ -203,12 +204,17 @@ class Rotations {
         if (typeof rotation === 'undefined') {
           throw new Error('Version does not exist');
         }
-        routes.push(this.findRotationRoute(rotation, route.path));
+        const rotationInfo = {qualifyingId, version};
+        const matchedRoute = this.findRotationRoute(rotation, route.path);
+        matchedRoute.rotationInfo = rotationInfo;
+        routes.push(matchedRoute);
         if (cachedRotation === null) {
           this.cache.setItem(route.path, {qualifyingId, version});
         }
       } catch (e) { // no qualifying rotation
+        route.rotationInfo = {version: this.rotationConfig.baseline_id};
         routes.push(route);
+        this.cache.removeItem(route.path);
       }
       await qualifyRoutes();
     };

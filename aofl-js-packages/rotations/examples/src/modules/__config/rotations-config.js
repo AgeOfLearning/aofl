@@ -1,13 +1,12 @@
 export default {
+  'baseline_id': '1000',
   'conditions': {
-    '1': 'baseline',
     '2': 'price',
     '3': 'homepage_design'
   },
   'qualification_order': {
-    '/': ['3', '1'],
-    '/about': ['1'],
-    '/subscribe': ['2', '1'],
+    '/': ['3'],
+    '/subscribe': ['2'],
   },
   'versions': {
     '1000': 'routes',
@@ -19,9 +18,6 @@ export default {
     '1006': 'routes'
   },
   'weights': {
-    '1': {
-      '1000': 1
-    },
     '2': {
       '1001': 1,
       '1002': 1,

@@ -17,21 +17,18 @@ $ npm i -S @aofl/rotations
 
 ```javascript
 {
+  'baseline_id': '1000',
   'conditions': {
-    '1': 'baseline',
     '2': 'homepage_design'
   },
   'qualification_order': {
-    '/': ['2', '1']
+    '/': ['2']
   },
   'versions': {
     '1000': 'routes',
     '1001': 'routes-homepage_design_test',
   },
   'weights': {
-    '1': {
-      '1000': 1
-    },
     '2': {
       '1000': 1,
       '1001': 1
