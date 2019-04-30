@@ -1,6 +1,6 @@
 {
   "name": "@aofl/dom-scope-loader",
-  "version": "2.0.0-alpha.5",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {

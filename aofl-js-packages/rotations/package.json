@@ -1,6 +1,6 @@
 {
   "name": "@aofl/rotations",
-  "version": "2.0.0-alpha.20",
+  "version": "2.0.0",
   "description": "The rotations class provides weight based view logic for A B testing",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,6 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@aofl/cache-manager": "^2.0.0-alpha.17"
+    "@aofl/cache-manager": "^2.0.0"
   }
 }
