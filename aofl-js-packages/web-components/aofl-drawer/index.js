@@ -157,7 +157,10 @@ class AoflDrawer extends AoflElement {
    *
    * @private
    */
-  animationEndHandler() {
+  animationEndHandler(e) {
+    if (e.target !== this) {
+      return;
+    }
     this.transitionEndCount += 1;
     if (this.transitionEndCount === this['transition-count']) {
       this.transitionEndCount = 0;
