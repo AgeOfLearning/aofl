@@ -164,7 +164,8 @@ const getTemplatingPluginOptions = (config, cache) => {
 
 const getConfig = (root, configObject) => {
   const mode = [environmentEnumerate.DEVELOPMENT, environmentEnumerate.PRODUCTION].indexOf(process.env.NODE_ENV) > -1 ?
-  process.env.NODE_ENV: 'none';
+  process.env.NODE_ENV: environmentEnumerate.TEST === process.env.NODE_ENV? 'production': 'none';
+
 
   const output = getOutput(configObject.build.path, configObject.build.publicPath, configObject.build.filename);
 
