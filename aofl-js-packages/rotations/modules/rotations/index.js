@@ -30,6 +30,7 @@ class Rotations {
     this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, expires);
     this.qualification = {};
     this.weightRanges = {};
+    this.qualifiedVersions = {};
 
     this.PUBLIC_PATH = publicPath.replace(TRAILING_SLASH_REGEX, ''); // eslint-disable-line
     this.PUBLIC_PATH_REGEX = new RegExp(`^${this.PUBLIC_PATH}`);
@@ -111,8 +112,15 @@ class Rotations {
    * @return {String}
    */
   getVersion(qualificationId) {
+    if (typeof this.qualifiedVersions[qualificationId] !== 'undefined') {
+      return this.qualifiedVersions[qualificationId];
+    }
+
     const weights = this.getWeightRange(qualificationId);
-    return weights[Math.floor(Math.random() * Math.floor(weights.length))];
+    const version = weights[Math.floor(Math.random() * Math.floor(weights.length))];
+    this.qualifiedVersions[qualificationId] = version;
+
+    return version;
   }
   /**
    * @param {String} rotation
@@ -166,6 +174,7 @@ class Rotations {
     return null;
   }
   /**
+   *
    * @param {String} mainRoutes
    * @return {Promise} resolves to a route configuration Array of route objects
    */
@@ -200,7 +209,9 @@ class Rotations {
           qualifyingId = await this.getQualifyingId(qualificationOrder);
           version = this.getVersion(qualifyingId);
         }
+
         const rotation = this.rotationConfig.versions[version];
+
         if (typeof rotation === 'undefined') {
           throw new Error('Version does not exist');
         }
@@ -227,3 +238,4 @@ class Rotations {
 export {
   Rotations
 };
+

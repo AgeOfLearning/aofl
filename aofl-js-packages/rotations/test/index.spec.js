@@ -292,6 +292,7 @@ describe('@aofl/rotations/rotation', function() {
       };
       for (let i = 0; i < limit; i++) {
         const version = this.rotation.getVersion('3');
+        this.rotation.qualifiedVersions = {};
         versions[version] += 1;
       }
 
