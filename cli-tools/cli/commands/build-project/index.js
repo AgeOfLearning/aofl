@@ -19,19 +19,20 @@ class BuildProject {
    * @param {Boolean} profile
    * @param {Boolean} debug
    */
-  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false) {
+  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy') {
     this.configPath = path.resolve(config);
     this.watch = watch;
     this.stats = stats;
     this.profile = profile;
     this.debug = debug;
+    this.reporter = reporter;
 
     const reporters = [];
 
     if (process.env.NODE_ENV === environmentEnumerate.TEST) {
       reporters.push('basic');
     } else {
-      reporters.push('fancy');
+      reporters.push(this.reporter);
       this.profile && reporters.push('profile');
       this.stats && reporters.push('stats');
     }

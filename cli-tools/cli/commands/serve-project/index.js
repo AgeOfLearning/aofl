@@ -40,6 +40,7 @@ class ServeProject {
 
     this.config = loadConfig(this.configPath);
     this.options = this.config.webpack.devServer;
+    delete this.config.webpack.devServer;
 
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,

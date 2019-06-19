@@ -19,18 +19,19 @@ class TestProject {
    * @param {Boolean} profile
    * @param {Boolean} debug
    */
-  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false) {
+  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy') {
     this.configPath = path.resolve(config);
     this.watch = watch;
     this.stats = stats;
     this.profile = profile;
     this.debug = debug;
+    this.reporter = reporter;
 
     if (typeof process.env.NODE_ENV === 'undefined') {
       process.env.NODE_ENV = environmentEnumerate.TEST;
     }
 
-    const reporters = ['fancy'];
+    const reporters = [this.reporter];
     this.profile && reporters.push('profile');
     this.stats && reporters.push('stats');
 

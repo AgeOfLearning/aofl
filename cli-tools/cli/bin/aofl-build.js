@@ -9,6 +9,7 @@ program
   .option('--profile', '')
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
+  .option('--reporter', 'Specify a reporter [fancy, basic]')
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -21,5 +22,5 @@ program
   .parse(process.argv);
 
 const buildProject = new BuildProject(program.config, program.watch, program.stats, program.profile,
-  program.debug);
+  program.debug, program.reporter);
 buildProject.init();
