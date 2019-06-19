@@ -9,7 +9,7 @@ program
   .option('--profile', '')
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
-  .option('--reporter', 'Specify a reporter [fancy, basic]')
+  .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
   .on('--help', () => {
     process.stdout.write(`
   Examples:

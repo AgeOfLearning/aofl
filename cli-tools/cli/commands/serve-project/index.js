@@ -61,7 +61,7 @@ class ServeProject {
     addEntries(this.config.webpack, this.options);
 
     const compiler = webpack(this.config.webpack);
-    const server = new WebpackDevServer(compiler, this.options);
+    const server = new WebpackDevServer(compiler, this.options, log);
 
     server.listen(port, host, (err) => {
       if (err && this.debug) {
@@ -73,8 +73,10 @@ class ServeProject {
       }
 
       const uri = createDomain(this.options, server.listeningApp) + suffix;
-
-      status(uri, this.options, log);
+      status(uri, {
+        ...this.options,
+        open: false
+      }, log);
     });
   }
 }
