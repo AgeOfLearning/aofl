@@ -3,7 +3,8 @@ const {loadConfig} = require('../../lib/webpack-config');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const environmentEnumerate = require('../../lib/environment-enumerate');
-
+const {DebugReporter} = require('../../lib/webpackbar-debug-reporter');
+const chalk = require('chalk');
 /**
  *
  *
@@ -27,6 +28,10 @@ class TestProject {
     this.debug = debug;
     this.reporter = reporter;
 
+    if (debug) {
+      this.reporter = new DebugReporter();
+    }
+
     if (typeof process.env.NODE_ENV === 'undefined') {
       process.env.NODE_ENV = environmentEnumerate.TEST;
     }
@@ -48,34 +53,60 @@ class TestProject {
    *
    */
   init() {
-    const compiler = webpack(this.config.webpack);
+    let compiler = null;
+    try {
+      compiler = webpack(this.config.webpack);
+    } catch (err) {
+      if (err.name === 'WebpackOptionsValidationError') {
+        process.stdout.write(chalk.red(err.message + '\n'));
+        process.exit(1);
+      }
+
+      throw err;
+    }
+
     const errorHandler = (err, stats) => {
+      if (!this.watch || err) {
+        // Do not keep cache anymore
+        compiler.purgeInputFileSystem();
+      }
       if (err) {
-        process.stdout.write(err.stack || err + '\n');
+        process.stdout.write((err.stack || err) + '\n');
         if (err.details) {
           process.stdout.write(err.details + '\n');
         }
-        return;
+        process.exit(1);
       }
 
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
         process.stdout.write(info.errors + '\n');
+        process.exit(2);
       }
 
       if (stats.hasWarnings()) {
         process.stdout.write(info.warnings + '\n');
+        process.exit(0);
       }
     };
 
     if (this.watch) {
       compiler.watch({
         aggregateTimeout: 300,
-        poll: void(0)
-      }, this.debug? errorHandler: () => {});
+        poll: void(0),
+        ...this.config.webpack.watchOptions
+      }, errorHandler);
     } else {
-      compiler.run(this.debug? errorHandler: () => {});
+      compiler.run((err, stats) => {
+        if (compiler.close) {
+          compiler.close((err2) => {
+            errorHandler(err || err2, stats);
+          });
+        } else {
+          errorHandler(err, stats);
+        }
+      });
     }
   }
 }

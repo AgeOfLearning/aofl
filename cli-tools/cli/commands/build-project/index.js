@@ -2,7 +2,8 @@ const path = require('path');
 const {loadConfig} = require('../../lib/webpack-config');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
-const environmentEnumerate = require('../../lib/environment-enumerate');
+const chalk = require('chalk');
+const {DebugReporter} = require('../../lib/webpackbar-debug-reporter');
 
 /**
  *
@@ -26,17 +27,14 @@ class BuildProject {
     this.profile = profile;
     this.debug = debug;
     this.reporter = reporter;
-
-    const reporters = [];
-
-    if (process.env.NODE_ENV === environmentEnumerate.TEST) {
-      reporters.push('basic');
-    } else {
-      reporters.push(this.reporter);
-      this.profile && reporters.push('profile');
-      this.stats && reporters.push('stats');
+    if (debug) {
+      this.reporter = new DebugReporter();
     }
 
+    const reporters = [this.reporter];
+
+    this.profile && reporters.push('profile');
+    this.stats && reporters.push('stats');
     this.config = loadConfig(this.configPath);
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,
@@ -50,24 +48,41 @@ class BuildProject {
    *
    */
   init() {
-    const compiler = webpack(this.config.webpack);
+    let compiler = null;
+    try {
+      compiler = webpack(this.config.webpack);
+    } catch (err) {
+      if (err.name === 'WebpackOptionsValidationError') {
+        process.stdout.write(chalk.red(err.message + '\n'));
+        process.exit(1);
+      }
+
+      throw err;
+    }
+
     const errorHandler = (err, stats) => {
+      if (!this.watch || err) {
+        // Do not keep cache anymore
+        compiler.purgeInputFileSystem();
+      }
       if (err) {
         process.stdout.write((err.stack || err) + '\n');
         if (err.details) {
           process.stdout.write(err.details + '\n');
         }
-        return;
+        process.exit(1);
       }
 
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
         process.stdout.write(info.errors + '\n');
+        process.exit(2);
       }
 
       if (stats.hasWarnings()) {
         process.stdout.write(info.warnings + '\n');
+        process.exit(0);
       }
     };
 
@@ -76,9 +91,17 @@ class BuildProject {
         aggregateTimeout: 300,
         poll: void(0),
         ...this.config.webpack.watchOptions
-      }, this.debug? errorHandler: () => {});
+      }, errorHandler);
     } else {
-      compiler.run(this.debug? errorHandler: () => {});
+      compiler.run((err, stats) => {
+        if (compiler.close) {
+          compiler.close((err2) => {
+            errorHandler(err || err2, stats);
+          });
+        } else {
+          errorHandler(err, stats);
+        }
+      });
     }
   }
 }
