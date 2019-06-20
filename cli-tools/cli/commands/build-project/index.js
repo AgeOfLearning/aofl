@@ -3,7 +3,7 @@ const {loadConfig} = require('../../lib/webpack-config');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
-const {DebugReporter} = require('../../lib/webpackbar-debug-reporter');
+const DebugReporter = require('../../lib/webpackbar-debug-reporter');
 
 /**
  *
