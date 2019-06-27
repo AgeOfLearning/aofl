@@ -75,19 +75,19 @@ class TestProject {
         if (err.details) {
           process.stdout.write(err.details + '\n');
         }
-        process.exit(1);
+        !this.watch && process.exit(1);
       }
 
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
         process.stdout.write(info.errors + '\n');
-        process.exit(2);
+        !this.watch && process.exit(2);
       }
 
       if (stats.hasWarnings()) {
         process.stdout.write(info.warnings + '\n');
-        process.exit(0);
+        !this.watch && process.exit(0);
       }
     };
 
