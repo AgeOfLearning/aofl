@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "@aofl/html-webpack-purify-internal-css-plugin": "^2.0.0",
     "@aofl/i18n-loader": "^2.0.0",
     "@aofl/templating-plugin": "^2.0.4",
-    "@aofl/unit-testing-plugin": "^2.0.6",
+    "@aofl/unit-testing-plugin": "^2.0.7",
     "@aofl/webcomponent-css-loader": "^2.0.0",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.0",
