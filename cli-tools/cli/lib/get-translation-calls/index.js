@@ -271,7 +271,7 @@ const getTranslationCalls = (i18nDir, includePatterns, ignorePatterns) => {
       fs.writeFileSync(sourcePath, ttSource, {encoding: 'utf-8'});
     }
 
-    const tokens = esprima.tokenize(ttSource).reverse();
+    const tokens = esprima.tokenize(ttSource, {tolerant: true}).reverse();
     parse(tokens);
   }
 
