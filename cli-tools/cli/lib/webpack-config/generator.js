@@ -7,7 +7,7 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const UnitTesting = require('@aofl/unit-testing-plugin');
 
 const getOutput = (path, publicPath, filename) => {
@@ -172,9 +172,8 @@ const getConfig = (root, configObject) => {
   rules.push(...getFontsRules(configObject.build));
 
   const plugins = [
-    new CleanWebpackPlugin('./*', {
-      root: output.path
-    }),
+    new CleanWebpackPlugin(),
+    new webpack.HashedModuleIdsPlugin(),
     new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache),
     new HtmlWebpackPurifycssPlugin(configObject.build.css.global),
   ];
@@ -191,16 +190,8 @@ const getConfig = (root, configObject) => {
     watchOptions: {
       ignored: ['node_modules/**']
     },
-    devServer: configObject.devServer
-  };
-
-  if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
-    config.plugins.push(new webpack.HashedModuleIdsPlugin());
-    config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
-    config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
-
-    config.plugins.push(new InjectManifest(configObject.build.serviceworker));
-    config.optimization = {
+    devServer: configObject.devServer,
+    optimization: {
       runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
@@ -221,9 +212,16 @@ const getConfig = (root, configObject) => {
             maxInitialRequests: 3
           }
         }
-      },
-      minimizer: [new TerserPlugin(configObject.build.terser)]
-    };
+      }
+    }
+  };
+
+  if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+    config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
+    config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
+
+    config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+    config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environmentEnumerate.TEST) {
     config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: configObject.unitTesting.maxChunks
