@@ -10,6 +10,7 @@ program
   .option('--profile', '')
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
+  .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -22,5 +23,5 @@ program
   .parse(process.argv);
 
 const serveProject = new ServeProject(program.config, program.port, program.host,
-  program.stats, program.profile, program.debug);
+  program.stats, program.profile, program.debug, program.reporter);
 serveProject.init();

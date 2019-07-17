@@ -4,12 +4,10 @@ const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 const HtmlWebpackPurifycssPlugin = require('@aofl/html-webpack-purify-internal-css-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const UnitTesting = require('@aofl/unit-testing-plugin');
 
 const getOutput = (path, publicPath, filename) => {
@@ -17,7 +15,8 @@ const getOutput = (path, publicPath, filename) => {
     path,
     publicPath,
     filename,
-    sourceMapFilename: '[file].map'
+    sourceMapFilename: '[file].map',
+    pathinfo: false
   };
 
   return output;
@@ -31,22 +30,7 @@ const getCssRules = (build) => {
     issuer: build.css.issuer,
     enforce: build.css.enforce,
     use: [
-      {
-        loader: 'css-loader',
-        options: {
-          sourceMap: false,
-          importLoaders: build.css.component.length + 1,
-          ...build.css.cssLoader
-        }
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          sourceMap: false,
-          cache: build.cache,
-          ...build.css.postCssLoader
-        }
-      },
+      'fast-css-loader',
       ...build.css.component.reduce((acc, item) => {
         acc.push({
           loader: '@aofl/webcomponent-css-loader',
@@ -169,7 +153,7 @@ const getConfig = (root, configObject) => {
 
   const output = getOutput(configObject.build.path, configObject.build.publicPath, configObject.build.filename);
 
-  const devtool = configObject.build.devtool || (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'source-map');
+  const devtool = configObject.build.devtool || (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'none');
 
   const rules = [];
 
@@ -188,17 +172,11 @@ const getConfig = (root, configObject) => {
   rules.push(...getFontsRules(configObject.build));
 
   const plugins = [
-    new webpack.HashedModuleIdsPlugin(),
     new CleanWebpackPlugin('./*', {
       root: output.path
     }),
     new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache),
     new HtmlWebpackPurifycssPlugin(configObject.build.css.global),
-    new CopyWebpackPlugin([configObject.build.favicon]),
-    new WebpackPwaManifest(configObject.build.pwaManifest),
-    new FriendlyErrorsWebpackPlugin({
-      clearConsole: false
-    })
   ];
 
   const config = {
@@ -211,9 +189,18 @@ const getConfig = (root, configObject) => {
     },
     plugins,
     watchOptions: {
-      ignored: [/node_modules\//]
+      ignored: ['node_modules/**']
     },
-    optimization: {
+    devServer: configObject.devServer
+  };
+
+  if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+    config.plugins.push(new webpack.HashedModuleIdsPlugin());
+    config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
+    config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
+
+    config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+    config.optimization = {
       runtimeChunk: 'single',
       splitChunks: {
         cacheGroups: {
@@ -234,14 +221,9 @@ const getConfig = (root, configObject) => {
             maxInitialRequests: 3
           }
         }
-      }
-    },
-    devServer: configObject.devServer
-  };
-
-  if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
-    config.plugins.push(new InjectManifest(configObject.build.serviceworker));
-    config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
+      },
+      minimizer: [new TerserPlugin(configObject.build.terser)]
+    };
   } else if (process.env.NODE_ENV === environmentEnumerate.TEST) {
     config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: configObject.unitTesting.maxChunks
@@ -256,12 +238,10 @@ const getConfig = (root, configObject) => {
       scripts: configObject.unitTesting.scripts
     }));
   } else { // development
-    if (configObject.build.hardSourceCache !== false) {
-      plugins.push(new HardSourceWebpackPlugin());
-    }
-    config.performance = {
-      maxEntrypointSize: 500000,
-      maxAssetSize: 500000
+    config.optimization = {
+      removeAvailableModules: false,
+      removeEmptyChunks: false,
+      splitChunks: false,
     };
   }
 

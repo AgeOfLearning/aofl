@@ -38,7 +38,8 @@ module.exports = (environment = environmentEnumerate.DEVELOPMENT) => {
           files: assets,
           options
         },
-        assetsMap
+        assetsMap,
+        mode: compilation.compiler.options.mode
       };
     }
   };

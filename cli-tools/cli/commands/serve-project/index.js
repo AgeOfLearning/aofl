@@ -7,6 +7,7 @@ const addEntries = require('webpack-dev-server/lib/utils/addEntries');
 const createDomain = require('webpack-dev-server/lib/utils/createDomain');
 const createLogger = require('webpack-dev-server/lib/utils/createLogger');
 const status = require('webpack-dev-server/lib/utils/status');
+const DebugReporter = require('../../lib/webpackbar-debug-reporter');
 
 /**
  *
@@ -25,15 +26,20 @@ class ServeProject {
    * @param {Boolean} debug
    */
   constructor(config = '.aofl.js', port, host, stats = false,
-  profile = false, debug = false) {
+  profile = false, debug = false, reporter = 'fancy') {
     this.configPath = path.resolve(config);
     this.port = port;
     this.host = host;
     this.stats = stats;
     this.profile = profile;
     this.debug = debug;
+    this.reporter = reporter;
 
-    const reporters = ['fancy'];
+    if (debug) {
+      this.reporter = new DebugReporter();
+    }
+
+    const reporters = [this.reporter];
 
     this.profile && reporters.push('profile');
     this.stats && reporters.push('stats');

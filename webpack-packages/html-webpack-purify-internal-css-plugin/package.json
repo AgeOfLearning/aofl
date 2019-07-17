@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "lodash.defaultsdeep": "^4.6.0",
+    "lodash.defaultsdeep": "^4.6.1",
     "parse5": "^5.1.0",
-    "purify-css": "^1.2.5"
+    "purgecss": "^1.3.0"
   }
 }

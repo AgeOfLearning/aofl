@@ -75,12 +75,6 @@
             },
             "global": {
               "type": "object"
-            },
-            "cssLoader": {
-              "type": "object"
-            },
-            "postCssLoader": {
-              "type": "object"
             }
           }
         },

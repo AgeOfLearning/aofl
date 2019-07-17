@@ -1,5 +1,5 @@
 const parse5 = require('parse5');
-const purify = require('purify-css');
+const Purgecss = require('purgecss');
 
 /**
  *
@@ -36,6 +36,25 @@ const getStyleNodes = async (docFrag) => {
   return styles;
 };
 
+/**
+ *
+ * @param {Object} docFrag
+ * @return {Array}
+ */
+const getScriptNodes = async (docFrag) => {
+  const scripts = [];
+
+  await traverseChildNodes(docFrag, (docFrag) => {
+    if (docFrag.tagName === 'script' && Array.isArray(docFrag.childNodes)) {
+      for (let i = 0; i < docFrag.childNodes.length; i++) {
+        scripts.push(docFrag.childNodes[i]);
+      }
+    }
+  });
+
+  return scripts;
+};
+
 
 /**
  *
@@ -43,11 +62,17 @@ const getStyleNodes = async (docFrag) => {
  * @param {Array} styles
  * @return {String}
  */
-const getStlyeFreeHtml = (document, styles) => {
+const getStyleFreeHtml = (document, styles, scripts) => {
   for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
     style.cachedValue = style.value;
     style.value = '';
+  }
+
+  for (let i = 0; i < scripts.length; i++) {
+    const script = scripts[i];
+    script.cachedValue = script.value;
+    script.value = '';
   }
 
   const stlyeFreeHtml = parse5.serialize(document);
@@ -58,6 +83,11 @@ const getStlyeFreeHtml = (document, styles) => {
     delete style.cachedValue;
   }
 
+  for (let i = 0; i < scripts.length; i++) {
+    const script = scripts[i];
+    script.value = script.cachedValue;
+    delete script.cachedValue;
+  }
   return stlyeFreeHtml;
 };
 
@@ -67,21 +97,35 @@ const getStlyeFreeHtml = (document, styles) => {
  * @param {Array} styles
  * @param {Object} options
  */
-const purifyStyles = async (html, styles, options) => {
+const purifyStyles = (html, styles, options) => {
   for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
-    await new Promise((resolve) => {
-      purify(html, style.value, options, (purified) => {
-        style.value = purified;
-        resolve();
-      });
+
+    const purgeCss = new Purgecss({
+      content: [
+        {
+          raw: html,
+          extension: 'html'
+        }
+      ],
+      css: [
+        {
+          raw: style.value
+        }
+      ],
+      rejected: false,
+      ...options
     });
+
+    const purged = purgeCss.purge();
+    style.value = purged[0].css;
   }
 };
 
 module.exports = {
   traverseChildNodes,
   getStyleNodes,
-  getStlyeFreeHtml,
-  purifyStyles
+  getStyleFreeHtml,
+  purifyStyles,
+  getScriptNodes
 };

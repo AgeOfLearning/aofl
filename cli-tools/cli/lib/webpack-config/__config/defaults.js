@@ -1,9 +1,6 @@
 const path = require('path');
 const environmentEnumerate = require('../../environment-enumerate');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
 const htmlWebpackconfig = require('../../html-webpack-config');
-
 
 module.exports = (root) => {
   return {
@@ -17,7 +14,7 @@ module.exports = (root) => {
       },
       path: path.join(root, '__build'),
       publicPath: '/',
-      devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'source-map'),
+      devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'none'),
       cache: true,
       hardSourceCache: true,
       middleware: [],
@@ -30,14 +27,7 @@ module.exports = (root) => {
           purifyCSS: {
             whitelist: ['route-view'],
           },
-        },
-        cssLoader: {}, // options
-        postCssLoader: {
-          plugins: [
-            autoprefixer(),
-            cssnano(),
-          ],
-        }, // options
+        }
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -49,9 +39,7 @@ module.exports = (root) => {
         imgLoader: {
           plugins: process.env.NODE_ENV === 'production' && [
             require('imagemin-gifsicle')(),
-            require('imagemin-mozjpeg')({
-              quality: 90,
-            }),
+            require('imagemin-jpegtran')(),
             require('imagemin-optipng')(),
             require('imagemin-svgo')(),
           ],

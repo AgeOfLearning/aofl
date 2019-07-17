@@ -2,12 +2,12 @@ const path = require('path');
 const defaultsDeep = require('lodash.defaultsdeep');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const getRoutes = require('./get-routes');
-const replaceTemplateFiles = require('./replace-template-parts');
 const server = require('./server');
 const prerender = require('./prerender');
 const validateOptions = require('schema-utils');
 const schema = require('./__config/schema.json');
 const partialsSchema = require('./__config/partials-schema.json');
+const replaceString = require('replace-string');
 
 const LOADER_OPTIONS = {
   enforce: 'pre',
@@ -171,7 +171,7 @@ class TemplatingPlugin {
         let t = source; // str.replace is not consistent on large strings
         const bodyMatch = /<body.*<\/body>/.exec(source);
         if (bodyMatch !== null) {
-          t = replaceTemplateFiles(source, bodyMatch[0], body);
+          t = replaceString(source, bodyMatch[0], body);
         }
         t.replace(/\n/g, ' ');
         compilation.assets[assetPath] = {
@@ -195,15 +195,14 @@ class TemplatingPlugin {
 
     for (const key in assets) {
       if (!assets.hasOwnProperty(key)) continue;
-      let t = templateSource;
-      for (const partialKey in assets[key].partialMap) {
-        if (!assets[key].partialMap.hasOwnProperty(partialKey)) continue;
-        t = replaceTemplateFiles(t, partialKey, assets[key].partialMap[partialKey]);
-      }
+      const t = templateSource;
+
+      const regex = new RegExp(Object.keys(assets[key].partialMap).join('|'), 'gi');
+      const text = String(t).replace(regex, (matched) => assets[key].partialMap[matched]);
 
       compilation.assets[key] = {
-        source: () => t,
-        size: () => t.length
+        source: () => text,
+        size: () => text.length
       };
     }
 

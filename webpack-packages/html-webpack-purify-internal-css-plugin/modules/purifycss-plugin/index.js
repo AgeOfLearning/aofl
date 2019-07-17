@@ -1,5 +1,5 @@
 const parse5 = require('parse5');
-const {getStyleNodes, purifyStyles, getStlyeFreeHtml} = require('../purify-internal-style');
+const {getStyleNodes, purifyStyles, getStyleFreeHtml, getScriptNodes} = require('../purify-internal-style');
 const defaultsDeep = require('lodash.defaultsdeep');
 
 /**
@@ -57,20 +57,24 @@ class PurifycssPlugin {
       (compilation) => {
         compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing
           .tapAsync(PurifycssPlugin.name + '#befeHtmlGeneration', async (data, cb) => {
-            const document = parse5.parse(data.html);
+            try {
+              if (this.options.level !== 'none') {
+                const document = parse5.parse(data.html);
+                const styles = await getStyleNodes(document);
+                const scripts = await getScriptNodes(document);
+                let html = '';
+                if (this.options.level === 'auto') {
+                  html = getStyleFreeHtml(document, styles, scripts);
+                }
 
-            if (this.options.level !== 'none') {
-              const styles = await getStyleNodes(document);
-              let html = '';
-              if (this.options.level === 'auto') {
-                html = getStlyeFreeHtml(document, styles);
+                await purifyStyles(html, styles, this.options.purgeCss);
+                data.html = parse5.serialize(document);
               }
 
-              await purifyStyles(html, styles, this.options.purifyCSS);
+              cb(null, data);
+            } catch (e) {
+              cb(e);
             }
-
-            data.html = parse5.serialize(document);
-            cb(null, data);
           });
       });
   }
