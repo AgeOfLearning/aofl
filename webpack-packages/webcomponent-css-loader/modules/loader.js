@@ -3,11 +3,9 @@ const path = require('path');
 const {getOptions} = require('loader-utils');
 const validationOptions = require('schema-utils');
 const Purgecss = require('purgecss');
-const purgeJs = require('purgecss-from-js');
 const Stylis = require('stylis');
 const importPlugin = require('./replace-url-plugin');
 const schema = require('./__config/schema.json');
-
 /**
  *
  * @param {*} source
@@ -64,7 +62,12 @@ module.exports = function(source) {
       const globalStyles = fs.readFileSync(options.path, {encoding: 'utf-8'});
       const plugin = importPlugin.plugin(this.resourcePath, options.path, this.addDependency);
       const stylisGlobal = new Stylis();
-      stylisGlobal.set({prefix: true, preserve: false, compress: true});
+      stylisGlobal.set({
+        prefix: true,
+        preserve: false,
+        compress: true,
+        cascade: true,
+      });
       stylisGlobal.use(plugin);
 
       const globalCss = stylisGlobal('', globalStyles.toString());
@@ -73,7 +76,12 @@ module.exports = function(source) {
 
     const plugin = importPlugin.plugin(this.resourcePath, this.resourcePath, this.addDependency);
     const stylisLocal = new Stylis();
-    stylisLocal.set({prefix: true, preserve: false, compress: true});
+    stylisLocal.set({
+      prefix: true,
+      preserve: false,
+      compress: true,
+      cascade: true,
+    });
     stylisLocal.use(plugin);
     const localCss = stylisLocal('', source.toString());
     combinedCss += localCss;
@@ -81,11 +89,11 @@ module.exports = function(source) {
     if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
       callback(null, combinedCss);
     } else {
-      const purgeCss = new Purgecss({
+      const config = {
         content: [
           {
             raw: content.toString(),
-            extension: 'html'
+            extension: 'js'
           }
         ],
         css: [
@@ -93,15 +101,10 @@ module.exports = function(source) {
             raw: combinedCss
           }
         ],
-        rejected: false,
-        whitelist: options.whitelist,
-        extractors: [
-          {
-            extractor: purgeJs,
-            extensions: ['js']
-          }
-        ]
-      });
+        rejected: true,
+        whitelist: options.whitelist
+      };
+      const purgeCss = new Purgecss(config);
 
       const purified = purgeCss.purge();
       callback(null, purified[0].css);

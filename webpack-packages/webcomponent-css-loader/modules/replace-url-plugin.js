@@ -17,7 +17,6 @@ const replaceUrls = (content, urlPath, basePath, url) => {
 };
 
 const replaceImports = (content, imports, basePath, modulePath) => {
-  const moduleDir = path.dirname(modulePath);
   const baseDir = path.dirname(basePath);
   for (let i = 0; i < imports.length; i++) {
     const nextImport = imports[i];
