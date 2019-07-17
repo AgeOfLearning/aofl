@@ -17,10 +17,10 @@ const replaceUrls = (content, urlPath, basePath, url) => {
 };
 
 const replaceImports = (content, imports, basePath, modulePath) => {
-  const baseDir = path.dirname(basePath);
+  const moduleDir = path.dirname(modulePath);
   for (let i = 0; i < imports.length; i++) {
     const nextImport = imports[i];
-    const importPath = path.resolve(baseDir, nextImport.path);
+    const importPath = path.resolve(moduleDir, nextImport.path);
     try {
       let importContent = fs.readFileSync(importPath, {encoding: 'utf-8'});
       const parsedUrls = parseCssUrls(importContent);
@@ -47,26 +47,16 @@ const replaceImports = (content, imports, basePath, modulePath) => {
 const plugin = (resourcePath, modulePath, addDependency) => {
   return (context, content, selectors, parent, line, column, length) => {
     if (context === -1) {
-      // console.time('parseUrls');
       const parsedUrls = parseCssUrls(content);
-      // console.timeEnd('parseUrls');
 
-      // console.time('replaceUrls');
       for (let i = 0; i < parsedUrls.length; i++) {
         const url = parsedUrls[i];
         const urlPath = path.resolve(path.dirname(modulePath), url);
         content = replaceUrls(content, urlPath, resourcePath, url);
       }
-      // console.timeEnd('replaceUrls');
 
-
-
-      // console.time('paseImports');
       const parsedImports = parseImport(content);
-      // console.timeEnd('paseImports');
-      // console.time('replaceImports');
       content = replaceImports(content, parsedImports, resourcePath, modulePath);
-      // console.timeEnd('replaceImports');
     }
     return content;
   };
