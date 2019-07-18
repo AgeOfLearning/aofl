@@ -3,9 +3,12 @@ workbox.setConfig({
   debug: false,
 });
 
-workbox.skipWaiting();
-workbox.clientsClaim();
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.suppressWarnings();
+workbox.precaching.cleanupOutdatedCaches();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
