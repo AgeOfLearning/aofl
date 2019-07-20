@@ -24,7 +24,7 @@ class I18N {
   }
 
   getDirectories(dir = process.env.PWD) {
-    return glob.sync(['**/i18n/'], {
+    return glob.sync(['**/i18n'], {
       cwd: dir,
       onlyFiles: false,
       ignore: this.excludePathsGlobPatterns
