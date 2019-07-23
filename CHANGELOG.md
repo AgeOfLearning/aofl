@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## unreleased
+
+### [Added]
+- Much faster dev builds
+- @aofl/cli - serve added reporter option
+- @aofl/cli - made webpack mode available in .ejs context
+### [Changed]
+- @aofl/cli - webpack config will not generate sourcemaps in dev by default
+- @aofl/cli - webpack config replace imagemin-mozjpeg with imagemin-jpegtran
+- @aofl/cli - webpack config will use fast-css-loader and stylis instead of css-loader/postcss
+- replaced purifyCss with purgeCss
+- @aofl/middleware - use() returns unsubscribe function
+- @aofl/router - hooks can unsubscribe
+
+### [Deprecated]
+### [Removed]
+- style-loader
+- postcss
+- cssnano
+- autoprefixer
+- @aofl/cli - .aofl.js config - removed cssLoader and postCssLoader config
+- @aofl/cli - hard-source-webpack-plugin
+- @aofl/cli - friendly-errors-webpack-plugin
+
+### [Fixed]
+- @aofl/cli - build/server/test will exit with error when .aofl.js config contains errors instead of falling back on the default configs
+- @aofl/router - fixed matching dynamic routes without trailing slash
+### [Security]
+
+---
 ## [2.0.8] - 2019-07-09
 ### [Added]
 ### [Changed]

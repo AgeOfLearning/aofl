@@ -8,8 +8,10 @@
 
 import Router from './modules/Router';
 import routerInstance from './modules/router-instance';
+import PathUtils from './modules/path-utils';
 
 export {
   Router,
-  routerInstance
+  routerInstance,
+  PathUtils
 };

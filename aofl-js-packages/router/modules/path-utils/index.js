@@ -9,10 +9,10 @@
 /**
  * @memberof PathUtils
  */
-const DYNAMIC_PATH_REGEX = /:([^/\s]*)(\/?)/g;
-const CLEAN_PATH_REGEX = /^([^#?\s]+)/;
-const TRAILING_SLASH_REGEX = /\/$/;
-
+const DYNAMIC_PATH_REGEX = /:([^/\s]*)(\/?)/ig;
+const CLEAN_PATH_REGEX = /[#?].*/i;
+const TRAILING_SLASH_REGEX = /\/$/i;
+const LEADING_SLASH_REGEX = /^\//i;
 /**
  *
  */
@@ -43,8 +43,9 @@ class PathUtils {
     const regex = new RegExp('^' + regexStr + '$');
     return {
       regex,
-      parse(path) {
+      parse(_path) {
         if (keys.length === 0) return {};
+        const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
         const matches = regex.exec(path);
         return keys.reduce((acc, key, index) => {
           acc[key] = matches[index + 1];
@@ -61,12 +62,7 @@ class PathUtils {
    * @throws {Error}
    */
   static cleanPath(path) {
-    const cleanPathMatch = CLEAN_PATH_REGEX.exec(path);
-    /* istanbul ignore next */
-    if (cleanPathMatch === null) {
-      return new Error('cannot clean invalid path');
-    }
-    return cleanPathMatch[1];
+    return path.replace(CLEAN_PATH_REGEX, '');
   }
 
 
@@ -77,6 +73,15 @@ class PathUtils {
   static removeTrailingSlash(str) {
     if (str === '/') return str;
     return str && str.replace(TRAILING_SLASH_REGEX, '');
+  }
+
+  /**
+   * @param {String} str
+   * @return {String}
+   */
+  static removeLeadingSlash(str) {
+    if (str === '/') return str;
+    return str && str.replace(LEADING_SLASH_REGEX, '');
   }
 
 

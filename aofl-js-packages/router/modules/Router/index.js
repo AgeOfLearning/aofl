@@ -28,6 +28,9 @@ class Router {
       },
       resolve: {
         writable: true
+      },
+      currentRoute: {
+        writable: true
       }
     });
   }
@@ -42,9 +45,8 @@ class Router {
       routes: this.addRegexRoutes(config)
     };
 
-    this
-      .beforeEach(matchRouteMiddleware(this))
-      .after(redirectMiddleware(this));
+    this.beforeEach(matchRouteMiddleware(this));
+    this.beforeEach(redirectMiddleware(this));
 
     this.removeListener = this.listen();
   }
@@ -55,8 +57,7 @@ class Router {
    * @return {void}
    */
   before(fn) {
-    this.middleware.use(fn, 'before');
-    return this;
+    return this.middleware.use(fn, 'before');
   }
 
   /**
@@ -65,8 +66,7 @@ class Router {
    * @return {void}
    */
   after(fn) {
-    this.middleware.use(fn, 'after');
-    return this;
+    return this.middleware.use(fn, 'after');
   }
 
   /**
@@ -75,8 +75,7 @@ class Router {
    * @return {void}
    */
   afterEach(fn) {
-    this.middleware.use(fn, 'afterEach');
-    return this;
+    return this.middleware.use(fn, 'afterEach');
   }
 
   /**
@@ -85,8 +84,7 @@ class Router {
    * @return {void}
    */
   beforeEach(fn) {
-    this.middleware.use(fn, 'beforeEach');
-    return this;
+    return this.middleware.use(fn, 'beforeEach');
   }
 
   /**
@@ -95,8 +93,8 @@ class Router {
    */
   async applyMiddleware(request) {
     const beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
-    await this.middleware.iterateMiddleware(request, 'afterEach', beforeEachResponse);
-    const afterResponse = await this.middleware.iterateMiddleware(request, 'after', beforeEachResponse);
+    await this.middleware.iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
+    const afterResponse = await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, beforeEachResponse));
 
     if (!request.popped && afterResponse.matchedRoute !== null) {
       window.history.pushState(null, null, afterResponse.to);

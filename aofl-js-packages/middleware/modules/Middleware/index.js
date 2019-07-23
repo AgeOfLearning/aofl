@@ -22,12 +22,19 @@ class Middleware {
    * @param {String} hook
    */
   use(callback, hook) {
-    if (typeof callback !== 'function') { throw new Error('callback must be a function'); }
-    if (typeof this.middleware[hook] === 'undefined') { throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`); }
+    if (typeof callback !== 'function') {
+      throw new Error('callback must be a function');
+    }
+    if (typeof this.middleware[hook] === 'undefined') {
+      throw new Error(`Only ${Object.keys(this.middleware)} hooks are supported.`);
+    }
+
     this.middleware[hook].push({
       callback,
       hook
     });
+
+    return this.createUnsubscribeFn();
   }
 
   /**
@@ -74,6 +81,31 @@ class Middleware {
       };
       next(response);
     });
+  }
+
+
+  /**
+   * Creates an unsubscribe function
+   *
+   * @private
+   * @param {String} hook
+   * @param {function} callback
+   */
+  createUnsubscribeFn(hook, callback) {
+    const unsubscribe = () => {
+      if (unsubscribe.executed) { return; }
+      Object.defineProperty(unsubscribe, 'executed', {
+        value: true
+      });
+
+      const index = this.middleware[hook].indexOf(callback);
+      /* istanbul ignore else */
+      if (index > -1) {
+        this.middleware[hook].splice(index, 1);
+      }
+    };
+
+    return unsubscribe;
   }
 }
 
