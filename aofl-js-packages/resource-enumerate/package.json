@@ -1,6 +1,6 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "2.0.0",
+  "version": "2.1.0-alpha.4",
   "description": "Resource enumerate is a special case API call that returns the interface of the API code in a single endpoint",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "dependencies": {
     "@aofl/api-request": "^2.0.0",
     "@aofl/cache-manager": "^2.0.0",
-    "@aofl/middleware": "^2.0.0",
+    "@aofl/middleware": "^2.1.0-alpha.4",
     "@aofl/server-environment": "^2.0.0"
   }
 }
