@@ -46,7 +46,7 @@ class Router {
     };
 
     this.beforeEach(matchRouteMiddleware(this));
-    this.beforeEach(redirectMiddleware(this));
+    this.afterEach(redirectMiddleware(this));
 
     this.removeListener = this.listen();
   }
