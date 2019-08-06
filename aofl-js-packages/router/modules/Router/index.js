@@ -96,8 +96,12 @@ class Router {
     await this.middleware.iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
     const afterResponse = await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, beforeEachResponse));
 
-    if (!request.popped && afterResponse.matchedRoute !== null) {
-      window.history.pushState(null, null, afterResponse.to);
+    if (!request.meta.poppedState) {
+      if (request.meta.replaceState) {
+        window.history.replaceState(null, null, afterResponse.to);
+      } else {
+        window.history.pushState(null, null, afterResponse.to);
+      }
     }
 
     this.resolve();
@@ -126,7 +130,10 @@ class Router {
   listen() {
     const popStateHandler = (e) => {
       e.preventDefault();
-      this.navigate(location.pathname, true, true);
+      this.navigate(location.href.replace(location.origin, ''), {
+        forceReload: true,
+        poppedState: true
+      });
     };
     window.addEventListener('popstate', popStateHandler);
     return () => {
@@ -137,25 +144,24 @@ class Router {
   /**
    * @description public method which attempts to load the given path
    * @param {String} path
-   * @param {Boolean} force
-   * @param {Boolean} popped
    * @param {Object} meta
    * @return {Promise}
    */
-  navigate(path, force = false, popped = false, meta = {}) {
+  navigate(path, _meta) {
+    const meta = Object.assign({poppedState: false, forceReload: false, replaceState: false}, _meta);
+
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       const request = {
         to: path,
         from: this.currentRoute? this.currentRoute.to: document.referrer,
         routes: this.config.routes,
-        popped,
         meta
       };
-      if (path !== location.href.replace(location.origin, '') || force) {
+      if (path !== location.href.replace(location.origin, '') || meta.forceReload) {
         this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
           .then(() => {
-            this.applyMiddleware(request, popped);
+            this.applyMiddleware(request);
           });
       } else {
         reject('Can\'t navigate to current path');
