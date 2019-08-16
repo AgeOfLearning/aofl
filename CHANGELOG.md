@@ -30,7 +30,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Fixed]
 - @aofl/cli - build/server/test will exit with error when .aofl.js config contains errors instead of falling back on the default configs
+- @aofl/cli - i18n ignores _r & _c keys when validating the manifest
+- @aofl/cli - excluded @webcomponents from webpack config ignore
 - @aofl/router - fixed matching dynamic routes without trailing slash
+
 ### [Security]
 
 ---

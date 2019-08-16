@@ -31,7 +31,7 @@ module.exports = (root) => {
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element).*/,
+        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
         fileLoader: {
           // name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
@@ -47,7 +47,7 @@ module.exports = (root) => {
       },
       fonts: {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element).*/,
+        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
         fileLoader: {
           name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
         },
@@ -62,7 +62,7 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element).*/,
+        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),

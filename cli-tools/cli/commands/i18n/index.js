@@ -10,6 +10,7 @@ const getTranslationCalls = require('../../lib/get-translation-calls');
 const outputFilename = 'translations.json';
 const REPLACE_REGEX = /%r(\d+)%/g;
 const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
+const KEY_TEST = /_[rs]-\d+/;
 
 class I18N {
   constructor(includePath = process.env.PWD, pattern, exclude, excludePattern) {
@@ -35,9 +36,11 @@ class I18N {
     const keys = [];
     for (let dir in manifest) {
       for (let key in manifest[dir]) {
+        if (KEY_TEST.test(key)) continue;
         if (keys.indexOf(key) === -1) {
           keys.push(key);
         } else {
+          console.log(`${key} found in ${dir}`);
           throw new Error(`Duplicate key ${key} found in ${dir}`);
         }
       }
@@ -157,11 +160,11 @@ class I18N {
         if (call.method === '__') {
           output[key] = this.prepare__(call);
         } else if (call.method === '_c') {
-          const cominations = this.prepare_c(call);
-          for (let cKey in cominations) {
-            if (!cominations.hasOwnProperty(cKey)) continue;
+          const combinations = this.prepare_c(call);
+          for (let cKey in combinations) {
+            if (!combinations.hasOwnProperty(cKey)) continue;
             const cCall = {
-              text: cominations[cKey]
+              text: combinations[cKey]
             };
 
             if (call.params.length % 2 === 0) {
@@ -209,7 +212,7 @@ class I18N {
 
     const manifestPath = path.join(path.resolve(this.includePath), 'i18n-manifest.json');
     fs.writeFileSync(manifestPath, JSON.stringify(this.i18nCalls, null, 2), {encoding: 'utf-8'});
-    console.log(chalk.green('18n-manifest.json generated successfuly :)'));
+    console.log(chalk.green('18n-manifest.json generated successfully :)'));
     this.generateJSON(this.i18nCalls);
     console.log(chalk.green('Translation files generated :)'));
   }
