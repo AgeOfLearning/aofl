@@ -166,7 +166,8 @@ const getConfig = (root, configObject) => {
   rules.push(...getJsRules(configObject.build));
   rules.push({
     test: /i18n\/index\.js$/,
-    use: '@aofl/i18n-loader'
+    use: '@aofl/i18n-loader',
+    exclude: /node_modules\/@aofl\/i18n\//
   });
   rules.push(...getImageRules(configObject.build));
   rules.push(...getFontsRules(configObject.build));

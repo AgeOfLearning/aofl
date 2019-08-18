@@ -1,1 +1,5 @@
-export {I18n} from './modules/index';
+import {I18n} from './modules/i18n';
+
+export {
+  I18n
+};
