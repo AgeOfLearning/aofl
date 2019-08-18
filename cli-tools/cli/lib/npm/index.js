@@ -38,7 +38,8 @@ class Npm {
           reject({
             code,
             command: 'npm',
-            subCommand: params[0]
+            subCommand: params[0],
+            res
           });
         }
       });

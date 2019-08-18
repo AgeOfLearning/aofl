@@ -103,7 +103,12 @@ class UnitTestingPlugin {
     compiler.hooks.afterEmit.tapAsync(UnitTestingPlugin.name, async (compilation, cb) => {
       try {
         if (this.runCount === 0) {
-          const wctInstalls = await Npm.list('web-component-tester', false, '', true, false, {stdio: 'pipe'});
+          let wctInstalls = '';
+          try {
+            wctInstalls = await Npm.list('web-component-tester', false, '', true, false, {stdio: 'pipe'});
+          } catch (e) {
+            wctInstalls = e.res;
+          }
           const wctArr = wctInstalls.split('\n');
           let wctPath = '';
           if (wctArr.length > 0) {
@@ -141,7 +146,11 @@ class UnitTestingPlugin {
           process.stdout.write(chalk.red('no tests were supplied to wct') + '\n');
         }
       } catch (e) {
-        compilation.errors.push(e);
+        if (e instanceof Error) {
+          compilation.errors.push(e);
+        } else if (typeof e === 'object') {
+          compilation.errors.push('UnitTestingError: ' + JSON.stringify(e));
+        }
       } finally {
         if (!this.watchMode) {
           if (this.options.clean) {

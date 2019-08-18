@@ -6,5 +6,10 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-export {deepAssign} from './modules/deep-assign-service';
-export {deepFreeze} from './modules/deep-feeze-service';
+export * from './modules/core';
+export {deepAssign} from './modules/deep-assign';
+export {deepFreeze} from './modules/deep-freeze';
+export {get} from './modules/get';
+export {has} from './modules/has';
+export {set} from './modules/set';
+export {defaults} from './modules/defaults';
