@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n",
-  "version": "2.1.0-alpha.7",
+  "version": "2.1.0-alpha.8",
   "description": "Implements `__()`, `_r()` and `_c()` functions for translations.",
   "main": "index.js",
   "scripts": {
