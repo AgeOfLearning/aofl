@@ -34,7 +34,7 @@ class Middleware {
       hook
     });
 
-    return this.createUnsubscribeFn();
+    return this.createUnsubscribeFn(hook, callback);
   }
 
   /**
