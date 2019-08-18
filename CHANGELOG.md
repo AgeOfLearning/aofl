@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Much faster dev builds
 - @aofl/cli - serve added reporter option
 - @aofl/cli - made webpack mode available in .ejs context
+- @aofl/i18n - extracted core i18n functionality from the mixin
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default
 - @aofl/cli - webpack config replace imagemin-mozjpeg with imagemin-jpegtran
