@@ -7,8 +7,9 @@ class I18n {
    *
    * @param {Object} [translations={}] - translations map
    */
-  constructor(translations = {}) {
+  constructor(translations = {}, lang = 'en-US') {
     this.translations = translations;
+    this.lang = lang;
   }
 
   /**
@@ -28,13 +29,12 @@ class I18n {
   /**
  * Language translation function.
  *
- * @param {String} lang
  * @param {String} id
  * @param {String} str
  * @return {String}
  */
-  async __(lang, id, str) {
-    const languageMap = await this.getTranslationMap(lang);
+  async __(id, str) {
+    const languageMap = await this.getTranslationMap(this.lang);
     let out = str;
 
     if (typeof languageMap !== 'undefined' && typeof languageMap[id] === 'object' &&
@@ -83,15 +83,14 @@ class I18n {
    * Conditional translation function. When invoked it finds the correct string based on the labels
    * specified in ...args.
    *
-   * @param {*} lang
    * @param {*} id
    * @param {*} str
    * @param {*} args
    * @return {String}
    */
-  async _c(lang, id, str, ...args) {
+  async _c(id, str, ...args) {
     let out = '';
-    const languageMap = await this.getTranslationMap(lang);
+    const languageMap = await this.getTranslationMap(this.lang);
 
     /* istanbul ignore else */
     if (typeof languageMap !== 'undefined' && typeof languageMap === 'object') {

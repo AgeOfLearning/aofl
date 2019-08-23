@@ -50,7 +50,7 @@ export default dedupingMixin((superClass) => {
     langListener() {
       const observer = new MutationObserver((mutationList) => {
         if (this.getAttribute('lang')) { return; }
-        this.__lang = mutationList[0].target.lang;
+        this.i18n.lang = mutationList[0].target.lang;
         this.requestUpdate();
       });
       observer.observe(document.documentElement, {attributes: true});
@@ -83,7 +83,7 @@ export default dedupingMixin((superClass) => {
      * @return {String}
      */
     async __(id, str) {
-      const translated = await this.i18n.__(this.__lang, id, str);
+      const translated = await this.i18n.__(id, str);
       const templateParts = html([translated]);
       return this.getCachedTemplate(id, templateParts);
     }
@@ -115,7 +115,7 @@ export default dedupingMixin((superClass) => {
      * @return {String}
      */
     async _c(id, str, ...args) {
-      const translated = await this.i18n._c(this.__lang, id, str, ...args);
+      const translated = await this.i18n._c(id, str, ...args);
       const templateParts = html([translated]);
       return this.getCachedTemplate(id, templateParts);
     }
@@ -124,7 +124,7 @@ export default dedupingMixin((superClass) => {
      * Sets initial lang
      */
     connectedCallback() {
-      this.__lang = this.getAttribute('lang') || document.documentElement.getAttribute('lang');
+      this.i18n.lang = this.getAttribute('lang') || document.documentElement.getAttribute('lang');
       super.connectedCallback();
     }
 
@@ -140,9 +140,9 @@ export default dedupingMixin((superClass) => {
     attributeChangedCallback(name, oldValue, newValue) {
       if (name === 'lang') {
         if (!newValue) {
-          this.__lang = document.documentElement.lang;
+          this.i18n.lang = document.documentElement.lang;
         } else {
-          this.__lang = newValue;
+          this.i18n.lang = newValue;
         }
         this.requestUpdate();
       }
@@ -158,8 +158,8 @@ export default dedupingMixin((superClass) => {
      */
     render(templates, ...args) {
       let template = templates.default;
-      if (typeof templates[this.__lang] !== 'undefined') {
-        template = templates[this.__lang];
+      if (typeof templates[this.i18n.lang] !== 'undefined') {
+        template = templates[this.i18n.lang];
       }
 
       return super.render(template.template, template.styles, ...args);
