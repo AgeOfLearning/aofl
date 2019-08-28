@@ -99,7 +99,7 @@ class AoflSelectList extends AoflElement {
    *
    * @param {String} newValue
    */
-  updateSelected(newValue) {
+  updateSelected(newValue, dispatch = true) {
     for (let i = 0; i < this.options.length; i++) {
       this.options[i].removeAttribute('selected');
       if (this.options[i].value === newValue) {
@@ -108,7 +108,9 @@ class AoflSelectList extends AoflElement {
         this.value = selected.value;
       }
     }
-    this.dispatchEvent(new CustomEvent('change'));
+    if (dispatch) {
+      this.dispatchEvent(new CustomEvent('change', {composed: true}));
+    }
   }
 
   /**
@@ -119,7 +121,7 @@ class AoflSelectList extends AoflElement {
   addOption(option) {
     this.options.push(option);
     if (option.hasAttribute('selected')) {
-      this.updateSelected(option.value);
+      this.updateSelected(option.value, false);
     }
   }
 

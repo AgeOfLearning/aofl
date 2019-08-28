@@ -92,7 +92,9 @@ class AoflListOption extends AoflElement {
    * Update selected value in the parent list
    */
   select() {
-    this.listElement.updateSelected(this.value);
+    if (this.listElement.value !== this.value) {
+      this.listElement.updateSelected(this.value);
+    }
   }
 
   /**
