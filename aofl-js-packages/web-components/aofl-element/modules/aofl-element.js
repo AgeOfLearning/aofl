@@ -19,6 +19,7 @@ class AoflElement extends LitElement {
   constructor() {
     super();
     this[cachedStyles] = [];
+    this._observedPropertiesMap = new Map();
   }
 
   /**
@@ -74,6 +75,16 @@ class AoflElement extends LitElement {
     }
 
     return template(this, html);
+  }
+  /**
+   * disconnectedCallback
+   */
+  disconnectedCallback() {
+    this._observedPropertiesMap.forEach((cb) => {
+      cb();
+    });
+    this._observedPropertiesMap.clear();
+    super.disconnectedCallback();
   }
 }
 
