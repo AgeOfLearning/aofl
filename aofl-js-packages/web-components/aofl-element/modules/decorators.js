@@ -13,7 +13,16 @@ const MapStateDeclaration = {
  *
  * @export
  * @param {Object} options
- * @returns
+ * @param {Boolean|String} options.attribute
+ * @param {TypeHint} options.type
+ * @param {Function} options.converter
+ * @param {Boolean} options.reflect
+ * @param {Function} options.hasChanged
+ * @param {Boolean} options.noAccessor
+ * @param {Store} options.store,
+ * @param {String} options.state
+ *
+ * @return {Object}
  */
 export function property(options = MapStateDeclaration) {
   const _options = Object.assign({}, MapStateDeclaration, options);
