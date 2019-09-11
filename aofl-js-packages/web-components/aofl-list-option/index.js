@@ -56,10 +56,8 @@ class AoflListOption extends AoflElement {
    */
   connectedCallback() {
     super.connectedCallback();
-    this.setAttribute('tabindex', 0);
     this.addEventListener('click', this.select);
     this.addEventListener('keydown', this.keydownCallback);
-    this.addEventListener('mouseenter', this.mouseenterCallback);
 
     this.updateComplete.then(() => {
       this.value = this.value || this.textContent;
@@ -82,13 +80,6 @@ class AoflListOption extends AoflElement {
   }
 
   /**
-   *
-   */
-  mouseenterCallback() {
-    this.focus();
-  }
-
-  /**
    * Update selected value in the parent list
    */
   select() {
@@ -104,7 +95,6 @@ class AoflListOption extends AoflElement {
     super.disconnectedCallback();
     this.removeEventListener('click', this.select);
     this.removeEventListener('keydown', this.keydownCallback);
-    this.removeEventListener('mouseenter', this.mouseenterCallback);
   }
 }
 
