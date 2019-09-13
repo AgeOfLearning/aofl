@@ -20,7 +20,6 @@ module.exports = async function(source) {
   const callback = this.async();
   const options = Object.assign({
     cache: true,
-    path: '',
     force: false,
     whitelist: []
   }, getOptions(this)); // eslint-disable-line

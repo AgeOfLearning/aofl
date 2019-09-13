@@ -29,7 +29,6 @@ module.exports = (root) => {
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        component: [path.join(root, 'templates', 'main', 'css', 'index.css')],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {

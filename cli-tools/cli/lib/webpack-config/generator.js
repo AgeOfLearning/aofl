@@ -34,7 +34,7 @@ const getCssRules = (build) => {
         loader: 'css-loader',
         options: {
           sourceMap: false,
-          importLoaders: build.css.component.length + 1,
+          importLoaders: 3,
           ...build.css.cssLoader
         }
       },
@@ -46,24 +46,22 @@ const getCssRules = (build) => {
           ...build.css.postCssLoader
         }
       },
-      ...build.css.component.reduce((acc, item) => {
-        acc.push({
-          loader: '@aofl/webcomponent-css-loader',
-          options: {
-            sourceMap: false,
-            cache: build.cache,
-            path: item
-          }
-        });
-        return acc;
-      }, []),
+      {
+        loader: '@aofl/webcomponent-css-loader',
+        options: {
+          sourceMap: false,
+          cache: build.cache
+        }
+      },
       {
         loader: 'sass-loader',
         options: {
           // Prefer `dart-sass`
           implementation: require('sass'),
-          fibers: require('fibers'),
-          webpackImporter: false
+          webpackImporter: false,
+          sassOptions: {
+            fibers: require('fibers')
+          }
         },
       }
     ]
