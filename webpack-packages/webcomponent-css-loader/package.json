@@ -1,6 +1,6 @@
 {
   "name": "@aofl/webcomponent-css-loader",
-  "version": "2.1.0-alpha.2",
+  "version": "2.1.0-alpha.12.2",
   "description": "Prunes webcomponent css",
   "main": "index.js",
   "scripts": {
