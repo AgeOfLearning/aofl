@@ -30,7 +30,22 @@ const getCssRules = (build) => {
     issuer: build.css.issuer,
     enforce: build.css.enforce,
     use: [
-      'fast-css-loader',
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: false,
+          importLoaders: build.css.component.length + 1,
+          ...build.css.cssLoader
+        }
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          sourceMap: false,
+          cache: build.cache,
+          ...build.css.postCssLoader
+        }
+      },
       ...build.css.component.reduce((acc, item) => {
         acc.push({
           loader: '@aofl/webcomponent-css-loader',
@@ -41,7 +56,16 @@ const getCssRules = (build) => {
           }
         });
         return acc;
-      }, [])
+      }, []),
+      {
+        loader: 'sass-loader',
+        options: {
+          // Prefer `dart-sass`
+          implementation: require('sass'),
+          fibers: require('fibers'),
+          webpackImporter: false
+        },
+      }
     ]
   };
 
@@ -190,6 +214,11 @@ const getConfig = (root, configObject) => {
     plugins,
     watchOptions: {
       ignored: ['node_modules/**']
+    },
+    resolve: {
+      alias: {
+        'Root': root
+      }
     },
     devServer: configObject.devServer,
     optimization: {

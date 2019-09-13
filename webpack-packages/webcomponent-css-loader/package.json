@@ -24,11 +24,12 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "css-url-parser": "^1.1.3",
+    "fast-glob": "^3.0.4",
     "loader-utils": "^1.2.3",
-    "parse-import": "^2.0.0",
+    "postcss": "^7.0.18",
+    "postcss-import": "^12.0.1",
+    "postcss-url": "^8.0.0",
     "purgecss": "^1.3.0",
-    "schema-utils": "^2.0.0",
-    "stylis": "^3.5.4"
+    "schema-utils": "^2.0.0"
   }
 }

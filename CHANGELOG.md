@@ -10,16 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Much faster dev builds
 - @aofl/cli - serve added reporter option
 - @aofl/cli - made webpack mode available in .ejs context
+- @aofl/cli - webpack config supports sass
 - @aofl/i18n - extracted core i18n functionality from the mixin
 - @aofl/web-components/aofl-element - added property decorator to support binding to store when declaring class properties
 
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default
 - @aofl/cli - webpack config replace imagemin-mozjpeg with imagemin-jpegtran
-- @aofl/cli - webpack config will use fast-css-loader and stylis instead of css-loader/postcss
+- @aofl/cli - webpack config updated to reflect webcomponent-css-loader options
 - replaced purifyCss with purgeCss
 - @aofl/middleware - use() returns unsubscribe function
 - @aofl/router - hooks can unsubscribe
+- @aofl/webcomponent-css-loader - No longer imports global css into components and doesn't prune css in dev
 
 ### [Deprecated]
 ### [Removed]

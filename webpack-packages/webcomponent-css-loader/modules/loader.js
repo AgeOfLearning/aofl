@@ -3,16 +3,20 @@ const path = require('path');
 const {getOptions} = require('loader-utils');
 const validationOptions = require('schema-utils');
 const Purgecss = require('purgecss');
-const Stylis = require('stylis');
-const importPlugin = require('./replace-url-plugin');
 const schema = require('./__config/schema.json');
+const postcss = require('postcss');
+const atImport = require('postcss-import');
+const url = require('postcss-url');
+const glob = require('fast-glob');
+
+const COMPONENT_REGEX = /\/\*\*?!\s*@aofl-component[^]*?\*\//igm;
 /**
  *
  * @param {*} source
  * @param {*} map
  * @param {*} meta
  */
-module.exports = function(source) {
+module.exports = async function(source) {
   const callback = this.async();
   const options = Object.assign({
     cache: true,
@@ -26,89 +30,75 @@ module.exports = function(source) {
     this.cacheable(false);
   }
 
-  this.cacheable(true);
-
-  const cssFileName = this.resourcePath.substr(this.resourcePath.lastIndexOf(path.sep) + 1);
-  const templateName = cssFileName.replace('css', 'js');
-  const templatePath = this.resourcePath.replace(cssFileName, templateName);
-  const indexPath = this.resourcePath.replace(cssFileName, 'index.js');
-
-  const globalStylesExists = fs.existsSync(options.path);
-  const templateFileExists = fs.existsSync(templatePath);
-  const indexFileExists = fs.existsSync(indexPath);
-  let content = '';
-
-  if (!templateFileExists && !indexFileExists && !options.force) {
-    return callback(null, source);
+  COMPONENT_REGEX.lastIndex = 0;
+  const isComponent = COMPONENT_REGEX.exec(source.toString());
+  if (isComponent === null || process.env.NODE_ENV === 'development') {
+    callback(null, source);
+    return;
   }
 
   try {
-    if (templateFileExists) {
-      content += fs.readFileSync(templatePath, {encoding: 'utf-8'});
-      this.addDependency(templatePath);
-    }
+    const sourceStr = source.toString();
+    const addDependencies = (messages) => {
+      if (Array.isArray(messages)) {
+        for (let i = 0; i < messages.length; i++) {
+          const message = messages[i];
+          if (typeof message.type === 'string' && message.type === 'dependency') {
+            this.addDependency(message.file);
+          }
+        }
+      }
+    };
 
-    if (indexFileExists) {
-      content += fs.readFileSync(indexPath, {encoding: 'utf-8'});
-      this.addDependency(indexPath);
-    }
-
-    if (globalStylesExists) {
-      this.addDependency(options.path);
-    }
 
     let combinedCss = '';
-    if (globalStylesExists) {
-      const globalStyles = fs.readFileSync(options.path, {encoding: 'utf-8'});
-      const plugin = importPlugin.plugin(this.resourcePath, options.path, this.addDependency);
-      const stylisGlobal = new Stylis();
-      stylisGlobal.set({
-        prefix: true,
-        preserve: false,
-        compress: true,
-        cascade: true,
+    const localCss = await postcss()
+      .use(atImport({
+        root: path.dirname(this.resourcePath)
+      }))
+      .use(url({
+        url: 'rebase'
+      }))
+      .process(sourceStr, {
+        from: this.resourcePath,
+        map: false
       });
-      stylisGlobal.use(plugin);
 
-      const globalCss = stylisGlobal('', globalStyles.toString());
-      combinedCss += globalCss;
-    }
-
-    const plugin = importPlugin.plugin(this.resourcePath, this.resourcePath, this.addDependency);
-    const stylisLocal = new Stylis();
-    stylisLocal.set({
-      prefix: true,
-      preserve: false,
-      compress: true,
-      cascade: true,
-    });
-    stylisLocal.use(plugin);
-    const localCss = stylisLocal('', source.toString());
+    addDependencies(localCss.messages);
     combinedCss += localCss;
 
-    if (typeof process.env.NODE_ENV !== 'undefined' && process.env.NODE_ENV === 'development') {
-      callback(null, combinedCss);
-    } else {
-      const config = {
-        content: [
-          {
-            raw: content.toString(),
-            extension: 'js'
-          }
-        ],
-        css: [
-          {
-            raw: combinedCss
-          }
-        ],
-        rejected: true,
-        whitelist: options.whitelist
-      };
-      const purgeCss = new Purgecss(config);
+    const cwd = path.dirname(this.resourcePath);
+    const dirs = glob.sync('**', {
+      cwd,
+      onlyFiles: true,
+      deep: 1,
+      ignore: ['*.css', '*.scss']
+    });
 
-      const purified = purgeCss.purge();
-      callback(null, purified[0].css);
+    let rawContent = '';
+    for (let i = 0; i < dirs.length; i++) {
+      rawContent += fs.readFileSync(path.join(cwd, dirs[i]), {encoding: 'utf-8'});
     }
+    const config = {
+      content: [
+        {
+          raw: rawContent,
+          extension: 'js'
+        }
+      ],
+      css: [
+        {
+          raw: combinedCss
+        }
+      ],
+      rejected: true,
+      whitelist: options.whitelist
+    };
+    const purgeCss = new Purgecss(config);
+
+    const purified = purgeCss.purge();
+
+    callback(null, purified[0].css);
   } catch (e) {
     callback(e);
   }

@@ -1,6 +1,14 @@
 const path = require('path');
 const environmentEnumerate = require('../../environment-enumerate');
 const htmlWebpackconfig = require('../../html-webpack-config');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+
+const postCssPlugins = [autoprefixer()];
+
+if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+  postCssPlugins.push(cssnano());
+}
 
 module.exports = (root) => {
   return {
@@ -20,18 +28,22 @@ module.exports = (root) => {
       middleware: [],
       extend: () => {},
       css: {
-        test: /\.css$/,
+        test: /\.(css|s[ac]ss)$/,
         component: [path.join(root, 'templates', 'main', 'css', 'index.css')],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {
             whitelist: ['route-view'],
           },
-        }
+        },
+        cssLoader: {}, // options
+        postCssLoader: {
+          plugins: postCssPlugins
+        }, // options
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
+        exclude: /node_modules/,
         fileLoader: {
           // name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
@@ -47,7 +59,7 @@ module.exports = (root) => {
       },
       fonts: {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
+        exclude: /node_modules/,
         fileLoader: {
           name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
         },
@@ -62,7 +74,6 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
-        exclude: /node_modules\/(?!@aofl|@polymer|lit-html|lit-element|@webcomponents).*/,
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),

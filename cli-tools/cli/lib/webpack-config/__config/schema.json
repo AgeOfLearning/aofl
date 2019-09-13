@@ -70,10 +70,13 @@
             "enforce": {
               "type": "string"
             },
-            "component": {
-              "type": "array"
-            },
             "global": {
+              "type": "object"
+            },
+            "cssLoader": {
+              "type": "object"
+            },
+            "postCssLoader": {
               "type": "object"
             }
           }

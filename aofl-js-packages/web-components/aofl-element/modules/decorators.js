@@ -5,7 +5,7 @@ import {property as litProperty} from 'lit-element/lib/decorators';
 const MapStateDeclaration = {
   store: storeInstance,
   state: ''
-}
+};
 
 
 /**
@@ -40,7 +40,7 @@ export function property(options = MapStateDeclaration) {
         if (_options.state !== '') {
           const updateValue = () => {
             const state = _options.store.getState();
-              this[protoOrDescriptor.key] = get(state, _options.state);
+            this[protoOrDescriptor.key] = get(state, _options.state);
           };
 
           updateValue();
@@ -49,5 +49,5 @@ export function property(options = MapStateDeclaration) {
         }
       }
     });
-  }
-};
+  };
+}

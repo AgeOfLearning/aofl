@@ -28,5 +28,6 @@
     "eslint": "^5.11.0",
     "eslint-config-aofl": "^1.0.0-alpha.1",
     "lerna": "^3.8.0"
-  }
+  },
+  "dependencies": {}
 }

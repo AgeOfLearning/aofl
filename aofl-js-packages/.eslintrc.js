@@ -17,7 +17,8 @@ const config = {
     cleanTestContainer: true,
     sinon: true,
     Promise: true,
-    Symbol: true
+    Symbol: true,
+    Map: true
   }
 };
 
