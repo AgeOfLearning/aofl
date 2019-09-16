@@ -8,6 +8,8 @@ program
   .option('--host [host]', 'The port')
   .option('--stats', '')
   .option('--profile', '')
+  .option('--hot', '')
+  .option('--hot-only', '')
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
   .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
@@ -23,5 +25,5 @@ program
   .parse(process.argv);
 
 const serveProject = new ServeProject(program.config, program.port, program.host,
-  program.stats, program.profile, program.debug, program.reporter);
+  program.stats, program.profile, program.debug, program.reporter, program.hot, program.hotOnly);
 serveProject.init();

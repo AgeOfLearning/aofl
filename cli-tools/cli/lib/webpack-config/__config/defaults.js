@@ -15,20 +15,21 @@ module.exports = (root) => {
     name: 'Aofl JS App',
     root,
     build: {
-      filename: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[name]-[chunkhash].js': '[name]-[chunkhash].js',
+      filename: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
         'custom-elements-es5-adapter': path.resolve(__dirname, 'custom-elements-es5-adapter.js'),
         'main': path.resolve(root, 'modules', 'index.js')
       },
       path: path.join(root, '__build'),
       publicPath: '/',
-      devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'none'),
+      devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'eval'), // cheap-module-eval-source-map
       cache: true,
       hardSourceCache: true,
       middleware: [],
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {
@@ -42,7 +43,7 @@ module.exports = (root) => {
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        exclude: /node_modules/,
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
         fileLoader: {
           // name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
@@ -58,14 +59,14 @@ module.exports = (root) => {
       },
       fonts: {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
-        exclude: /node_modules/,
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
         fileLoader: {
-          name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
+          name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
         },
       },
       eslint: {
         test: /\.js$/,
-        exclude: /(node_modules|sw)/,
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs')],
         enforce: 'pre',
         options: {
           config: path.join(__dirname, '.eslintrc.js'),
@@ -73,6 +74,7 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'codemirror'), path.join(root, 'node_modules', 'lit-element'), path.join(root, 'node_modules', 'lit-html')],
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),

@@ -9,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const UnitTesting = require('@aofl/unit-testing-plugin');
+const path = require('path');
 
 const getOutput = (path, publicPath, filename) => {
   const output = {
@@ -30,6 +31,7 @@ const getCssRules = (build) => {
     issuer: build.css.issuer,
     enforce: build.css.enforce,
     use: [
+      'cache-loader',
       {
         loader: 'css-loader',
         options: {
@@ -53,17 +55,17 @@ const getCssRules = (build) => {
           cache: build.cache
         }
       },
-      {
-        loader: 'sass-loader',
-        options: {
-          // Prefer `dart-sass`
-          implementation: require('sass'),
-          webpackImporter: false,
-          sassOptions: {
-            fibers: require('fibers')
-          }
-        },
-      }
+      // {
+      //   loader: 'sass-loader',
+      //   options: {
+      //     // Prefer `dart-sass`
+      //     implementation: require('sass'),
+      //     webpackImporter: false,
+      //     sassOptions: {
+      //       fibers: require('fibers')
+      //     }
+      //   },
+      // }
     ]
   };
 
@@ -82,7 +84,6 @@ const getEsLintRules = (build) => {
       enforce: build.eslint.enforce,
       use: [
         {
-          loader: 'eslint-loader',
           options: {
             cache: build.cache,
             ...build.eslint.options
@@ -102,6 +103,7 @@ const getJsRules = (build) => {
       issuer: build.js.issuer,
       enforce: build.js.enforce,
       use: [
+        'cache-loader',
         {
           loader: 'babel-loader',
           options: {
@@ -188,17 +190,15 @@ const getConfig = (root, configObject) => {
   rules.push(...getJsRules(configObject.build));
   rules.push({
     test: /i18n\/index\.js$/,
-    use: '@aofl/i18n-loader',
-    exclude: /node_modules\/@aofl\/i18n\//
+    use: ['cache-loader', '@aofl/i18n-loader'],
+    exclude: /node_modules/
   });
   rules.push(...getImageRules(configObject.build));
   rules.push(...getFontsRules(configObject.build));
 
   const plugins = [
     new CleanWebpackPlugin(),
-    new webpack.HashedModuleIdsPlugin(),
-    new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache),
-    new HtmlWebpackPurifycssPlugin(configObject.build.css.global),
+    new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
   ];
 
   const config = {
@@ -211,12 +211,15 @@ const getConfig = (root, configObject) => {
     },
     plugins,
     watchOptions: {
-      ignored: ['node_modules/**']
+      ignored: [path.join(root, 'node_modules')],
+      poll: 2000
     },
     resolve: {
       alias: {
         'Root': root
-      }
+      },
+      symlinks: false,
+      cacheWithContext: false
     },
     devServer: configObject.devServer,
     optimization: {
@@ -245,6 +248,8 @@ const getConfig = (root, configObject) => {
   };
 
   if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+    config.plugins.push(new webpack.HashedModuleIdsPlugin());
+    config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
     config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
     config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
 

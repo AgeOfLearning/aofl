@@ -26,7 +26,7 @@ class ServeProject {
    * @param {Boolean} debug
    */
   constructor(config = '.aofl.js', port, host, stats = false,
-  profile = false, debug = false, reporter = 'fancy') {
+  profile = false, debug = false, reporter = 'fancy', hot = false, hotOnly = false) {
     this.configPath = path.resolve(config);
     this.port = port;
     this.host = host;
@@ -34,6 +34,8 @@ class ServeProject {
     this.profile = profile;
     this.debug = debug;
     this.reporter = reporter;
+    this.hot = hot;
+    this.hotOnly = hotOnly;
 
     if (debug) {
       this.reporter = new DebugReporter();
@@ -47,6 +49,14 @@ class ServeProject {
     this.config = loadConfig(this.configPath);
     this.options = this.config.webpack.devServer;
     delete this.config.webpack.devServer;
+
+    if (this.hot) {
+      this.options.hot = true;
+    }
+
+    if (this.hotOnly) {
+      this.options.hotOnly = true;
+    }
 
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,

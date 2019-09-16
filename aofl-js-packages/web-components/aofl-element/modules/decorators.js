@@ -1,6 +1,6 @@
 import {storeInstance} from '@aofl/store';
 import {get} from '@aofl/object-utils';
-import {property as litProperty} from 'lit-element/lib/decorators';
+import {property as litProperty, customElement as litCustomElement} from 'lit-element/lib/decorators';
 
 const MapStateDeclaration = {
   store: storeInstance,
@@ -10,8 +10,6 @@ const MapStateDeclaration = {
 
 /**
  *
- *
- * @export
  * @param {Object} options
  * @param {Boolean|String} options.attribute
  * @param {TypeHint} options.type
@@ -21,7 +19,6 @@ const MapStateDeclaration = {
  * @param {Boolean} options.noAccessor
  * @param {Store} options.store,
  * @param {String} options.state
- *
  * @return {Object}
  */
 export function property(options = MapStateDeclaration) {
@@ -49,5 +46,21 @@ export function property(options = MapStateDeclaration) {
         }
       }
     });
+  };
+}
+
+
+/**
+ *
+ * @export customElement
+ * @param {String} tagName
+ * @return {Object}
+ */
+export function customElement(tagName) {
+  return (descriptor) => {
+    if (window.customElements.get(tagName) !== void 0) {
+      return descriptor;
+    }
+    return litCustomElement(tagName)(descriptor);
   };
 }

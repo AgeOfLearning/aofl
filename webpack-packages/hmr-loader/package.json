@@ -1,0 +1,32 @@
+{
+  "name": "@aofl/hmr-loader",
+  "version": "0.0.0",
+  "description": "Hot Module replacement (HMR) Webpack Loader ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
+  },
+  "keywords": [
+    "HMR",
+    "Hot",
+    "Module",
+    "Replacement",
+    "Webpack",
+    "Loader",
+    "AoflElement"
+  ],
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://github.com/AgeOfLearning/aofl#readme",
+  "dependencies": {
+    "loader-utils": "^1.1.0",
+    "schema-utils": "^1.0.0"
+  }
+}

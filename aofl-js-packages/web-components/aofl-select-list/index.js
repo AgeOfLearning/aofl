@@ -136,4 +136,6 @@ class AoflSelectList extends AoflElement {
   }
 }
 
-window.customElements.define(AoflSelectList.is, AoflSelectList);
+if (window.customElements.get(AoflSelectList.is) === void 0) {
+  window.customElements.define(AoflSelectList.is, AoflSelectList);
+}
