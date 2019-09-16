@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0-alpha.12.6",
+  "version": "2.1.0-alpha.12.7",
   "packages": [
     "aofl-js-packages/*",
     "cli-tools/*",
