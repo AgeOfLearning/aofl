@@ -65,6 +65,7 @@ module.exports = async function() {
 
           walk(document.body, (node) => {
             if (node.localName === Ctor.is) {
+              Ctor.observedAttributes;
               const descriptorsS = Object.getOwnPropertyDescriptors(Ctor);
               const descriptorsI = Object.getOwnPropertyDescriptors(Ctor.prototype);
 
@@ -81,6 +82,7 @@ module.exports = async function() {
               if (node.connectedCallback) {
                 node.connectedCallback();
                 node.shouldUpdate(Ctor._classProperties);
+                nede.requestUpdate();
               }
             }
           });

@@ -43,7 +43,6 @@ module.exports = function(source) {
     }
 
     const tmpSource = `${source}
-
        const walk = function walk(root, call) {
         call(root);
         if (root.shadowRoot) {
@@ -74,6 +73,7 @@ module.exports = function(source) {
           }
           walk(document.body, async (node) => {
             if (node.localName === Ctor.is) {
+              Ctor.observedAttributes;
               const descriptorsS = Object.getOwnPropertyDescriptors(Ctor);
               const descriptorsI = Object.getOwnPropertyDescriptors(Ctor.prototype);
 
@@ -90,6 +90,7 @@ module.exports = function(source) {
               if (node.connectedCallback) {
                 node.connectedCallback();
                 node.shouldUpdate(Ctor._classProperties);
+                node.requestUpdate();
               }
             }
           });
