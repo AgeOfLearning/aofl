@@ -144,4 +144,6 @@ class AoflPicture extends AoflElement {
   }
 }
 
-window.customElements.define(AoflPicture.is, AoflPicture);
+if (window.customElements.get(AoflPicture.is) === void 0) {
+  window.customElements.define(AoflPicture.is, AoflPicture);
+}

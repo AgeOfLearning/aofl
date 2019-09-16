@@ -98,4 +98,6 @@ class AoflListOption extends AoflElement {
   }
 }
 
-window.customElements.define(AoflListOption.is, AoflListOption);
+if (window.customElements.get(AoflListOption.is) === void 0) {
+  window.customElements.define(AoflListOption.is, AoflListOption);
+}

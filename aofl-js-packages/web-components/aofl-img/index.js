@@ -128,4 +128,6 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   }
 }
 
-window.customElements.define(AoflImg.is, AoflImg);
+if (window.customElements.get(AoflImg.is) === void 0) {
+  window.customElements.define(AoflImg.is, AoflImg);
+}

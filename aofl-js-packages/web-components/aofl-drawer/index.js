@@ -195,6 +195,8 @@ class AoflDrawer extends AoflElement {
   }
 }
 
-window.customElements.define(AoflDrawer.is, AoflDrawer);
+if (window.customElements.get(AoflDrawer.is) === void 0) {
+  window.customElements.define(AoflDrawer.is, AoflDrawer);
+}
 
 export default AoflDrawer;

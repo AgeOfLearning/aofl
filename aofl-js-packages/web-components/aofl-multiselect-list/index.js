@@ -160,4 +160,6 @@ class AoflMultiselectList extends AoflElement {
   }
 }
 
-window.customElements.define(AoflMultiselectList.is, AoflMultiselectList);
+if (window.customElements.get(AoflMultiselectList.is) === void 0) {
+  window.customElements.define(AoflMultiselectList.is, AoflMultiselectList);
+}

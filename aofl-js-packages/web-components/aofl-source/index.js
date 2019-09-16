@@ -57,4 +57,6 @@ class AoflSource extends AoflElement {
   }
 }
 
-window.customElements.define(AoflSource.is, AoflSource);
+if (window.customElements.get(AoflSource.is) === void 0) {
+  window.customElements.define(AoflSource.is, AoflSource);
+}
