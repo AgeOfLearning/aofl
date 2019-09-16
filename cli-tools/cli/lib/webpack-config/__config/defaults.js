@@ -29,7 +29,7 @@ module.exports = (root) => {
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {
@@ -43,7 +43,7 @@ module.exports = (root) => {
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         fileLoader: {
           // name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
@@ -59,14 +59,14 @@ module.exports = (root) => {
       },
       fonts: {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', 'codemirror')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         fileLoader: {
           name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
         },
       },
       eslint: {
         test: /\.js$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         enforce: 'pre',
         options: {
           config: path.join(__dirname, '.eslintrc.js'),
@@ -74,7 +74,7 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'routes-docs'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'codemirror'), path.join(root, 'node_modules', 'lit-element'), path.join(root, 'node_modules', 'lit-html')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'), path.join(root, 'node_modules', 'lit-html')],
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),
