@@ -82,7 +82,7 @@ module.exports = async function() {
               if (node.connectedCallback) {
                 node.connectedCallback();
                 node.shouldUpdate(Ctor._classProperties);
-                nede.requestUpdate();
+                node.requestUpdate();
               }
             }
           });
