@@ -1,8 +1,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
-const Git = require('../../lib/git');
-const Npm = require('../../lib/npm');
+const {Git, Npm} = require('@aofl/cli-lib');
 const glob = require('fast-glob');
 const moduleRefRegex = /(.+)@(.*)/;
 /**

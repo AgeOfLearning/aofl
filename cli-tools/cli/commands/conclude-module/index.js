@@ -1,6 +1,5 @@
 const chalk = require('chalk');
-const Git = require('../../lib/git');
-const Npm = require('../../lib/npm');
+const {Git, Npm} = require('@aofl/cli-lib');
 const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');

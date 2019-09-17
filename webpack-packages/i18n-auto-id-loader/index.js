@@ -1,4 +1,4 @@
-const addTtTags = require('@aofl/cli/lib/tt-tags');
+const {TtTag} = require('../../cli-tools/cli-lib');
 const fs = require('fs');
 const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
@@ -16,7 +16,7 @@ module.exports = function(content) {
   }
 
   const sourcePath = this.resourcePath;
-  const ttTags = addTtTags(content);
+  const ttTags = TtTag.addIds(content);
 
   if (ttTags !== content) {
     fs.writeFileSync(sourcePath, ttTags);

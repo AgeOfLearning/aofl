@@ -1,12 +1,12 @@
 const path = require('path');
-const environmentEnumerate = require('../../environment-enumerate');
+const {environments} = require('../../constants-enumerate');
 const htmlWebpackconfig = require('../../html-webpack-config');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
 const postCssPlugins = [autoprefixer()];
 
-if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+if (process.env.NODE_ENV === environments.PRODUCTION) {
   postCssPlugins.push(cssnano());
 }
 
@@ -15,14 +15,14 @@ module.exports = (root) => {
     name: 'Aofl JS App',
     root,
     build: {
-      filename: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
+      filename: process.env.NODE_ENV === environments.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
         'custom-elements-es5-adapter': path.resolve(__dirname, 'custom-elements-es5-adapter.js'),
         'main': path.resolve(root, 'modules', 'index.js')
       },
       path: path.join(root, '__build'),
       publicPath: '/',
-      devtool: (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'eval'), // cheap-module-eval-source-map
+      devtool: (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'eval'), // cheap-module-eval-source-map
       cache: true,
       hardSourceCache: true,
       middleware: [],
@@ -45,7 +45,7 @@ module.exports = (root) => {
         test: /\.(png|jpe?g|gif|svg)$/,
         include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         fileLoader: {
-          // name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
+          // name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
         },
         imgLoader: {
@@ -61,7 +61,7 @@ module.exports = (root) => {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
         include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
         fileLoader: {
-          name: process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
+          name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
         },
       },
       eslint: {

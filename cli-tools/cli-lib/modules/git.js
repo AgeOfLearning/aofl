@@ -250,4 +250,4 @@ class Git {
   }
 }
 
-module.exports = Git;
+module.exports.Git = Git;

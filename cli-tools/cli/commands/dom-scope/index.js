@@ -1,5 +1,5 @@
 const glob = require('fast-glob');
-const PathHelper = require('../../lib/path-helper');
+const {PathHelper} = require('@aofl/cli-lib');
 const fs = require('fs');
 const chalk = require('chalk');
 const Table = require('cli-table');
@@ -117,7 +117,7 @@ class DomScope {
       let duplicatesFound = false;
 
       for (const key in this.domScopes) {
-        if (!this.domScopes.hasOwnProperty(key)) continue;
+        if (!Object.prototype.hasOwnProperty.call(this.domScopes, key)) continue;
         if (this.domScopes[key].length > 1) {
           table.push([key, this.domScopes[key].join('\n')]);
           duplicatesFound = true;

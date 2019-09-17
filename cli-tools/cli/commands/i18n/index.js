@@ -1,11 +1,10 @@
 /*eslint-disable*/
 /** @todo: fix linting */
 const glob = require('fast-glob');
-const pathHelper = require('../../lib/path-helper');
+const {PathHelper, getTranslationCalls} = require('@aofl/cli-lib')
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
-const getTranslationCalls = require('../../lib/get-translation-calls');
 
 const outputFilename = 'translations.json';
 const REPLACE_REGEX = /%r(\d+)%/g;

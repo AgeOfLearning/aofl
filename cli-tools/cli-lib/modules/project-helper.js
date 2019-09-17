@@ -1,11 +1,11 @@
 const path = require('path');
 const fs = require('fs');
-const {project} = require('./constants-enumerate');
+const {projectFileNames} = require('./constants-enumerate');
 
 class ProjectHelper {
   static getConfigFilePath(target) {
     const fileList = fs.readdirSync(target);
-    const configFile = project.GENERATED_CONFIG_FILE_NAMES.find((item) => fileList.indexOf(item) > -1);
+    const configFile = projectFileNames.GENERATED_CONFIG.find((item) => fileList.indexOf(item) > -1);
     if (configFile) {
       return path.join(target, configFile);
     }
@@ -35,4 +35,4 @@ class ProjectHelper {
   }
 }
 
-module.exports = ProjectHelper;
+module.exports.ProjectHelper = ProjectHelper;

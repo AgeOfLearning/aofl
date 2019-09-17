@@ -51,4 +51,4 @@ class PathHelper {
   }
 }
 
-module.exports = PathHelper;
+module.exports.PathHelper = PathHelper;

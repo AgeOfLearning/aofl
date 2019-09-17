@@ -23,4 +23,4 @@ class DebugReporter {
   }
 }
 
-module.exports = DebugReporter;
+module.exports.DebugReporter = DebugReporter;

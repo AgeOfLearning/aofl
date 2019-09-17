@@ -1,4 +1,4 @@
-const environmentEnumerate = require('../environment-enumerate');
+const {environments} = require('../constants-enumerate');
 const webpack = require('webpack');
 const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 const HtmlWebpackPurifycssPlugin = require('@aofl/html-webpack-purify-internal-css-plugin');
@@ -8,7 +8,7 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const UnitTesting = require('@aofl/unit-testing-plugin');
+// const UnitTesting = require('@aofl/unit-testing-plugin');
 const path = require('path');
 
 const getOutput = (path, publicPath, filename) => {
@@ -84,6 +84,7 @@ const getEsLintRules = (build) => {
       enforce: build.eslint.enforce,
       use: [
         {
+          loader: 'eslint-loader',
           options: {
             cache: build.cache,
             ...build.eslint.options
@@ -171,13 +172,13 @@ const getTemplatingPluginOptions = (config, cache) => {
 };
 
 const getConfig = (root, configObject) => {
-  const mode = [environmentEnumerate.DEVELOPMENT, environmentEnumerate.PRODUCTION].indexOf(process.env.NODE_ENV) > -1 ?
-  process.env.NODE_ENV: environmentEnumerate.TEST === process.env.NODE_ENV? 'production': 'none';
+  const mode = [environments.DEVELOPMENT, environments.PRODUCTION].indexOf(process.env.NODE_ENV) > -1 ?
+  process.env.NODE_ENV: environments.TEST === process.env.NODE_ENV? 'production': 'none';
 
 
   const output = getOutput(configObject.build.path, configObject.build.publicPath, configObject.build.filename);
 
-  const devtool = configObject.build.devtool || (process.env.NODE_ENV === environmentEnumerate.PRODUCTION ? 'nosources-source-map': 'none');
+  const devtool = configObject.build.devtool || (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'none');
 
   const rules = [];
 
@@ -247,7 +248,7 @@ const getConfig = (root, configObject) => {
     }
   };
 
-  if (process.env.NODE_ENV === environmentEnumerate.PRODUCTION) {
+  if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.HashedModuleIdsPlugin());
     config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
     config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
@@ -255,19 +256,19 @@ const getConfig = (root, configObject) => {
 
     config.plugins.push(new InjectManifest(configObject.build.serviceworker));
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
-  } else if (process.env.NODE_ENV === environmentEnumerate.TEST) {
+  } else if (process.env.NODE_ENV === environments.TEST) {
     config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: configObject.unitTesting.maxChunks
     }));
 
-    config.plugins.push(new UnitTesting({
-      config: configObject.unitTesting.config,
-      include: configObject.unitTesting.include,
-      exclude: configObject.unitTesting.exclude,
-      output: configObject.unitTesting.output,
-      clean: configObject.unitTesting.clean,
-      scripts: configObject.unitTesting.scripts
-    }));
+    // config.plugins.push(new UnitTesting({
+    //   config: configObject.unitTesting.config,
+    //   include: configObject.unitTesting.include,
+    //   exclude: configObject.unitTesting.exclude,
+    //   output: configObject.unitTesting.output,
+    //   clean: configObject.unitTesting.clean,
+    //   scripts: configObject.unitTesting.scripts
+    // }));
   } else { // development
     config.optimization = {
       removeAvailableModules: false,

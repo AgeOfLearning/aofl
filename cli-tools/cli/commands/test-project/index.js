@@ -1,10 +1,8 @@
 const path = require('path');
-const {loadConfig} = require('../../lib/webpack-config');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
-const environmentEnumerate = require('../../lib/environment-enumerate');
-const DebugReporter = require('../../lib/webpackbar-debug-reporter');
 const chalk = require('chalk');
+const {loadConfig, environments, DebugReporter} = require('@aofl/cli-lib');
 /**
  *
  *
@@ -33,7 +31,7 @@ class TestProject {
     }
 
     if (typeof process.env.NODE_ENV === 'undefined') {
-      process.env.NODE_ENV = environmentEnumerate.TEST;
+      process.env.NODE_ENV = environments.TEST;
     }
 
     const reporters = [this.reporter];

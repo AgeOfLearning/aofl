@@ -1,14 +1,14 @@
 const jsStringEscape = require('js-string-escape');
-const environmentEnumerate = require('./environment-enumerate');
+const {environments} = require('./constants-enumerate');
 
-module.exports = (environment = environmentEnumerate.DEVELOPMENT) => {
+module.exports = (environment = environments.DEVELOPMENT) => {
   return {
     inject: false,
     minify: {
-      minifyJS: environment === environmentEnumerate.PRODUCTION,
-      minifyCSS: environment === environmentEnumerate.PRODUCTION,
-      collapseWhitespace: environment === environmentEnumerate.PRODUCTION,
-      removeComments: environment === environmentEnumerate.PRODUCTION
+      minifyJS: environment === environments.PRODUCTION,
+      minifyCSS: environment === environments.PRODUCTION,
+      collapseWhitespace: environment === environments.PRODUCTION,
+      removeComments: environment === environments.PRODUCTION
     },
     cache: true,
     alwaysWriteToDisk: true,

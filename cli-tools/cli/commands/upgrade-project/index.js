@@ -1,9 +1,8 @@
 const path = require('path');
-const ProjectHelper = require('../../lib/project-helper');
 const semver = require('semver');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const Npm = require('../../lib/npm');
+const {Npm, ProjectHelper} = require('@aofl/cli-lib');
 const runner = require('./codemod');
 
 const upgradeConfig = require('./upgrade-config');

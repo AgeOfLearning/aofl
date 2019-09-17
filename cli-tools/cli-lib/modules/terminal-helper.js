@@ -34,4 +34,4 @@ class TerminalHelper {
   }
 }
 
-module.exports = TerminalHelper;
+module.exports.TerminalHelper = TerminalHelper;

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const CommanderHelper = require('../lib/commander-helper');
+const {CommanderHelper} = require('@aofl/cli-lib');
 const DomScope = require('../commands/dom-scope');
 
 // args

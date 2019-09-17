@@ -11,7 +11,7 @@ const {CliReporter} = require('web-component-tester/runner/clireporter');
 const cleankill = require('cleankill');
 const md5 = require('tiny-js-md5');
 const {getChunksMap} = require('./assets-map');
-const Npm = require('@aofl/cli/lib/npm');
+const {Npm} = require('../../cli-tools/cli-lib');
 /**
  *
  */

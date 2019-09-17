@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const I18NModule = require('../commands/i18n');
 const program = require('commander');
-const CommanderHelper = require('../lib/commander-helper');
+const {CommanderHelper} = require('@aofl/cli-lib');
 
 program
   .option('-p, --pattern [pattern]', 'list of patterns to search. Wrap patterns in "".', CommanderHelper.collect, ['**/*.js'])

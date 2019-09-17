@@ -1,9 +1,8 @@
 const path = require('path');
-const {loadConfig} = require('../../lib/webpack-config');
+const {loadConfig, DebugReporter} = require('@aofl/cli-lib');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
-const DebugReporter = require('../../lib/webpackbar-debug-reporter');
 
 /**
  *

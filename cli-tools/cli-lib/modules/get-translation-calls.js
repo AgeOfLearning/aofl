@@ -3,7 +3,7 @@ const esprima = require('esprima');
 const fs = require('fs');
 const glob = require('fast-glob');
 // const chalk = require('chalk');
-const addTtTags = require('../tt-tags');
+const {TtTag} = require('./tt-tags');
 
 const STRIP_QUOTE_REGEX = /^\(?['`"](.*)['`"]\)?$/;
 // const REPLACE_REGEX = /%r(\d+)%/g;
@@ -265,7 +265,7 @@ const getTranslationCalls = (i18nDir, includePatterns, ignorePatterns) => {
     if (i18nSkip.some((item) => path.join(baseDir, files[i]).indexOf(item) > -1)) continue;
     const sourcePath = path.resolve(baseDir, files[i]);
     const source = fs.readFileSync(sourcePath, {encoding: 'utf-8'});
-    const ttSource = addTtTags(source);
+    const ttSource = TtTag.addIds(source);
 
     if (ttSource !== source) {
       fs.writeFileSync(sourcePath, ttSource, {encoding: 'utf-8'});
