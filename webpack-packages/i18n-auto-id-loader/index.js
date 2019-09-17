@@ -1,4 +1,4 @@
-const {TtTag} = require('../../cli-tools/cli-lib');
+const {TtTag} = require('@aofl/cli-lib');
 const fs = require('fs');
 const schema = require('./__config/schema.json');
 const validationOptions = require('schema-utils');
