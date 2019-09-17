@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n-auto-id-loader",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "Generates tt-tags and inserts them as the 1st argument to  __, _c fucntion calls",
   "main": "index.js",
   "scripts": {
