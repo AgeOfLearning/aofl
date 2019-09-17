@@ -43,7 +43,7 @@ module.exports = (root) => {
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'assets')],
         fileLoader: {
           // name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000

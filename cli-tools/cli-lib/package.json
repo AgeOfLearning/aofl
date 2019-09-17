@@ -56,6 +56,7 @@
     "imagemin-jpegtran": "^6.0.0",
     "imagemin-optipng": "^7.0.0",
     "imagemin-svgo": "^7.0.0",
+    "imagemin": "^6.1.0",
     "img-loader": "^3.0.1",
     "imports-loader": "^0.8.0",
     "js-string-escape": "^1.0.1",
