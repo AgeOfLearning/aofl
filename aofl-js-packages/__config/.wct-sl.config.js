@@ -25,18 +25,18 @@ const config = {
         {
           ...sharedSettings,
           browserName: 'Safari',
-          appiumVersion: '1.9.1',
+          appiumVersion: '1.13.0',
           deviceName: 'iPhone X Simulator',
-          platformVersion: '12.0',
+          platformVersion: '12.2',
           platformName: 'iOS',
         },
         {
           ...sharedSettings,
           browserName: 'Safari',
-          appiumVersion: '1.7.1',
-          deviceName: 'iPhone 4s Simulator',
+          appiumVersion: '1.9.1',
+          deviceName: 'iPhone 5 Simulator',
           deviceOrientation: 'portrait',
-          platformVersion: '9.3',
+          platformVersion: '10.3',
           platformName: 'iOS',
         },
         {
@@ -45,7 +45,7 @@ const config = {
           deviceName: 'Android GoogleAPI Emulator',
           deviceOrientation: 'portrait',
           browserName: 'Chrome',
-          platformVersion: '7.1',
+          platformVersion: '9.0',
           platformName: 'Android',
         },
         {
@@ -54,7 +54,7 @@ const config = {
           deviceName: 'Android GoogleAPI Emulator',
           deviceOrientation: 'portrait',
           browserName: 'Browser',
-          platformVersion: '4.4',
+          platformVersion: '5.1',
           platformName: 'Android',
         },
         {
@@ -90,7 +90,7 @@ const config = {
         {
           ...sharedSettings,
           browserName: 'safari',
-          platform: 'macOS 10.13',
+          platform: 'macOS 10.14',
           version: 'latest',
         }
       ]

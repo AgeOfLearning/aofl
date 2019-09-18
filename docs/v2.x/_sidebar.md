@@ -36,4 +36,4 @@
 - [Browser devtools](v2.x/devtools/index.md)
 - <a href="v2.x/api-docs/index.html" target="_blank">Api Reference</a>
 - <a href="https://codecov.io/gh/AgeOfLearning/aofl" target="_blank">Coverage Report</a>
-- <a href="/benchmark-results/" target="_blank" rel="noopener noreferrer">Performance Bechmarks</a>
+- <a href="/aofl/benchmark-results/" target="_blank" rel="noopener noreferrer">Performance Bechmarks</a>
