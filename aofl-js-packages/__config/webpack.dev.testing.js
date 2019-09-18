@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
-const UnitTesting = require('@aofl/unit-testing-plugin');
+const UnitTesting = require('../../webpack-packages/unit-testing-plugin/index');
 const webpack = require('webpack');
 
 const config = merge(common('development'), {
