@@ -8,7 +8,7 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-// const UnitTesting = require('@aofl/unit-testing-plugin');
+const UnitTesting = require('@aofl/unit-testing-plugin');
 const path = require('path');
 
 const getOutput = (path, publicPath, filename) => {
@@ -261,14 +261,14 @@ const getConfig = (root, configObject) => {
       maxChunks: configObject.unitTesting.maxChunks
     }));
 
-    // config.plugins.push(new UnitTesting({
-    //   config: configObject.unitTesting.config,
-    //   include: configObject.unitTesting.include,
-    //   exclude: configObject.unitTesting.exclude,
-    //   output: configObject.unitTesting.output,
-    //   clean: configObject.unitTesting.clean,
-    //   scripts: configObject.unitTesting.scripts
-    // }));
+    config.plugins.push(new UnitTesting({
+      config: configObject.unitTesting.config,
+      include: configObject.unitTesting.include,
+      exclude: configObject.unitTesting.exclude,
+      output: configObject.unitTesting.output,
+      clean: configObject.unitTesting.clean,
+      scripts: configObject.unitTesting.scripts
+    }));
   } else { // development
     config.optimization = {
       removeAvailableModules: false,
