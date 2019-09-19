@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mocha</title>
+    <style>${require("./mocha.css")}</style>
+    <script>
+      window.aofljsConfig = {};
+      if (typeof window.__coverage__ === 'undefined') {
+        window.__coverage__ = {};
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mocha" style="display: none;"></div>
+    <div id="test-container"></div>
+    <%if (assetsMap['runtime']) { %>
+      <script><%= assetsMap['runtime'].source %></script>
+     <% } %>
+
+    <script>
+      (function() {
+        if (window.customElements) {
+          eval('<%= assetsMap["custom-elements-es5-adapter"].sourceStr %>');
+        }
+      }());
+
+      window.WCT = {
+        waitFor: function (fn) {
+          const ready = function() {
+            window.removeEventListener('AOFL_FRAMEWORK_READY', ready);
+            fn();
+          }
+          window.addEventListener('AOFL_FRAMEWORK_READY', ready);
+        }
+      }
+    </script>
+
+    <% if (assetsMap['common']) { %>
+      <script src="<%= assetsMap['common'].url %>"></script>
+    <% } %>
+    <script src="<%= assetsMap['mocha'].url %>"></script>
+    <script src="<%= assetsMap['test-vendors'].url %>"></script>
+
+    <script>
+      (function(w) {
+        var evalTestSuite = function() {
+          <%= assetsMap['test-suite'].source %>
+        };
+
+        if (w.WebComponents && w.WebComponents.ready) {
+          evalTestSuite();
+        } else {
+          w.addEventListener('WebComponentsReady', function() {
+            w.removeEventListener('WebComponentsReady');
+            evalTestSuite();
+          });
+        }
+      }(window))
+    </script>
+    <script>
+      if (typeof window.WCT === 'object' && window.WCT.share === 'object') {
+        window.WCT.share.__coverage__ = window.__coverage__;
+      } else {
+        window.WCT = {
+          share: {
+            __coverage__: window.__coverage__
+          }
+        }
+      }
+      </script>
+  </body>
+</html>

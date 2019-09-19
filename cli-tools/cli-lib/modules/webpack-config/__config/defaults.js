@@ -1,5 +1,5 @@
 const path = require('path');
-const {environments} = require('../../constants-enumerate');
+const {environments, resources} = require('../../constants-enumerate');
 const htmlWebpackconfig = require('../../html-webpack-config');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
@@ -17,7 +17,7 @@ module.exports = (root) => {
     build: {
       filename: process.env.NODE_ENV === environments.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
-        'custom-elements-es5-adapter': path.resolve(__dirname, 'custom-elements-es5-adapter.js'),
+        'custom-elements-es5-adapter': resources.CUSTOM_ELEMENTS_ES5_ADAPTER,
         'main': path.resolve(root, 'modules', 'index.js')
       },
       path: path.join(root, '__build'),
@@ -29,7 +29,7 @@ module.exports = (root) => {
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl')],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {
@@ -74,7 +74,8 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'), path.join(root, 'node_modules', 'lit-html')],
+        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'),
+          path.join(root, 'node_modules', 'lit-html'), path.join(root, 'node_modules', 'chai') , path.join(root, 'node_modules', 'chai-as-promised')],
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),
@@ -160,8 +161,12 @@ module.exports = (root) => {
       historyApiFallback: true,
     },
     unitTesting: {
+      root,
+      output: '__build_tests',
       config: path.join(root, '.wctrc.json'),
       maxChunks: 1,
+      polyfill: path.join(root, 'modules', '__config', 'polyfills.js'),
+      include: ['**/*.spec.js'],
       exclude: [
         '**/__build*',
         '**/node_modules',
@@ -170,12 +175,9 @@ module.exports = (root) => {
         '**/__config',
         '**/*-instance/**',
         '**/*-polyfill/**',
-      ],
-      scripts: [
-        'runtime',
-        'common',
-        'main',
-      ],
+        'sw.js',
+        'coverage'
+      ]
     },
   };
 };

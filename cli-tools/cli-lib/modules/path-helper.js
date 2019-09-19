@@ -1,6 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
+const TRAILING_SLASH_REGEX = new RegExp(`\\${path.sep}$`, 'i');
+const LEADING_SLASH_REGEX = new RegExp(`^\\${path.sep}`, 'i');
+
 /**
  * shared methods for path operations
  */
@@ -48,6 +51,38 @@ class PathHelper {
     return PathHelper
       .resolvePathDir(_paths)
       .map((_path) => path.join(_path, '**', _matchPattern));
+  }
+
+    /**
+   * @param {*} path
+   * @return {String}
+   * @throws {Error}
+   */
+  static cleanPath(path) {
+    return path.replace(CLEAN_PATH_REGEX, '');
+  }
+
+
+  /**
+   * @param {String} str
+   * @return {String}
+   */
+  static removeTrailingSlash(str) {
+    return str && str.replace(TRAILING_SLASH_REGEX, '');
+  }
+
+  /**
+   * @param {String} str
+   * @return {String}
+   */
+  static removeLeadingSlash(str) {
+    return str && str.replace(LEADING_SLASH_REGEX, '');
+  }
+
+  static stripEndSlashes(str) {
+    str = PathHelper.removeLeadingSlash(str);
+    str = PathHelper.removeTrailingSlash(str);
+    return str;
   }
 }
 

@@ -8,7 +8,6 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const UnitTesting = require('@aofl/unit-testing-plugin');
 const path = require('path');
 
 const getOutput = (path, publicPath, filename) => {
@@ -183,10 +182,11 @@ const getConfig = (root, configObject) => {
   const rules = [];
 
   rules.push(getCssRules(configObject.build));
-  rules.push({
-    test: /@webcomponents/,
-    loader: 'imports-loader?this=>window'
-  });
+  // rules.push({
+  //   test: /\.js$/,
+  //   inpclude: path.join(root, 'node_modules', '@webcomponents', 'webcomponentsjs')
+  //   loader: 'imports-loader?this=>window'
+  // });
   rules.push(...getEsLintRules(configObject.build));
   rules.push(...getJsRules(configObject.build));
   rules.push({
@@ -199,7 +199,6 @@ const getConfig = (root, configObject) => {
 
   const plugins = [
     new CleanWebpackPlugin(),
-    new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
   ];
 
   const config = {
@@ -256,20 +255,9 @@ const getConfig = (root, configObject) => {
 
     config.plugins.push(new InjectManifest(configObject.build.serviceworker));
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
-  } else if (process.env.NODE_ENV === environments.TEST) {
-    config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: configObject.unitTesting.maxChunks
-    }));
+  } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
+    config.plugins.push(new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache));
 
-    config.plugins.push(new UnitTesting({
-      config: configObject.unitTesting.config,
-      include: configObject.unitTesting.include,
-      exclude: configObject.unitTesting.exclude,
-      output: configObject.unitTesting.output,
-      clean: configObject.unitTesting.clean,
-      scripts: configObject.unitTesting.scripts
-    }));
-  } else { // development
     config.optimization = {
       removeAvailableModules: false,
       removeEmptyChunks: false,

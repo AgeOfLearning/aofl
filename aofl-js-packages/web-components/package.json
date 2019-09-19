@@ -1,6 +1,6 @@
 {
   "name": "@aofl/web-components",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0-alpha.5",
   "description": "Several simple building block components",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,8 +29,12 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/component-utils": "^3.0.0-alpha.0",
+    "@aofl/component-utils": "^3.0.0-alpha.5",
     "lit-element": "2.1.0",
     "lit-html": "1.0.0"
+  },
+  "peerDependencies": {
+    "@aofl/object-utils": ">1.0.0",
+    "@aofl/store": ">1.0.0"
   }
 }

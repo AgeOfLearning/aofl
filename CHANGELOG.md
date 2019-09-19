@@ -29,6 +29,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/web-components - all components check customElements registry before calling define. This is done so hmr doesn't throw already defined error
 - @aofl/cli - updated babel config
 - @aofl/cli - a bunch of webpack optimization
+- @aofl/unit-testing-plugin - major rewrite and optimization
+- @aofl/cli - test command updated to work with new unit-testing-plugin
 
 ### [Deprecated]
 ### [Removed]

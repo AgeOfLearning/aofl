@@ -1,5 +1,5 @@
 const CommanderHelper = require('./modules/commander-helper');
-const {environments, project} = require('./modules/constants-enumerate');
+const {environments, project, resources} = require('./modules/constants-enumerate');
 const getTranslationCalls = require('./modules/get-translation-calls');
 const {Git} = require('./modules/git');
 const htmlWebpackConfig = require('./modules/html-webpack-config');
@@ -16,6 +16,7 @@ const {loadConfig} = require('./modules/webpack-config');
 module.exports.CommanderHelper = CommanderHelper;
 module.exports.environments = environments;
 module.exports.project = project;
+module.exports.resources = resources;
 module.exports.getTranslationCalls = getTranslationCalls;
 module.exports.Git = Git;
 module.exports.htmlWebpackConfig = htmlWebpackConfig;

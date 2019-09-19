@@ -112,7 +112,7 @@ class Router {
    * @param {Object} routes
    * @return {Object}
    */
-  addRegexRoutes(routes) {
+  addRegexRoutes(routes = []) {
     for (let i = 0; i < routes.length; i++) {
       const {regex, parse} = PathUtils.getRegex(routes[i].path);
       routes[i] = Object.assign({}, routes[i], {

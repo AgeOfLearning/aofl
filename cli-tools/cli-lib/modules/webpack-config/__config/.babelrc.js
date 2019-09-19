@@ -1,9 +1,16 @@
+const {environments} = require('../../constants-enumerate');
 const ignore = [
   /[\/\\]core-js/,
   /@babel[\/\\]runtime/,
 ];
 
 const sourceType = 'unambiguous';
+
+let compact = false;
+
+if (process.env.NODE_ENV === environments.PRODUCTION) {
+  compact = true;
+}
 
 const presets = [
   [
@@ -15,8 +22,6 @@ const presets = [
   ]
 ];
 const plugins = [
-  // '@babel/plugin-proposal-object-rest-spread',
-  // '@babel/plugin-syntax-dynamic-import',
   '@babel/plugin-proposal-optional-chaining',
   [
     '@babel/plugin-proposal-decorators',
@@ -37,7 +42,7 @@ const plugins = [
   ]
 ];
 
-if (process.env.NODE_ENV === 'test' && typeof process.env.SAUCE_USERNAME !== 'string') {
+if (process.env.NODE_ENV === environments.TEST && typeof process.env.SAUCE_USERNAME !== 'string' && process.env.WATCH_FS !== true) {
   plugins.unshift([
     'istanbul', {
       'exclude': [
@@ -52,6 +57,7 @@ if (process.env.NODE_ENV === 'test' && typeof process.env.SAUCE_USERNAME !== 'st
 }
 
 module.exports = {
+  compact,
   ignore,
   sourceType,
   presets,

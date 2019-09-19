@@ -268,25 +268,25 @@
     "unitTesting": {
       "type": "object",
       "properties": {
+        "root": {
+          "type": "string"
+        },
+        "output": {
+          "type": "string"
+        },
         "config": {
           "type": "string"
         },
         "maxChunks": {
           "type": "number"
         },
+        "polyfill": {
+          "type": "string"
+        },
         "include": {
           "type": "array"
         },
         "exclude": {
-          "type": "array"
-        },
-        "output": {
-          "type": "string"
-        },
-        "clean": {
-          "type": "boolean"
-        },
-        "scripts": {
           "type": "array"
         }
       }
