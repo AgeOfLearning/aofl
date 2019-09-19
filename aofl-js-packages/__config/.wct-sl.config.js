@@ -42,10 +42,10 @@ const config = {
         {
           ...sharedSettings,
           appiumVersion: '1.9.1',
-          deviceName: 'Android GoogleAPI Emulator',
+          deviceName: 'Google Pixel GoogleAPI Emulator',
           deviceOrientation: 'portrait',
           browserName: 'Chrome',
-          platformVersion: '9.0',
+          platformVersion: '8.1',
           platformName: 'Android',
         },
         {
@@ -90,7 +90,7 @@ const config = {
         {
           ...sharedSettings,
           browserName: 'safari',
-          platform: 'macOS 10.14',
+          platform: 'macOS 10.13',
           version: 'latest',
         }
       ]
