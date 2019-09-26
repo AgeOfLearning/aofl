@@ -247,6 +247,9 @@ const getConfig = (root, configObject) => {
 
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.HashedModuleIdsPlugin());
+    config.plugins.push(new AofLTemplatingPlugin(
+      getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
+    );
     config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
     config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
     config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
