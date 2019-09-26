@@ -1,29 +1,42 @@
 import styles from './template.css';
 import template from './template';
+import {storeInstance} from '@aofl/store';
 import {AoflElement, customElement} from '@aofl/web-components/aofl-element';
+import {i18nMixin} from '@aofl/i18n-mixin';
+
+import translations from '..';
 
 /**
  * @summary __uppercamelcase__placeholder__
- * @extends {AoflElement}
+ * @extends {i18nMixin(AoflElement)}
  */
 @customElement('__adddash__placeholder__')
-class __uppercamelcase__placeholder__ extends AoflElement {
+class __uppercamelcase__placeholder__ extends i18nMixin(AoflElement) {
   /**
    * Creates an instance of __uppercamelcase__placeholder__.
    */
   constructor() {
     super();
+    this.translations = translations;
+    this.storeInstance = storeInstance;
   }
+
   /**
    * @readonly
    */
   static is = '__adddash__placeholder__';
+
   /**
    *
    * @return {Object}
    */
   render() {
-    return super.render(template, [styles]);
+    return super.render({
+      default: {
+        template,
+        styles: [styles]
+      }
+    });
   }
 }
 
