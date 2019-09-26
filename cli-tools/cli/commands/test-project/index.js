@@ -165,13 +165,12 @@ class TestProject {
 
   getCoverAllFiles() {
     if (this.watch) return;
-    const files = glob.sync([
-      '**/*.js'
-    ], {
+    const files = glob.sync(['**/*.js'], {
       ignore: [
         ...this.config.unitTesting.exclude,
         '**/' + this.config.unitTesting.output,
-        '**/*.spec.js'],
+        '**/*.spec.js'
+      ],
       cwd: this.config.root
     });
 

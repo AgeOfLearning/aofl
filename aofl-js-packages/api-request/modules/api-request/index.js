@@ -53,6 +53,17 @@ class ApiRequest {
     return this.cacheManagers[namespace];
   }
 
+  purgeCache(namespace) {
+    if (typeof namespace === 'undefined') { // purge all
+      for (const key in this.cacheManagers) {
+        if (!this.cacheManagers.hasOwnProperty(key)) continue;
+        this.cacheManagers[key].clear();
+      }
+    } else {
+      this.cacheManagers[namespace].clear();
+    }
+  }
+
   /**
    * Makes a network call using fetch API.
    *

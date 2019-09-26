@@ -24,6 +24,7 @@ class Store {
     this.state = {};
     this.decorators = [];
     this.namespaces = {};
+    this.purgeList = [];
     this.registerCallbackInstance = new RegisterCallback();
     this.pending = {
       any: false,
@@ -209,6 +210,8 @@ class Store {
       [sdo.namespace]: initState,
     });
 
+    this.purgeList.push({namespace: sdo.namespace, mutationId: 'init'});
+
     if (Array.isArray(sdo.decorators)) {
       this.addDecorators(sdo.decorators);
     } else {
@@ -216,6 +219,9 @@ class Store {
     }
   }
 
+  purge() {
+    this.commit(...this.purgeList);
+  }
   /**
    * commit() accepts variadit mutation objects as arguments and applies the mutations agains the
    * current state to generate the next state of the application.

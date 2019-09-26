@@ -197,9 +197,7 @@ const getConfig = (root, configObject) => {
   rules.push(...getImageRules(configObject.build));
   rules.push(...getFontsRules(configObject.build));
 
-  const plugins = [
-    new CleanWebpackPlugin(),
-  ];
+  const plugins = [new CleanWebpackPlugin()];
 
   const config = {
     entry: configObject.build.entry,
@@ -256,7 +254,9 @@ const getConfig = (root, configObject) => {
     config.plugins.push(new InjectManifest(configObject.build.serviceworker));
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
-    config.plugins.push(new AofLTemplatingPlugin(getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache));
+    config.plugins.push(new AofLTemplatingPlugin(
+      getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
+    );
 
     config.optimization = {
       removeAvailableModules: false,
