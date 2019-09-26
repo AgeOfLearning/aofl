@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.9",
   "description": "A module for simplifying api calls",
   "keywords": [
     "aofljs",

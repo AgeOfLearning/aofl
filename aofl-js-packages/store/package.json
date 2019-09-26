@@ -1,6 +1,6 @@
 {
   "name": "@aofl/store",
-  "version": "3.0.0-alpha.5",
+  "version": "3.0.0-alpha.9",
   "description": "Centralized state management for aofljs applications",
   "main": "index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "3.0.0-alpha.8",
+  "version": "3.0.0-alpha.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,8 @@
     "aofl": "./bin/aofl.js"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^3.0.0-alpha.8",
-    "@aofl/unit-testing-plugin": "^3.0.0-alpha.8",
+    "@aofl/cli-lib": "^3.0.0-alpha.9",
+    "@aofl/unit-testing-plugin": "^3.0.0-alpha.9",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chalk": "^2.4.2",
