@@ -7,8 +7,6 @@ const ignore = [
 const sourceType = 'unambiguous';
 let compact = false;
 
-let compact = false;
-
 if (process.env.NODE_ENV === environments.PRODUCTION) {
   compact = true;
 }
@@ -55,9 +53,6 @@ if (process.env.NODE_ENV === environments.TEST && typeof process.env.SAUCE_USERN
       ]
     }
   ]);
-}
-if (process.env.NODE_ENV === 'production') {
-  compact = true;
 }
 
 module.exports = {

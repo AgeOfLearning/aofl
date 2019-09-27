@@ -54,10 +54,11 @@
         if (w.WebComponents && w.WebComponents.ready) {
           evalTestSuite();
         } else {
-          w.addEventListener('WebComponentsReady', function() {
-            w.removeEventListener('WebComponentsReady');
+          var wctReadyHandler = function() {
+            w.removeEventListener('WebComponentsReady', wctReadyHandler);
             evalTestSuite();
-          });
+          };
+          w.addEventListener('WebComponentsReady', wctReadyHandler);
         }
       }(window))
     </script>
