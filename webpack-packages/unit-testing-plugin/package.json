@@ -1,6 +1,6 @@
 {
   "name": "@aofl/unit-testing-plugin",
-  "version": "3.0.0-alpha.12",
+  "version": "3.0.0-alpha.13",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^3.0.0-alpha.12",
+    "@aofl/cli-lib": "^3.0.0-alpha.13",
     "bower-config": "^0.6.2",
     "chalk": "^2.4.2",
     "cleankill": "^2.0.0",
@@ -28,7 +28,6 @@
     "send": "^0.17.1",
     "server-destroy": "^1.0.1",
     "socket.io": "^2.2.0",
-    "stacky": "^1.3.1",
     "strip-ansi": "^5.2.0",
     "util": "^0.12.1",
     "wct-istanbul": "^0.14.3",

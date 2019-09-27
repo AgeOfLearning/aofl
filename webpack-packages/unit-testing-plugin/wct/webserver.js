@@ -102,17 +102,7 @@ function webserver(wct) {
                 // loaded.  Here we list the legacy packages and attempt to resolve them
                 // from the WCT package.
                 if (['web-component-tester', 'wct-browser-legacy'].includes(options.wctPackageName)) {
-                    const legacyNpmSupportPackageScripts = [
-                        'stacky/browser.js',
-                        'async/lib/async.js',
-                        'lodash/index.js',
-                        'mocha/mocha.js',
-                        'chai/chai.js',
-                        '@polymer/sinonjs/sinon.js',
-                        'sinon-chai/lib/sinon-chai.js',
-                        'accessibility-developer-tools/dist/js/axs_testing.js',
-                        '@polymer/test-fixture/test-fixture.js',
-                    ];
+                    const legacyNpmSupportPackageScripts = [];
                     const resolvedLegacyNpmSupportPackageScripts = legacyNpmSupportPackageScripts
                         .map((script) => resolveFrom(npmPackageRootPath, script))
                         .filter((script) => script !== '');

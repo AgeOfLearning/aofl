@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const chalk = require("chalk");
 const cleankill = require("cleankill");
 const _ = require("lodash");
-const stacky = require("stacky");
+const stacky = require("../stacky");
 const util = require("util");
 const strip_ansi_1 = require("strip-ansi");
 const STACKY_CONFIG = {
