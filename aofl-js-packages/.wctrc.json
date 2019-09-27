@@ -1,6 +1,5 @@
 {
   "verbose": false,
-  "persistent": false,
   "plugins": {
     "local": {
       "browsers": [

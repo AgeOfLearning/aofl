@@ -1,0 +1,28 @@
+{
+  "source": {
+    "includePattern": "index.js$",
+    "excludePattern": "(node_modules|documentation|api-docs|webpack)",
+    "include": ["./README.md"]
+  },
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "encoding": "utf8",
+    "destination": "../docs/v3.x/api-docs/",
+    "recurse": true,
+    "verbose": true
+  },
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "templates": {
+    "systemName": "Age Of Learning JavaScript SDK",
+    "theme": "paper",
+    "linenums": true,
+    "outputSourceFiles": true,
+    "collapseSymbols": false,
+    "navType": "vertical",
+    "inverseNav": true,
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

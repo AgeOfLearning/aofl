@@ -126,24 +126,6 @@ describe('@aofl/web-components/aofl-list-option', function() {
     });
   });
 
-  context('mouseenterCallback()', function() {
-    it('should focus element on mouseenter', async function() {
-      try {
-        await this.element.updateComplete;
-        const children = Array.from(this.element.children).map((item) => {
-          return item.updateComplete;
-        });
-
-        await Promise.all(children);
-
-        const event = new Event('mouseenter');
-        this.element.querySelector('aofl-list-option').mouseenterCallback(event);
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-  });
-
   context('select()', function() {
     it('Should set attribute true to selected', async function() {
       try {

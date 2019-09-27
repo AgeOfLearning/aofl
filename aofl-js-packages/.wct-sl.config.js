@@ -1,4 +1,4 @@
-const npmPkg = require('../package.json');
+const npmPkg = require('./package.json');
 
 const build = `v${npmPkg.version}`;
 
@@ -79,12 +79,6 @@ const config = {
           ...sharedSettings,
           browserName: 'internet explorer',
           platform: 'Windows 10',
-          version: 'latest',
-        },
-        {
-          ...sharedSettings,
-          browserName: 'internet explorer',
-          platform: 'Windows 7',
           version: 'latest',
         },
         {

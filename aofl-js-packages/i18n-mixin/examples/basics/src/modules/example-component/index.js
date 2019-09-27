@@ -11,7 +11,6 @@ class ExampleComponent extends i18nMixin(AoflElement) {
     this.user = 'Mike';
     this.messageCount = 0;
     this.translations = translations;
-    console.log(translations);
   }
 
   static get is() {

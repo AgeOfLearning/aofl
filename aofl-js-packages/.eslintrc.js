@@ -18,7 +18,11 @@ const config = {
     sinon: true,
     Promise: true,
     Symbol: true,
-    Map: true
+    Map: true,
+    getTestContainer: true,
+    fixture: true,
+    __webpack_public_path__: true,
+    aofljsConfig: true
   }
 };
 
