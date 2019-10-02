@@ -1,6 +1,6 @@
 {
   "name": "@aofl/web-components",
-  "version": "3.0.0-alpha.13",
+  "version": "3.0.0-alpha.14",
   "description": "Several simple building block components",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
