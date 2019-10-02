@@ -1,5 +1,3 @@
-/*eslint-disable*/
-/** @todo: fix linting */
 const glob = require('fast-glob');
 const {PathHelper, getTranslationCalls} = require('@aofl/cli-lib')
 const fs = require('fs');
@@ -16,7 +14,7 @@ class I18N {
     this.includePath = includePath;
     this.includePatterns = pattern;
 
-    this.excludePathsGlobPatterns = pathHelper
+    this.excludePathsGlobPatterns = PathHelper
       .convertToGlobPattern(exclude)
       .concat(excludePattern);
 
