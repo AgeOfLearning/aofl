@@ -1,7 +1,5 @@
 const path = require('path');
 
-console.log(process.env.SAUCE, typeof process.env.SAUCE);
-
 const include = [
   path.join(__dirname, '__config'),
   path.join(__dirname, 'node_modules', 'api-request'),

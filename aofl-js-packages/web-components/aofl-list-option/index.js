@@ -38,17 +38,25 @@ class AoflListOption extends AoflElement {
    */
   static get properties() {
     return {
-      selected: {type: Boolean},
+      selected: {type: Boolean, reflect: true},
       disabled: {type: Boolean},
       value: {type: String}
     };
   }
+  /**
+   * @param {Event} e
+   */
+  keydownCallback(e) {
+    if (e.keyCode === 13 || e.keyCode === 32) { // If user hits enter or space
+      this.select();
+    }
+  }
 
   /**
-   * @return {Object}
+   * Update selected value in the parent list
    */
-  render() {
-    return super.render(template);
+  select(e) {
+    this.listElement.updateSelected(this, true);
   }
 
   /**
@@ -63,31 +71,15 @@ class AoflListOption extends AoflElement {
       this.value = this.value || this.textContent;
       this.listElement = findParent(this, 'addOption');
       this.listElement.addOption(this);
-
-      if (typeof this.hasAttribute !== 'undefined' && this.hasAttribute('selected')) {
-        this.select();
-      }
     });
   }
 
   /**
-   * @param {Event} e
+   * @return {Object}
    */
-  keydownCallback(e) {
-    if (e.keyCode === 13 || e.keyCode === 32) { // If user hits enter or space
-      this.select();
-    }
+  render() {
+    return super.render(template);
   }
-
-  /**
-   * Update selected value in the parent list
-   */
-  select() {
-    if (this.listElement.value !== this.value) {
-      this.listElement.updateSelected(this.value);
-    }
-  }
-
   /**
    *
    */

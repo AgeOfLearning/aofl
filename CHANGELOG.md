@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - excluded @webcomponents from webpack config ignore
 - @aofl/router - fixed matching dynamic routes without trailing slash
 - @aofl/web-components/aofl-select-list - Prevent dispatching change event while initializing
+- @aofl/web-components/aofl-select-list - aofl-multi-select-list - aofl-list-option - fixed compatibility between these components
 
 ### [Security]
 

@@ -103,25 +103,32 @@ class AoflMultiselectList extends AoflElement {
   /**
    * Toggle selected on list element and dispatch custom change event
    *
-   * @param {String} newValue
+   * @param {Boolean} dispatch
    */
-  updateSelected(newValue) {
+  updateSelected(option, dispatch = true) {
+    const selected = [];
     for (let i = 0; i < this.options.length; i++) {
-      if (this.options[i].value !== newValue) continue;
-
-      if (this.options[i].hasAttribute('selected')) {
-        this.options[i].removeAttribute('selected');
-        this.selected = this.selected.filter((listItem) => listItem !== newValue);
-        break;
+      if (this.options[i] === option) {
+        if (option.selected) {
+          option.selected = false;
+        } else {
+          option.selected = true;
+          if (selected.indexOf(option.value) === -1) {
+            selected.push(option.value);
+          }
+        }
       } else {
-        this.options[i].setAttribute('selected', '');
-        if (this.selected.indexOf(newValue) === -1) {
-          this.selected.push(this.options[i].value);
+        if (this.options[i].selected && selected.indexOf(this.options[i].value) === -1) {
+          selected.push(this.options[i].value);
         }
       }
     }
 
-    this.dispatchEvent(new CustomEvent('change'));
+    this.selected = selected;
+
+    if (dispatch) {
+      this.dispatchEvent(new CustomEvent('change'));
+    }
   }
 
   /**
@@ -144,8 +151,8 @@ class AoflMultiselectList extends AoflElement {
    */
   addOption(option) {
     this.options.push(option);
-    if (option.hasAttribute('selected')) {
-      this.updateSelected(option.value);
+    if (option.selected && this.selected.indexOf(option.value) === -1) {
+      this.selected.push(option.value);
     }
   }
 

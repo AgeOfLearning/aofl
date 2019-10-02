@@ -97,19 +97,19 @@ class AoflSelectList extends AoflElement {
   /**
    * Updated selected value and dispatches a custom event with that value
    *
-   * @param {String} newValue
+   * @param {Boolean} dispatch
    */
-  updateSelected(newValue, dispatch = true) {
-    for (let i = 0; i < this.options.length; i++) {
-      this.options[i].removeAttribute('selected');
-      if (this.options[i].value === newValue) {
-        const selected = this.options[i];
-        selected.setAttribute('selected', '');
-        this.value = selected.value;
-      }
-    }
+  updateSelected(option, dispatch = true, init = false) {
+    option.setAttribute('selected', '');
+    option.selected = true;
+    this.value = option.value;
     if (dispatch) {
-      this.dispatchEvent(new CustomEvent('change', {composed: true}));
+      this.dispatchEvent(new CustomEvent('change', {composed: true, bubbles: true}));
+    }
+    for (let i = 0; i < this.options.length; i++) {
+      if (this.options[i] !== option) {
+        this.options[i].selected = false;
+      }
     }
   }
 
@@ -120,8 +120,11 @@ class AoflSelectList extends AoflElement {
    */
   addOption(option) {
     this.options.push(option);
-    if (option.hasAttribute('selected')) {
-      this.updateSelected(option.value, false);
+
+    if (this.options.length === 1) {
+      this.value = option.value;
+    } else if (option.selected) {
+      this.updateSelected(option, false);
     }
   }
 

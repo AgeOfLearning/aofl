@@ -124,36 +124,41 @@ describe('@aofl/web-components/aofl-multiselect-list', function() {
       }
       this.element.mouseoverCallback(e);
 
-      expect(this.element.focusIndex).to.equal(1);
+      expect(this.element.focusIndex).to.eql(1);
     });
   });
 
   context('updateSelected()', function() {
     it('should add value to selected array', function() {
-      this.element.updateSelected('1');
-      expect(this.element.selected).to.eql(['1']);
+      this.element.children[1].select();
+      expect(this.element.selected).to.eql(['1', '2']);
     });
 
-    it('should add selected attribute to element', function() {
+    it('should add selected attribute to element', function(done) {
       this.element.querySelector('aofl-list-option').select();
-      expect(this.element.querySelector('aofl-list-option').hasAttribute('selected')).to.be.true;
+      setTimeout(() => {
+        expect(this.element.querySelector('aofl-list-option').hasAttribute('selected')).to.be.true;
+        done();
+      }, 100);
     });
 
-    it('should remove value from selected array', function() {
-      this.element.updateSelected(2);
-      expect(this.element.selected.length).to.equal(0);
+    it('should remove value from selected array', function(done) {
+      this.element.children[2].select();
+      setTimeout(() => {
+        expect(this.element.selected.length).to.equal(0);
+        done();
+      }, 100);
     });
 
-    it('should remove selected attribute from element', function() {
+    it('should remove selected attribute from element', function(done) {
       this.element.querySelector('aofl-list-option:last-of-type').select();
-      this.element.querySelector('aofl-list-option:last-of-type').select();
-      expect(this.element.querySelector('aofl-list-option:last-of-type').hasAttribute('selected')).to.be.false;
-    });
-
-    it('should not add duplicate values', function() {
-      this.element.querySelector('aofl-list-option').select();
-
-      expect(this.element.selected.length).to.equal(1);
+      setTimeout(() => {
+        this.element.querySelector('aofl-list-option:last-of-type').select();
+        setTimeout(() => {
+          expect(this.element.querySelector('aofl-list-option:last-of-type').hasAttribute('selected')).to.be.true;
+          done();
+        }, 100);
+      }, 100);
     });
   });
 
