@@ -1,6 +1,6 @@
 {
   "name": "@aofl/register-callback",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "description": "It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called",
   "main": "index.js",
   "scripts": {
