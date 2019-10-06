@@ -61,7 +61,11 @@ class ApiRequest {
    */
   getCacheManager(namespace, expire) {
     try {
-      this.addCacheManager(namespace, expire);
+      if (typeof namespace === 'undefined') {
+        this.addCacheManager(this[this.DEFAULT_CACHE_NAMESPACE], expire);
+      } else {
+        this.addCacheManager(namespace, expire);
+      }
     } catch (e) {}
 
     return this.cacheManagers[namespace];

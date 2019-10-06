@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {AoflElement} from '../';
+import {AoflElement} from '../modules/aofl-element';
 import {render, html} from 'lit-html';
 
 describe('@aofl/web-components/aofl-element >> invalid style', function() {

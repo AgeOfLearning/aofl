@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import ValidationFunction from '../validation-function';
+import ValidationFunction from './validation-function';
 
 /**
  * ValidationProperty implementation

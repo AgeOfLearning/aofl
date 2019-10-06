@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import {environmentTypeEnumerate} from '../environment-type-enumerate';
+import {environmentTypeEnumerate} from './environment-type-enumerate';
 
 /**
  * Takes a devRegex and a stageRegex and tests them against hostname. Returns 'production' if

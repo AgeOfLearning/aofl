@@ -1,4 +1,4 @@
-import Middleware from '../modules/Middleware';
+import {Middleware} from '../modules/middleware';
 
 /* eslint-disable */
 describe('@aofl/middleware', function() {

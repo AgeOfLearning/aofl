@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import ValidationProperty from '../validation-property';
+import ValidationProperty from './validation-property';
 
 /**
  * @memberof module:@aofl/form-validate

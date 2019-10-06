@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Drawer as AoflDrawer} from '../';
+import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
 
 describe('@aofl/web-components/aofl-drawer#animated-close', function() {

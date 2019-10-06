@@ -7,7 +7,7 @@
 import PathUtils from '../path-utils';
 import {Middleware} from '@aofl/middleware';
 import matchRouteMiddleware from '../match-route-middleware';
-import redirectMiddleware from '../redirect-middleware';
+import {redirectMiddleware} from '../redirect-middleware';
 
 
 /**
@@ -23,6 +23,10 @@ class Router {
    * Create an instance of Router
    */
   constructor() {
+    this.removeMatchRouteMiddleware = () => {};
+    this.removeRedirectMiddleware = () => {};
+    this.removeListener = () => {};
+
     Object.defineProperties(this, {
       middleware: {
         value: new Middleware('before', 'after', 'afterEach', 'beforeEach')
@@ -46,8 +50,8 @@ class Router {
       routes: this.addRegexRoutes(config)
     };
 
-    this.beforeEach(matchRouteMiddleware(this));
-    this.afterEach(redirectMiddleware(this));
+    this.removeMatchRouteMiddleware = this.beforeEach(matchRouteMiddleware(this));
+    this.removeRedirectMiddleware = this.afterEach(redirectMiddleware(this));
 
     this.removeListener = this.listen();
   }

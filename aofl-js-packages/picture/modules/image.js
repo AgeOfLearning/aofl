@@ -87,8 +87,8 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    */
   render() {
     return super.render((ctx, html) => html`
-      <canvas width="${context.width}" height="${context.height}"></canvas>
-      <img alt="${context.alt}" height="${context.height}" width="${context.width}" src="${context.imgSrc}" @load="${(e) => context.imageLoaded(e)}">
+      <canvas width="${ctx.width}" height="${ctx.height}"></canvas>
+      <img alt="${ctx.alt}" height="${ctx.height}" width="${ctx.width}" src="${ctx.imgSrc}" @load="${(e) => ctx.imageLoaded(e)}">
     `, [
       `
         :host {

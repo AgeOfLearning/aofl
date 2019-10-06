@@ -32,7 +32,9 @@
         "**/*-loader/**",
         "**/*-polyfill/**",
         "**/*-plugin/**",
-        "**/router/examples"
+        "**/router/examples",
+        "**/web-components",
+        "**/dist"
       ]
     }
   }
