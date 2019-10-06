@@ -209,8 +209,7 @@ const getConfig = (root, configObject) => {
     },
     plugins,
     watchOptions: {
-      ignored: [path.join(root, 'node_modules')],
-      poll: 2000
+      ignored: ['node_modules']
     },
     resolve: {
       alias: {

@@ -1,12 +1,12 @@
 const recurseObjectByPath = (obj, path, op) => {
   const pathParts = path === ''? '': path.split('.');
 
-  const recurse = (pathParts, source) => {
+  const recurse = (argPathParts, source) => {
     let key = '';
     let subPath = [];
-    if (pathParts.length) {
-      key = pathParts[0];
-      subPath = pathParts.slice(1);
+    if (argPathParts.length) {
+      key = argPathParts[0];
+      subPath = argPathParts.slice(1);
     }
     return op(key, subPath, source, recurse);
   };

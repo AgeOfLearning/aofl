@@ -10,6 +10,8 @@ const STORAGE = {
 
 const MAX_SIGNED_INT = 2147483647;
 
+const EXPIRE_SYMBOL = Symbol('expire');
+
 /**
  * Provides a unified class for storing objects in Storage-like Objects. You can choose from
  * localStorage, sessionStorage and memoryStorage.
@@ -33,14 +35,26 @@ class CacheManager {
   constructor(namespace, storageType = cacheTypeEnumerate.MEMORY, expire = 3600000) {
     this.storage = STORAGE[storageType];
     this.storageType = storageType;
-    this.expire = expire;
     this.namespace = namespace;
     this.storedKeys = this.getStoredKeys();
-    if (expire > 0 && expire < MAX_SIGNED_INT) {
-      this.interval = setInterval(() => this.removeExpired(), expire);
-    }
+    this.expire = expire;
   }
 
+  get expire() {
+    return this[EXPIRE_SYMBOL];
+  }
+
+  set expire(value) {
+    this[EXPIRE_SYMBOL] = value;
+
+    if (this.interval !== null) {
+      clearInterval(this.interval);
+    }
+
+    if (value > 0 && value < MAX_SIGNED_INT) {
+      this.interval = setInterval(() => this.removeExpired(), value);
+    }
+  }
 
   /**
    * The size read-only property of the Storage interface returns an integer representing the

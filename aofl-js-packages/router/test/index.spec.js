@@ -97,7 +97,6 @@ describe('@aofl/router/router', function() {
           expect(response.matchedRoute).to.have.property('path', '/home')
           resolve();
         });
-        console.log(this.router);
         this.router.navigate('/home');
       });
     });
@@ -115,7 +114,6 @@ describe('@aofl/router/router', function() {
     it('Should match dynamic "/about/mike/" route and navigate to it', async function() {
       return await new Promise((resolve) => {
         this.router.after((request, response, next) => {
-          console.log(response);
           expect(response.matchedRoute).to.have.property('path', '/about/:user')
           resolve();
         });

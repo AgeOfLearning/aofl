@@ -2,16 +2,14 @@
  * Exports Store and storeInstance
  *
  * @module aofl-js/store-package
- * @version 3.0.0
+ * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import {Store} from './modules/store';
-import {storeInstance} from './modules/instance';
-import {Sdo} from './modules/sdo';
+import Store from './store';
+import storeInstance from './instance';
 
 export {
-  Sdo,
   Store,
   storeInstance
 };

@@ -1,4 +1,4 @@
-const defaults = (target, defaults) => {
+const defaults = (target, defaultOptions) => {
   const recurse = (t, d) => {
     for (const key in d) {
       if (!d.hasOwnProperty(key)) continue;
@@ -12,7 +12,7 @@ const defaults = (target, defaults) => {
     }
   };
 
-  recurse(target, defaults);
+  recurse(target, defaultOptions);
 };
 
 export {defaults};

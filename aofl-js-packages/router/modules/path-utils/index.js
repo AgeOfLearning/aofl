@@ -43,12 +43,12 @@ class PathUtils {
     const regex = new RegExp('^' + regexStr + '$');
     return {
       regex,
-      parse(_path) {
+      parse(p) {
         if (keys.length === 0) return {};
-        const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
-        const matches = regex.exec(path);
+        const cleanPath = PathUtils.removeTrailingSlash(PathUtils.cleanPath(p));
+        const pathMatches = regex.exec(cleanPath);
         return keys.reduce((acc, key, index) => {
-          acc[key] = matches[index + 1];
+          acc[key] = pathMatches[index + 1];
           return acc;
         }, {});
       }

@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {Store} from '../';
+import Store from '../modules/legacy/store';
 import {deepAssign} from '@aofl/object-utils';
 
 describe('@aofl/store/src/store', function() {

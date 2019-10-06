@@ -1,6 +1,6 @@
 import {deepFreeze} from '@aofl/object-utils';
 import {RegisterCallback} from '@aofl/register-callback';
-import {generateMutations} from '../generate-basic-mutations';
+import {generateMutations} from './generate-basic-mutations';
 
 /**
  * Store is a built on the same principles as redux and attempts to simplify some of Redux's
@@ -136,16 +136,16 @@ class Store {
         if (ns[key].asyncMutations[mutationId].condition(nextState)) {
           this.setPending(key, mutationId);
           ns[key].asyncMutations[mutationId].method(nextState)
-            .then(function(mutationId, namespace, payload) {
-              this.setPending(namespace, mutationId, false);
+            .then(function(pendingMutationId, namespace, payload) {
+              this.setPending(namespace, pendingMutationId, false);
               this.commit({
                 namespace,
-                mutationId,
+                mutationId: pendingMutationId,
                 payload,
               });
             }.bind(this, mutationId, key))
-            .catch(function(mutationId, namespace) {
-              this.setPending(namespace, mutationId, false);
+            .catch(function(pendingMutationId, namespace) {
+              this.setPending(namespace, pendingMutationId, false);
               this.forceCommit();
             }.bind(this, mutationId, key));
         }

@@ -13,18 +13,10 @@
   * @memberof webcomponentsLoader
   */
 const scripts = {
-  'webcompononts-ce': () => {
-    return import('@webcomponents/webcomponentsjs/bundles/webcomponents-ce');
-  },
-  'webcomponents-sd': () => {
-    return import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd');
-  },
-  'webcomponents-sd-ce': () => {
-    return import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js');
-  },
-  'webcomponents-sd-ce-pf': () => {
-    return import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf');
-  }
+  'webcompononts-ce': () => import('@webcomponents/webcomponentsjs/bundles/webcomponents-ce'),
+  'webcomponents-sd': () => import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd'),
+  'webcomponents-sd-ce': () => import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce.js'),
+  'webcomponents-sd-ce-pf': () => import('@webcomponents/webcomponentsjs/bundles/webcomponents-sd-ce-pf')
 };
 
 /* istanbul ignore next */

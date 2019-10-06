@@ -4,7 +4,7 @@
  *
  */
 
-import {Store} from '../../';
+import Store from './store';
 
 /**
  * Persistent instance of Store.

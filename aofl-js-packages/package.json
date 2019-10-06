@@ -34,6 +34,7 @@
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
     "@aofl/web-components": "file:web-components",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "codecov": "^3.1.0",
     "core-js": "^3.2.1",
     "cross-env": "^5.2.0",
@@ -43,6 +44,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jsdoc": "^3.5.5",
     "lit-element": "2.1.0",
-    "lit-html": "1.0.0"
+    "lit-html": "1.0.0",
+    "plato": "^1.7.0"
   }
 }

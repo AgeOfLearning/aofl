@@ -1,5 +1,5 @@
 import FormatterManager from '../formatter-manager';
-import {CacheManager} from '@aofl/cache-manager';
+import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
 /**
  * ApiReqest class implementation.
@@ -25,9 +25,9 @@ class ApiRequest {
    */
   constructor() {
     this.formatterManager = new FormatterManager();
-    this.cacheManagers = {
-      default: new CacheManager(ApiRequest.DEFAULT_CACHE_NAMESPACE)
-    };
+    this.cacheManagers = {};
+
+    this.addCacheManager('default');
   }
   /**
    * addformatter() adds a new format to formatter's list.
@@ -38,21 +38,46 @@ class ApiRequest {
   addFormatter(format, formatter) {
     this.formatterManager.addFormatter(format, formatter);
   }
-
+  /**
+   *
+   * @param {String} namespace
+   * @param {Number} expire
+   */
+  addCacheManager(namespace, expire) {
+    if (this.cacheManagers.hasOwnProperty(namespace)) {
+      throw new Error(`ApiRequest: Cache namespace ${namespace} already exists`);
+    }
+    this.cacheManagers[namespace] = new CacheManager(namespace, cacheTypeEnumerate.MEMORY, expire);
+  }
   /**
    * Returns an existing cacheManager if it exists or creates a new one and assigns it to the
    * namespace.
    *
    * @param {String} namespace cache namespace
+   * @param {Number} expire
    * @return {CacheManager}
    */
-  getCacheManager(namespace) {
-    if (!this.cacheManagers.hasOwnProperty(namespace)) {
-      this.cacheManagers[namespace] = new CacheManager(namespace);
-    }
+  getCacheManager(namespace, expire) {
+    try {
+      this.addCacheManager(namespace, expire);
+    } catch (e) {}
+
     return this.cacheManagers[namespace];
   }
-
+  /**
+   * Update a cache managers expire time
+   * @param {String} namespace
+   * @param {Number} expire
+   */
+  updateCacheInterval(namespace, expire) {
+    const manager = this.getCacheManager(namespace, expire);
+    manager.expire = expire;
+  }
+  /**
+   *
+   *
+   * @param {String} namespace
+   */
   purgeCache(namespace) {
     if (typeof namespace === 'undefined') { // purge all
       for (const key in this.cacheManagers) {
@@ -74,10 +99,10 @@ class ApiRequest {
    * @param {String} namespace cache manager namespace
    * @return {Promise}
    */
-  request(url, payload, format, fromCache = true, namespace = 'default') {
+  request(url, payload, format, fromCache = true, namespace = 'default', expire) {
     const formatter = this.formatterManager.getFormatter(format);
     const cacheKey = url + JSON.stringify(payload);
-    const cacheManager = this.getCacheManager(namespace);
+    const cacheManager = this.getCacheManager(namespace, expire);
     const cacheResponse = cacheManager.getItem(cacheKey);
     if (fromCache && cacheResponse) {
       return cacheResponse;

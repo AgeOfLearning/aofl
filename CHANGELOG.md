@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/templating-plugin - routes-config-loader supports hmr
 - @aofl/store - added purge
 - @aofl/api-request - added purge
+- @aofl/store - store v3
+- @aofl/api-request - added support for different expire times for each cache namespace
 
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default
@@ -34,8 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - a bunch of webpack optimization
 - @aofl/unit-testing-plugin - major rewrite and optimization
 - @aofl/cli - test command updated to work with new unit-testing-plugin
+- @aofl/store - Store move to modules/legacy
 
 ### [Deprecated]
+- @oafl/store/legacy
+
 ### [Removed]
 - style-loader
 - postcss
@@ -52,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/router - fixed matching dynamic routes without trailing slash
 - @aofl/web-components/aofl-select-list - Prevent dispatching change event while initializing
 - @aofl/cli - i18n PathHelper reference typo
+- possible veriable overrides
 
 ### [Security]
 

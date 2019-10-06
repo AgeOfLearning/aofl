@@ -22,7 +22,9 @@ const config = {
     getTestContainer: true,
     fixture: true,
     __webpack_public_path__: true,
-    aofljsConfig: true
+    aofljsConfig: true,
+    Reflect: true,
+    Proxy: true
   }
 };
 

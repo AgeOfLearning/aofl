@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {generateMutations} from '../modules/generate-basic-mutations';
+import {generateMutations} from '../modules/legacy/generate-basic-mutations';
 
 describe('@aofl/store/modules/generate-basic-mutations', function() {
   beforeEach(function() {
