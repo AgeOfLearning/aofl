@@ -1,14 +1,18 @@
+/**
+ * @summary match-route-middleware
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import PathUtils from '../path-utils';
 
 /**
  * Evaluates and returns the best matching route for the given path
  *
- * @summary match route middleware
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:@aofl/router
+ *
  * @param {String} _path
  * @param {Array} routes
- * @memberof module:aofl-js/router-package/src/match-route-middleware
  * @return {Object}
  */
 const matchBestPath = (_path, routes) => {

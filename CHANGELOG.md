@@ -22,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/api-request - added purge
 - @aofl/store - store v3
 - @aofl/api-request - added support for different expire times for each cache namespace
+- @aofl/element - as a standole package
+- @aofl/picture - as a standole package
+- @aofl/select - as a standole package
+- @aofl/drawer - as a standole package
 
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default
@@ -40,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Deprecated]
 - @oafl/store/legacy
+- @aofl/web-components
 
 ### [Removed]
 - style-loader

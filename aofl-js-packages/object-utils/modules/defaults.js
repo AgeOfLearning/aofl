@@ -1,3 +1,20 @@
+/**
+ * @summary defaults
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi<arian.khosravi@aofl.com>
+ */
+
+/**
+ * Assigns missing defaultOptions onto the target object.
+ *
+ * @memberof module:@aofl/object-utils
+ *
+ * @param {Object} target
+ * @param {Object} defaultOptions
+ *
+ * @return {Object}
+ */
 const defaults = (target, defaultOptions) => {
   const recurse = (t, d) => {
     for (const key in d) {

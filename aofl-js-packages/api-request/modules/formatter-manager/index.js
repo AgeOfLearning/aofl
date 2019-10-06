@@ -5,6 +5,11 @@
  * @version 1.0.0
  * @author Isaac Yoon <isaac.yoon@aofl.com>
  * @author Arian Khosravi <arian.khosravi@aofl.com>
+ *
+ */
+
+/**
+ * @memberof module:@aofl/api-request
  */
 class FormatterManager {
   /**

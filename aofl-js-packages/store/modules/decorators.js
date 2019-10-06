@@ -1,5 +1,14 @@
 /**
+ * @summary decorators
+ * @version 3.0.0
+ * @since 3.0.0
+ * @author Arian Khosravi<arian.khosravi@aofl.com>
+ */
+/**
+ * v2 decorator adds observed properties to an Sdo's instance to support memoized
+ * getters.
  *
+ * @memberof module:@aofl/store
  *
  * @param {String[]} args
  * @return {Object}

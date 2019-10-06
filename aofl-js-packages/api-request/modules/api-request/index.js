@@ -1,19 +1,21 @@
+/**
+ * ApiRequst class implementation.
+ *
+ * @summary api-request
+ * @since 1.0.0
+ * @version 3.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import FormatterManager from '../formatter-manager';
 import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
+
 /**
- * ApiReqest class implementation.
- *
- * @summary api-request
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- * @memberof module:aofl-js/api-request-package
- *
- * @requires module:aofl-js/cache-manager-package
- * @requires module:aofl-js/api-request-package/src/formatter-manager
+ * @memberof module:@aofl/api-request
  */
 class ApiRequest {
   /**
+   * @static
    * @readonly
    */
   static get DEFAULT_CACHE_NAMESPACE() {
@@ -33,7 +35,7 @@ class ApiRequest {
    * addformatter() adds a new format to formatter's list.
    *
    * @param {String} format name for the formatter
-   * @param {Object} formatter formatter object
+   * @param {FormatterManager} formatter formatter object
    */
   addFormatter(format, formatter) {
     this.formatterManager.addFormatter(format, formatter);

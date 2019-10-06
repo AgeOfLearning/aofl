@@ -1,18 +1,20 @@
+/**
+ * @summary store
+ * @version 2.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import {deepFreeze} from '@aofl/object-utils';
 import {RegisterCallback} from '@aofl/register-callback';
 import {generateMutations} from './generate-basic-mutations';
 
 /**
- * Store is a built on the same principles as redux and attempts to simplify some of Redux's
- * concepts. It also incorporates ideas from other centralized state management implementations.
+ * Store is a built on the same principles as redux and attempts to simplify
+ * some of Redux's concepts. It also incorporates ideas from other centralized
+ * state management implementations.
  *
- * @summary store
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- * @memberof module:aofl-js/store-package
- *
- * @requires module:aofl-js/object-utils-package
- * @requires module:aofljs/register-callback
+ * @memberof module:@aofl/store/legacy
+ * @deprecated
  */
 class Store {
   /**

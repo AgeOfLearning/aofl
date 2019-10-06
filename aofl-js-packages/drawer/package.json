@@ -1,0 +1,36 @@
+{
+  "name": "@aofl/drawer",
+  "version": "3.0.0-beta.0",
+  "description": "The <aofl-drawer> element toggles content between an open and closed state. Opening and closing animations are provided as classes to allow for any possible method of toggling content.",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production npx aofl build",
+    "build:dev": "cross-env NODE_ENV=development npx aofl build",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
+  },
+  "keywords": [
+    "@aofl/element",
+    "web components",
+    "web",
+    "components"
+  ],
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://ageoflearning.github.io/aofl/",
+  "peerDependencies": {
+    "@aofl/element": "0.0.0"
+  },
+  "devDependencies": {
+    "@aofl/cli": "^3.0.0-beta.0",
+    "@aofl/element": "^3.0.0-beta.0",
+    "cross-env": "^6.0.3"
+  }
+}

@@ -1,8 +1,10 @@
 /**
- * Exports Store and storeInstance
+ * Exports Sdo, Store and storeInstance
  *
- * @module aofl-js/store-package
+ * @module @aofl/store
+ *
  * @version 3.0.0
+ * @since 3.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 

@@ -1,20 +1,37 @@
 /**
- * PathUtils implementation
- *
- * @summary path utilities
- * @version 1.0.0
+ * @summary path-utilities
+ * @version 3.0.0
+ * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
 /**
- * @memberof PathUtils
+ * @memberof module:@aofl/router
+ * @private
+ * @type {RegExp}
  */
 const DYNAMIC_PATH_REGEX = /:([^/\s]*)(\/?)/ig;
+/**
+ * @memberof module:@aofl/router
+ * @private
+ * @type {RegExp}
+ */
 const CLEAN_PATH_REGEX = /[#?].*/i;
+/**
+ * @memberof module:@aofl/router
+ * @private
+ * @type {RegExp}
+ */
 const TRAILING_SLASH_REGEX = /\/$/i;
+/**
+ * @memberof module:@aofl/router
+ * @private
+ * @type {RegExp}
+ */
 const LEADING_SLASH_REGEX = /^\//i;
 /**
- *
+ * PathUtils implementation
+ * @memberof module:@aofl/router
  */
 class PathUtils {
   /**

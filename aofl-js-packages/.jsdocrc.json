@@ -1,7 +1,7 @@
 {
   "source": {
-    "includePattern": "index.js$",
-    "excludePattern": "(node_modules|documentation|api-docs|webpack)",
+    "includePattern": ".*\\.js$",
+    "excludePattern": "(node_modules|documentation|api-docs|webpack|__build|examples|__config|\\.sample\\.js|\\.spec\\.js|web-components)",
     "include": ["./README.md"]
   },
   "opts": {

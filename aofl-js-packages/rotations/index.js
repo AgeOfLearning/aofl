@@ -1,8 +1,9 @@
 /**
  * Exports Rotations
  *
- * @module aofl-js/rotations-package
- * @version 2.0.0
+ * @module @aofl/rotations
+ * @version 3.0.0
+ * @since 2.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 export {Rotations} from './modules/rotations';

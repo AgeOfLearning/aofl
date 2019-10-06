@@ -1,8 +1,9 @@
 /**
  * Exports getServerEnvironment and environmentTypeEnumerate
  *
- * @module aofl-js/server-environment-package
- * @version 1.0.0
+ * @module @aofl/server-environment
+ * @version 3.0.0
+ * @since 3.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 

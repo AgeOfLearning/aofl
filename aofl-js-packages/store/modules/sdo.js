@@ -1,3 +1,9 @@
+/**
+ * @summary sdo
+ * @version 3.0.0
+ * @since 3.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import {get} from '@aofl/object-utils';
 import {Store} from './store'; // eslint-disable-line
 import {storeInstance as defaultStoreInstance} from './instance';
@@ -8,8 +14,9 @@ const defineDecorators = Symbol('defineDecorators');
 const defineStateProperties = Symbol('defineStateProperties');
 
 /**
+ * Sate Definition Object {Sdo} is a base class to define sub states of the store.
  *
- * @class Sdo
+ * @memberof module:@aofl/store
  */
 class Sdo {
   /**

@@ -1,3 +1,18 @@
+/**
+ * @summary generate-basic-mutations
+ * @version 2.0.0
+ * @since 2.0.0
+ * @author Arian Khosravi<arian.khosravi@aofl.com>
+ */
+
+/**
+ * Generates setters for given object.
+ * @memberof module:@aofl/store/legacy
+ * @deprecated
+ * @param {Object} config
+ *
+ * @return {Object}
+ */
 const generateMutations = (config) => {
   const mutations = {};
 

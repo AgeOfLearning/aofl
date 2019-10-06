@@ -1,11 +1,15 @@
 /**
- * Implements a new Storage type that has the same api as Storage (local, session) except for key().
- * Due to compatibility issues with IE, the size property is implemented instead of length.
- *
  * @summary server-environment
- * @version 1.0.0
+ * @version 3.0.0
+ * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
- * @memberof module:aofl-js/cache-manager-package
+ */
+
+
+/**
+ *
+ *
+ * @memberof module:@aofl/cache-manager
  */
 class MemoryStorage {
   /**

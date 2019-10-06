@@ -1,0 +1,45 @@
+{
+  "name": "@aofl/element",
+  "version": "3.0.0-beta.0",
+  "description": "aofl-element extends lit-element and overrides the _render() function. It accepts a template function and an String[] of styles. It is intented to be used in place of lit-element as the base class for elements. In it's current version it doesn't do much other than provide a clean interface to sperate HTML, CSS and JavaScript context. It makes it easier to change the template on the fly (see @aofl/i18n-mixin.)",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production npx aofl build",
+    "build:dev": "cross-env NODE_ENV=development npx aofl build",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
+  },
+  "keywords": [
+    "aofl-element",
+    "web-components",
+    "lit-element",
+    "lit-html"
+  ],
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgeOfLearning/aofl/issues"
+  },
+  "homepage": "https://ageoflearning.github.io/aofl/",
+  "peerDependencies": {
+    "@aofl/object-utils": ">2.0.0",
+    "@aofl/store": ">2.0.0",
+    "lit-element": ">2.2.1",
+    "lit-html": ">1.1.2"
+  },
+  "devDependencies": {
+    "@aofl/cli": "^3.0.0-beta.0",
+    "@aofl/object-utils": "^3.0.0-beta.0",
+    "@aofl/store": "^3.0.0-beta.0",
+    "cross-env": "^6.0.3",
+    "lit-element": "2.2.1",
+    "lit-html": "1.1.2"
+  }
+}

@@ -1,13 +1,14 @@
 /**
- * @requires module:aolf-js/router-package
+ * @summary router-instance
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
-
 import Router from '../Router';
-
 /**
  * Persistent instance of Router.
  *
- * @memberof module:aofl-js/router-package
+ * @memberof module:@aofl/router
  */
 const routerInstance = new Router();
 

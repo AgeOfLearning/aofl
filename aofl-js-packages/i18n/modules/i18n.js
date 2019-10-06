@@ -1,6 +1,29 @@
+/**
+ * @summary i18n
+ * @version 3.0.0
+ * @since 3.0.0
+ * @author Arian Khosravi<arian.khosravi@aofl.com>
+ */
+
+/**
+ * @memberof module:@aofl/i18n
+ * @private
+ * @type {RegExp}
+ */
 const REPLACE_REGEX = /%%?r(\d+)(?:%|::.*?%%)/g;
+/**
+ * @memberof module:@aofl/i18n
+ * @private
+ * @type {RegExp}
+ */
 const CONDITIONAL_REPLACE_REGEX = /%c(\d+)%/g;
 
+
+/**
+ * Provides translation capability.
+ *
+ * @memberof module:@aofl/i18n
+ */
 class I18n {
   /**
    * Creates an instance of I18n.

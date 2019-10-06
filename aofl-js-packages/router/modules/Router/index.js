@@ -1,25 +1,26 @@
+/**
+ * @summary router
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import PathUtils from '../path-utils';
 import {Middleware} from '@aofl/middleware';
 import matchRouteMiddleware from '../match-route-middleware';
 import redirectMiddleware from '../redirect-middleware';
 
+
 /**
- * @summary router
- * @version 1.0.0
- * @extends Middleware
- * @memberof module:aofl-js/router-package
+ * A client side router that uses history api and implements a middleware. This router
+ * implementation is minimal yet very powerful. It will match routes and handles
+ * redirects out of the box. Everything else can be programmed using an appropriate
+ * middleware function.
  *
- * @requires module:aofl-js/router-package/src/path-utils
- * @requires module:aofl-js/middleware-package
- * @requires module:aofl-js/router-package/src/match-route-middleware
- * @requires module:aofl-js/router-package/src/redirect-middleware
- * @requires module:aofl-js/router-package/src/update-state-middleware
- * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:@aofl/router
  */
 class Router {
   /**
-   * @description Loads route config
-   * @return {void}
+   * Create an instance of Router
    */
   constructor() {
     Object.defineProperties(this, {
@@ -36,7 +37,7 @@ class Router {
   }
 
   /**
-   *
+   * Loads rotes config
    * @param {Array} config
    * @return {void}
    */
@@ -70,7 +71,7 @@ class Router {
   }
 
   /**
-   * @description Registers a post middleware function
+   * Registers a post middleware function
    * @param {Function} fn
    * @return {void}
    */
@@ -79,7 +80,7 @@ class Router {
   }
 
   /**
-   * @description Registers a pre middle function
+   * Registers a pre middle function
    * @param {Function} fn
    * @return {void}
    */
@@ -88,7 +89,8 @@ class Router {
   }
 
   /**
-   * @description Runs all middleware
+   * Runs all middleware
+   * @private
    * @param {Object} request
    */
   async applyMiddleware(request) {
@@ -108,7 +110,8 @@ class Router {
   }
 
   /**
-   * @description Adds regex version of routes for dynamic routing
+   * Adds regex version of routes for dynamic routing
+   * @private
    * @param {Object} routes
    * @return {Object}
    */
@@ -124,7 +127,8 @@ class Router {
   }
 
   /**
-   * @description Listens to changes on history
+   * Listens to changes on history
+   * @private
    * @return {Function}
    */
   listen() {
@@ -142,7 +146,7 @@ class Router {
   }
 
   /**
-   * @description public method which attempts to load the given path
+   * public method which attempts to load the given path
    * @param {String} path
    * @param {Object} meta
    * @return {Promise}

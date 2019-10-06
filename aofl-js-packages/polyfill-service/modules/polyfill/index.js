@@ -1,3 +1,9 @@
+/**
+ * @summary polyfill
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import promiscuous from '../promiscuous-polyfill';
 import webcomponentsLoader from '../webcomponents-loader';
 
@@ -9,10 +15,20 @@ if (typeof window.Promise === 'undefined') {
 /**
  * Used to polyfill missing browser features.
  *
- * @summary polyfill
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- * @memberof module:aofl-js/polyfill-service-package
+ * @memberof module:@aofl/polyfill-service
+ *
+ * @example
+ * await Polyfill.loadAll({
+ *   'fetch': () => import('isomorphic-fetch'),
+ *   'Reflect': () => import('harmony-reflect'),
+ *   'Array.prototype.find': () => import('array.prototype.find'),
+ *   'html-imports': {
+ *     test() {
+ *       return !('import' in document.createElement('link'));
+ *     },
+ *     load: () => import('@webcomponents/webcomponentsjs/webcomponents-bundle')
+ *   }
+ * });
  */
 class Polyfill {
   /**

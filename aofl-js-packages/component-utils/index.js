@@ -1,7 +1,7 @@
 /**
  * Exports findParent, isInViewport, and IsInViewportMixin
  *
- * @module aofl-js/component-utils-package
+ * @module @aofl/component-utils
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */

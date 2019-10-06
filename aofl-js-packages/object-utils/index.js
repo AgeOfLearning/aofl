@@ -1,8 +1,9 @@
 /**
- * Exports deepAssign and deepFreeze
+ * Exports deepAssign, deepFreeze, get, has, set, defaults, recurseObjectByPath
  *
- * @module aofl-js/object-utils-package
- * @version 1.0.0
+ * @module @aofl/object-utils
+ * @version 3.0.0
+ * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 

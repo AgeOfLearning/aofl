@@ -1,7 +1,8 @@
 /**
  * Exports i18nMixin
  *
- * @module aofl-js/i18n-mixin-package
+ * @module @aofl/i18n-mixin
+ *
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */

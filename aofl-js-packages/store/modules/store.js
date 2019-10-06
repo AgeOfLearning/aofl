@@ -1,14 +1,16 @@
+/**
+ * @summary store
+ * @version 3.0.0
+ * @since 3.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
 import {RegisterCallback} from '@aofl/register-callback';
 import {deepFreeze} from '@aofl/object-utils';
 
 /**
- * Store is a built on the same principles as redux and attempts to simplify some of Redux's
- * concepts. It also incorporates ideas from other centralized state management implementations.
+ * Simple yet powerful implementation of flux type data store.
  *
- * @class
- * @summary store
- * @version 3.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:@aofl/store
  */
 class Store {
   /**

@@ -1,19 +1,27 @@
+/**
+ * @summary is-in-viewport-mixin
+ * @version 3.0.0
+ * @since 1.0.0
+ * @author Arian Khosravi <arian.khosravi@aofl.com>
+ */
+
 import {isInViewport} from './is-in-viewport';
 
+/**
+ * Mixes the superClass with functions necessary to detect if the element
+ * is within the visible area of the page.
+ *
+ * @memberof module:@aofl/component-utils
+ * @param {LitElement} superClass
+ */
 const isInViewportMixin = (superClass) => {
   /**
-   * Mixes the superClass with functions necessary to detect if the element is within the visible
-   * area of the page.
-   * @summary is-in-viewport-mixin
-   * @version 1.0.0
-   * @author Arian Khosravi <arian.khosravi@aofl.com>
-   * @memberof module:aofl-js/component-utils-package
-   *
-   * @requires module:aofl-js/component-utils-package/src/is-in-viewport
+   * @memberof module:@aofl/component-utils
+   * @extends {superClass}
    */
-  class IsInViewportClass extends superClass {
+  class IsInViewportMixinClass extends superClass {
     /**
-     * Creates an instance of IsInViewportClass.
+     * Creates an instance of IsInViewportMixinClass.
      * @param {*} args
      */
     constructor(...args) {
@@ -26,7 +34,6 @@ const isInViewportMixin = (superClass) => {
     }
 
     /**
-     *
      *
      * @param {*} args
      */
@@ -134,7 +141,7 @@ const isInViewportMixin = (superClass) => {
     }
   }
 
-  return IsInViewportClass;
+  return IsInViewportMixinClass;
 };
 
 export {
