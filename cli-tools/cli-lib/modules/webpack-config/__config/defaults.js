@@ -14,6 +14,7 @@ module.exports = (root) => {
   return {
     name: 'Aofl JS App',
     root,
+    mode: 'project',
     build: {
       filename: process.env.NODE_ENV === environments.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
@@ -74,8 +75,10 @@ module.exports = (root) => {
       },
       js: {
         test: /\.js$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'),
-          path.join(root, 'node_modules', 'lit-html'), path.join(root, 'node_modules', 'chai') , path.join(root, 'node_modules', 'chai-as-promised')],
+        include: [
+          path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'),
+          path.join(root, 'node_modules', 'lit-html'), path.join(root, 'node_modules', 'chai'), path.join(root, 'node_modules', 'chai-as-promised')
+        ],
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),

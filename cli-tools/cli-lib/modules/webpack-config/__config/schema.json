@@ -8,6 +8,10 @@
     "root": {
       "type": "string"
     },
+    "mode": {
+      "type": "string",
+      "allowedValues": ["project", "stand-alone"]
+    },
     "build": {
       "type": "object",
       "additionalProperties": false,
@@ -21,6 +25,9 @@
             {"type": "array"},
             {"type": "object"}
           ]
+        },
+        "entryReplace": {
+          "type": "object"
         },
         "path": {
           "type": "string"

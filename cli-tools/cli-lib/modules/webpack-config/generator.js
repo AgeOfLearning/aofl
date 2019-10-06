@@ -8,7 +8,6 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const path = require('path');
 
 const getOutput = (path, publicPath, filename) => {
   const output = {
@@ -246,19 +245,23 @@ const getConfig = (root, configObject) => {
 
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.HashedModuleIdsPlugin());
-    config.plugins.push(new AofLTemplatingPlugin(
-      getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
-    );
-    config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
-    config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
-    config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
+    if (configObject.mode === 'project') {
+      config.plugins.push(new AofLTemplatingPlugin(
+        getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
+      );
+      config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
+      config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
+      config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
 
-    config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+      config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+    }
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
-    config.plugins.push(new AofLTemplatingPlugin(
-      getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
-    );
+    if (configObject.mode === 'project') {
+      config.plugins.push(new AofLTemplatingPlugin(
+        getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
+      );
+    }
 
     config.optimization = {
       removeAvailableModules: false,
