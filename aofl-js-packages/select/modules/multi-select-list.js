@@ -177,3 +177,5 @@ class AoflMultiselectList extends AoflElement {
 if (window.customElements.get(AoflMultiselectList.is) === void 0) {
   window.customElements.define(AoflMultiselectList.is, AoflMultiselectList);
 }
+
+export default AoflMultiselectList;
