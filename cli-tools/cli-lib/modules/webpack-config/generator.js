@@ -199,7 +199,7 @@ const getConfig = (root, configObject) => {
   const plugins = [new CleanWebpackPlugin()];
 
   const config = {
-    entry: configObject.build.entry,
+    entry: configObject.build.entryReplace || configObject.build.entry,
     output,
     mode,
     devtool,
