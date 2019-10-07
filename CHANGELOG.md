@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - generate -  Added i18n template
 - @aofl/cli - added cache-loader to webpack config
 - @aofl/cli-lib - webpack config support standole and project modes
+- @aofl/cli-lib - webpack config allows replace and append for include, exclude objects
 - @aofl/i18n - extracted core i18n functionality from the mixin
 - @aofl/web-components/aofl-element - added property decorator to support binding to store when declaring class properties
 - @aofl/hmr-loader
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/picture - as a standole package
 - @aofl/select - as a standole package
 - @aofl/drawer - as a standole package
+- all packages ship with built file
 
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default

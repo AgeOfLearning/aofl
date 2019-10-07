@@ -9,7 +9,29 @@
  */
 
 /**
- * @memberof module:@aofl/api-request
+ * @example
+ * class SampleFormatter {
+ *   static pack(payload) {
+ *     const boundary = 'Boundary-' + Date.now();
+ *     const args = JSON.stringify(payload.args);
+ *
+ *     const body = new FormData();
+ *     body.append('arguments', args);
+ *
+ *     return {
+ *       method: 'POST',
+ *       body,
+ *       mode: 'cors',
+ *       credentails: 'include'
+ *     };
+ *   }
+ *
+ *   static unpack(response) {
+ *     return response.json();
+ *   }
+ * }
+ *
+ * export default SampleFormatter;
  */
 class FormatterManager {
   /**
@@ -26,7 +48,7 @@ class FormatterManager {
    * @return {Object}
    */
   getFormatter(format) {
-    if (this.formatters.hasOwnProperty(format)) {
+    if (Object.hasOwnProperty.call(this.formatters, format)) {
       return this.formatters[format];
     }
   }

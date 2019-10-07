@@ -12,13 +12,14 @@ const loadConfig = (configPath) => {
 
 
   const root = aoflConfig.root || path.dirname(configPath);
-  const config = defaultsDeep(aoflConfig, defaults(root));
+  const defs = defaults(root);
+  const config = defaultsDeep(aoflConfig, defs);
 
   validateOptions(schema, config, 'AofL JS');
 
   return {
     ...config,
-    webpack: generator(root, config)
+    webpack: generator(root, config, defs)
   };
 };
 

@@ -24,16 +24,10 @@ class AoflSelectList extends AoflElement {
   }
   /**
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-select-list';
-  }
-
-  /**
-   * @readonly
-   */
-  static get properties() {
-    return {};
   }
   /**
    * If the element losing focus is not a child of the list reset the focusIndex

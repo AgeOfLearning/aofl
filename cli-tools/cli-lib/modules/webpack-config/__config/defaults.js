@@ -19,18 +19,19 @@ module.exports = (root) => {
       filename: process.env.NODE_ENV === environments.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
         'custom-elements-es5-adapter': resources.CUSTOM_ELEMENTS_ES5_ADAPTER,
-        'main': path.resolve(root, 'modules', 'index.js')
+        'main': path.resolve(root, 'src', 'modules', 'index.js')
       },
+      target: 'web',
       path: path.join(root, '__build'),
       publicPath: '/',
       devtool: (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'eval'), // cheap-module-eval-source-map
       cache: true,
-      hardSourceCache: true,
       middleware: [],
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl')],
+        include: [path.join(root, 'src'), path.join(root, 'node_modules', '@aofl', 'unit-testing'), path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')],
+        exclude: [],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purifyCSS: {
@@ -44,7 +45,8 @@ module.exports = (root) => {
       },
       images: {
         test: /\.(png|jpe?g|gif|svg)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'assets')],
+        include: [path.join(root, 'src')],
+        exclude: [],
         fileLoader: {
           // name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
           // limit: 1000
@@ -60,14 +62,16 @@ module.exports = (root) => {
       },
       fonts: {
         test: /\.(woff2?|ttf|eot|svg#.*)$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
+        include: [path.join(root, 'src')],
+        exclude: [],
         fileLoader: {
           name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
         },
       },
       eslint: {
         test: /\.js$/,
-        include: [path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes')],
+        include: [path.join(root, 'src')],
+        exclude: [],
         enforce: 'pre',
         options: {
           config: path.join(__dirname, '.eslintrc.js'),
@@ -76,9 +80,16 @@ module.exports = (root) => {
       js: {
         test: /\.js$/,
         include: [
-          path.join(root, 'templates'), path.join(root, 'modules'), path.join(root, 'routes'), path.join(root, 'node_modules', '@aofl'), path.join(root, 'node_modules', 'lit-element'),
-          path.join(root, 'node_modules', 'lit-html'), path.join(root, 'node_modules', 'chai'), path.join(root, 'node_modules', 'chai-as-promised')
+          path.join(root, 'src'),
+          path.join(root, 'node_modules', '@aofl', 'unit-testing'),
+          path.join(root, 'node_modules', '@aofl', 'polyfill-service'),
+          path.join(root, 'node_modules', 'lit-element'),
+          path.join(root, 'node_modules', 'lit-html'),
+          path.join(root, 'node_modules', 'chai'),
+          path.join(root, 'node_modules', 'chai-as-promised'),
+          path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')
         ],
+        exclude: [],
         babel: {
           cacheDirectory: true,
           ...require(path.join(__dirname, '.babelrc.js')),
@@ -87,17 +98,17 @@ module.exports = (root) => {
       templating: {
         template: {
           name: 'main',
-          template: path.resolve(root, 'templates', 'main', 'template.ejs'),
-          filename: path.join('templates', 'main', 'template.html'),
+          template: path.resolve(root, 'src', 'template', 'template.ejs'),
+          filename: path.join('template', 'template.html'),
           ...htmlWebpackconfig(process.env.NODE_ENV),
         },
         routes: {
-          mainRoutes: path.join(root, 'routes'),
-          pattern: [path.join('routes', '**', 'index.js')],
+          mainRoutes: path.join(root, 'src', 'routes'),
+          pattern: [path.join('src', 'routes', '**', 'index.js')],
           ignore: ['**/__build/**/*', '**/node_modules/**/*'],
         },
         loaderOptions: {
-          path: path.join(root, 'modules', '__config', 'routes.js'),
+          path: path.join(root, 'src', 'modules', '__config', 'routes.js'),
         },
       },
       terser: {
@@ -111,7 +122,7 @@ module.exports = (root) => {
         exclude: [/\.LICENSE$/, /\.map\.js$/],
       },
       favicon: {
-        from: 'assets/favicon.ico',
+        from: 'src/assets/favicon.ico',
         to: 'favicon.ico',
       },
       pwaManifest: {
@@ -128,27 +139,27 @@ module.exports = (root) => {
         },
         'icons': [
           {
-            src: 'assets/manifest/icon-48x48.png',
+            src: 'src/assets/manifest/icon-48x48.png',
             sizes: '48x48',
           },
           {
-            src: 'assets/manifest/icon-72x72.png',
+            src: 'src/assets/manifest/icon-72x72.png',
             sizes: '72x72',
           },
           {
-            src: 'assets/manifest/icon-96x96.png',
+            src: 'src/assets/manifest/icon-96x96.png',
             sizes: '96x96',
           },
           {
-            src: 'assets/manifest/icon-144x144.png',
+            src: 'src/assets/manifest/icon-144x144.png',
             sizes: '144x144',
           },
           {
-            src: 'assets/manifest/icon-192x192.png',
+            src: 'src/assets/manifest/icon-192x192.png',
             sizes: '192x192',
           },
           {
-            src: 'assets/manifest/icon-512x512.png',
+            src: 'src/assets/manifest/icon-512x512.png',
             sizes: '512x512',
           },
         ],
@@ -168,8 +179,8 @@ module.exports = (root) => {
       output: '__build_tests',
       config: path.join(root, '.wctrc.json'),
       maxChunks: 1,
-      polyfill: path.join(root, 'modules', '__config', 'polyfills.js'),
-      include: ['**/*.spec.js'],
+      polyfill: path.join(root, 'src', 'modules', '__config', 'polyfills.js'),
+      include: ['src/**/*.spec.js'],
       exclude: [
         '**/__build*',
         '**/node_modules',

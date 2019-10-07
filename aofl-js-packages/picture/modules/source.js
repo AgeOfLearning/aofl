@@ -29,12 +29,14 @@ class AoflSource extends AoflElement {
   }
   /**
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-source';
   }
   /**
    * @readonly
+   * @type {Object}
    */
   static get properties() {
     return {

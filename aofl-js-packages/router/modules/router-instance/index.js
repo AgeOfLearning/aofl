@@ -9,6 +9,7 @@ import Router from '../Router';
  * Persistent instance of Router.
  *
  * @memberof module:@aofl/router
+ * @type {Router}
  */
 const routerInstance = new Router();
 

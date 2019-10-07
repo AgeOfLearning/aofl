@@ -23,6 +23,7 @@ class AoflListOption extends AoflElement {
   /**
    *
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-list-option';
@@ -30,6 +31,7 @@ class AoflListOption extends AoflElement {
   /**
    *
    * @readonly
+   * @type {Object}
    */
   static get properties() {
     return {

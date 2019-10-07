@@ -32,9 +32,9 @@ class ValidationProperty {
 
     for (const key in validators) {
       /* istanbul ignore next */
-      if (!validators.hasOwnProperty(key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(validators, key)) continue;
       /* istanbul ignore next */
-      if (this.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(this, key)) {
         throw new Error(`${key} is a reserved keyword and cannot be used as a validator name.`);
       }
 
@@ -66,7 +66,7 @@ class ValidationProperty {
 
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key) ||
+      if (!Object.prototype.hasOwnProperty.call(this, key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
       this[key].reset();
@@ -76,11 +76,12 @@ class ValidationProperty {
   /**
    *
    * @readonly
+   * @type {Boolean}
    */
   get valid() {
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key) ||
+      if (!Object.prototype.hasOwnProperty.call(this, key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
       if (this[key].valid === false) {
@@ -93,11 +94,12 @@ class ValidationProperty {
   /**
    *
    * @readonly
+   * @type {Boolean}
    */
   get pending() {
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key) ||
+      if (!Object.prototype.hasOwnProperty.call(this, key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
       if (this[key].pending === true) {
@@ -110,11 +112,12 @@ class ValidationProperty {
   /**
    *
    * @readonly
+   * @type {Boolean}
    */
   get observed() {
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key) ||
+      if (!Object.prototype.hasOwnProperty.call(this, key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
       if (this[key].observed === false) {
@@ -131,7 +134,7 @@ class ValidationProperty {
   validate() {
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key) ||
+      if (!Object.prototype.hasOwnProperty.call(this, key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
       this[key].validate();
@@ -141,6 +144,7 @@ class ValidationProperty {
   /**
    *
    * @readonly
+   * @type {Promise}
    */
   get validateComplete() {
     if (this.pending && this.validateCompleteResolved) {
@@ -176,7 +180,7 @@ class ValidationProperty {
     const keys = ['valid', 'pending', 'observed'];
     for (const key in this) {
       /* istanbul ignore next */
-      if (!this.hasOwnProperty(key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(this, key)) continue;
       keys.push(key);
       keys.push(...this[key].getKeys());
     }

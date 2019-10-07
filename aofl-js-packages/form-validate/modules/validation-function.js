@@ -101,8 +101,7 @@ class ValidationFunction {
   }
 
   /**
-   *
-   *
+   * @type {Promise}
    */
   get validateComplete() {
     return this.validateCompletePromise;
@@ -116,7 +115,7 @@ class ValidationFunction {
   getKeys() {
     const keys = ['valid', 'pending', 'observed'];
     for (const key in this) {
-      if (!this.hasOwnProperty(key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(this, key)) continue;
       keys.push(key);
     }
     return keys;

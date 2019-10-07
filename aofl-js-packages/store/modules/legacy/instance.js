@@ -12,6 +12,7 @@ import Store from './store';
  *
  * @memberof module:@aofl/store/legacy
  * @deprecated
+ * @type {Store}
  */
 const storeInstance = new Store(process.env.NODE_ENV === 'development');
 

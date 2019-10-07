@@ -15,6 +15,7 @@ import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
  */
 class ApiRequest {
   /**
+   * @type {String}
    * @static
    * @readonly
    */
@@ -46,7 +47,7 @@ class ApiRequest {
    * @param {Number} expire
    */
   addCacheManager(namespace, expire) {
-    if (this.cacheManagers.hasOwnProperty(namespace)) {
+    if (Object.hasOwnProperty.call(this.cacheManagers, namespace)) {
       throw new Error(`ApiRequest: Cache namespace ${namespace} already exists`);
     }
     this.cacheManagers[namespace] = new CacheManager(namespace, cacheTypeEnumerate.MEMORY, expire);
@@ -87,7 +88,7 @@ class ApiRequest {
   purgeCache(namespace) {
     if (typeof namespace === 'undefined') { // purge all
       for (const key in this.cacheManagers) {
-        if (!this.cacheManagers.hasOwnProperty(key)) continue;
+        if (!Object.hasOwnProperty.call(this.cacheManagers, key)) continue;
         this.cacheManagers[key].clear();
       }
     } else {

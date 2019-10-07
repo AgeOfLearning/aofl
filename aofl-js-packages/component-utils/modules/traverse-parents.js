@@ -43,7 +43,6 @@ const traverseParents = (node, cb) => {
  *
  * @param {HTMLElement} node
  * @param {*} args
- * @memberof module:aofl-js/component-utils-package
  * @return {Object}
  */
 const findParent = (node, ...args) => {
@@ -66,7 +65,6 @@ const findParent = (node, ...args) => {
  *
  * @param {HTMLElement} node
  * @param {*} args
- * @memberof module:aofl-js/component-utils-package
  * @return {Object}
  */
 const findParentByAttributes = (node, ...args) => {

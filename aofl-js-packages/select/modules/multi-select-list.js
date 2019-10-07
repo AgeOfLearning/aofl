@@ -17,6 +17,7 @@ import {AoflElement} from '@aofl/element';
 class AoflMultiselectList extends AoflElement {
   /**
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-multiselect-list';
@@ -24,6 +25,7 @@ class AoflMultiselectList extends AoflElement {
 
   /**
    * @readonly
+   * @type {Object}
    */
   static get properties() {
     return {

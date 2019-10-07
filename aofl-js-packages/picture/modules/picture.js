@@ -30,6 +30,7 @@ class AoflPicture extends AoflElement {
   /**
    *
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-picture';
@@ -37,6 +38,7 @@ class AoflPicture extends AoflElement {
   /**
    *
    * @readonly
+   * @type {Object}
    */
   static get properties() {
     return {

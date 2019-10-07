@@ -18,7 +18,7 @@ class MemoryStorage {
   static clear() {
     for (const key in MemoryStorage) {
       /* istanbul ignore else */
-      if (MemoryStorage.hasOwnProperty(key)) {
+      if (Object.hasOwnProperty.call(MemoryStorage, key)) {
         MemoryStorage.removeItem(key);
       }
     }
@@ -29,12 +29,13 @@ class MemoryStorage {
    *  number of data items stored in the Storage object.
    *
    * @readonly
+   * @type {Number}
    */
   static get size() {
     let length = 0;
     for (const key in MemoryStorage) {
       /* istanbul ignore else */
-      if (MemoryStorage.hasOwnProperty(key)) {
+      if (Object.hasOwnProperty.call(MemoryStorage, key)) {
         length++;
       }
     }
@@ -50,7 +51,7 @@ class MemoryStorage {
    */
   static getItem(key) {
     /* istanbul ignore else */
-    if (MemoryStorage.hasOwnProperty(key)) {
+    if (Object.hasOwnProperty.call(MemoryStorage, key)) {
       return MemoryStorage[key];
     }
     return null;

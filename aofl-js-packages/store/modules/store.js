@@ -7,6 +7,9 @@
 import {RegisterCallback} from '@aofl/register-callback';
 import {deepFreeze} from '@aofl/object-utils';
 
+const TICK = Symbol('tick');
+const MICRO_TASK = Symbol('microtask');
+
 /**
  * Simple yet powerful implementation of flux type data store.
  *
@@ -15,19 +18,23 @@ import {deepFreeze} from '@aofl/object-utils';
 class Store {
   /**
    * Creates an instance of Store.
-   * @memberof Store
    * @param {Boolean} debug
    */
   constructor(debug = false) {
     this.debug = debug;
-    this.staged = {};
     this.state = {};
     this.namespaces = {};
     this.registerCallback = new RegisterCallback();
+    this[TICK] = null;
+
+    this[MICRO_TASK] = () => {
+      this.registerCallback.next();
+      this[TICK] = null;
+    };
 
     if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
+      this.debug = true;
       this.state = deepFreeze(this.state);
-      window.aoflDevtools = window.aoflDevtools || {};
       if (!Array.isArray(window.aoflDevtools.storeInstances)) {
         window
           .aoflDevtools
@@ -40,7 +47,6 @@ class Store {
    * subscribe() register the callback function with registerCallback and returns
    * the unsubscribe function.
    *
-   * @memberof Store
    * @param {Furtion} callback
    * @return {Function}
    */
@@ -50,24 +56,13 @@ class Store {
   /**
    * getState() return the current state.
    *
-   * @memberof Store
    * @return {Object}
    */
   getState() {
     return this.state;
   }
   /**
-   * returns staged changes
    *
-   * @memberof Store
-   * @return {Object}
-   */
-  getStaged() {
-    return this.staged;
-  }
-  /**
-   *
-   * @memberof Store
    * @param {SDO} sdo
    */
   addState(sdo) {
@@ -76,33 +71,20 @@ class Store {
     }
 
     this.namespaces[sdo.namespace] = sdo;
-    this.stage(sdo.namespace, sdo.initialState).commit();
-  }
-  /**
-   *
-   * @memberof Store
-   * @param {String} namespace
-   * @param {Omjern} state
-   * @return {Store}
-   */
-  stage(namespace, state) {
-    this.staged = Object.assign({}, this.staged, {
-      [namespace]: state
-    });
-    return this;
+    this.commit(sdo.namespace, sdo.initialState || sdo.constructor.initialState);
   }
   /**
    * Copies staged changes to state and notifies subscribers
-   * @memberof Store
    */
-  commit() {
-    const state = Object.assign({}, this.staged);
+  commit(namespace, subState) {
+    const state = Object.assign({}, this.state, {
+      [namespace]: subState
+    });
     this.replaceState(state);
   }
   /**
    * replaceState() take a state object, replaces the state property and notifies subscribers.
    *
-   * @memberof Store
    * @param {Object} state
    */
   replaceState(state) {
@@ -110,19 +92,29 @@ class Store {
     if (this.debug) {
       this.state = deepFreeze(this.state);
     }
-    this.registerCallback.next();
+    this.dispatch();
   }
+
   /**
    * Resets the state to the inital state of Sdos.
-   * @memberof Store
    */
   flushState() {
+    const state = {};
     for (const key in this.namespaces) {
-      if (!this.namespaces.hasOwnProperty(key)) continue;
+      if (!Object.hasOwnProperty.call(this.namespaces, key)) continue;
       const sdo = this.namespaces[key];
-      this.stage(sdo.namespace, Object.assign({}, sdo.constructor.initialState));
+      state[sdo.namespace] = Object.assign({}, sdo.constructor.initialState);
     }
-    this.commit();
+    this.replaceState(state);
+  }
+  /**
+   * Batches all calls to dispatch and notifies subscribers on next tick.
+   */
+  dispatch() {
+    if (this[TICK]) {
+      return;
+    }
+    this[TICK] = setTimeout(this[MICRO_TASK]);
   }
 }
 

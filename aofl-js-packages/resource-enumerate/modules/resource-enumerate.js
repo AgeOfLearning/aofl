@@ -34,6 +34,7 @@ class ResourceEnumerate {
    *
    *
    * @readonly
+   * @type {String}
    */
   static get NAMESPACE() {
     return 'resource-enumerate';
@@ -51,7 +52,7 @@ class ResourceEnumerate {
 
     for (const apiNs in this.apis) {
       /* istanbul ignore next */
-      if (!this.apis.hasOwnProperty(apiNs)) continue;
+      if (!Object.hasOwnProperty.call(this.apis, apiNs)) continue;
       const api = this.apis[apiNs];
       this.apiRequestInstance.addFormatter(apiNs, {
         pack() {
@@ -153,7 +154,7 @@ class ResourceEnumerate {
       .then((configModule) => {
         for (const apiNs in this.apis) {
         /* istanbul ignore next */
-          if (!this.apis.hasOwnProperty(apiNs)) continue;
+          if (!Object.hasOwnProperty.call(this.apis, apiNs)) continue;
           const api = this.apis[apiNs];
           let variables = {};
           if (typeof api[this.environment + 'Variables'] === 'function') {

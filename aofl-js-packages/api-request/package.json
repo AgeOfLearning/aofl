@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "3.0.0-beta.5",
+  "version": "3.0.0-beta.30",
   "description": "A module for simplifying api calls",
   "keywords": [
     "aofljs",
@@ -10,8 +10,15 @@
     "cache response"
   ],
   "main": "index.js",
+  "browser": "dist/index.js",
+  "module": "index.js",
+  "typings": "types.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production aofl build",
+    "build:dev": "cross-env NODE_ENV=development aofl build",
+    "docs": "jsdoc -c .jsdocrc.json .",
+    "prepublishOnly": "npm run build && npm run docs"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "contributors": [
@@ -23,7 +30,15 @@
     "type": "git",
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
-  "dependencies": {
-    "@aofl/cache-manager": "^3.0.0-beta.1"
+  "devDependencies": {
+    "@aofl/cache-manager": "^3.0.0-beta.30",
+    "@aofl/cli": "^3.0.0-beta.30",
+    "cross-env": "^6.0.3",
+    "jsdoc": "^3.6.3",
+    "jsdoc-babel": "^0.5.0",
+    "tsd-jsdoc": "^2.4.0"
+  },
+  "peerDependencies": {
+    "@aofl/cache-manager": ">= 3.0.0-beta.1 < 4.0.0"
   }
 }

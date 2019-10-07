@@ -11,7 +11,7 @@
     "test": "npm run env:test -- npx aofl test",
     "test:sl": "cross-env SAUCE=1 npm test -- --debug",
     "start": "echo 'Nothing to see here ;)'",
-    "docs": "rm -rf ../docs/3.x/api-docs && jsdoc -c .jsdocrc.json .",
+    "docs": "jsdoc -c .jsdocrc.json .",
     "lint": "eslint ."
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
@@ -22,7 +22,6 @@
     "@aofl/cli": "^3.0.0-alpha.12",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/i18n-mixin": "file:i18n-mixin",
-    "@aofl/jsdoc-template": "^3.4.0",
     "@aofl/middleware": "file:middleware",
     "@aofl/object-utils": "file:object-utils",
     "@aofl/polyfill-service": "file:polyfill-service",
@@ -33,7 +32,6 @@
     "@aofl/server-environment": "file:server-environment",
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
-    "@aofl/web-components": "file:web-components",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "codecov": "^3.1.0",
     "core-js": "^3.2.1",
@@ -43,9 +41,8 @@
     "ink-docstrap": "^1.3.2",
     "isomorphic-fetch": "^2.2.1",
     "jsdoc": "^3.5.5",
-    "lit-element": "2.1.0",
-    "lit-html": "1.0.0",
-    "plato": "^1.7.0"
+    "lit-element": "2.2.1",
+    "lit-html": "1.1.2"
   },
   "dependencies": {
     "@aofl/drawer": "file:drawer",

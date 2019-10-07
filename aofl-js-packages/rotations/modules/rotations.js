@@ -8,16 +8,19 @@ import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
 
 /**
  * @memberof module:@aofl/rotations
+ * @private
  * @type {Number}
  */
 const EXPIRE_90_DAYS = 7776000000;
 /**
  * @memberof module:@aofl/rotations
+ * @private
  * @type {RegExp}
  */
-const TRAILING_SLASH_REGEX = /\/$/;
+const TRAILING_SLASH_REGEX = /\/$/i;
 /**
  * @memberof module:@aofl/rotations
+ * @private
  * @generator
  * @function arrayIterator
  * @yields {*} next next item in array
@@ -112,7 +115,7 @@ class Rotations {
     const range = [];
     for (const key in weights) {
       /* istanbul ignore next */
-      if (!weights.hasOwnProperty(key)) continue;
+      if (!Object.hasOwnProperty.call(weights, key)) continue;
       let i = 0;
       while (i++ < weights[key]) {
         range.push(key);

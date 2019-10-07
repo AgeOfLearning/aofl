@@ -12,10 +12,16 @@ if (typeof window.Promise === 'undefined') {
   window.Promise = promiscuous;
 }
 
+/* eslint-disable */
+/* istanbul ignore next */
+if (typeof process !== 'undefined' && typeof process.env !== 'undefined' &&
+typeof process.env.PUBLIC_PATH !== 'undefined') {
+  __webpack_public_path__ = process.env.PUBLIC_PATH;
+}
+/* eslint-enable */
+
 /**
  * Used to polyfill missing browser features.
- *
- * @memberof module:@aofl/polyfill-service
  *
  * @example
  * await Polyfill.loadAll({
@@ -29,6 +35,9 @@ if (typeof window.Promise === 'undefined') {
  *     load: () => import('@webcomponents/webcomponentsjs/webcomponents-bundle')
  *   }
  * });
+ *
+ * @memberof module:@aofl/polyfill-service
+ * @class
  */
 class Polyfill {
   /**
@@ -75,13 +84,13 @@ class Polyfill {
 
     for (const key in polyfills) {
       /* istanbul ignore next */
-      if (polyfills.hasOwnProperty(key)) {
+      if (Object.hasOwnProperty.call(polyfills, key)) {
         promises.push(Polyfill.load(key, polyfills[key]));
       }
     }
 
-    return Promise.all(promises)
-      .then(webcomponentsLoader)
+    return webcomponentsLoader()
+      .then(Promise.all(promises))
       .then(/* istanbul ignore next */() => {
         document.dispatchEvent(new CustomEvent('WebComponentsReady', {
           bubbles: true
@@ -90,4 +99,6 @@ class Polyfill {
   }
 }
 
-export default Polyfill;
+export {
+  Polyfill
+};

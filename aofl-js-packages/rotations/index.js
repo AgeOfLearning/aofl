@@ -6,4 +6,9 @@
  * @since 2.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-export {Rotations} from './modules/rotations';
+import {Rotations} from './modules/rotations';
+
+export {
+  Rotations
+};
+

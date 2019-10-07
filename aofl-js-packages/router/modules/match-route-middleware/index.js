@@ -52,9 +52,7 @@ const matchBestPath = (_path, routes) => {
 /**
  * Adds the match route before middleware logic
  *
- * @summary match route middleware
- * @version 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @memberof module:@aofl/router
  *
  * @param {Object} router
  * @return {Function}

@@ -33,8 +33,8 @@ class Store {
     };
 
     if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
+      this.debug = true;
       this.state = deepFreeze(this.state);
-      window.aoflDevtools = window.aoflDevtools || {};
       if (!Array.isArray(window.aoflDevtools.storeInstances)) {
         window
           .aoflDevtools

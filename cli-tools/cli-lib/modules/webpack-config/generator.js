@@ -21,15 +21,31 @@ const getOutput = (path, publicPath, filename) => {
   return output;
 };
 
-const getCssRules = (build) => {
+const getReplace = (key, userDefined, defaultOption) => {
+  if (typeof userDefined.replace !== 'undefined' && typeof userDefined.replace[key] !== 'undefined') {
+    return userDefined.replace[key];
+  }
+
+  const merged = Array.from(new Set([...userDefined[key], ...defaultOption[key]]));
+  return merged;
+};
+
+const getCacheLoader = (cache) => {
+  if (cache === true) {
+    return ['cache-loader'];
+  }
+  return [];
+};
+
+const getCssRules = (build, defaultBuild) => {
   const css = {
     test: build.css.test,
-    include: build.css.include,
-    exclude: build.css.exclude,
+    include: getReplace('include', build.css, defaultBuild.css),
+    exclude: getReplace('exclude', build.css, defaultBuild.css),
     issuer: build.css.issuer,
     enforce: build.css.enforce,
     use: [
-      'cache-loader',
+      ...getCacheLoader(build.cache),
       {
         loader: 'css-loader',
         options: {
@@ -70,14 +86,14 @@ const getCssRules = (build) => {
   return css;
 };
 
-const getEsLintRules = (build) => {
+const getEsLintRules = (build, defaultBuild) => {
   if (build.eslint === false) { return []; }
 
   return [
     {
       test: build.eslint.test,
-      include: build.eslint.include,
-      exclude: build.eslint.exclude,
+      include: getReplace('include', build.eslint, defaultBuild.eslint),
+      exclude: getReplace('exclude', build.eslint, defaultBuild.eslint),
       issuer: build.eslint.issuer,
       enforce: build.eslint.enforce,
       use: [
@@ -93,16 +109,16 @@ const getEsLintRules = (build) => {
   ];
 };
 
-const getJsRules = (build) => {
+const getJsRules = (build, defaultBuild) => {
   return [
     {
       test: build.js.test,
-      include: build.js.include,
-      exclude: build.js.exclude,
+      include: getReplace('include', build.js, defaultBuild.js),
+      exclude: getReplace('exclude', build.js, defaultBuild.js),
       issuer: build.js.issuer,
       enforce: build.js.enforce,
       use: [
-        'cache-loader',
+        ...getCacheLoader(build.cache),
         {
           loader: 'babel-loader',
           options: {
@@ -115,12 +131,12 @@ const getJsRules = (build) => {
   ];
 };
 
-const getImageRules = (build) => {
+const getImageRules = (build, defaultBuild) => {
   return [
     {
       test: build.images.test,
-      include: build.images.include,
-      exclude: build.images.exclude,
+      include: getReplace('include', build.images, defaultBuild.images),
+      exclude: getReplace('exclude', build.images, defaultBuild.images),
       issuer: build.images.issuer,
       enforce: build.images.enforce,
       use: [
@@ -140,12 +156,12 @@ const getImageRules = (build) => {
   ];
 };
 
-const getFontsRules = (build) => {
+const getFontsRules = (build, defaultBuild) => {
   return [
     {
       test: build.fonts.test,
-      include: build.fonts.include,
-      exclude: build.fonts.exclude,
+      include: getReplace('include', build.fonts, defaultBuild.fonts),
+      exclude: getReplace('exclude', build.fonts, defaultBuild.fonts),
       issuer: build.fonts.issuer,
       enforce: build.fonts.enforce,
       use: [
@@ -169,7 +185,7 @@ const getTemplatingPluginOptions = (config, cache) => {
   return config;
 };
 
-const getConfig = (root, configObject) => {
+const getConfig = (root, configObject, defaultOptions) => {
   const mode = [environments.DEVELOPMENT, environments.PRODUCTION].indexOf(process.env.NODE_ENV) > -1 ?
   process.env.NODE_ENV: environments.TEST === process.env.NODE_ENV? 'production': 'none';
 
@@ -180,21 +196,21 @@ const getConfig = (root, configObject) => {
 
   const rules = [];
 
-  rules.push(getCssRules(configObject.build));
-  // rules.push({
-  //   test: /\.js$/,
-  //   inpclude: path.join(root, 'node_modules', '@webcomponents', 'webcomponentsjs')
-  //   loader: 'imports-loader?this=>window'
-  // });
-  rules.push(...getEsLintRules(configObject.build));
-  rules.push(...getJsRules(configObject.build));
-  rules.push({
-    test: /i18n\/index\.js$/,
-    use: ['cache-loader', '@aofl/i18n-loader'],
-    exclude: /node_modules/
-  });
-  rules.push(...getImageRules(configObject.build));
-  rules.push(...getFontsRules(configObject.build));
+  rules.push(getCssRules(configObject.build, defaultOptions.build));
+  rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
+  rules.push(...getJsRules(configObject.build, defaultOptions.build));
+  if (configObject.mode === 'project') {
+    rules.push({
+      test: /i18n\/index\.js$/,
+      use: [
+        ...getCacheLoader(configObject.build.cache),
+        '@aofl/i18n-loader'
+      ],
+      exclude: /node_modules/
+    });
+  }
+  rules.push(...getImageRules(configObject.build, defaultOptions.build));
+  rules.push(...getFontsRules(configObject.build, defaultOptions.build));
 
   const plugins = [new CleanWebpackPlugin()];
 
@@ -242,6 +258,10 @@ const getConfig = (root, configObject) => {
       }
     }
   };
+
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env.PUBLIC_PATH': JSON.stringify(configObject.build.publicPath),
+  }));
 
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.HashedModuleIdsPlugin());

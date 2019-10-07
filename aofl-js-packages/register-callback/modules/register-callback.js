@@ -49,7 +49,7 @@ class RegisterCallback {
    * When next() is invoked, it calls all functions in this.callbacks list and passes error and args
    * to each function.
    *
-   * @param {*} [err=null]
+   * @param {Error} [err=null]
    * @param {*} args
    */
   next(err = null, ...args) {

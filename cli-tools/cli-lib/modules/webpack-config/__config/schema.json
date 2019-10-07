@@ -19,6 +19,10 @@
         "filename": {
           "type": "string"
         },
+        "target": {
+          "type": "string",
+          "allowedValues": ["web", "async-node", "electron-main", "electron-renderer", "electron-preload", "node", "node-webkit", "webworker"]
+        },
         "entry": {
           "anyOf": [
             {"type": "string"},
@@ -41,9 +45,6 @@
         "cache": {
           "type": "boolean"
         },
-        "hardSourceCache": {
-          "type": "boolean"
-        },
         "css": {
           "type": "object",
           "additionalProperties": false,
@@ -52,24 +53,10 @@
               "instanceof": "RegExp"
             },
             "include": {
-              "anyOf": [
-                {
-                  "type": "array"
-                },
-                {
-                  "instanceof": "RegExp"
-                }
-              ]
+              "type": "array"
             },
             "exclude": {
-              "anyOf": [
-                {
-                  "type": "array"
-                },
-                {
-                  "instanceof": "RegExp"
-                }
-              ]
+              "type": "array"
             },
             "issuer": {
               "type": "object"
@@ -85,6 +72,17 @@
             },
             "postCssLoader": {
               "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
             }
           }
         },
@@ -126,6 +124,17 @@
             },
             "imgLoader": {
               "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
             }
           }
         },
@@ -164,6 +173,17 @@
             },
             "fileLoader": {
               "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
             }
           }
         },
@@ -206,6 +226,31 @@
             "enforce": {
               "type": "string"
             }
+          },
+          "replace": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "anyOf": [
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "instanceof": "RegExp"
+                  }
+                ]
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "instanceof": "RegExp"
+                  }
+                ]
+              }
+            }
           }
         },
         "js": {
@@ -243,6 +288,17 @@
             },
             "babel": {
               "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
             }
           }
         },

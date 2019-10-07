@@ -13,7 +13,7 @@ const environments = {
 
 const resources = {
   CUSTOM_ELEMENTS_ES5_ADAPTER: path.join(__dirname, 'webpack-config', '__config', 'custom-elements-es5-adapter.js')
-}
+};
 
 module.exports = {
   projectFileNames,

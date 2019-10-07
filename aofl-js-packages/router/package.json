@@ -1,10 +1,17 @@
 {
   "name": "@aofl/router",
-  "version": "3.0.0-beta.5",
+  "version": "3.0.0-beta.30",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
+  "browser": "dist/index.js",
+  "module": "index.js",
+  "typings": "types.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production npx aofl build",
+    "build:dev": "cross-env NODE_ENV=development npx aofl build",
+    "prepublishOnly": "npm run build && npm run docs",
+    "docs": "jsdoc -c .jsdocrc.json ."
   },
   "keywords": [
     "aofljs",
@@ -23,11 +30,14 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "@aofl/cli": "^3.0.0-beta.30",
+    "@aofl/middleware": "^3.0.0-beta.30",
+    "cross-env": "^6.0.3",
+    "jsdoc": "^3.6.3",
+    "jsdoc-babel": "^0.5.0",
+    "tsd-jsdoc": "^2.4.0"
   },
-  "dependencies": {
-    "@aofl/middleware": "^3.0.0-beta.5"
+  "peerDependencies": {
+    "@aofl/middleware": ">= 3.0.0-beta.5 < 4.0.0"
   }
 }

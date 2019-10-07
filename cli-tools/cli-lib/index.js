@@ -12,7 +12,6 @@ const {DebugReporter} = require('./modules/webpackbar-debug-reporter');
 const {loadConfig} = require('./modules/webpack-config');
 
 
-
 module.exports.CommanderHelper = CommanderHelper;
 module.exports.environments = environments;
 module.exports.project = project;

@@ -1,13 +1,17 @@
 {
   "name": "@aofl/picture",
-  "version": "3.0.0-beta.5",
+  "version": "3.0.0-beta.31",
   "description": "`<aofl-picture>` serves as a container for zero or more `<aofl-source>` and one `<aofl-img>` elements to provide versions of an image for different display sizes. Display size specific sources are defined using the media attribute of the `aofl-source` element. `<aofl-img>` embeds an image into the document. It behaves similarly to `<img>` with the addition of lazy loading images as they scroll near the visible area of the screen. The current formula is 2x height or width. In addition to this `<aofl-img>` can be combined with `<aofl-picture>` and `<aofl-source>` to provide different images for different display sizes. AoflSource component must be used as a child of aofl-picture and specifies images for different media queries.",
-  "main": "dist/index.js",
+  "main": "index.js",
+  "browser": "dist/index.js",
+  "module": "index.js",
+  "typings": "types.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production npx aofl build",
     "build:dev": "cross-env NODE_ENV=development npx aofl build",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build && npm run docs",
+    "docs": "jsdoc -c .jsdocrc.json ."
   },
   "repository": {
     "type": "git",
@@ -31,13 +35,16 @@
   },
   "homepage": "https://ageoflearning.github.io/aofl/",
   "peerDependencies": {
-    "@aofl/component-utils": ">2.0.0",
-    "@aofl/element": "0.0.0"
+    "@aofl/component-utils": ">= 3.0.0-beta.1 < 4.0.0",
+    "@aofl/element": ">= 3.0.0-beta.5 < 4.0.0"
   },
   "devDependencies": {
-    "@aofl/cli": "^3.0.0-beta.3",
-    "@aofl/component-utils": "^3.0.0-beta.1",
-    "@aofl/element": "^3.0.0-beta.5",
-    "cross-env": "^6.0.3"
+    "@aofl/cli": "^3.0.0-beta.30",
+    "@aofl/component-utils": "^3.0.0-beta.30",
+    "@aofl/element": "^3.0.0-beta.31",
+    "cross-env": "^6.0.3",
+    "jsdoc": "^3.6.3",
+    "jsdoc-babel": "^0.5.0",
+    "tsd-jsdoc": "^2.4.0"
   }
 }

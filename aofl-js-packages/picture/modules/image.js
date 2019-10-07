@@ -37,6 +37,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    *
    * @readonly
    * @static
+   * @type {String}
    */
   static get is() {
     return 'aofl-img';
@@ -45,6 +46,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    *
    * @readonly
    * @static
+   * @type {Object}
    */
   static get properties() {
     return {

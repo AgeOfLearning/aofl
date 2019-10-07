@@ -1,0 +1,17 @@
+{
+  "plugins": ["node_modules/jsdoc-babel"],
+  "babel": {
+    "plugins": ["@babel/plugin-syntax-dynamic-import"]
+  },
+  "source": {
+    "includePattern": ".*\\.js$",
+    "excludePattern": "(node_modules|dist|examples|test|-loader|-polyfill)"
+  },
+  "opts": {
+    "template": "./node_modules/tsd-jsdoc/dist",
+    "encoding": "utf8",
+    "destination": ".",
+    "recurse": true,
+    "verbose": true
+  }
+}

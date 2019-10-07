@@ -59,6 +59,7 @@ class CacheManager {
    * number of data items stored in the Storage object.
    *
    * @readonly
+   * @type {Number}
    */
   get size() {
     const collection = this.getCollection();
@@ -73,7 +74,7 @@ class CacheManager {
   getStoredKeys() {
     const keys = [];
     for (const key in this.storage) {
-      if (!this.storage.hasOwnProperty(key)) continue;
+      if (!Object.hasOwnProperty.call(this.storage, key)) continue;
       if (key.indexOf(this.namespace + '_') === 0) {
         keys.push(key);
       }
@@ -131,7 +132,7 @@ class CacheManager {
     this.storageType === cacheTypeEnumerate.SESSION) {
       obj = JSON.parse(obj);
     }
-    if (obj !== null && obj.hasOwnProperty('t')) {
+    if (obj !== null && Object.hasOwnProperty.call(obj, 't')) {
       if (this.isExpired(key)) { // expired
         this.removeItem(key);
         return null;

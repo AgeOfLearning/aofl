@@ -8,7 +8,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Polyfill from './modules/polyfill';
+import {Polyfill} from './modules/polyfill';
 
 export {
   Polyfill

@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  name: '@aofl/drawer',
+  name: '@aofl/select',
   mode: 'stand-alone',
   build: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'dist'),
     entryReplace: {
       'index': path.join(__dirname, 'index.js')
@@ -22,7 +22,7 @@ module.exports = {
     extend() {
       return {
         output: {
-          libraryTarget: "commonjs2"
+          libraryTarget: 'commonjs2'
         },
         optimization: {
           runtimeChunk: false

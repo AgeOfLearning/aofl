@@ -1,7 +1,8 @@
 {
+  "recurseDepth": 5,
   "source": {
     "includePattern": ".*\\.js$",
-    "excludePattern": "(node_modules|documentation|api-docs|webpack|__build|examples|__config|\\.sample\\.js|\\.spec\\.js|web-components)",
+    "excludePattern": "(node_modules|coverage|__build|examples|__config|\\.sample\\.js|\\.spec\\.js|\\.aofl\\.js|\\.eslintrc\\.js|\\.wct|\\.min\\.js)",
     "include": ["./README.md"]
   },
   "opts": {

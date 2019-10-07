@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Age Of Learning JavaScript SDK Source: rotations/modules/rotations.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.paper.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Age Of Learning JavaScript SDK</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="module-@aofl_api-request.html">@aofl/api-request</a></li><li><a href="module-@aofl_cache-manager.html">@aofl/cache-manager</a></li><li><a href="module-@aofl_component-utils.html">@aofl/component-utils</a></li><li><a href="module-@aofl_drawer.html">@aofl/drawer</a></li><li><a href="module-@aofl_element.html">@aofl/element</a></li><li><a href="module-@aofl_form-validate.html">@aofl/form-validate</a></li><li><a href="module-@aofl_i18n.html">@aofl/i18n</a></li><li><a href="module-@aofl_i18n-mixin.html">@aofl/i18n-mixin</a></li><li><a href="module-@aofl_map-state-properties-mixin.html">@aofl/map-state-properties-mixin</a></li><li><a href="module-@aofl_middleware.html">@aofl/middleware</a></li><li><a href="module-@aofl_object-utils.html">@aofl/object-utils</a></li><li><a href="module-@aofl_picture.html">@aofl/picture</a></li><li><a href="module-@aofl_polyfill-service.html">@aofl/polyfill-service</a></li><li><a href="module-@aofl_register-callback.html">@aofl/register-callback</a></li><li><a href="module-@aofl_resource-enumerate.html">@aofl/resource-enumerate</a></li><li><a href="module-@aofl_rotations.html">@aofl/rotations</a></li><li><a href="module-@aofl_router.html">@aofl/router</a></li><li><a href="module-@aofl_select.html">@aofl/select</a></li><li><a href="module-@aofl_server-environment.html">@aofl/server-environment</a></li><li><a href="module-@aofl_store.html">@aofl/store</a></li><li><a href="module-@aofl_store_legacy.html">@aofl/store/legacy</a></li><li><a href="module-@aofl_uuid.html">@aofl/uuid</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="FormatterManager.html">FormatterManager</a></li><li><a href="module-@aofl_api-request.ApiRequest.html">@aofl/api-request.ApiRequest</a></li><li><a href="module-@aofl_cache-manager.CacheManager.html">@aofl/cache-manager.CacheManager</a></li><li><a href="module-@aofl_cache-manager.MemoryStorage.html">@aofl/cache-manager.MemoryStorage</a></li><li><a href="module-@aofl_component-utils.IsInViewportMixinClass.html">@aofl/component-utils.IsInViewportMixinClass</a></li><li><a href="module-@aofl_drawer.AoflDrawer.html">@aofl/drawer.AoflDrawer</a></li><li><a href="module-@aofl_element.AoflElement.html">@aofl/element.AoflElement</a></li><li><a href="module-@aofl_form-validate.ValidationFunction.html">@aofl/form-validate.ValidationFunction</a></li><li><a href="module-@aofl_form-validate.ValidationMixin.html">@aofl/form-validate.ValidationMixin</a></li><li><a href="module-@aofl_form-validate.ValidationProperty.html">@aofl/form-validate.ValidationProperty</a></li><li><a href="module-@aofl_i18n.I18n.html">@aofl/i18n.I18n</a></li><li><a href="module-@aofl_i18n-mixin.I18nMixin.html">@aofl/i18n-mixin.I18nMixin</a></li><li><a href="module-@aofl_map-state-properties-mixin.MapStatePropertiesMixin.html">@aofl/map-state-properties-mixin.MapStatePropertiesMixin</a></li><li><a href="module-@aofl_middleware.Middleware.html">@aofl/middleware.Middleware</a></li><li><a href="module-@aofl_picture.AoflImg.html">@aofl/picture.AoflImg</a></li><li><a href="module-@aofl_picture.AoflPicture.html">@aofl/picture.AoflPicture</a></li><li><a href="module-@aofl_picture.AoflSource.html">@aofl/picture.AoflSource</a></li><li><a href="module-@aofl_polyfill-service.Polyfill.html">@aofl/polyfill-service.Polyfill</a></li><li><a href="module-@aofl_register-callback.RegisterCallback.html">@aofl/register-callback.RegisterCallback</a></li><li><a href="module-@aofl_resource-enumerate.ResourceEnumerate.html">@aofl/resource-enumerate.ResourceEnumerate</a></li><li><a href="module-@aofl_rotations.Rotations.html">@aofl/rotations.Rotations</a></li><li><a href="module-@aofl_router.PathUtils.html">@aofl/router.PathUtils</a></li><li><a href="module-@aofl_router.Router.html">@aofl/router.Router</a></li><li><a href="module-@aofl_select.AoflListOption.html">@aofl/select.AoflListOption</a></li><li><a href="module-@aofl_select.AoflMultiselectList.html">@aofl/select.AoflMultiselectList</a></li><li><a href="module-@aofl_select.AoflSelectList.html">@aofl/select.AoflSelectList</a></li><li><a href="module-@aofl_store.Sdo.html">@aofl/store.Sdo</a></li><li><a href="module-@aofl_store.Store.html">@aofl/store.Store</a></li><li><a href="module-@aofl_store_legacy.Store.html">@aofl/store/legacy.Store</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: rotations/modules/rotations.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">/**
+ * @summary rotations
+ * @version 3.0.0
+ * @since 2.0.0
+ * @author Arian Khosravi &lt;arian.khosravi@aofl.com>
+ */
+import {CacheManager, cacheTypeEnumerate} from '@aofl/cache-manager';
+
+/**
+ * @memberof module:@aofl/rotations
+ * @type {Number}
+ */
+const EXPIRE_90_DAYS = 7776000000;
+/**
+ * @memberof module:@aofl/rotations
+ * @type {RegExp}
+ */
+const TRAILING_SLASH_REGEX = /\/$/;
+/**
+ * @memberof module:@aofl/rotations
+ * @generator
+ * @function arrayIterator
+ * @yields {*} next next item in array
+ */
+const arrayIterator = function* arrayIterator(arr) {
+  yield* arr;
+};
+
+/**
+ * Produces an updated route config based on a rotation config
+ *
+ * @memberof module:@aofl/rotations
+ */
+class Rotations {
+  /**
+   * @param {String} cacheNamespace
+   * @param {Object} routesConfig
+   * @param {Object} rotationConfig
+   * @param {Object} rotationConditions
+   * @param {Object} publicPath
+   */
+  constructor(cacheNamespace, routesConfig, rotationConfig, rotationConditions, publicPath = '/', expires = EXPIRE_90_DAYS) {
+    this.routesConfig = routesConfig;
+    this.rotationConfig = rotationConfig;
+    this.rotationConditions = rotationConditions;
+    this.cache = new CacheManager(cacheNamespace, cacheTypeEnumerate.LOCAL, expires);
+    this.qualification = {};
+    this.weightRanges = {};
+    this.qualifiedVersions = {};
+
+    this.PUBLIC_PATH = publicPath.replace(TRAILING_SLASH_REGEX, ''); // eslint-disable-line
+    this.PUBLIC_PATH_REGEX = new RegExp(`^${this.PUBLIC_PATH}`);
+  }
+  /**
+   * @private
+   * @param {String} conditionId
+   */
+  async qualifies(conditionId) {
+    if (typeof this.qualification[conditionId] !== 'undefined') {
+      return this.qualification[conditionId];
+    }
+
+    const conditionName = this.rotationConfig.conditions[conditionId];
+
+    if (typeof this.rotationConditions[conditionName] === 'function') {
+      const qualifies = Promise.resolve(await this.rotationConditions[conditionName]());
+      this.qualification[conditionId] = qualifies;
+      return qualifies;
+    }
+
+    return false;
+  }
+  /**
+   *
+   * @private
+   * @param {String} qualificationOrder
+   * @return {Promise}
+   */
+  getQualifyingId(qualificationOrder) {
+    const qualificationIterator = arrayIterator(qualificationOrder);
+    const qualify = async () => {
+      const nextQ = qualificationIterator.next();
+      if (nextQ.done) {
+        throw new Error('No matching conditions');
+      }
+      const conditionId = nextQ.value;
+      const qualifies = await this.qualifies(conditionId);
+      if (qualifies) {
+        return conditionId;
+      }
+      return qualify();
+    };
+    return qualify();
+  }
+  /**
+   * @param {String} qualificationId
+   * @private
+   * @return {Array}
+   */
+  getWeightRange(qualificationId) {
+    const weights = this.rotationConfig.weights[qualificationId];
+
+    if (typeof weights === 'undefined') {
+      throw new Error('Invalid weights for qualifying rotation');
+    }
+
+    const weightRanges = this.weightRanges[qualificationId];
+    if (typeof weightRanges !== 'undefined') {
+      return weightRanges;
+    }
+
+    const range = [];
+    for (const key in weights) {
+      /* istanbul ignore next */
+      if (!Object.hasOwnProperty.call(weights, key)) continue;
+      let i = 0;
+      while (i++ &lt; weights[key]) {
+        range.push(key);
+      }
+    }
+
+    this.weightRanges[qualificationId] = range;
+    return range;
+  }
+  /**
+   * @param {String} qualificationId
+   * @private
+   * @return {String}
+   */
+  getVersion(qualificationId) {
+    if (typeof this.qualifiedVersions[qualificationId] !== 'undefined') {
+      return this.qualifiedVersions[qualificationId];
+    }
+
+    const weights = this.getWeightRange(qualificationId);
+    const version = weights[Math.floor(Math.random() * Math.floor(weights.length))];
+    this.qualifiedVersions[qualificationId] = version;
+
+    return version;
+  }
+  /**
+   * @param {String} rotation
+   * @param {String} path
+   * @private
+   * @return {Object}
+   */
+  findRotationRoute(rotation, path) {
+    const routes = this.routesConfig[rotation];
+    if (typeof routes === 'undefined') {
+      throw new Error('Rotation not found');
+    }
+
+    for (let i = 0; i &lt; routes.length; i++) {
+      if (routes[i].path === path) {
+        return routes[i];
+      }
+    }
+
+    throw new Error('Rotation route not found');
+  }
+  /**
+   * @param {String} path
+   * @private
+   * @return {Object}
+   */
+  getCachedRotation(path) {
+    const cachedResult = this.cache.getItem(path);
+
+    if (cachedResult === null) {
+      return null;
+    }
+
+    const qualifyingId = cachedResult.qualifyingId;
+    const version = cachedResult.version;
+    const weights = this.rotationConfig.weights[qualifyingId];
+    const rotation = this.rotationConfig.versions[version];
+
+    if (typeof weights !== 'undefined' &amp;&amp; typeof rotation !== 'undefined' &amp;&amp;
+    typeof this.routesConfig[rotation] !== 'undefined') {
+      try {
+        this.findRotationRoute(rotation, path);
+
+        return {
+          qualifyingId,
+          version
+        };
+      } catch (e) {}
+    }
+
+    return null;
+  }
+  /**
+   *
+   * @param {String} mainRoutes
+   * @return {Promise} resolves to a route configuration Array of route objects
+   */
+  async getRoutes(mainRoutes = 'routes') {
+    const routes = [];
+    const routesIterator = arrayIterator(this.routesConfig[mainRoutes]);
+
+    const qualifyRoutes = async () => {
+      const next = routesIterator.next();
+      if (next.done) {
+        return routes;
+      }
+
+      const route = next.value;
+      const routePath = route.path.replace(this.PUBLIC_PATH_REGEX, '').replace(TRAILING_SLASH_REGEX, '');
+      const qualificationOrder = this.rotationConfig.qualification_order[routePath] ||
+        this.rotationConfig.qualification_order[routePath + '/'];
+
+      try {
+        if (typeof qualificationOrder === 'undefined') {
+          throw new Error('No qualification order for giver route');
+        }
+
+        let qualifyingId = 0;
+        let version = '';
+        const cachedRotation = this.getCachedRotation(route.path);
+
+        if (cachedRotation !== null) {
+          qualifyingId = cachedRotation.qualifyingId;
+          version = cachedRotation.version;
+        } else {
+          qualifyingId = await this.getQualifyingId(qualificationOrder);
+          version = this.getVersion(qualifyingId);
+        }
+
+        const rotation = this.rotationConfig.versions[version];
+
+        if (typeof rotation === 'undefined') {
+          throw new Error('Version does not exist');
+        }
+        const rotationInfo = {qualifyingId, version};
+        const matchedRoute = this.findRotationRoute(rotation, route.path);
+        matchedRoute.rotationInfo = rotationInfo;
+        routes.push(matchedRoute);
+        if (cachedRotation === null) {
+          this.cache.setItem(route.path, {qualifyingId, version});
+        }
+      } catch (e) { // no qualifying rotation
+        route.rotationInfo = {version: this.rotationConfig.baseline_version};
+        routes.push(route);
+        this.cache.removeItem(route.path);
+      }
+      await qualifyRoutes();
+    };
+
+    await qualifyRoutes();
+    return routes;
+  }
+}
+
+export {
+  Rotations
+};
+
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+	
+		on 2019-10-08T00:50:33-07:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

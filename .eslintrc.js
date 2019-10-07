@@ -16,7 +16,8 @@ const config = {
     getTestContainer: true,
     cleanTestContainer: true,
     sinon: true,
-    Promise: true
+    Promise: true,
+    Set: true
   }
 };
 

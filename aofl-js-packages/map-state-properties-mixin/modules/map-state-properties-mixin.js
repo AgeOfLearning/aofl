@@ -4,13 +4,12 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin';
 
 /**
  * @memberof module:@aofl/map-state-properties-mixin
  * @pram {HtmlElement} superClass
  */
-export default dedupingMixin((superClass) => {
+export default (superClass) => {
   /**
    * Mixes the superClass with MapStatePropertiesMixin. It subscribes to store on
    * connectedCallback and calls mapStateProperties before element is connected to
@@ -18,7 +17,7 @@ export default dedupingMixin((superClass) => {
    * override mapStateProperties.
    *
    * @memberof module:@aofl/map-state-properties-mixin
-   * @extends {dedupingMixin(superClass)}
+   * @extends {superClass}
    */
   class MapStatePropertiesMixin extends superClass {
     /**
@@ -55,4 +54,4 @@ export default dedupingMixin((superClass) => {
   }
 
   return MapStatePropertiesMixin;
-});
+};

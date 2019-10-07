@@ -4,7 +4,6 @@
  * @since 1.0.0
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
-import {dedupingMixin} from '@polymer/polymer/lib/utils/mixin';
 import {html} from 'lit-element';
 import md5 from 'tiny-js-md5';
 import {I18n} from '@aofl/i18n';
@@ -15,7 +14,7 @@ import {I18n} from '@aofl/i18n';
  * @memberof module:@aofl/i18n-mixin
  * @param {LitElement} superClass
  */
-export default dedupingMixin((superClass) => {
+export default (superClass) => {
   /**
    * @memberof module:@aofl/i18n-mixin
    * @extends {superClass}
@@ -32,7 +31,7 @@ export default dedupingMixin((superClass) => {
     }
 
     /**
-     *
+     * @type {Object}
      */
     static get properties() {
       return {
@@ -136,7 +135,6 @@ export default dedupingMixin((superClass) => {
     /**
      * Listen for component lang attribute mutataions
      *
-     * @memberof I18nMixin
      * @param {String} name
      * @param {String} oldValue
      * @param {String} newValue
@@ -156,7 +154,6 @@ export default dedupingMixin((superClass) => {
 
     /**
      *
-     * @memberof I18nMixin
      * @param {Object} templates
      * @param {*} args
      * @return {Object}
@@ -179,4 +176,4 @@ export default dedupingMixin((superClass) => {
     }
   }
   return I18nMixin;
-});
+};

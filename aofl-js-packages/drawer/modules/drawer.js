@@ -22,6 +22,7 @@ class AoflDrawer extends AoflElement {
 
   /**
    * @readonly
+   * @type {String}
    */
   static get is() {
     return 'aofl-drawer';

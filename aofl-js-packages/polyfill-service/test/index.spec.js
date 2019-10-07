@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {Polyfill} from '../';
+import {Polyfill} from '../modules/polyfill';
 
 describe('@aofl/polyfill-service/polyfill', function() {
   context('supported()', function() {

@@ -1,10 +1,17 @@
 {
   "name": "@aofl/register-callback",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.30",
   "description": "It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called",
   "main": "index.js",
+  "browser": "dist/index.js",
+  "module": "index.js",
+  "typings": "types.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cross-env NODE_ENV=production npx aofl build",
+    "build:dev": "cross-env NODE_ENV=development npx aofl build",
+    "prepublishOnly": "npm run build && npm run docs",
+    "docs": "jsdoc -c .jsdocrc.json ."
   },
   "keywords": [
     "aofljs",
@@ -21,5 +28,12 @@
     "Daniel Belisle <daniel.belisle@aofl.com>",
     "Micah Blu <micah.blu@aofl.com>"
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@aofl/cli": "^3.0.0-beta.30",
+    "cross-env": "^6.0.3",
+    "jsdoc": "^3.6.3",
+    "jsdoc-babel": "^0.5.0",
+    "tsd-jsdoc": "^2.4.0"
+  }
 }
