@@ -19,7 +19,7 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^3.0.0-alpha.12",
+    "@aofl/cli": "^3.0.0-beta.30",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/i18n-mixin": "file:i18n-mixin",
     "@aofl/middleware": "file:middleware",

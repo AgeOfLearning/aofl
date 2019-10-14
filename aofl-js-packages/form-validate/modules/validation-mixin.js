@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import ValidationProperty from './validation-property';
+import {ValidationProperty} from './validation-property';
 
 /**
  * @memberof module:@aofl/form-validate
@@ -12,7 +12,7 @@ import ValidationProperty from './validation-property';
  * @param {Object} superClass
  * @return {ValidationMixin}
  */
-export default ((superClass) => {
+const validationMixin = ((superClass) => {
   /**
    * Mixes the superClass with the form validatin functionality.
    *
@@ -49,3 +49,7 @@ export default ((superClass) => {
 
   return ValidationMixin;
 });
+
+export {
+  validationMixin
+};

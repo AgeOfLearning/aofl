@@ -78,8 +78,8 @@ class TestProject {
     if (this.watch) {
       this.config.webpack.devtool = 'none';
     }
-    this.config.webpack.output.path = path.join(this.config.root, this.config.unitTesting.output);
-    this.config.webpack.output.publicPath = '';
+    // this.config.webpack.output.path = path.join(this.config.root, this.config.unitTesting.output);
+    // this.config.webpack.output.publicPath = '';
     this.config.webpack.performance = {hints: false};
 
     this.addHtmlWebpackPlugin(entries);
@@ -119,7 +119,7 @@ class TestProject {
     const defaultConfig = htmlWebpackConfig(environments.TEST);
 
     for (const key in entries) {
-      if (!entries.hasOwnProperty(key)) continue;
+      if (!Object.hasOwnProperty.call(entries, key)) continue;
       this.config.webpack.plugins.push(new HtmlWebpackPlugin({
         ...defaultConfig,
         filename: key + '.html',
@@ -128,7 +128,7 @@ class TestProject {
         templateParameters(compilation, assets, options) {
           const assetsMap = {};
           for (const chunkKey in compilation.chunks) {
-            if (!compilation.chunks.hasOwnProperty(chunkKey)) continue;
+            if (!Object.hasOwnProperty.call(compilation.chunks, chunkKey)) continue;
             const chunk = compilation.chunks[chunkKey];
             if (typeof chunk.name === 'string' && chunk.name.length > 0) {
               const url = assets.publicPath + chunk.files[0];

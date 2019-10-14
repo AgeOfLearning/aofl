@@ -1,4 +1,5 @@
-import {getServerEnvironment, environmentTypeEnumerate} from '../';
+import {environmentTypeEnumerate} from '../modules/environment-type-enumerate';
+import {getServerEnvironment} from '../modules/server-environment-service';
 
 describe('@aofl/getServerEnvironment', function() {
   it('should match production if no arguments are passed', function() {

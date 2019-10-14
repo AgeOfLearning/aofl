@@ -28,4 +28,6 @@ const isAllDigits = (value) => {
   return typeof value === 'string' && allDigitRegex.test(value);
 };
 
-export default isAllDigits;
+export {
+  isAllDigits
+};

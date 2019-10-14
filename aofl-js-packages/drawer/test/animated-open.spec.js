@@ -2,7 +2,7 @@
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
 
-describe('@aofl/web-components/aofl-drawer#animated-open', function() {
+describe('@aofl/drawer#animated-open', function() {
   beforeEach(function() {
     this.testContainer = getTestContainer();
 
@@ -10,7 +10,7 @@ describe('@aofl/web-components/aofl-drawer#animated-open', function() {
       <style>
         .ease-in {
           opacity: 0;
-          transition: opacity 1ms ease-in;
+          transition: opacity 10ms ease-in;
         }
 
         .ease-in.animate {
@@ -19,7 +19,7 @@ describe('@aofl/web-components/aofl-drawer#animated-open', function() {
 
         .ease-out {
           opacity: 1;
-          transition: opacity 1ms ease-out;
+          transition: opacity 10ms ease-out;
         }
 
         .ease-out.animate {

@@ -213,6 +213,7 @@ class Rotations {
         this.rotationConfig.qualification_order[routePath + '/'];
 
       try {
+        /* istanbul ignore next */
         if (typeof qualificationOrder === 'undefined') {
           throw new Error('No qualification order for giver route');
         }

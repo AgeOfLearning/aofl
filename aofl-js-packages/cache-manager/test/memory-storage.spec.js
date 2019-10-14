@@ -1,4 +1,4 @@
-import {MemoryStorage} from '../';
+import {MemoryStorage} from '../modules/memory-storage';
 
 describe('@aofl/cache-manager/memory-storage', function() {
   beforeEach(function() {

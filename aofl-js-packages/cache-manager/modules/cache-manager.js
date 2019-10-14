@@ -3,8 +3,8 @@
  * @version 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import {cacheTypeEnumerate} from '../cache-type-enumerate';
-import MemoryStorage from '../memory-storage';
+import {cacheTypeEnumerate} from './cache-type-enumerate';
+import {MemoryStorage} from './memory-storage';
 import md5 from 'tiny-js-md5';
 
 const STORAGE = {
@@ -32,9 +32,12 @@ class CacheManager {
    */
   constructor(namespace, storageType = cacheTypeEnumerate.MEMORY, expire = 3600000) {
     this.storage = STORAGE[storageType];
+    /** @type {cacheTypeEnumerate} */
     this.storageType = storageType;
+    /** @type {String} */
     this.namespace = namespace;
     this.storedKeys = this.getStoredKeys();
+    /** @type {Number} */
     this.expire = expire;
   }
 
@@ -237,4 +240,6 @@ class CacheManager {
   }
 }
 
-export default CacheManager;
+export {
+  CacheManager
+};

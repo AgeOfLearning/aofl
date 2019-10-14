@@ -1,0 +1,8 @@
+:host {
+  display: none;
+}
+
+:host([open]),
+:host(.closing) {
+  display: block;
+}

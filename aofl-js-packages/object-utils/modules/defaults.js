@@ -18,6 +18,7 @@
 const defaults = (target, defaultOptions) => {
   const recurse = (t, d) => {
     for (const key in d) {
+      /* istanbul ignore next */
       if (!Object.hasOwnProperty.call(d, key)) continue;
       if (typeof t[key] === 'undefined') {
         t[key] = Object.assign({}, d[key]);

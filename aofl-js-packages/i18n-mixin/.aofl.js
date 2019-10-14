@@ -33,10 +33,10 @@ module.exports = {
             commonjs: '@aofl/i18n',
             amd: '@aofl/i18n',
           },
-          'lit-element': {
-            commonjs2: 'lit-element',
-            commonjs: 'lit-element',
-            amd: 'lit-element',
+          'lit-html': {
+            commonjs2: 'lit-html',
+            commonjs: 'lit-html',
+            amd: 'lit-html',
           },
           'tiny-js-md5': {
             commonjs2: 'tiny-js-md5',

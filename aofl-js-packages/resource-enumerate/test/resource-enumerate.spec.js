@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {ResourceEnumerate} from '../';
+import {ResourceEnumerate} from '../modules/resource-enumerate';
 import {CacheManager} from '@aofl/cache-manager';
 
 describe('@aofl/resource-enumerate/src/resource-enumerate', function() {

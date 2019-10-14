@@ -2,7 +2,7 @@
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
 
-describe('@aofl/web-components/aofl-drawer#multi-animation', function() {
+describe('@aofl/drawer#multi-animation', function() {
   beforeEach(function() {
     this.testContainer = getTestContainer();
 

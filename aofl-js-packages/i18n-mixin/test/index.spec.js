@@ -1,6 +1,6 @@
 /* eslint-disable */
 import i18nMixin from '../modules/i18n-mixin';
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
 import {until} from 'lit-html/directives/until';
 
@@ -34,7 +34,7 @@ describe('@aofl/i18n-mixin', function() {
       default: {
         template(ctx, html) {
           return html`
-            <h1>${until(ctx.__('<tt-1>', 'Greeting and salutations!'))}</h1>
+            <h1>${until(ctx.__('<tt-1>', 'Greeting and salutations!'), '...')}</h1>
             <h2>${until(ctx._r(ctx.__('<tt-2>', 'How are you %r1%'), ctx.person))}</h2>
           `
         },
@@ -112,9 +112,11 @@ describe('@aofl/i18n-mixin', function() {
 
   afterEach(function() {
     document.documentElement.removeAttribute('lang');
-    cleanTestContainer(this.testContainer);
   });
 
+  it('Should return translations from i18n class', function() {
+    expect(this.element.translations).to.equal(this.element.i18n.translations);
+  });
   context('__()', function() {
     it('Should translate the string to German', async function() {
       try {

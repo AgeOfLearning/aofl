@@ -7,7 +7,7 @@
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
 import {AoflElement} from '@aofl/element';
-
+import styles from './multi-select-list';
 /**
  * Similar to select multi
  *
@@ -58,13 +58,7 @@ class AoflMultiselectList extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => html`<slot></slot>`, [
-      `
-        :host {
-          display: inline-block;
-        }
-      `
-    ]);
+    return super.render((ctx, html) => html`<slot></slot>`, [styles]);
   }
 
   /**
@@ -72,6 +66,7 @@ class AoflMultiselectList extends AoflElement {
    *
    * @param {Event} e
    */
+  /* istanbul ignore next */
   focusoutCallback(e) {
     if (e.relatedTarget && e.relatedTarget.parentNode === this) { return; }
 

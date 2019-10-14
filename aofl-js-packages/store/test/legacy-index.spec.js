@@ -65,6 +65,17 @@ describe('@aofl/store/src/store', function() {
       expect(this.storeInstance.state['unit-test']).to.have.property('key', 'hello');
     });
 
+    it('should reset state to initial state', function() {
+      this.storeInstance.commit({
+        namespace: 'unit-test',
+        mutationId: 'updateKey',
+        payload: 'hello'
+      });
+      this.storeInstance.purge();
+
+      expect(this.storeInstance.state['unit-test']).to.have.property('key', '');
+    });
+
     it('should throw a TypeError when called without any arguments', function() {
       expect(this.storeInstance.commit).to.throw(TypeError);
     });
@@ -249,6 +260,14 @@ describe('@aofl/store/src/store', function() {
   });
 
   context('debug', function() {
+    before(function() {
+      window.aoflDevtools = {};
+    });
+
+    after(function() {
+      delete window.aoflDevtools;
+    });
+
     beforeEach(function() {
       this.debugStoreInstance = new Store(true);
     });

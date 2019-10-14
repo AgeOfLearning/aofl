@@ -6,6 +6,7 @@
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
 import {AoflElement} from '@aofl/element';
+import styles from './select-list.css';
 /**
  * Similar to select tag it supports a single select list of aofl-options.
  *
@@ -34,6 +35,7 @@ class AoflSelectList extends AoflElement {
    *
    * @param {Event} e
    */
+  /* istanbul ignore next */
   focusoutCallback(e) {
     if (e.relatedTarget && e.relatedTarget.parentNode === this) { return; }
 
@@ -109,13 +111,7 @@ class AoflSelectList extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => html`<slot></slot>`, [
-      `
-    :host {
-      display: inline-block;
-    }
-    `
-    ]);
+    return super.render((ctx, html) => html`<slot></slot>`, [styles]);
   }
   /**
    *

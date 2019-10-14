@@ -81,4 +81,6 @@ class MemoryStorage {
   }
 }
 
-export default MemoryStorage;
+export {
+  MemoryStorage
+};

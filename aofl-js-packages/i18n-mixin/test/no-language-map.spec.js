@@ -1,6 +1,6 @@
 /* eslint-disable */
 import i18nMixin from '../modules/i18n-mixin';
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
 import {until} from 'lit-html/directives/until';
 

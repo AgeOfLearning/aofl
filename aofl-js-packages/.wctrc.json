@@ -3,17 +3,8 @@
   "plugins": {
     "local": {
       "browsers": [
-        "firefox",
         "chrome"
-      ],
-      "browserOptions": {
-        "chrome": [
-          "headless"
-        ],
-        "firefox": [
-          "-headless"
-        ]
-      }
+      ]
     },
     "istanbul": {
       "dir": "./coverage/",
@@ -27,14 +18,15 @@
         "**/node_modules_sourced",
         "**/documentation{,!(/tests/**)}",
         "**/__config",
+        "__config/*",
         "**/cli",
         "**/*-instance/**",
         "**/*-loader/**",
         "**/*-polyfill/**",
         "**/*-plugin/**",
         "**/router/examples",
-        "**/web-components",
-        "**/dist"
+        "dist",
+        "polyfills.js"
       ]
     }
   }

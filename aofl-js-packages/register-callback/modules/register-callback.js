@@ -59,4 +59,6 @@ class RegisterCallback {
   }
 }
 
-export default RegisterCallback;
+export {
+  RegisterCallback
+};

@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
-import {maxLength, minLength} from '../';
+import {maxLength, minLength} from '../modules/length';
 
 describe('@aofl/aofl-validate/max-length', function() {
   before(function() {

@@ -5,6 +5,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 import {AoflElement} from '@aofl/element';
+import style from './picture.css';
 
 /**
  * <aofl-picture> serves as a container for zero or more <aofl-source> and one <aofl-img> elements
@@ -50,14 +51,7 @@ class AoflPicture extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => html`<slot></slot>`, [
-      `
-        :host {
-          display: inline-block;
-          line-height: 0;
-        }
-      `
-    ]);
+    return super.render((ctx, html) => html`<slot></slot>`, [style]);
   }
   /**
    * setImg should be invoked by a slotted <aofl-img> and sets the aofl-img element as the main img element of aofl-picture.

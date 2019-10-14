@@ -22,6 +22,7 @@ class Sdo {
    * @param {Store} [storeInstance=defaultStoreInstance]
    */
   constructor(initialState, storeInstance = defaultStoreInstance) {
+    /* istanbul ignore next */
     if (typeof this.constructor.namespace === 'undefined') {
       throw new Error(`${this.constructor.name}: Missing static property namespace.`);
     }
@@ -65,7 +66,9 @@ class Sdo {
    */
   [defineDecorators](properties) {
     for (const property in properties) {
+      /* istanbul ignore next */
       if (!Object.hasOwnProperty.call(properties, property)) continue;
+      /* istanbul ignore next */
       if (property === 'namespace') continue;
       if (typeof properties[property].value === 'undefined' && typeof properties[property].set === 'undefined') {
         const getFn = Reflect.get(properties[property], 'get');

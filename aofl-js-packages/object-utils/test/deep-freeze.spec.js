@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {deepFreeze} from '../';
+import {deepFreeze} from '../modules/deep-freeze';
 
 
 describe('object-utils#deepFreeze', function() {

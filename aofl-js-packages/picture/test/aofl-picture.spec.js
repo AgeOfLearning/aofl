@@ -4,7 +4,7 @@ import '../modules/source';
 import '../modules/image';
 import {render, html} from 'lit-html';
 
-describe('@aofl/web-components/aofl-picture', function() {
+describe('@aofl/picture', function() {
   before(function() {
     this.initialWidth = window.innerWidth;
     this.initialHeight = window.innerHeight;

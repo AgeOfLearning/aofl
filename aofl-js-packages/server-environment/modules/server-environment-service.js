@@ -16,7 +16,7 @@ import {environmentTypeEnumerate} from './environment-type-enumerate';
  * @param {RegExp} stageRegex
  * @return {Number}
  */
-export function getServerEnvironment(devRegex, stageRegex) {
+const getServerEnvironment = (devRegex, stageRegex) => {
   if (devRegex instanceof RegExp && devRegex.test(location.hostname)) {
     return environmentTypeEnumerate.DEV;
   }
@@ -26,4 +26,8 @@ export function getServerEnvironment(devRegex, stageRegex) {
   }
 
   return environmentTypeEnumerate.PROD;
-}
+};
+
+export {
+  getServerEnvironment
+};

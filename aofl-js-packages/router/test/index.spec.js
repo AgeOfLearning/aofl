@@ -8,6 +8,7 @@ describe('@aofl/router/router', function() {
     sinon.stub(history, 'pushState').callsFake((stateObject, title, to) => {
       this.historyState.push(to);
     });
+    sinon.stub(history, 'replaceState').callsFake((stateObject, title, to) => {});
 
     this.listeners = [];
     sinon.stub(window, 'addEventListener').callsFake((event, fn) => {
@@ -29,6 +30,7 @@ describe('@aofl/router/router', function() {
     this.historyState = [];
     this.listeners = [];
     history.pushState.restore();
+    history.replaceState.restore();
     addEventListener.restore();
     history.back.restore();
   });
@@ -98,6 +100,20 @@ describe('@aofl/router/router', function() {
           resolve();
         });
         this.router.navigate('/home');
+      });
+    });
+
+    it('Should match "/home" route and navigate to it and call replace state', async function() {
+      return await new Promise((resolve) => {
+        this.router.after((request, response, next) => {
+          next(response);
+          setTimeout(() => {
+            expect(response.matchedRoute).to.have.property('path', '/home')
+            expect(this.historyState).to.have.property('length', 0)
+            resolve();
+          });
+        });
+        this.router.navigate('/home', {replaceState: true});
       });
     });
 

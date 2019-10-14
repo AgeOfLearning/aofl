@@ -6,7 +6,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import RegisterCallback from './modules/register-callback';
+import {RegisterCallback} from './modules/register-callback';
 
 export {
   RegisterCallback

@@ -24,7 +24,8 @@ const config = {
     __webpack_public_path__: true,
     aofljsConfig: true,
     Reflect: true,
-    Proxy: true
+    Proxy: true,
+    Map: true
   }
 };
 

@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
-import {html} from 'lit-element';
+import {html} from 'lit-html';
 import md5 from 'tiny-js-md5';
 import {I18n} from '@aofl/i18n';
 

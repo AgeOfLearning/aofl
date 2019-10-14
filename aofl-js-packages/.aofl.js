@@ -51,42 +51,48 @@ const include = [
 module.exports = {
   name: 'Aofl JS',
   build: {
+    // publicPath: '/__build_tests/',
     eslint: {
       options: {
         config: path.join(__dirname, '.eslintrc.js')
       }
     },
     css: {
-      include: [
-        ...include,
-        path.join(__dirname, 'node_modules', '@aofl')
-      ],
+      replace: {
+        include: [
+          ...include,
+          path.join(__dirname, 'node_modules', '@aofl')
+        ],
+      }
     },
     images: {
-      include
+      replace: {include}
     },
     fonts: {
-      include
+      replace: {include}
     },
     eslint: {
-      include
+      replace: {include}
     },
     js: {
-      include: [
-        path.join(__dirname, 'node_modules', '@aofl'),
-        path.join(__dirname, 'node_modules', 'lit-element'),
-        path.join(__dirname, 'node_modules', 'lit-html'),
-        path.join(__dirname, 'node_modules', 'chai'),
-        path.join(__dirname, 'node_modules', 'chai-as-promised'),
-        path.join(__dirname, 'node_modules', '@webcomponents'),
-        ...include
-      ]
+      replace: {
+        include: [
+          path.join(__dirname, 'node_modules', '@aofl'),
+          path.join(__dirname, 'node_modules', 'lit-element'),
+          path.join(__dirname, 'node_modules', 'lit-html'),
+          path.join(__dirname, 'node_modules', 'chai'),
+          path.join(__dirname, 'node_modules', 'chai-as-promised'),
+          path.join(__dirname, 'node_modules', '@webcomponents'),
+          ...include
+        ]
+      }
     },
     extend() {
       return {
         resolve: {
+          mainFields: ['module', 'main'],
           alias: {
-            'Root': __dirname
+            'isomorphic-fetch': path.join(__dirname, 'node_modules', 'isomorphic-fetch', 'fetch-npm-browserify.js'),
           },
           symlinks: true,
           cacheWithContext: false
@@ -95,6 +101,7 @@ module.exports = {
     }
   },
   unitTesting: {
+    include: ['**/*.spec.js'],
     config: process.env.SAUCE === '1'? path.join(__dirname, '.wct-sl.config.js'): path.join(__dirname, '.wctrc.json'),
     polyfill: path.join(__dirname, '__config', 'polyfills.js'),
     exclude: [
@@ -104,6 +111,7 @@ module.exports = {
       '**/documentation{,!(/tests/**)}',
       '**/docs',
       '**/__config',
+      '__config',
       '**/*-instance/**',
       '**/*-polyfill/**',
       'sw.js',

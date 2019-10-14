@@ -1,1 +1,6 @@
 examples
+__config
+test
+.jsdocrc.json
+wct
+__build

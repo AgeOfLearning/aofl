@@ -3,7 +3,7 @@ import '../modules/select-list';
 import '../modules/list-option';
 import {render, html} from 'lit-html';
 
-describe('@aofl/web-components/aofl-select-list', function() {
+describe('@aofl/select/aofl-select-list', function() {
   beforeEach(async function() {
     this.testContainer = getTestContainer();
 

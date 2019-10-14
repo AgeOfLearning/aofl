@@ -19,7 +19,7 @@ if (typeof polyfills !== 'undefined') {
 
 Polyfill.loadAll(polyfillsConfig)
 .then(async () => {
-  const chaiAsPromisedModule = await import(/* webpackMode: "eager" */ 'chai-as-promised');
+  const chaiAsPromisedModule = await import('chai-as-promised');
   chai.use(chaiAsPromisedModule.default);
 })
 .then(() => {

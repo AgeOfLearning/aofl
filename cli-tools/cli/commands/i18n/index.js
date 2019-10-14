@@ -1,5 +1,5 @@
 const glob = require('fast-glob');
-const {PathHelper, getTranslationCalls} = require('@aofl/cli-lib')
+const {PathHelper, getTranslationCalls} = require('@aofl/cli-lib');
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
@@ -31,13 +31,14 @@ class I18N {
 
   validateManifest(manifest) {
     const keys = [];
-    for (let dir in manifest) {
-      for (let key in manifest[dir]) {
+    for (const dir in manifest) {
+      if (!Object.hasOwnProperty.call(manifest, dir)) continue;
+      for (const key in manifest[dir]) {
         if (KEY_TEST.test(key)) continue;
         if (keys.indexOf(key) === -1) {
           keys.push(key);
         } else {
-          console.log(`${key} found in ${dir}`);
+          process.stdout.write(`${key} found in ${dir}` + '\n');
           throw new Error(`Duplicate key ${key} found in ${dir}`);
         }
       }
@@ -60,7 +61,7 @@ class I18N {
     return output;
   }
 
-  prepare_c(callObj) {
+  prepareC(callObj) {
     const result = [];
     const keyAcc = [];
 
@@ -70,7 +71,8 @@ class I18N {
         return;
       }
 
-      for (let key in arr[nextIndex]) {
+      for (const key in arr[nextIndex]) {
+        if (!Object.hasOwnProperty.call(arr[nextIndex], key)) continue;
         const copy = [...carry];
         const keyCopy = [...keyCarry];
         copy.push(arr[nextIndex][key]);
@@ -83,7 +85,7 @@ class I18N {
           generateCombinations(arr, copy, index + 1, keyCopy);
         }
       }
-   };
+    };
 
     if (callObj.params.length % 2 === 0) {
       generateCombinations(callObj.params.slice(1));
@@ -91,7 +93,7 @@ class I18N {
       generateCombinations(callObj.params.slice(1, callObj.params.length - 1));
     }
 
-    let str = callObj.params[1];
+    const str = callObj.params[1];
     const output = {};
     for (let i = 0; i < keyAcc.length; i++) {
       let matches = null;
@@ -109,7 +111,7 @@ class I18N {
           out += str.slice(pivot, matches.index) + result[i][paramIndex];
           pivot = matches.index + offset;
         }
-      } while(matches !== null);
+      } while (matches !== null);
 
       out += str.slice(pivot);
       output[keyAcc[i].join('^^')] = out;
@@ -118,11 +120,11 @@ class I18N {
     return output;
   }
 
-  prepare_r(callObj) {
+  prepareR(callObj) {
     let matches = null;
     let pivot = 0;
     let out = '';
-    let str = callObj.params[0];
+    const str = callObj.params[0];
 
     do {
       matches = REPLACE_REGEX.exec(str);
@@ -142,24 +144,25 @@ class I18N {
   }
 
   generateJSON(manifest) {
-    for (let dir in manifest) {
+    for (const dir in manifest) {
+      if (!Object.hasOwnProperty.call(manifest, dir)) continue;
       const i18nDir = path.dirname(path.resolve(dir));
       const outputFile = path.join(i18nDir, outputFilename);
       const translationSource = manifest[dir];
       const output = {};
       const processed = [];
 
-      for (let key in translationSource) {
-        if (!translationSource.hasOwnProperty(key) || processed.indexOf(key) > -1) continue;
+      for (const key in translationSource) {
+        if (!Object.hasOwnProperty.call(translationSource, key) || processed.indexOf(key) > -1) continue;
         const call = translationSource[key];
         processed.push(key);
 
         if (call.method === '__') {
           output[key] = this.prepare__(call);
         } else if (call.method === '_c') {
-          const combinations = this.prepare_c(call);
-          for (let cKey in combinations) {
-            if (!combinations.hasOwnProperty(cKey)) continue;
+          const combinations = this.prepareC(call);
+          for (const cKey in combinations) {
+            if (!Object.hasOwnProperty.call(combinations, cKey)) continue;
             const cCall = {
               text: combinations[cKey]
             };
@@ -179,16 +182,14 @@ class I18N {
               return acc;
             }, {});
 
-            for (let tKey in targets) {
-              if (!targets.hasOwnProperty(tKey)) continue;
-              let t = targets[tKey];
+            for (const tKey in targets) {
+              if (!Object.hasOwnProperty.call(targets, tKey)) continue; // eslint-disable-line
+              const t = targets[tKey];
               call.params[0] = t.text;
-              const processedR = this.prepare_r(call);
+              const processedR = this.prepareR(call);
               output[tKey].text = processedR;
             }
-
           }
-          const targetKey = call.params[0].target;
         }
       }
 
@@ -201,7 +202,8 @@ class I18N {
 
     for (let i = 0; i < dirs.length; i++) {
       const dir = dirs[i];
-      this.i18nCalls[path.join(dir, outputFilename)] = getTranslationCalls(dir, this.includePatterns, this.excludePathsGlobPatterns);
+      this.i18nCalls[path.join(dir, outputFilename)] = getTranslationCalls(
+        dir, this.includePatterns, this.excludePathsGlobPatterns);
     }
 
     this.validateManifest(this.i18nCalls);
@@ -209,9 +211,9 @@ class I18N {
 
     const manifestPath = path.join(path.resolve(this.includePath), 'i18n-manifest.json');
     fs.writeFileSync(manifestPath, JSON.stringify(this.i18nCalls, null, 2), {encoding: 'utf-8'});
-    console.log(chalk.green('18n-manifest.json generated successfully :)'));
+    process.stdout.write(chalk.green('18n-manifest.json generated successfully :)') + '\n');
     this.generateJSON(this.i18nCalls);
-    console.log(chalk.green('Translation files generated :)'));
+    process.stdout.write(chalk.green('Translation files generated :)') + '\n');
   }
 }
 

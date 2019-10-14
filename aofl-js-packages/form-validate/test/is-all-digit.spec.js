@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
-import {isAllDigits} from '../';
+import {isAllDigits} from '../modules/is-all-digits';
 
 describe('@aofl/aofl-validate/is-all-digit', function() {
   it('should be true when input is all digits', function() {

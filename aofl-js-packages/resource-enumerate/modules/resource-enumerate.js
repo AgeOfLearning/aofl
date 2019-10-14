@@ -166,4 +166,6 @@ class ResourceEnumerate {
   }
 }
 
-export default ResourceEnumerate;
+export {
+  ResourceEnumerate
+};

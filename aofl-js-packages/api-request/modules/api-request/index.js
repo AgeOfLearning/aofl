@@ -30,7 +30,7 @@ class ApiRequest {
     this.formatterManager = new FormatterManager();
     this.cacheManagers = {};
 
-    this.addCacheManager('default');
+    this.addCacheManager(ApiRequest.DEFAULT_CACHE_NAMESPACE);
   }
   /**
    * addformatter() adds a new format to formatter's list.
@@ -63,7 +63,7 @@ class ApiRequest {
   getCacheManager(namespace, expire) {
     try {
       if (typeof namespace === 'undefined') {
-        this.addCacheManager(this[this.DEFAULT_CACHE_NAMESPACE], expire);
+        namespace = ApiRequest.DEFAULT_CACHE_NAMESPACE;
       } else {
         this.addCacheManager(namespace, expire);
       }
@@ -88,6 +88,7 @@ class ApiRequest {
   purgeCache(namespace) {
     if (typeof namespace === 'undefined') { // purge all
       for (const key in this.cacheManagers) {
+        /* istanbul ignore next */
         if (!Object.hasOwnProperty.call(this.cacheManagers, key)) continue;
         this.cacheManagers[key].clear();
       }

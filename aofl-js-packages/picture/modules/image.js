@@ -7,6 +7,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 import {AoflElement} from '@aofl/element';
+import styles from './image.css';
 import {findParent, isInViewportMixin} from '@aofl/component-utils';
 
 /**
@@ -91,29 +92,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
     return super.render((ctx, html) => html`
       <canvas width="${ctx.width}" height="${ctx.height}"></canvas>
       <img alt="${ctx.alt}" height="${ctx.height}" width="${ctx.width}" src="${ctx.imgSrc}" @load="${(e) => ctx.imageLoaded(e)}">
-    `, [
-      `
-        :host {
-          display: inline-block;
-          position: relative;
-          line-height: 0;
-        }
-
-        :host canvas {
-          width: 100%;
-          height: 100%;
-        }
-
-        :host img {
-          display: inline-block;
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          top: 0;
-          left: 0;
-        }
-    `
-    ]);
+    `, [styles]);
   }
 
   /**

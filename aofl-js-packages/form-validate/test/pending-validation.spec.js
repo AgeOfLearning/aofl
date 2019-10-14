@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
-import {validationMixin} from '../';
+import {validationMixin} from '../modules/validation-mixin';
 
 describe('@aofl/aofl-validate/validationMixin', function() {
   before(function() {

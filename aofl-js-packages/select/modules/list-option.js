@@ -6,6 +6,7 @@
  */
 import {AoflElement} from '@aofl/element';
 import {findParent} from '@aofl/component-utils';
+import styles from './list-option.css';
 
 /**
  * Similar to option tag can be combined with <aofl-select-list> or <aofl-multi-select-list>
@@ -73,13 +74,7 @@ class AoflListOption extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => html`<slot></slot>`, [
-      `
-      :host {
-        display: inline-block;
-      }
-    `
-    ]);
+    return super.render((ctx, html) => html`<slot></slot>`, [styles]);
   }
   /**
    *

@@ -2,7 +2,7 @@
 import {AoflElement} from '../modules/aofl-element';
 import {render, html} from 'lit-html';
 
-describe('@aofl/web-components/aofl-element >> valid style', function() {
+describe('@aofl/element >> valid style', function() {
   before(function() {
     /** */
     class StyledElement extends AoflElement {

@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
-import {validationMixin, isEqual} from '../';
+import {isEqual} from '../modules/is-equal';
+import {validationMixin} from '../modules/validation-mixin';
 
 describe('@aofl/aofl-validate/is-equal', function() {
   before(function() {

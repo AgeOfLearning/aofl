@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {Rotations} from '../';
+import {Rotations} from '../modules/rotations';
 
 describe('@aofl/rotations/rotation', function() {
   beforeEach(function() {

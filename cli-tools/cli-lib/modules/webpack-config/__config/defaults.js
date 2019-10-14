@@ -177,6 +177,7 @@ module.exports = (root) => {
     unitTesting: {
       root,
       output: '__build_tests',
+      publicPath: '/__build_tests/',
       config: path.join(root, '.wctrc.json'),
       maxChunks: 1,
       polyfill: path.join(root, 'src', 'modules', '__config', 'polyfills.js'),

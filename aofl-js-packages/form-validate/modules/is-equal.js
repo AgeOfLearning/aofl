@@ -5,7 +5,6 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  * @author Isaac Yoon <isaac.yoon@aofl.com>
  */
-/* eslint no-invalid-this: "off" */
 
 /**
  * Tracks two properties of any class to be equal.
@@ -18,10 +17,12 @@
  *                   given regex test is valid.
  */
 const isEqual = (propName) => {
-  return function isEqualValidator(value) {
+  return /** @this */ function isEqualValidator(value) {
     if (typeof this.target[propName] === 'undefined') { return false; }
     return this.target[propName] === value;
   };
 };
 
-export default isEqual;
+export {
+  isEqual
+};

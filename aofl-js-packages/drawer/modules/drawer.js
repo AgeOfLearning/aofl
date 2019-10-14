@@ -5,6 +5,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 import {AoflElement} from '@aofl/element';
+import styles from './drawer.css';
 /**
  * @memberof module:@aofl/drawer
  * @extends {AoflElement}
@@ -74,22 +75,7 @@ class AoflDrawer extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => html`
-      <slot></slot>
-    `, [
-      `
-        <style>
-        :host {
-          display: none;
-        }
-
-        :host([open]),
-        :host(.closing) {
-          display: block;
-        }
-        </style>
-      `
-    ]);
+    return super.render((ctx, html) => html`<slot></slot>`, [styles]);
   }
 
   /**
@@ -159,7 +145,7 @@ class AoflDrawer extends AoflElement {
     };
 
     testDisplayBlock();
-    return () => {
+    return /* istanbul ignore next */ () => {
       cancel = true;
     };
   }
@@ -170,6 +156,7 @@ class AoflDrawer extends AoflElement {
    * @private
    */
   animationEndHandler(e) {
+    /* istanbul ignore next */
     if (e.target !== this) {
       return;
     }
@@ -207,6 +194,7 @@ class AoflDrawer extends AoflElement {
   }
 }
 
+/* istanbul ignore else */
 if (window.customElements.get(AoflDrawer.is) === void 0) {
   window.customElements.define(AoflDrawer.is, AoflDrawer);
 }

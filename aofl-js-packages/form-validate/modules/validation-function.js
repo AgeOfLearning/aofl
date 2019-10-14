@@ -131,4 +131,6 @@ class ValidationFunction {
   }
 }
 
-export default ValidationFunction;
+export {
+  ValidationFunction
+};

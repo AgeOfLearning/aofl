@@ -8,17 +8,25 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const merge = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const path = require('path');
 
-const getOutput = (path, publicPath, filename) => {
-  const output = {
-    path,
-    publicPath,
-    filename,
+const getOutput = (config) => {
+  if (process.env.NODE_ENV === environments.TEST) {
+    return {
+      path: path.join(config.root, config.unitTesting.output),
+      publicPath: config.unitTesting.publicPath,
+      filename: config.build.filename,
+      sourceMapFilename: '[file].map',
+      pathinfo: false
+    };
+  }
+  return {
+    path: config.build.path,
+    publicPath: config.build.publicPath,
+    filename: config.build.filename,
     sourceMapFilename: '[file].map',
     pathinfo: false
   };
-
-  return output;
 };
 
 const getReplace = (key, userDefined, defaultOption) => {
@@ -190,7 +198,7 @@ const getConfig = (root, configObject, defaultOptions) => {
   process.env.NODE_ENV: environments.TEST === process.env.NODE_ENV? 'production': 'none';
 
 
-  const output = getOutput(configObject.build.path, configObject.build.publicPath, configObject.build.filename);
+  const output = getOutput(configObject);
 
   const devtool = configObject.build.devtool || (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'none');
 
@@ -258,10 +266,6 @@ const getConfig = (root, configObject, defaultOptions) => {
       }
     }
   };
-
-  config.plugins.push(new webpack.DefinePlugin({
-    'process.env.PUBLIC_PATH': JSON.stringify(configObject.build.publicPath),
-  }));
 
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.HashedModuleIdsPlugin());

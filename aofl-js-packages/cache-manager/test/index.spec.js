@@ -1,5 +1,7 @@
 /* eslint no-invalid-this: "off" */
-import {CacheManager, cacheTypeEnumerate, MemoryStorage} from '../';
+import {CacheManager} from '../modules/cache-manager';
+import {cacheTypeEnumerate} from '../modules/cache-type-enumerate';
+import {MemoryStorage} from '../modules/memory-storage';
 
 
 describe('@aofl/cache-manager#CacheManager', function() {

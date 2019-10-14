@@ -23,9 +23,9 @@ class Router {
    * Create an instance of Router
    */
   constructor() {
-    this.removeMatchRouteMiddleware = () => {};
-    this.removeRedirectMiddleware = () => {};
-    this.removeListener = () => {};
+    this.removeMatchRouteMiddleware = /* istanbul ignore next */ () => {};
+    this.removeRedirectMiddleware = /* istanbul ignore next */ () => {};
+    this.removeListener = /* istanbul ignore next */ () => {};
 
     Object.defineProperties(this, {
       middleware: {
@@ -119,7 +119,7 @@ class Router {
    * @param {Object} routes
    * @return {Object}
    */
-  addRegexRoutes(routes = []) {
+  addRegexRoutes(routes) {
     for (let i = 0; i < routes.length; i++) {
       const {regex, parse} = PathUtils.getRegex(routes[i].path);
       routes[i] = Object.assign({}, routes[i], {
@@ -152,7 +152,7 @@ class Router {
   /**
    * public method which attempts to load the given path
    * @param {String} path
-   * @param {Object} meta
+   * @param {Object} _meta
    * @return {Promise}
    */
   navigate(path, _meta) {

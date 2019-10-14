@@ -2,11 +2,8 @@ import {Middleware} from '../modules/middleware';
 
 /* eslint-disable */
 describe('@aofl/middleware', function() {
-  before(function() {
-    this.mw = new Middleware('before', 'after');
-  });
-
   beforeEach(function() {
+    this.mw = new Middleware('before', 'after');
     this.beforeStub = sinon.stub();
     this.afterStub = sinon.stub();
     this.beforeMW = (request, response, next) => {
@@ -17,8 +14,14 @@ describe('@aofl/middleware', function() {
       this.afterStub();
       next(response);
     }
-    this.mw.use(this.beforeMW, 'before');
-    this.mw.use(this.afterMW, 'after');
+    this.unsubBefore = this.mw.use(this.beforeMW, 'before');
+    this.unsubAfter = this.mw.use(this.afterMW, 'after');
+  });
+
+  afterEach(function() {
+    this.mw = null;
+    this.beforeStub.reset();
+    this.afterStub.reset();
   });
 
   context('Registering and calling', function() {
@@ -46,6 +49,41 @@ describe('@aofl/middleware', function() {
     });
   });
 
+  context('Unsubscribe and calling', function() {
+    beforeEach(function() {
+      this.unsubBefore();
+      this.unsubAfter();
+    });
+
+    it('Should call before middleware', async function() {
+      try {
+        await this.mw.iterateMiddleware({}, 'before');
+        expect(this.beforeStub.called).to.be.false;
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+
+    it('Should call after middleware', async function() {
+      try {
+        await this.mw.iterateMiddleware({}, 'after');
+        expect(this.afterStub.called).to.be.false;
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+
+    it('Calling unsubscribe twice should not have any effect', async function() {
+      try {
+        this.unsubAfter();
+        await this.mw.iterateMiddleware({}, 'after');
+        expect(this.afterStub.called).to.be.false;
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    });
+  });
+
   context('Enforcement and errors', function() {
     it('Should throw an error when registering w/invalid hook', function() {
       try {
@@ -64,10 +102,5 @@ describe('@aofl/middleware', function() {
         expect(e).to.match(/Error: callback must be a function/);
       }
     });
-  });
-
-  afterEach(function() {
-    this.beforeStub.reset();
-    this.afterStub.reset();
   });
 });

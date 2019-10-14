@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {Store} from '@aofl/store/modules/legacy';
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import mapStatePropertiesMixin from '../modules/map-state-properties-mixin';
 import {render, html} from 'lit-html';
 

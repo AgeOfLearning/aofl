@@ -35,6 +35,11 @@ class Store {
     if (debug === true || /* istanbul ignore next */typeof window.aoflDevtools !== 'undefined') {
       this.debug = true;
       this.state = deepFreeze(this.state);
+      /* istanbul ignore next */
+      if (typeof window.aoflDevtools === 'undefined') {
+        window.aoflDevtools = {};
+      }
+      /* istanbul ignore next */
       if (!Array.isArray(window.aoflDevtools.storeInstances)) {
         window
           .aoflDevtools
@@ -66,6 +71,7 @@ class Store {
    * @param {SDO} sdo
    */
   addState(sdo) {
+    /* istanbul ignore next */
     if (typeof this.namespaces[sdo.namespace] !== 'undefined') {
       throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.namespace}`);
     }
@@ -101,6 +107,7 @@ class Store {
   flushState() {
     const state = {};
     for (const key in this.namespaces) {
+      /* istanbul ignore next */
       if (!Object.hasOwnProperty.call(this.namespaces, key)) continue;
       const sdo = this.namespaces[key];
       state[sdo.namespace] = Object.assign({}, sdo.constructor.initialState);

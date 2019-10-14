@@ -2,7 +2,7 @@
 import '../modules/image';
 import {render, html} from 'lit-html';
 
-describe('@aofl/web-components/aofl-img', function() {
+describe('@aofl/picture', function() {
   context('Image is in viewport on page load', function() {
     beforeEach(function() {
       this.testContainer = getTestContainer();

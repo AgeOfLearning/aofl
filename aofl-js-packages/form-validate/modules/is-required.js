@@ -18,4 +18,6 @@ function isRequired(value) {
   return typeof value === 'string' && value !== '';
 }
 
-export default isRequired;
+export {
+  isRequired
+};

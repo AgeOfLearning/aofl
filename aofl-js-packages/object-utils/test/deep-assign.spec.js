@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {deepAssign} from '../';
+import {deepAssign} from '../modules/deep-assign';
 
 describe('object-utils#deepAssign', function() {
   beforeEach(function() {

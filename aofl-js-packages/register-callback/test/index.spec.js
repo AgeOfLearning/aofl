@@ -1,5 +1,5 @@
 /* eslint no-invalid-this: "off" */
-import {RegisterCallback} from '../';
+import {RegisterCallback} from '../modules/register-callback';
 
 describe('@aofl/register-callback/src/register-callback', function() {
   beforeEach(function() {

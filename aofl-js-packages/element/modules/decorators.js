@@ -43,10 +43,12 @@ export function property(options = MapStateDeclaration) {
 
     return Object.assign({}, descriptor, {
       initializer() {
+        /* istanbul ignore next */
         if (typeof descriptor.initializer === 'function') {
           descriptor.initializer.call(this);
         }
 
+        /* istanbul ignore next */
         if (_options.mapState !== '') {
           const updateValue = () => {
             const state = _options.store.getState();

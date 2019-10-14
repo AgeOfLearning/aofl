@@ -39,6 +39,7 @@ class AoflElement extends LitElement {
       return true;
     }
 
+    /* istanbul ignore next */
     for (let i = 0; i < styles.length; i++) {
       if (styles[i] !== this[cachedStyles][i]) {
         return true;
@@ -71,6 +72,7 @@ class AoflElement extends LitElement {
       const renderedStyles = this.renderRoot.querySelectorAll('style');
 
       for (const rStyle of renderedStyles) {
+        /* istanbul ignore next */
         if (rStyle.parentNode === this.renderRoot) {
           rStyle.parentNode.removeChild(rStyle);
         }

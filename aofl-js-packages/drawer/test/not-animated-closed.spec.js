@@ -2,7 +2,7 @@
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
 
-describe('@aofl/web-components/aofl-drawer#not-animated-closed', function() {
+describe('@aofl/drawer#not-animated-closed', function() {
   before(function() {
     sinon.spy(AoflDrawer.prototype, 'dispatchEvent');
   });

@@ -103,10 +103,11 @@ class Middleware {
         value: true
       });
 
-      const index = this.middleware[hook].indexOf(callback);
-      /* istanbul ignore else */
-      if (index > -1) {
-        this.middleware[hook].splice(index, 1);
+      for (let i = 0; i < this.middleware[hook].length; i++) {
+        if (callback === this.middleware[hook][i].callback) {
+          this.middleware[hook].splice(i, 1);
+          break;
+        }
       }
     };
 

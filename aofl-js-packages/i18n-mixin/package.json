@@ -7,9 +7,11 @@
   "module": "index.js",
   "typings": "types.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cross-env NODE_ENV=production npx aofl build",
-    "build:dev": "cross-env NODE_ENV=development npx aofl build",
+    "env:prod": "cross-env NODE_ENV=production",
+    "env:dev": "cross-env NODE_ENV=development",
+    "env:test": "cross-env NODE_ENV=test",
+    "build": "npm run env:prod -- npx aofl build",
+    "build:dev": "npm run env:dev -- npx aofl build",
     "prepublishOnly": "npm run build && npm run docs",
     "docs": "jsdoc -c .jsdocrc.json ."
   },
@@ -32,17 +34,21 @@
   "license": "MIT",
   "devDependencies": {
     "@aofl/cli": "^3.0.0-beta.30",
+    "@aofl/cli-lib": "^3.0.0-beta.30",
+    "@aofl/element": "^3.0.0-beta.3",
     "@aofl/i18n": "^3.0.0-beta.30",
+    "core-js": "^3.2.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "jsdoc-babel": "^0.5.0",
-    "lit-element": "2.2.1",
+    "lit-element": "^2.2.1",
+    "lit-html": "1.1.2",
     "tiny-js-md5": "^1.1.2",
     "tsd-jsdoc": "^2.4.0"
   },
   "peerDependencies": {
     "@aofl/i18n": ">= 3.0.0-beta.1 < 4.0.0",
-    "lit-element": ">= 2.0.0 < 3.0.0",
+    "lit-html": ">= 1.0.0 < 2.0.0",
     "tiny-js-md5": ">= 1.0.0 < 2.0.0"
   }
 }

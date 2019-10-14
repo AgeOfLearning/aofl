@@ -15,10 +15,12 @@
  */
 function decorate(...args) {
   return (descriptor, name) => {
+    /* istanbul ignore next */
     if (args.length === 0) {
       throw new TypeError('@aofl/store#decorate requires at least 1 argumen, but only 0 were passed');
     }
     descriptor.finisher = (clazz) => {
+      /* istanbul ignore else */
       if (typeof clazz.prototype.observedProperties === 'undefined') {
         clazz.prototype.observedProperties = {};
       }
@@ -51,9 +53,11 @@ function state() {
       descriptor: {},
       initializer() {
         const val = descriptor.initializer.call(this);
+        /* istanbul ignore else */
         if (typeof this.constructor.initialState === 'undefined') {
           this.constructor.initialState = {};
         }
+        /* istanbul ignore else */
         if (typeof this.constructor.initialState[key] === 'undefined') {
           this.constructor.initialState[key] = val;
         }
