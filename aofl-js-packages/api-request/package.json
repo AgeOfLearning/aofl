@@ -1,6 +1,6 @@
 {
   "name": "@aofl/api-request",
-  "version": "3.0.0-beta.30",
+  "version": "3.0.0-beta.32",
   "description": "A module for simplifying api calls",
   "keywords": [
     "aofljs",
@@ -31,8 +31,8 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "@aofl/cache-manager": "^3.0.0-beta.30",
-    "@aofl/cli": "^3.0.0-beta.30",
+    "@aofl/cache-manager": "^3.0.0-beta.32",
+    "@aofl/cli": "^3.0.0-beta.32",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "jsdoc-babel": "^0.5.0",
