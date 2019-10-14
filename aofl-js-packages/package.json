@@ -19,16 +19,20 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^3.0.0-beta.30",
+    "@aofl/cli": "^3.0.0-beta.32",
     "@aofl/component-utils": "file:component-utils",
+    "@aofl/drawer": "file:drawer",
+    "@aofl/element": "file:element",
     "@aofl/i18n-mixin": "file:i18n-mixin",
     "@aofl/middleware": "file:middleware",
     "@aofl/object-utils": "file:object-utils",
+    "@aofl/picture": "file:picture",
     "@aofl/polyfill-service": "file:polyfill-service",
     "@aofl/register-callback": "file:register-callback",
     "@aofl/resource-enumerate": "file:resource-enumerate",
     "@aofl/rotations": "file:rotations",
     "@aofl/router": "file:router",
+    "@aofl/select": "file:select",
     "@aofl/server-environment": "file:server-environment",
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
@@ -43,11 +47,5 @@
     "jsdoc": "^3.5.5",
     "lit-element": "2.2.1",
     "lit-html": "1.1.2"
-  },
-  "dependencies": {
-    "@aofl/drawer": "file:drawer",
-    "@aofl/element": "file:element",
-    "@aofl/picture": "file:picture",
-    "@aofl/select": "file:select"
   }
 }

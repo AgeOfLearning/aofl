@@ -17,7 +17,7 @@
  *                   given regex test is valid.
  */
 const isEqual = (propName) => {
-  return /** @this */ function isEqualValidator(value) {
+  return /** @this HTMLElement */ function isEqualValidator(value) {
     if (typeof this.target[propName] === 'undefined') { return false; }
     return this.target[propName] === value;
   };

@@ -10,7 +10,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docsify": "docsify serve docs",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "install-all": "lerna exec --stream -- npm install",
+    "build": "lerna run --stream -- npm install",
+    "docs": "lerna run --stream -- npm docs",
+    "publish-all": "lerna publish"
   },
   "repository": {
     "type": "git",

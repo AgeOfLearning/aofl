@@ -14,6 +14,11 @@ module.exports = {
         config: path.join(__dirname, '..', '.eslintrc.js')
       }
     },
+    css: {
+      include: [
+        path.join(__dirname, 'modules')
+      ]
+    },
     js: {
       include: [
         path.join(__dirname, 'modules')

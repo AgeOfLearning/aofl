@@ -3,8 +3,17 @@
   "plugins": {
     "local": {
       "browsers": [
+        "firefox",
         "chrome"
-      ]
+      ],
+      "browserOptions": {
+        "chrome": [
+          "headless"
+        ],
+        "firefox": [
+          "-headless"
+        ]
+      }
     },
     "istanbul": {
       "dir": "./coverage/",
