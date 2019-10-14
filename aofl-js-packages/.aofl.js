@@ -50,6 +50,7 @@ const include = [
 
 module.exports = {
   name: 'Aofl JS',
+  mode: 'stand-alone',
   build: {
     // publicPath: '/__build_tests/',
     eslint: {

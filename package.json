@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "install-all": "lerna exec --stream -- npm install",
     "build": "lerna run --stream -- npm install",
-    "docs": "lerna run --stream -- npm docs",
+    "docs-all": "lerna run --stream docs",
     "publish-all": "lerna publish"
   },
   "repository": {

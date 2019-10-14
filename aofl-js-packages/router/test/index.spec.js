@@ -249,7 +249,7 @@ describe('@aofl/router/router', function() {
     it('Should not navigate to same path', async function() {
       try {
         await new Promise((resolve) => {
-          this.router.navigate(location.pathname).catch((e) => {
+          this.router.navigate(location.href.replace(location.origin, '')).catch((e) => {
             expect(e).to.equal('Can\'t navigate to current path');
             resolve();
           });

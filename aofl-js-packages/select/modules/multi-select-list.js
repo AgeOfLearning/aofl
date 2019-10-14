@@ -131,7 +131,10 @@ class AoflMultiselectList extends AoflElement {
     this.selected = selected;
 
     if (dispatch) {
-      this.dispatchEvent(new CustomEvent('change'));
+      this.dispatchEvent(new CustomEvent('change', {
+        composed: true,
+        bubbles: true
+      }));
     }
   }
 

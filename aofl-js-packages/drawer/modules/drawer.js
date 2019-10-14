@@ -92,7 +92,8 @@ class AoflDrawer extends AoflElement {
         this.openChanged(this.open);
       } else {
         this.dispatchEvent(new CustomEvent('drawer-toggle', {
-          composed: true
+          composed: true,
+          bubbles: true
         }));
       }
     }

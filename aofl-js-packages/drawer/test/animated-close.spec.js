@@ -9,21 +9,21 @@ describe('@aofl/drawer#animated-close', function() {
     render(html`
       <style>
         .ease-in {
-          opacity: 0;
-          transition: opacity 10ms ease-in;
+          color: blue;
+          transition: color 10ms ease-in;
         }
 
         .ease-in.animate {
-          opacity: 1;
+          color: red;
         }
 
         .ease-out {
-          opacity: 1;
-          transition: opacity 10ms ease-out;
+          color: red;
+          transition: color 10ms ease-out;
         }
 
         .ease-out.animate {
-          opacity: 0;
+          color: blue;
         }
       </style>
       <aofl-drawer id="drawerAnimatedClosed" opening="ease-in" closing="ease-out">content</aofl-drawer>

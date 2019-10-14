@@ -17,7 +17,7 @@ describe('object-utils#deepFreeze', function() {
       this.data.prop1 = 'other';
     };
 
-    expect(badFn).to.throw(Error);
+    expect(badFn).to.throw;
   });
 
   it('should throw an error when object\'s nested property is reassigned', function() {
@@ -25,6 +25,6 @@ describe('object-utils#deepFreeze', function() {
       this.data.prop2.prop1 = 'other';
     };
 
-    expect(badFn).to.throw(Error);
+    expect(badFn).to.throw;
   });
 });

@@ -28,6 +28,11 @@ module.exports = {
           runtimeChunk: false
         },
         externals: {
+          '@aofl/element': {
+            commonjs2: '@aofl/element',
+            commonjs: '@aofl/element',
+            amd: '@aofl/element',
+          },
           '@aofl/i18n': {
             commonjs2: '@aofl/i18n',
             commonjs: '@aofl/i18n',

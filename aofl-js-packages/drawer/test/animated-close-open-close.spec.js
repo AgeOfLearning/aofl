@@ -7,38 +7,38 @@ describe('@aofl/drawer#animated-close', function() {
     sinon.spy(AoflDrawer.prototype, 'openChanged')
   });
 
-  beforeEach(function() {
+  beforeEach(async function() {
     this.testContainer = getTestContainer();
 
     render(html`
       <style>
         .ease-in {
-          opacity: 0;
-          transition: opacity 1ms ease-in;
+          color: blue;
+          transition: color 1ms ease-in;
         }
 
         .ease-in.animate {
-          opacity: 1;
+          color: red;
         }
 
         .ease-out {
-          opacity: 1;
-          transition: opacity 1ms ease-out;
+          color: red;
+          transition: color 1ms ease-out;
         }
 
         .ease-out.animate {
-          opacity: 0;
+          color: blue;
         }
       </style>
       <aofl-drawer id="drawerAnimatedClosed" opening="ease-in" closing="ease-out">content</aofl-drawer>
     `, this.testContainer);
 
     this.elementDrawerAnimatedClosed = this.testContainer.querySelector('#drawerAnimatedClosed');
-    this.elementDrawerAnimatedClosed.setAttribute('open', '');
   });
 
   it('Should call openChanged() twice', async function() {
     await this.elementDrawerAnimatedClosed.updateComplete;
+    this.elementDrawerAnimatedClosed.setAttribute('open', '');
 
     await new Promise((resolve) => {
       setTimeout(() => {
