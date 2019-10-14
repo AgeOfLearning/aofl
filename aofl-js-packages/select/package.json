@@ -1,6 +1,6 @@
 {
   "name": "@aofl/select",
-  "version": "3.0.0-beta.32",
+  "version": "3.0.0-beta.33",
   "description": "The <aofl-select-list> takes any number of <aofl-list-option>. Selecting any option will give it a selected attribute with. Selecting an option emits an event with the selected value. The <aofl-multiselect-list> takes any number of <aofl-list-option>. Selecting any option will give it a selected attribute and add it to the selected array. Selecting an option emits an event with the selected array. The <aofl-list-option> is a simple selectable component that takes a value. It typically lives in an <aofl-select-list> but it can be used in any component where selections are made. It must have a parent with of a component with an addToParent method.",
   "main": "index.js",
   "browser": "dist/index.js",
