@@ -14,7 +14,7 @@ const sharedSettings = {
 
 const config = {
   verbose: false,
-  testTimeout: 210000,
+  testTimeout: 600000,
   plugins: {
     sauce: {
       tunnelOptions: {

@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
 
@@ -7,8 +6,8 @@ const version = require('../../../../../package.json').version;
 module.exports = (projectRoot, projectInfo, commit = false) => {
   const result = {
     skip: false,
-    message: chalk.yellow(`Update AofL JS version`),
-    label: chalk.cyan(`Updating AofL JS version`)
+    message: `Update AofL JS version`,
+    label: `Updating AofL JS version`
   };
 
   if (version === projectInfo.config.version) {

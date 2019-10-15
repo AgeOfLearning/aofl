@@ -222,6 +222,19 @@ class Git {
     return Git.__run(params, options);
   }
 
+  static mv(source, destination, force = false, skip = false, dry = false, verbose = false, options = {}) {
+    const params = ['mv'];
+    if (force) { params.push('-f'); }
+    if (skip) params.push('-k');
+    if (dry) params.push('-n');
+    if (verbose) params.push('-v');
+
+    params.push(source);
+    params.push(destination);
+
+    return Git.__run(params, options);
+  }
+
   /**
    *
    *
@@ -247,6 +260,19 @@ class Git {
    */
   static clone(repo, directory = '', options = {}) {
     return Git.__run(['clone', repo, directory], options);
+  }
+
+  static status(short = false, branch = false, showStash = false, porcelain = false, long = false,
+  verbose = false, options = {}) {
+    const params = ['status'];
+    if (short) params.push('-s');
+    if (branch) params.push('-b');
+    if (showStash) params.push('--show-stash');
+    if (porcelain) params.push('--porcelain');
+    if (long) params.push('--long');
+    if (verbose) params.push('-v');
+
+    return Git.__run(params, options);
   }
 }
 

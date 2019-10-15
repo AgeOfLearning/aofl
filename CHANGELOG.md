@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - server supports hot and hot only options
 - @aofl/cli - generate -  Added i18n template
 - @aofl/cli - added cache-loader to webpack config
-- @aofl/cli-lib - webpack config support standole and project modes
+- @aofl/cli-lib - webpack config support stand-alone and project modes
 - @aofl/cli-lib - webpack config allows replace and append for include, exclude objects
 - @aofl/i18n - extracted core i18n functionality from the mixin
 - @aofl/web-components/aofl-element - added property decorator to support binding to store when declaring class properties
@@ -24,11 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/api-request - added purge
 - @aofl/store - store v3
 - @aofl/api-request - added support for different expire times for each cache namespace
-- @aofl/element - as a standole package
-- @aofl/picture - as a standole package
-- @aofl/select - as a standole package
-- @aofl/drawer - as a standole package
+- @aofl/element - as a standalone package
+- @aofl/picture - as a standalone package
+- @aofl/select - as a standalone package
+- @aofl/drawer - as a standalone package
 - all packages ship with built file
+- upgrade config for v3.0.0
 
 ### [Changed]
 - @aofl/cli - webpack config will not generate sourcemaps in dev by default
@@ -46,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/store - Store move to modules/legacy
 
 ### [Deprecated]
-- @oafl/store/legacy
+- @aofl/store/legacy
 - @aofl/web-components
 
 ### [Removed]
@@ -65,7 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/router - fixed matching dynamic routes without trailing slash
 - @aofl/web-components/aofl-select-list - Prevent dispatching change event while initializing
 - @aofl/cli - i18n PathHelper reference typo
-- possible veriable overrides
+- possible variable overrides
 
 ### [Security]
 
@@ -76,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
-- @aofl/cli - i18n enabled tollerant config for esprima
+- @aofl/cli - i18n enabled tolerant config for esprima
 ### [Security]
 
 ---
@@ -154,7 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
-- @aofl/webcomponents/aofl-drawer - fixed issue with child elements transitionend causing drawer to flicker
+- @aofl/webcomponents/aofl-drawer - fixed issue with child elements transitions causing drawer to flicker
 ### [Security]
 
 ---

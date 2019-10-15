@@ -2,7 +2,7 @@ const path = require('path');
 const semver = require('semver');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const {Npm, ProjectHelper} = require('@aofl/cli-lib');
+const {Npm, ProjectHelper, Git} = require('@aofl/cli-lib');
 const runner = require('./codemod');
 
 const upgradeConfig = require('./upgrade-config');
@@ -14,6 +14,13 @@ class UpgradeProject {
 
     if (!this.projectRoot) {
       process.stdout.write(chalk.yellow('Could not locate an AofL JS project.') + '\n');
+      process.exit(1);
+    }
+
+    try {
+      Git.findGitDir(this.projectRoot);
+    } catch (e) {
+      process.stdout.write(chalk.yellow('Not a git repository.' + '\n'));
       process.exit(1);
     }
 
@@ -36,6 +43,14 @@ class UpgradeProject {
   }
 
   async init() {
+    try {
+      const status = await Git.status(false, false, false, true, false, false, {stdio: 'pipe'});
+      if (status.length) throw new Error();
+    } catch (e) {
+      process.stdout.write(chalk.yellow('Working tree has uncommitted changes, please commit or remove the following changes before continuing' + '\n'));
+      process.exit(1);
+    }
+
     const upgradeObject = await this.promptUpgradeVersion();
     const {analyze, upgrade} = runner(upgradeObject.path);
     const globalRunner = runner(path.join(__dirname, 'codemod', 'global'));

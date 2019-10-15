@@ -34,7 +34,7 @@ module.exports = (root) => {
         exclude: [],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
-          purifyCSS: {
+          purgeCss: {
             whitelist: ['route-view'],
           },
         },

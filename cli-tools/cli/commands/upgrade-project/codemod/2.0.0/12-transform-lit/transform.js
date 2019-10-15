@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = (file, api, options) => {
   const {j} = api;
 

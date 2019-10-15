@@ -65,7 +65,36 @@
               "type": "string"
             },
             "global": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "string",
+                  "allowedValues": ["all", "none", "auto"]
+                },
+                "purgeCss": {
+                  "type": "object",
+                  "properties": {
+                    "whitelist": {
+                      "type": "array"
+                    },
+                    "whitelistPatterns": {
+                      "type": "array"
+                    },
+                    "whitelistPatternsChildren": {
+                      "type": "array"
+                    },
+                    "keyframes": {
+                      "type": "boolean"
+                    },
+                    "fontFace": {
+                      "type": "boolean"
+                    },
+                    "rejected": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
             },
             "cssLoader": {
               "type": "object"

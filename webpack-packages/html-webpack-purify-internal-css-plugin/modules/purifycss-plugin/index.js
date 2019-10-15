@@ -33,18 +33,16 @@ class PurifycssPlugin {
   setOptions(options) {
     this.options = defaultsDeep({}, options, {
       level: 'auto' || 'whitelist' || 'all' || 'none',
-      purifyCSS: {
-        minify: true,
+      purgeCss: {
         rejected: false,
-        info: false,
         whitelist: []
       }
     });
 
-    this.options.purifyCSS.output = false; // force
+    this.options.purgeCss.output = false; // force
 
     if (this.options.level === 'all') {
-      this.options.purifyCSS.whitelist = [];
+      this.options.purgeCss.whitelist = [];
     }
   }
   /**
