@@ -87,9 +87,9 @@ const isInViewportMixin = (superClass) => {
         }
       }
 
-      window.addEventListener('resize', this.checkInViewport, true);
+      window.addEventListener('resize', this.checkInViewport);
       for (let i = 0; i < this.trackScrollHosts.length; i++) {
-        this.trackScrollHosts[i].addEventListener('scroll', this.checkInViewport, true);
+        this.trackScrollHosts[i].addEventListener('scroll', this.checkInViewport);
       }
     }
 
@@ -126,7 +126,7 @@ const isInViewportMixin = (superClass) => {
     stopIsInViewportCheck() {
       window.removeEventListener('resize', this.checkInViewport);
       for (let i = 0; i < this.trackScrollHosts.length; i++) {
-        this.trackScrollHosts[i].removeEventListener('scroll', this.checkInViewport, true);
+        this.trackScrollHosts[i].removeEventListener('scroll', this.checkInViewport);
       }
     }
 

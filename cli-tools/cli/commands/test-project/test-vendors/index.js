@@ -4,7 +4,7 @@ import './get-test-container';
 import './mocha';
 import chai from 'chai';
 import 'wct-mocha/wct-mocha';
-import sinon from './sinon';
+import sinon from 'sinon/pkg/sinon-no-sourcemaps';
 
 window.chai = chai;
 window.expect = chai.expect;

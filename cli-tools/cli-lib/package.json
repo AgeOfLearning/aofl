@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli-lib",
-  "version": "3.0.0-beta.32",
+  "version": "3.0.0-beta.35",
   "description": "Shared library for cli and various webpack plugins.",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "@aofl/html-webpack-purify-internal-css-plugin": "^3.0.0-beta.32",
+    "@aofl/html-webpack-purify-internal-css-plugin": "^3.0.0-beta.35",
     "@aofl/i18n-loader": "^3.0.0-beta.32",
     "@aofl/templating-plugin": "^3.0.0-beta.32",
     "@aofl/webcomponent-css-loader": "^3.0.0-beta.32",

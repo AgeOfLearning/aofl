@@ -177,7 +177,8 @@ class AoflDrawer extends AoflElement {
 
       setTimeout(() => { // queue micro task
         this.dispatchEvent(new CustomEvent('drawer-toggle', {
-          composed: true
+          composed: true,
+          bubbles: true
         }));
       });
     }

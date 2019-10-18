@@ -31,16 +31,19 @@ describe('@aofl/picture', function() {
 
   context('image is not in viewport on page load', function() {
     beforeEach(function() {
-      this.testContainer = getTestContainer();
+      this.testContainer2 = getTestContainer();
 
       const left = -10 * window.innerHeight;
 
       render(html`
         <aofl-img id="ImageNotVisibleOnLoad" src="data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=" width="100" height="100" style="position: absolute; width: 100px; height: 100px; left: ${left}px; background: blue;"></aofl-img>
       </div>
-      `, this.testContainer);
+      `, this.testContainer2);
 
-      this.elementOutside = this.testContainer.querySelector('#ImageNotVisibleOnLoad');
+      this.elementOutside = this.testContainer2.querySelector('#ImageNotVisibleOnLoad');
+    });
+    afterEach(function() {
+      cleanTestContainer(this.testContainer2);
     });
 
     it('should not load the image when element is outside the viewport', async function() {
@@ -56,10 +59,6 @@ describe('@aofl/picture', function() {
           }
         }, 100);
       });
-    });
-
-    afterEach(function() {
-      cleanTestContainer(this.testContainer);
     });
   });
 });

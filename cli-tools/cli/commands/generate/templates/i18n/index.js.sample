@@ -1,7 +1,6 @@
 import styles from './template.css';
 import template from './template';
-import {storeInstance} from '@aofl/store';
-import {AoflElement, customElement} from '@aofl/web-components/aofl-element';
+import {AoflElement, customElement} from '@aofl/element';
 import {i18nMixin} from '@aofl/i18n-mixin';
 
 import translations from '..';
@@ -18,7 +17,6 @@ class __uppercamelcase__placeholder__ extends i18nMixin(AoflElement) {
   constructor() {
     super();
     this.translations = translations;
-    this.storeInstance = storeInstance;
   }
 
   /**

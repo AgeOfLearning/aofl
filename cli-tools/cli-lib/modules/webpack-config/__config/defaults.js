@@ -87,7 +87,8 @@ module.exports = (root) => {
           path.join(root, 'node_modules', 'lit-html'),
           path.join(root, 'node_modules', 'chai'),
           path.join(root, 'node_modules', 'chai-as-promised'),
-          path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')
+          path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project'),
+          path.join(root, 'node_modules', '@webcomponents')
         ],
         exclude: [],
         babel: {

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/component-utils",
-  "version": "3.0.0-beta.32",
+  "version": "3.0.0-beta.35",
   "description": "A small collection of component utility functions",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -33,10 +33,12 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.0.0-beta.32",
+    "@aofl/cli": "^3.0.0-beta.35",
+    "@aofl/element": "^3.0.0-beta.35",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "jsdoc-babel": "^0.5.0",
+    "lit-html": "1.1.2",
     "tsd-jsdoc": "^2.4.0"
   }
 }

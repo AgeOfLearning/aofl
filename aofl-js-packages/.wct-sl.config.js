@@ -1,7 +1,5 @@
 const npmPkg = require('./package.json');
 
-const build = `v${npmPkg.version}`;
-
 const sharedSettings = {
   avoidProxy: true,
   idleTimeout: 1000,
@@ -9,7 +7,7 @@ const sharedSettings = {
   recordScreenshots: false,
   recordLogs: false,
   webdriverRemoteQuietExceptions: false,
-  videoUploadOnPass: false
+  videoUploadOnPass: false,
 };
 
 const config = {
@@ -32,15 +30,6 @@ const config = {
         },
         {
           ...sharedSettings,
-          browserName: 'Safari',
-          appiumVersion: '1.9.1',
-          deviceName: 'iPhone 5 Simulator',
-          deviceOrientation: 'portrait',
-          platformVersion: '10.3',
-          platformName: 'iOS',
-        },
-        {
-          ...sharedSettings,
           appiumVersion: '1.9.1',
           deviceName: 'Google Pixel GoogleAPI Emulator',
           deviceOrientation: 'portrait',
@@ -54,7 +43,7 @@ const config = {
           deviceName: 'Android GoogleAPI Emulator',
           deviceOrientation: 'portrait',
           browserName: 'Browser',
-          platformVersion: '5.1',
+          platformVersion: '6.0',
           platformName: 'Android',
         },
         {
@@ -62,30 +51,55 @@ const config = {
           browserName: 'chrome',
           platform: 'Windows 10',
           version: 'latest',
+          "sauce:options": {
+            "recordVideo": false,
+            "recordScreenshots": false,
+            "screenResolution": '800x600',
+          }
         },
         {
           ...sharedSettings,
           browserName: 'firefox',
           platform: 'Windows 10',
           version: 'latest',
+          "sauce:options": {
+            "recordVideo": false,
+            "recordScreenshots": false,
+            "screenResolution": '800x600',
+          }
         },
         {
           ...sharedSettings,
           browserName: 'MicrosoftEdge',
           platform: 'Windows 10',
           version: 'latest',
+          "sauce:options": {
+            recordVideo: false,
+            recordScreenshots: false,
+            screenResolution: '800x600',
+          }
         },
         {
           ...sharedSettings,
           browserName: 'internet explorer',
-          platform: 'Windows 10',
-          version: 'latest',
+          platform: 'Windows 7',
+          version: '11.0',
+          "sauce:options": {
+            "recordVideo": false,
+            "recordScreenshots": false,
+            "screenResolution": '800x600',
+          }
         },
         {
           ...sharedSettings,
           browserName: 'safari',
           platform: 'macOS 10.13',
           version: 'latest',
+          "sauce:options": {
+            "recordVideo": false,
+            "recordScreenshots": false,
+            "screenResolution": '1024x768',
+          }
         }
       ]
     }

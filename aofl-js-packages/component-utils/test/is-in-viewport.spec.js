@@ -1,7 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import {isInViewport} from '../modules/is-in-viewport';
-import {html} from 'lit-element';
-import {render} from 'lit-html';
+import {render, html} from 'lit-html';
 
 describe('@aofl/component-utils/src/is-in-viewport', function() {
   beforeEach(function() {

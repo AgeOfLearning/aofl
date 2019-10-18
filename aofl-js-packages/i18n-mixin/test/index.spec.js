@@ -112,9 +112,11 @@ describe('@aofl/i18n-mixin', function() {
 
   afterEach(function() {
     document.documentElement.removeAttribute('lang');
+    cleanTestContainer(this.testContainer);
   });
 
-  it('Should return translations from i18n class', function() {
+  it('Should return translations from i18n class', async function() {
+    await this.element.updateComplete;
     expect(this.element.translations).to.equal(this.element.i18n.translations);
   });
   context('__()', function() {

@@ -43,7 +43,7 @@ class AoflPicture extends AoflElement {
    */
   static get properties() {
     return {
-      'disable-sources': {type: String}
+      'disable-sources': {type: Boolean}
     };
   }
   /**
@@ -77,7 +77,7 @@ class AoflPicture extends AoflElement {
    * @param {String} source
    */
   addSource(source) {
-    if (typeof this['disable-sources'] !== 'undefined' && this['disable-sources'] !== 'false') { return; }
+    if (this['disable-sources']) return;
     const mediaQuery = window.matchMedia(source.getAttribute('media'));
     const sourceAttributes = {
       src: source.getAttribute('srcset'),

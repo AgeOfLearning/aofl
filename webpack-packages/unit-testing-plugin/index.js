@@ -63,8 +63,8 @@ class UnitTestingPlugin {
             await steps.runTests(this.wctContext);
           } else {
             await steps.refreshTests(this.wctContext);
-            process.stdout.write(chalk.green('Tests ran successfully') + '\n');
           }
+          process.stdout.write(chalk.yellow('Tests finished running...') + '\n');
         } else {
           process.stdout.write(chalk.red('no tests were supplied to wct') + '\n');
         }

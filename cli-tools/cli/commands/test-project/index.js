@@ -33,7 +33,7 @@ class TestProject {
    * @param {Boolean} profile
    * @param {Boolean} debug
    */
-  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy') {
+  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy', skipAll = false) {
     this.configPath = path.resolve(config);
     this.watch = watch;
     this.stats = stats;
@@ -164,7 +164,7 @@ class TestProject {
   }
 
   getCoverAllFiles() {
-    if (this.watch) return;
+    if (this.watch || this.skipAll) return;
     const files = glob.sync(['**/*.js'], {
       ignore: [
         ...this.config.unitTesting.exclude,

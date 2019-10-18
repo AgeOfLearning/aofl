@@ -16,13 +16,13 @@
 export function deepFreeze(source) {
   Object.freeze(source);
 
-  Object.getOwnPropertyNames(source).forEach((prop) => {
-    if (Object.hasOwnProperty.call(source, prop) && source[prop] !== null &&
-    (typeof source[prop] === 'object' || typeof source[prop] === 'function') &&
-    !Object.isFrozen(source[prop])) {
-      deepFreeze(source[prop]);
+  for (const key in source) {
+    if (Object.hasOwnProperty.call(source, key) && source[key] !== null &&
+    (typeof source[key] === 'object' || typeof source[key] === 'function') &&
+    !Object.isFrozen(source[key])) {
+      deepFreeze(source[key]);
     }
-  });
+  }
 
   return source;
 }

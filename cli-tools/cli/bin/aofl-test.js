@@ -10,6 +10,7 @@ program
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
   .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
+  .option('-s, --skip-all', 'Skip generating all scripts for full coverage report')
   .on('--help', () => {
     process.stdout.write(`
   Examples:
