@@ -41,6 +41,7 @@ const traverseParents = (node, cb) => {
 /**
  * Finds parent method with matching signature
  *
+ * @memberof module:@aofl/component-utils
  * @param {HTMLElement} node
  * @param {*} args
  * @return {Object}
@@ -63,6 +64,7 @@ const findParent = (node, ...args) => {
 /**
  * Finds parent method with matching attributes
  *
+ * @memberof module:@aofl/component-utils
  * @param {HTMLElement} node
  * @param {*} args
  * @return {Object}

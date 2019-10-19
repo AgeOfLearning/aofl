@@ -2,6 +2,8 @@
 
 Helps determine dev, stage, prod environments based on hostname.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_server-environment.html)
+
 ---
 ## Examples
 * https://stackblitz.com/edit/1-0-0-server-environment?embed=1

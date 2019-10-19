@@ -1,4 +1,4 @@
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import template from './template';
 import styles from './styles';
 import {uuid} from '@aofl/uuid';

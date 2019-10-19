@@ -2,6 +2,7 @@
 
 Implements `__()`, `_r()` and `_c()` functions for translations.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_i18n.html)
 
 ## Examples
 WIP

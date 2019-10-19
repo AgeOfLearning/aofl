@@ -2,9 +2,10 @@
 
 The **AOFL i18nMixin element** decorates any element with **i18n** support.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_i18n-mixin.html)
 
 ## Examples
-* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/i18n-mixin/examples/basics
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/i18n-mixin/examples/basics
 
 
 ## Requirements

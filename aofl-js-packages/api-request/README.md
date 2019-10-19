@@ -6,9 +6,10 @@ Caching is implemented using @aofl/cache-manager and uses MemoryCache. @aofl/api
 
 Request/response formatting referes to constructing a request payload and parsing the response payload. A formatter object should implement `pack()` and `unpack()` properties. `pack()` is to construct the request payload and `unpack()` is used to parse the response. Any number of formatters can be added to `apiRequestInstance` using the `addFromatter()` method. E.g. `GetFormatter`, `PostFormatter`, `CorsFormatter`, `FileUploadFormatter`, `GoogleMapsFormatter`, ....
 
-## Examples
-* [Basic Example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/api-request/examples/simple)
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_api-request.html)
 
+## Examples
+* [Basic Example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/api-request/examples/simple)
 
 ## Installation
 ```bash
@@ -23,10 +24,6 @@ class PostFormatter {
   static pack(payload) {
     const headers = new Headers();
     const body = new FormData();
-    const boundary = 'Boundary-' + Date.now();
-
-    headers.append('Accept', '*/*');
-    headers.append('Content-Type', 'multipart/form-data; boundary=' + boundary);
 
     if (typeof payload !== 'undefined') {
       body.append('arguments', JSON.stringify(payload));
@@ -37,7 +34,7 @@ class PostFormatter {
       headers,
       body,
       mode: 'cors',
-      credentails: 'include'
+      credentials: 'include'
     };
   }
 

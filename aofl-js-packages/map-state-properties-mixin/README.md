@@ -4,8 +4,10 @@
 
 The class extending `mapStatePropertiesMixin(AoflElement)` is required to have `storeInstance` as an instance property and implement `mapStateProperties()` function.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_map-state-properties-mixin.html)
+
 ## Examples
-* [Basic](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/map-state-properties-mixin/examples/basic)
+* [Basic](https://codesandbox.io/s/github/AgeOfLearning/aofl/v3.0.0/master/aofl-js-packages/map-state-properties-mixin/examples/basic)
 
 ## Installation
 ```bash

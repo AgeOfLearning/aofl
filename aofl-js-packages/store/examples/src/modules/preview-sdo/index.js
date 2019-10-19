@@ -1,46 +1,27 @@
-import {storeInstance} from '@aofl/store';
-import {deepAssign} from '@aofl/object-utils';
+import {Sdo, decorate, state, storeInstance} from '@aofl/store';
 
-const sdo = {
-  namespace: 'preview',
-  mutations: {
-    init() {
-      return {
-        count: 0,
-        date: Date.now()
-      };
-    },
-    increment(subState, count) {
-      return Object.assign({}, subState, {
-        count: count + 1
-      });
-    },
-    setDate(subState, date) {
-      return Object.assign({}, subState, {
-        date
-      });
-    }
-  },
-  decorators: [
-    (_nextState) => {
-      const state = storeInstance.getState();
-      let nextState = _nextState;
-
-      if (
-        typeof nextState.preview.$formattedDate === 'undefined' ||
-        state.preview.date !== nextState.preview.date
-      ) {
-        const config = {
-          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
-        };
-        nextState = deepAssign(_nextState, 'preview', {
-          $formattedDate: new Date(_nextState.preview.date).toLocaleDateString('en-US', config)
-        });
-      }
-
-      return nextState;
-    }
-  ]
+const config = {
+  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
 };
 
-storeInstance.addState(sdo);
+class PreviewSdo extends Sdo {
+  static namespace = 'preview';
+  @state() count = 0;
+  @state() date = Date.now();
+
+  increment() {
+    this.count += 1;
+  }
+
+  @decorate('preview.date')
+  get formattedDate() {
+    return new Date(this.date).toLocaleDateString('en-US', config);
+  }
+}
+
+const previewSdo = new PreviewSdo();
+storeInstance.addState(previewSdo);
+
+export {
+  previewSdo
+};

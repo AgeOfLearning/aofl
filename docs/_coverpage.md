@@ -2,7 +2,7 @@
 
 ![logo](_assets/manifest/icon-512x512.png)
 
-# AofL JS <small>v2.x</small>
+# AofL JS <small>v3.x</small>
 
 > An unopinionated web component based framework
 
@@ -12,4 +12,4 @@
 - Featherweight - Under 20kB gzipped
 
 [GitHub](https://github.com/AgeOfLearning/aofl)
-[Get Started](v2.x/getting-started/index.md)
+[Get Started](v3.x/getting-started/index.md)

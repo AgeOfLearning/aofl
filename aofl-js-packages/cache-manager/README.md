@@ -2,8 +2,10 @@
 
 Provides a unified class for storing objects in Storage-like Objects. You can choose from localStorage, sessionStorage and memoryStorage.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_cache-manager.html)
+
 ## Examples
-* [Basic Example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/cache-manager/examples/simple)
+* [Basic Example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/cache-manager/examples/simple)
 
 
 ## Installation

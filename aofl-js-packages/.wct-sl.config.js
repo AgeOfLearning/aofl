@@ -1,5 +1,7 @@
 const npmPkg = require('./package.json');
 
+const jobName = process.env.TRAVIS_REPO_SLUG || 'AgeOfLearning/aofl';
+
 const sharedSettings = {
   avoidProxy: true,
   idleTimeout: 1000,
@@ -15,6 +17,7 @@ const config = {
   testTimeout: 600000,
   plugins: {
     sauce: {
+      jobName,
       tunnelOptions: {
         noSslBumpDomains: 'all',
         noProxyCaching: true

@@ -2,6 +2,8 @@
 
 AOFL Router is a simple client side router. It supports the history API, dynamic paths and provides multiple middleware hooks. It makes no path rendering assumptions.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_router.html)
+
 ## Examples
 * https://stackblitz.com/edit/1-0-0-router?embed=1
 

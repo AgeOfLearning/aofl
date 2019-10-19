@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import template from './template';
 import styles from './styles';
 import {Rotations} from '@aofl/rotations';
@@ -33,6 +33,7 @@ class ExampleComponent extends AoflElement {
 
   clearCache() {
     this.rotations.cache.clear();
+    this.rotations.qualifiedVersions = {};
     this.rotations.getRoutes().then((routes) => {
       this.routes = routes;
     });

@@ -1,11 +1,8 @@
+import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
 import './styles.css';
 import './modules/example-component';
-import {storeInstance} from '@aofl/store';
+import {previewSdo} from './modules/preview-sdo';
 
 setInterval(() => {
-  storeInstance.commit({
-    namespace: 'preview',
-    mutationId: 'setDate',
-    payload: Date.now()
-  });
-}, 0);
+  previewSdo.date = Date.now();
+}, 5);

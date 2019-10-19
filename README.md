@@ -28,8 +28,9 @@
 </p>
 
 ## Supported Browsers
-
+<a href="https://saucelabs.com/open_sauce/user/aoflsaucem/builds" target="_blank" rel="noopener noreferrer">
 <img src="https://saucelabs.com/browser-matrix/aoflsaucem.svg?auth=c0f586d708f2895cc0c009e385483adb" alt="Sauce Test Status"/>
+</a>
 
 ### Big Thanks
 

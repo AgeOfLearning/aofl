@@ -2,6 +2,8 @@
 
 `<aofl-picture>` serves as a container for zero or more `<aofl-source>` and one `<aofl-img>` elements to provide versions of an image for different display sizes. Display size specific sources are defined using the media attribute of the `aofl-source` element.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_picture.html)
+
 ## Examples
 * https://stackblitz.com/edit/1-0-0-aofl-picture?embed=1&file=js/example-component/template.js
 

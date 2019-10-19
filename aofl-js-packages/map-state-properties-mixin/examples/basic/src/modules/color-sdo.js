@@ -1,17 +1,12 @@
-import {storeInstance} from '@aofl/store';
+import {storeInstance, Sdo, state} from '@aofl/store';
 
-const sdo = {
-  namespace: 'color',
-  mutations: {
-    init() {
-      return {
-        color: 'gold'
-      };
-    },
-    setColor(subState, color) {
-      return Object.assign({}, subState, {color});
-    }
-  }
-};
+class ColorSdo extends Sdo {
+  static namespace = 'color';
 
-storeInstance.addState(sdo);
+  @state() color = 'gold';
+}
+
+const colorSdo = new ColorSdo();
+storeInstance.addState(colorSdo);
+
+export {colorSdo};

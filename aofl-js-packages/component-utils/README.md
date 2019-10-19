@@ -2,8 +2,7 @@
 
 A small collection of component utility functions.
 
-## Examples
-* [`findParent()`](https://stackblitz.com/edit/1-0-0-component-utils-1?embed=1)
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_component-utils.html)
 
 ## Installation
 

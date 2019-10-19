@@ -4,8 +4,10 @@ An ultra-light (192b gzip) uuid like random value generator.
 
 > Note: this service does not generate actual uuids and does not guarantee uniqueness. Do not use it to enforce data integrity
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_uuid.html)
+
 ## Exmaples
-* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/uuid/examples/generate
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/uuid/examples/generate
 
 ## Installation
 ```bash

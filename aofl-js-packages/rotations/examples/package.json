@@ -9,12 +9,17 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
-    "@aofl/rotations": "^2.0.0",
-    "@aofl/web-components": "^2.0.0"
+    "@aofl/rotations": "3.0.0-beta.38",
+    "@aofl/element": "3.0.0-beta.39",
+    "@webcomponents/webcomponentsjs": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.2.0",
     "parcel-bundler": "^1.12.3"
   },
-  "browserslist": "last 2 Chrome versions"
+  "browserslist": "last 2 Chrome versions",
+  "alias": {
+    "@aofl/rotations": "./node_modules/@aofl/rotations/index.js",
+    "@aofl/element": "./node_modules/@aofl/element/index.js"
+  }
 }

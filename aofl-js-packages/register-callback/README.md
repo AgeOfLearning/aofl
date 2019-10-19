@@ -2,6 +2,7 @@
 
 It allows callback functions to be registered and called in series when registerCallbackInstance.next or registerCallbackInstance.error are called.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_register-callback.html)
 
 ## Installation
 ```bash

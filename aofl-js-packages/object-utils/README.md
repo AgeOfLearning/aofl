@@ -2,6 +2,8 @@
 
 A small collection of Object utility functions designed to have a small footprint (20b gz) and be performant.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_object-utils.html)
+
 ---
 ## Why?
 Libraries like Lodash have a high overhead and come with more functionality than most projects need. Also, with es6 features fewer of these "utility" functions are needed.

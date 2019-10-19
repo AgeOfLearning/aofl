@@ -1,8 +1,9 @@
 import template from './template';
 import styles from './styles';
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import {mapStatePropertiesMixin} from '@aofl/map-state-properties-mixin';
 import {storeInstance} from '@aofl/store';
+import {colorSdo} from '../color-sdo';
 
 class MixinComponent extends mapStatePropertiesMixin(AoflElement) {
   constructor() {
@@ -15,8 +16,7 @@ class MixinComponent extends mapStatePropertiesMixin(AoflElement) {
   }
 
   mapStateProperties() {
-    const state = storeInstance.getState();
-    this.parentNode.style.background = state.color.color;
+    this.parentNode.style.background = colorSdo.color;
   }
 
   connectedCallback() {

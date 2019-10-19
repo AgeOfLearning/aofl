@@ -1,10 +1,9 @@
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 import template from './template';
 import styles from './styles';
 import randomColor from '../random-color';
-import {storeInstance} from '@aofl/store';
 import '../mixin-component';
-import '../color-sdo';
+import {colorSdo} from '../color-sdo';
 
 class ExampleComponent extends AoflElement {
   constructor() {
@@ -24,11 +23,7 @@ class ExampleComponent extends AoflElement {
   }
 
   updateColor() {
-    storeInstance.commit({
-      namespace: 'color',
-      mutationId: 'setColor',
-      payload: randomColor()
-    });
+    colorSdo.color = randomColor();
   }
 
   attachDetach(e) {

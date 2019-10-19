@@ -6,6 +6,8 @@ Resource enumerate is a special case API call that returns the interface of the 
 
 It also supports `before()` and `after()` hooks. See example below.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_resource-enumerate.html)
+
 ## Installation
 ```bash
 npm i -S @aofl/resource-enumerate

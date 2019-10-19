@@ -2,8 +2,8 @@
 
 Implements a customized version of `@webcomponents/webcomponentsjs/webcomponents-loader.js` that uses dynamic imports to load polyfills. It also allows for lazy loading other polyfills based on a config file.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_polyfill-service.html)
 
-## How to use
 
 ### Installation
 ```

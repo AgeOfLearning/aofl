@@ -2,6 +2,8 @@
 
 `aofl-element` extends `lit-element` and overrides the `_render()` function. It accepts a template function and an String[] of styles. It is intented to be used in place of `lit-element` as the base class for elements. In it's current version it doesn't do much other than provide a clean interface to sperate HTML, CSS and JavaScript context. It makes it easier to change the template on the fly (see @aofl/i18n-mixin.)
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_element.html)
+
 ## Methods
 
 | Name     | Parameters                                       | Description                  |

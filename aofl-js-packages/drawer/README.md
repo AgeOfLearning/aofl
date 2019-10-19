@@ -2,6 +2,8 @@
 
 The **`<aofl-drawer>` element** toggles content between an open and closed state. Opening and closing animations are provided as classes to allow for any possible method of toggling content.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_drawer.html)
+
 ## Examples
 * [no-amination](https://stackblitz.com/edit/1-0-0-drawer-no-animation?embed=1&file=js/example-component/template.js)
 * [fade-in](https://stackblitz.com/edit/1-0-0-drawer-fade?embed=1&file=js/example-component/template.js)

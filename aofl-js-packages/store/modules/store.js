@@ -102,7 +102,7 @@ class Store {
   }
 
   /**
-   * Resets the state to the inital state of Sdos.
+   * Resets the state to the initial state of Sdos.
    */
   flushState() {
     const state = {};

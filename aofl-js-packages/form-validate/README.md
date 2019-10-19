@@ -2,9 +2,11 @@
 
 @aofl/aofl-validate comes with a handful of form validation functions and an aofl-element mixin to simplify form validation for webcomponents. It even bundles some basic validators.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_form-validate.html)
+
 ## Examples
-* [Login Form](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/form-validate/examples/login-form)
-* [Sign Up form - async validator example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/form-validate/examples/signup-form)
+* [Login Form](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/form-validate/examples/login-form)
+* [Sign Up form - async validator example](https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/form-validate/examples/signup-form)
 
 ## Installation
 ```bash

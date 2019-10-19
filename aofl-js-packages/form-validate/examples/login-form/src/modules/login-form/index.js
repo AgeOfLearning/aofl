@@ -1,7 +1,7 @@
 import template from './template';
 import styles from './styles';
 import {validationMixin, isRequired, minLength} from '@aofl/form-validate';
-import {AoflElement} from '@aofl/web-components/aofl-element';
+import {AoflElement} from '@aofl/element';
 
 const validators = {
   username: {

@@ -1,0 +1,3 @@
+# Some notes on Application Architecture
+
+WIP...

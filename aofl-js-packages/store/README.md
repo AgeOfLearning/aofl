@@ -2,9 +2,11 @@
 
 @aofl/store is a built on the same principles as redux and attempts to simplify some of Redux's concepts. It also incorporates ideas from other centralized state management implementations.
 
+[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_store.html)
+
 ---
 ## Examples
-* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/master/aofl-js-packages/store/examples/
+* https://codesandbox.io/s/github/AgeOfLearning/aofl/tree/v3.0.0/aofl-js-packages/store/examples/
 
 ---
 ## Installation
@@ -18,141 +20,102 @@ npm i -S @aofl/store
 #### State
 In @aofl/store the state consists of a collection of sub-states. This allows us to add new sub-states at runtime which leads to constructing an efficient state object based on the applications current needs.
 
-The state object must not be mutated directly. In fact, when debug mode is enabled, Object.freeze is called on every property of the state, attempting to mutate the state will throw an error. To modify store, mutation and decorator functions must be used.
+The state object must not be mutated directly. In fact, when debug mode is enabled, Object.freeze is called on every property of the state, attempting to mutate the state will throw an error.
 
 
 #### State Definition Object (SDO)
-A State Definition Object (SDO) is an object that defines the properties of a sub-state. SDOs must define a namespace, a mutations object, and optionally, a decorators array, and an asyncMutations object.
+A State Definition Object (SDO) is an object that defines the properties of a sub-state. SDOs must define a namespace, state properties and initial values, optionally mutation functions and decorators.
 
 Here's an example of an SDO configured with all the valid options.
 ```javascript
-const accountsSdo = {
-  namespace: 'accounts', // required
-  mutations: { // required
-    init(payload) {
-      return {
-        accounts: [],
-        selectedAccountId: 0
-      };
-    }, // required
-    setActiveAccount(subState, payload) {}
-  },
-  decorators: [ // optional
-    (nextState) => {}
-  ],
-  asyncMutations: { // optional
-      setActiveUser: {
-        condition(nextState) {},
-        method(nextState) {}
-      }
-    }
-  };
+import {Sdo, decorate, state, storeInstance} from '@aofl/store';
 
+class AccountsSdo extends Sdo {
+  static namespace: 'accounts';
+
+  @state() id = 0;
+  @state() username = '';
+  @state() firstName = '';
+  @state() lastName = '';
+  @state() email = '';
+  @state() phone = 0;
+  @state() createdTimestamp = 0;
+  @state() products = [];
+
+  addProduct(product) {
+    this.products = [
+      ...this.products,
+      product
+    ];
+  }
+
+  @decorate('accounts.createdTimestamp')
+  get formattedCreated() {
+    return new Date(this.date).toLocaleDateString('en-US');
+  }
+}
+
+const accountsSdo = new AccountsSdo();
 storeInstance.addState(accountsSdo);
+
+export {accountsSdo};
 ```
 
 ##### namespace
-sub-states are keyed by namespace. Additionally mutations can only be invoked using the namespace and can only modify the sub-state attached to a namespace.
+sub-states are keyed by namespace. Additionally mutations can only be invoked using the namespace and can only modify the sub-state attached to a namespace. The `Sdo` class abstracts away interacting with the store directly.
 
 ```javascript
 // storeInstance.state
 {
   accounts: { // namespace
-    accounts: [],
-    selectedAccountId: 0
+    id: 0,
+    username: '',
+    ...
   }
 }
 ```
 
-##### mutations
-mutations must include an `init()` method. This function is invoked when SDO is added to store using `addState(SDO, [payload])` and sets the inital state of the sub-state. In addition to initializing the state object, the data returned from `init()` is used to automatically generate setter mutations for all the properties of the sub state.
+##### @state
+Properties decorated with `@state` are added to Store. Furthermore, the initialized values are used to reset store if necessary. These properties are created with specialized getter/setter functions. The getter proxies the values from `store.state.{namespace}.property`. This means directly committing a change to store will reflect in the sdo instance. The setter function commits the new value to store.
 
-When a mutation function is invoked; the sub-state pertaining to the mutation's namespace is passed to the mutation function. This means, a mutation function can only modify the sub-state it's attached to.
+In addition to the state variables, additional methods can be implemented to apply more complex mutations. E.g. inserting into an array or updating nested properties of an object.
 
-> Some rules to follow when creating mutation functions...
->
-> * mutation functions must be pure functions.
-> * mutation functions can only change the value of the namespace they belong to.
-> * mutation functions should return a new reference to the sub-state object (Object.assign, @aofl/object-utils/deepAssign)
->
 
-```javascript
-const accountsMutations = {
-  init() {
-    return {
-      accounts: [],
-      lastLogin: 0,
-      selectedAccountId: 0
-    };
-  },
-  insertAccount(subState, account) {
-    return Object.assign({}, subState, {
-      accounts: [
-        ...subState.accounts,
-        account
-      ]
-    });
-  }
-};
-```
-*The above example will include the auto generated mutations `setAccounts`, `setLastLogin`, and `setSelectedAccountId`*
-
-##### decorators
+##### @decorate
 Decorators are used to derive new information based on the state of the application. E.g. formatting timestamps to formatted date strings or calculating number of pages based on pagination data (limit per page and total results).
 
-When a mutation is commited to the store. The store applies the mutation to a copy of the state and before the new state object is commited it passes through all decorator functions. Therefore, in one operation we can mutate state and calculate derived values. Whith this model a lot of the applications logic can be moved to decorators and there is no need for individual compononts to encapsulate this logic.
+`@decorate()` takes variadic arguments that map to properties in store. Hence, the paths used include namespace. This allows us to observe changes across multiple SDOs. Consider the case where the decorated value should update when user's preferred locale changes. A decorator can observe changes in UserSettingsSdo and update timestamps accordingly in other SDOs.
 
-The nameing convension for decorated keys is that they should be prepended with `$` to make it easy to distinguish between state keys and decorated keys.
+Decorated properties are [memoized](https://en.wikipedia.org/wiki/Memoization) based on the arguments passed to @decorate. I.e. the values are computed when accessed and only recomputed when observed values change.
 
-> Some rules to follow when creating decorators...
->
-> * Decorators should only add and update a single key in a sub-state.
-> * Decorators can draw information from multiple sub-states to derive new values.
-> * Decorators should always have a conditional statement to only allow them to run on the first run or if the sub-state properties they use are changed/mutated.
-> * Decorated keys should be prepended with `$` character.
-> * Decorator functions should return a new reference of state which points to a new reference of the sub-state it modified (@aofl/object-utils/deepAssign)
 
 ```javascript
-import deepAssign from '@aofl/object-utils';
-import timeFormatter from 'time/formatter/module :)';
+import {userSettingsSdo} from 'user-settings-sdo';
 
-const accountsDecorators = [
-  (_nextState) => { // nextState is mutatedState and will become the next state of the application
-    const state = storeInstance.getState(); // get the current state
-    let nextState = _nextState;
+class AccountsSdo extends Sdo {
+  static namespace: 'accounts';
+  ...
+  @state() createdTimestamp = 0;
+  ...
 
-    if ( // we should only mutate state on first run or if substate or source values were mutated
-      typeof nextState.accounts.$formattedLastLogin === 'undefined' || // first run?
-      nextState.accounts.selectedAccountId !== state.accounts.selectedAccountId // selectedAccountId changed?
-    ) {
-      nextState = deepAssign(_nextState, 'accounts', { // check @aofl/object-utils
-        $formattedLastLogin: timeFormatter(nextState.accounts.lastLogin)
-      });
-    }
-
-    return nextState;
+  @decorate('accounts.createdTimestamp', `${userSettingsSdo.namespace}.locale`)
+  get formattedCreated() {
+    return new Date(this.date).toLocaleDateString(userSettingsSdo.locale);
   }
-];
-
+}
 ```
 
-##### asyncMutations
-Documentation is WIP
 
+#### `addState()`
+Adds a new Sdo to store.
 
 #### `commit()`
-To change state `commit()` can be used. It accepts variadic mutation objects as arguments.
+To change state `commit()` can be used. It accepts a namespace and a mutation objects as arguments.
 
 ```javascript
-storeInstance.commit({
-  namespace: 'accounts',
-  mutationId: 'setActiveAccount',
-  payload: 1234
-}, {
-  namespace: 'otherNamespace',
-  mutationId: ...
-  payload: ...
-}, ...);
+storeInstance.commit('accounts', {
+  id: 1
+});
 ```
 
 #### `subscribe()`
@@ -168,3 +131,50 @@ view.onDestroy(() => {
   unsubscribe();
 });
 ```
+
+#### `flushState()`
+Resets the state to the initial state of Sdos.
+
+```javascript
+storeInstance.flushState();
+```
+
+## Usage with @aofl/element
+
+`@property` decorator exported from @aofl/element extends the @property decorator from lit-element and adds 2 new keys to the options `mapState` and `store`.
+
+`mapState` is a string path relative to the provided store's state property.
+`store` defaults to storeInstance exported from @aofl/store. It can be replaced with an instance of store or an sdo class.
+
+```javascript
+import {AoflElement, property, customElement} from '@aofl/element';
+import template from './template';
+import styles from './styles';
+import {previewSdo} from '../preview-sdo';
+
+@customElement('example-component)
+class ExampleComponent extends AoflElement {
+  constructor() {
+    super();
+  }
+
+  static is = 'example-component';
+
+  @property({mapState: 'count', store: previewSdo})
+  count = 0;
+
+  @property({mapState: 'formattedDate', store: previewSdo})
+  formattedDate = '';
+
+  incrementCount() {
+    previewSdo.increment();
+  }
+
+  render() {
+    return super.render(template, [styles]);
+  }
+}
+
+```
+
+
