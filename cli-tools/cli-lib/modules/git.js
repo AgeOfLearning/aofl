@@ -3,6 +3,8 @@ const chalk = require('chalk');
 const rimraf = require('rimraf');
 const path = require('path');
 const fs = require('fs');
+
+const NAME_REGEX = /\/(?!.*\/)(.+)\.git/i;
 /**
  *
  *
@@ -44,6 +46,15 @@ class Git {
     });
   }
 
+  static getNameFromUrl(url) {
+    const matches = NAME_REGEX.exec(url);
+
+    if (matches === null) {
+      throw new Error(`${url} is not a valid git url.`);
+    }
+
+    return matches[1];
+  }
 
   /**
    *
@@ -262,6 +273,19 @@ class Git {
     return Git.__run(['clone', repo, directory], options);
   }
 
+  /**
+   *
+   *
+   * @static
+   * @param {boolean} [short=false]
+   * @param {boolean} [branch=false]
+   * @param {boolean} [showStash=false]
+   * @param {boolean} [porcelain=false]
+   * @param {boolean} [long=false]
+   * @param {boolean} [verbose=false]
+   * @param {*} [options={}]
+   * @return {Promise}
+   */
   static status(short = false, branch = false, showStash = false, porcelain = false, long = false,
   verbose = false, options = {}) {
     const params = ['status'];
@@ -271,6 +295,36 @@ class Git {
     if (porcelain) params.push('--porcelain');
     if (long) params.push('--long');
     if (verbose) params.push('-v');
+
+    return Git.__run(params, options);
+  }
+
+
+  /**
+   *
+   *
+   * @static
+   * @param {string} [format='tar']
+   * @param {boolean} [verbose=false]
+   * @param {string} [prefix='']
+   * @param {string} [output='']
+   * @param {string} [remote='']
+   * @param {String} treeish
+   * @param {String} path
+   * @param {*} [options={}]
+   * @return {Promise}
+   */
+  static archive(format = 'tar', verbose = false, prefix = '', output = '', remote = '', treeish, path, options = {}) {
+    const params = [
+      'archive',
+      `--format=${format}`
+    ];
+
+    if (verbose) params.push('-v');
+    if (prefix !== '') params.push(`--prefix=${prefix}`);
+    if (remote !== '') params.push(`--remote=${remote}`);
+    if (typeof treeish !== 'undefined') params.push(treeish);
+    if (typeof path !== 'undefined') params.push(path);
 
     return Git.__run(params, options);
   }
