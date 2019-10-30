@@ -5,7 +5,7 @@
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
 import {storeInstance} from '@aofl/store';
-import {get} from '@aofl/object-utils';
+import {get, has} from '@aofl/object-utils';
 import {property as litProperty, customElement as litCustomElement} from 'lit-element/lib/decorators';
 
 /**
@@ -51,12 +51,16 @@ export function property(options = MapStateDeclaration) {
         /* istanbul ignore next */
         if (_options.mapState !== '') {
           const updateValue = () => {
-            const state = _options.store.getState();
-            this[protoOrDescriptor.key] = get(state, _options.mapState);
+            const state = _options.store.state;
+            if (has(state, _options.mapState)) {
+              this[protoOrDescriptor.key] = get(state, _options.mapState);
+            } else {
+              this[protoOrDescriptor.key] = get(_options.store, _options.mapState);
+            }
           };
 
           updateValue();
-          const unsubscribe = storeInstance.subscribe(updateValue);
+          const unsubscribe = _options.store.subscribe(updateValue);
           this._observedPropertiesMap.set(protoOrDescriptor.key, unsubscribe);
         }
       }

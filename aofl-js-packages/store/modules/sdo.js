@@ -61,6 +61,16 @@ class Sdo {
     this.storeInstance.commit(this.namespace, this.constructor.initialState);
   }
   /**
+   * subscribe() register the callback function with registerCallback and returns
+   * the unsubscribe function.
+   *
+   * @param {Furtion} callback
+   * @return {Function}
+   */
+  subscribe(callback) {
+    return this.storeInstance.subscribe(callback);
+  }
+  /**
    * @private
    * @param {Object} properties
    */

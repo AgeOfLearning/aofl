@@ -1,6 +1,6 @@
 import styles from './template.css';
 import template from './template';
-import {AoflElement, customElement} from '@aofl/web-components/aofl-element';
+import {AoflElement, customElement} from '@aofl/element';
 
 /**
  * @summary __uppercamelcase__placeholder__
