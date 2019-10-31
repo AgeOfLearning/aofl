@@ -15,22 +15,28 @@
  *
  * @return {Object}
  */
-const defaults = (target, defaultOptions) => {
+const defaults = (target, defaults) => {
   const recurse = (t, d) => {
     for (const key in d) {
-      /* istanbul ignore next */
-      if (!Object.hasOwnProperty.call(d, key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(d, key)) continue;
       if (typeof t[key] === 'undefined') {
-        t[key] = Object.assign({}, d[key]);
-        continue;
-      }
-      if (typeof d[key] === 'object' && !Array.isArray(d[key])) {
-        recurse(t[key], d[key]);
+        if (Array.isArray(d[key])) {
+          t[key] = [].concat(d[key]);
+        } else if (typeof d[key] === 'object') {
+          t[key] = {};
+          recurse(t[key], d[key]);
+        } else {
+          t[key] = d[key];
+        }
+      } else {
+        if (typeof t[key] === 'object' && !Array.isArray(t[key])) {
+          recurse(t[key], d[key]);
+        }
       }
     }
   };
 
-  recurse(target, defaultOptions);
+  recurse(target, defaults);
 };
 
 export {defaults};
