@@ -27,7 +27,8 @@ describe('object-utils#set', function() {
 
     expect(get(this.data, 'prop1')).to.equal('');
     expect(get(this.data, 'prop2.prop2prop1')).to.equal('prop2prop1');
-    expect(get(this.data, 'prop2.prop2prop2')).to.equal(this.defaults.prop2.prop2prop2);
+    expect(get(this.data, 'prop2.prop2prop2')).to.eql(this.defaults.prop2.prop2prop2);
+    expect(get(this.data, 'prop2.prop2prop2')).to.not.equal(this.defaults.prop2.prop2prop2);
     expect(get(this.data, 'prop3.prop3prop1')).to.equal(this.data.prop3.prop3prop1);
   });
 });
