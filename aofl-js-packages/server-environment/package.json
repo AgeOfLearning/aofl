@@ -1,6 +1,6 @@
 {
   "name": "@aofl/server-environment",
-  "version": "3.0.0-alpha.11",
+  "version": "3.0.0-alpha.12",
   "description": "Helps determine dev, stage, prod environments based on hostname",
   "main": "index.js",
   "scripts": {
