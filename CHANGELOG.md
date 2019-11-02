@@ -47,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/unit-testing-plugin - major rewrite and optimization
 - @aofl/cli - test command updated to work with new unit-testing-plugin
 - @aofl/store - Store move to modules/legacy
+- @aofl/form-validate - form.observed is set to true when any property is observed
 
 ### [Deprecated]
 - @aofl/store/legacy
