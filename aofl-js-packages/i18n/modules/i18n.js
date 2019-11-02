@@ -81,7 +81,7 @@ class I18n {
    */
   async _r(_str, ...args) {
     let str = await Promise.resolve(_str);
-    /* istanbul ignore else */
+    /* istanbul ignore next */
     if (typeof str === 'object' && Array.isArray(str.strings) && str.strings.length) {
       str = str.strings[0];
     }

@@ -59,6 +59,7 @@ class AoflPicture extends AoflElement {
    * @param {HTMLElement} img
    */
   setImg(img) {
+    /* istanbul ignore next */
     if (this.img !== null) { return; }
     this.img = img;
     this.defaultSrc = {

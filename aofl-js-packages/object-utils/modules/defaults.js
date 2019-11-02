@@ -18,6 +18,7 @@
 const defaults = (target, defaults) => {
   const recurse = (t, d) => {
     for (const key in d) {
+      /* istanbul ignore next */
       if (!Object.prototype.hasOwnProperty.call(d, key)) continue;
       if (typeof t[key] === 'undefined') {
         if (Array.isArray(d[key])) {

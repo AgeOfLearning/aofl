@@ -22,22 +22,7 @@
         "text-summary",
         "lcov"
       ],
-      "include": "**/*.js",
-      "exclude": [
-        "**/node_modules",
-        "**/node_modules_sourced",
-        "**/documentation{,!(/tests/**)}",
-        "**/__config",
-        "__config/*",
-        "**/cli",
-        "**/*-instance/**",
-        "**/*-loader/**",
-        "**/*-polyfill/**",
-        "**/*-plugin/**",
-        "**/router/examples",
-        "dist",
-        "polyfills.js"
-      ]
+      "include": "**/*.js"
     }
   }
 }
