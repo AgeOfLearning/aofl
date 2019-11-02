@@ -27,6 +27,7 @@
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
     "loader-utils": "^1.1.0",
+    "parse-es6-imports": "^1.0.1",
     "schema-utils": "^1.0.0"
   }
 }
