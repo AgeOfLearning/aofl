@@ -56,6 +56,14 @@ class ServeProject {
       this.options.hotOnly = true;
     }
 
+    if (this.hot || this.hotOnly) {
+      this.config.webpack.module.rules.push({
+        test: /\.js$/,
+        include: path.join(this.config.root, 'src'),
+        loader: '@aofl/hmr-loader'
+      });
+    }
+
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,
       profile: true,
