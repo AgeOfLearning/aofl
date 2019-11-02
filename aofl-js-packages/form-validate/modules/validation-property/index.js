@@ -118,11 +118,11 @@ class ValidationProperty {
       if (!this.hasOwnProperty(key) ||
       !(this[key] instanceof ValidationProperty || this[key] instanceof ValidationFunction)) continue;
 
-      if (this[key].observed === false) {
-        return false;
+      if (this[key].observed === true) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   /**
