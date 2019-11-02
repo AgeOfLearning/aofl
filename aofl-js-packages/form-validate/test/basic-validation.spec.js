@@ -319,12 +319,12 @@ describe('@aofl/aofl-validate/validationMixin', function() {
         }
       });
 
-    it('should have property form.observe = false',
+    it('should have property form.observe = true when a property is validated',
       async function() {
         try {
           this.testForm.form.firstname.validate();
           await this.testForm.form.validateComplete;
-          expect(this.testForm.form).to.have.property('observed', false);
+          expect(this.testForm.form).to.have.property('observed', true);
         } catch (e) {
           return Promise.reject(e);
         }
@@ -401,18 +401,18 @@ describe('@aofl/aofl-validate/validationMixin', function() {
         try {
           this.testForm.form.firstname.isRequired.validate();
           await this.testForm.form.validateComplete;
-          expect(this.testForm.form.firstname).to.have.property('observed', false);
+          expect(this.testForm.form.firstname).to.have.property('observed', true);
         } catch (e) {
           return Promise.reject(e);
         }
       });
 
-    it('should have property form.observe = false',
+    it('should have property form.observe = true',
       async function() {
         try {
           this.testForm.form.firstname.isRequired.validate();
           await this.testForm.form.validateComplete;
-          expect(this.testForm.form).to.have.property('observed', false);
+          expect(this.testForm.form).to.have.property('observed', true);
         } catch (e) {
           return Promise.reject(e);
         }
