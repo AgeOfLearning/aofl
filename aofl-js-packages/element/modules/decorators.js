@@ -15,7 +15,7 @@ import {property as litProperty, customElement as litCustomElement} from 'lit-el
  */
 const MapStateDeclaration = {
   store: storeInstance,
-  state: ''
+  mapState: ''
 };
 
 /**

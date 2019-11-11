@@ -1,5 +1,5 @@
 /**
- * ApiRequst class implementation.
+ * ApiRequest class implementation.
  *
  * @summary api-request
  * @since 1.0.0
@@ -22,7 +22,6 @@ class ApiRequest {
   static get DEFAULT_CACHE_NAMESPACE() {
     return 'ApiRequest';
   }
-
   /**
    * Creates an instance of ApiRequest.
    */
