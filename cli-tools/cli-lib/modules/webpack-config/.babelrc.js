@@ -1,4 +1,4 @@
-const {environments} = require('../../constants-enumerate');
+const {environments} = require('../constants-enumerate');
 const ignore = [
   /[\/\\]core-js/,
   /@babel[\/\\]runtime/,
