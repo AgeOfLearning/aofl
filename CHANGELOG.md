@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli-lib - git - added archive
 - @aofl/cli-lib - git - added getNameFromUrl
 - @aofl/i18n - extracted core i18n functionality from the mixin
+- @aofl/i18n-mixin - added support for aoflDevtools.showI18nIds to display tt-tags over strings.
 - @aofl/web-components/aofl-element - added property decorator to support binding to store when declaring class properties
 - @aofl/hmr-loader
 - @aofl/web-components/aofl-element - store and state options to properties decorator

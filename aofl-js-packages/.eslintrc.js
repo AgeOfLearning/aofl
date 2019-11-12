@@ -25,7 +25,8 @@ const config = {
     aofljsConfig: true,
     Reflect: true,
     Proxy: true,
-    Map: true
+    Map: true,
+    aoflDevtools: true
   }
 };
 
