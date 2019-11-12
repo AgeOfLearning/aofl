@@ -1,6 +1,6 @@
 {
   "name": "@aofl/picture",
-  "version": "3.0.0-beta.40",
+  "version": "3.0.0-beta.41",
   "description": "`<aofl-picture>` serves as a container for zero or more `<aofl-source>` and one `<aofl-img>` elements to provide versions of an image for different display sizes. Display size specific sources are defined using the media attribute of the `aofl-source` element. `<aofl-img>` embeds an image into the document. It behaves similarly to `<img>` with the addition of lazy loading images as they scroll near the visible area of the screen. The current formula is 2x height or width. In addition to this `<aofl-img>` can be combined with `<aofl-picture>` and `<aofl-source>` to provide different images for different display sizes. AoflSource component must be used as a child of aofl-picture and specifies images for different media queries.",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -40,9 +40,9 @@
     "@aofl/element": ">= 3.0.0-beta.5 < 4.0.0"
   },
   "devDependencies": {
-    "@aofl/cli": "^3.0.0-beta.40",
-    "@aofl/component-utils": "^3.0.0-beta.40",
-    "@aofl/element": "^3.0.0-beta.40",
+    "@aofl/cli": "^3.0.0-beta.41",
+    "@aofl/component-utils": "^3.0.0-beta.41",
+    "@aofl/element": "^3.0.0-beta.41",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "jsdoc-babel": "^0.5.0",
