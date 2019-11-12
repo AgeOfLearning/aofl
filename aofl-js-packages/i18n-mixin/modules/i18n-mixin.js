@@ -88,11 +88,7 @@ export default (superClass) => {
      */
     async __(id, str) {
       const translated = await this.i18n.__(id, str);
-      const templateParts = aoflDevtools && aoflDevtools.showI18nIds? html([
-        `<span id="${id}" class="aofl-i18n-string" title="${id}" style="position: relative;">${translated}
-          <span style="font-size: 12px; color: #000; position: absolute; left: 0; bottom: 0; transform: translateY(60%); white-space: pre; background: yellow; line-height: 1; padding: 0 2px;">${id.replace('<', '&lt;').replace('>', '&gt;')}</span>
-        </span>`
-      ]): html([translated]);
+      const templateParts = html([translated]);
 
       return this.getCachedTemplate(id, templateParts);
     }
@@ -125,11 +121,7 @@ export default (superClass) => {
      */
     async _c(id, str, ...args) {
       const translated = await this.i18n._c(id, str, ...args);
-      const templateParts = aoflDevtools && aoflDevtools.showI18nIds? html([
-        `<span id="${id}" class="aofl-i18n-string" title="${id}" style="position: relative;">${translated}
-          <span style="font-size: 12px; color: #000; position: absolute; left: 0; bottom: 0; transform: translateY(60%); white-space: pre; background: yellow; line-height: 1; padding: 0 2px;">${id.replace('<', '&lt;').replace('>', '&gt;')}</span>
-        </span>`
-      ]): html([translated]);
+      const templateParts = html([translated]);
 
       return this.getCachedTemplate(id, templateParts);
     }
@@ -143,7 +135,7 @@ export default (superClass) => {
     }
 
     /**
-     * Listen for component lang attribute mutataions
+     * Listen for component's lang attribute mutations
      *
      * @param {String} name
      * @param {String} oldValue

@@ -35,6 +35,9 @@ class I18n {
     this.lang = lang;
   }
 
+  static getDecorateOutput(id, str) {
+    return window.aoflDevtools && window.aoflDevtools.showI18nIds? `<span id="${id}" class="aofl-i18n-string" title="${id}" style="position: relative;">${str}<span style="font-size: 12px; color: #000; position: absolute; left: 0; bottom: 0; transform: translateY(60%); white-space: pre; background: yellow; line-height: 1; padding: 0 2px; font-weight: 400;    z-index: 1;">${id.replace('<', '&lt;').replace('>', '&gt;')}</span></span>`: str;
+  }
   /**
    * Lazy-load the translation map
    *
@@ -65,7 +68,7 @@ class I18n {
       out = languageMap[id].text;
     }
 
-    return out;
+    return I18n.getDecorateOutput(id, out);
   }
 
   /**
@@ -157,7 +160,7 @@ class I18n {
     }
 
     out += str.slice(pivot);
-    return out;
+    return I18n.getDecorateOutput(id, out);
   }
 }
 
