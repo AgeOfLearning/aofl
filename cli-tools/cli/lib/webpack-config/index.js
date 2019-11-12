@@ -1,8 +1,8 @@
 const path = require('path');
 const validateOptions = require('schema-utils');
-const schema = require('./__config/schema.json');
+const schema = require('@aofl/cli-lib/modules/webpack-config/schema.json');
 const generator = require('./generator');
-const defaults = require('./__config/defaults');
+const defaults = require('./defaults');
 const defaultsDeep = require('lodash.defaultsdeep');
 
 

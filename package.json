@@ -12,7 +12,7 @@
     "docsify": "docsify serve docs",
     "lint": "eslint .",
     "install-all": "lerna exec --stream -- npm install",
-    "build-all": "lerna run --stream build -- --debug",
+    "build-all": "lerna run --stream build-ci",
     "docs-all": "lerna run --stream docs",
     "publish-all": "lerna publish"
   },

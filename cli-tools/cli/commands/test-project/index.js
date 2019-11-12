@@ -3,7 +3,7 @@ const fs = require('fs');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
-const {loadConfig, environments, DebugReporter, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
+const {environments, DebugReporter, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
 const glob = require('fast-glob');
 const md5 = require('tiny-js-md5');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,6 +11,7 @@ const jsStringEscape = require('js-string-escape');
 const findCacheDir = require('find-cache-dir');
 const UnitTestingPlugin = require('@aofl/unit-testing-plugin');
 const mkdirp = require('mkdirp');
+const {loadConfig} = require('../../lib/webpack-config');
 
 const defaultEntries = {
   'custom-elements-es5-adapter': resources.CUSTOM_ELEMENTS_ES5_ADAPTER,

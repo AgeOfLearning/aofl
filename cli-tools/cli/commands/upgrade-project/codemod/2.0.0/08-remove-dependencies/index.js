@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const {Npm}= require('@aofl/cli-lib');
+const {Npm} = require('@aofl/cli-lib');
 
 module.exports = async (projectRoot, projectInfo, commit = false) => {
   const toRemove = [

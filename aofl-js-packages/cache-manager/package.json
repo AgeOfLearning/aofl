@@ -15,9 +15,10 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-ci": "cross-env NODE_ENV=production aofl build --debug",
     "build": "cross-env NODE_ENV=production npx aofl build",
     "build:dev": "cross-env NODE_ENV=development npx aofl build",
-    "prepublishOnly": "npm run build && npm run docs",
+    "prepublishOnly": "npm run build-ci && npm run docs",
     "docs": "jsdoc -c .jsdocrc.json ."
   },
   "repository": {

@@ -1,6 +1,6 @@
 const path = require('path');
-const {environments, resources} = require('../../constants-enumerate');
-const htmlWebpackconfig = require('../../html-webpack-config');
+const {environments, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
+
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
@@ -74,7 +74,7 @@ module.exports = (root) => {
         exclude: [],
         enforce: 'pre',
         options: {
-          config: path.join(__dirname, '.eslintrc.js'),
+          config: path.join(resources.WEBPACK_CONFIG, '.eslintrc.js'),
         },
       },
       js: {
@@ -93,7 +93,7 @@ module.exports = (root) => {
         exclude: [],
         babel: {
           cacheDirectory: true,
-          ...require(path.join(__dirname, '.babelrc.js')),
+          ...require('@aofl/cli-lib/modules/webpack-config/.babelrc.js'),
         },
       },
       templating: {
@@ -101,7 +101,7 @@ module.exports = (root) => {
           name: 'main',
           template: path.resolve(root, 'src', 'template', 'template.ejs'),
           filename: path.join('template', 'template.html'),
-          ...htmlWebpackconfig(process.env.NODE_ENV),
+          ...htmlWebpackConfig(process.env.NODE_ENV),
         },
         routes: {
           mainRoutes: path.join(root, 'src', 'routes'),
@@ -118,7 +118,7 @@ module.exports = (root) => {
         extractComments: true,
       },
       serviceworker: {
-        swSrc: path.join(__dirname, 'sw.js'),
+        swSrc: path.join(resources.WEBPACK_CONFIG, 'sw.js'),
         swDest: 'sw.js',
         exclude: [/\.LICENSE$/, /\.map\.js$/],
       },

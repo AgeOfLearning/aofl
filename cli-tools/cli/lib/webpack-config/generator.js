@@ -1,4 +1,4 @@
-const {environments} = require('../constants-enumerate');
+const {environments} = require('@aofl/cli-lib');
 const webpack = require('webpack');
 const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 const HtmlWebpackPurifycssPlugin = require('@aofl/html-webpack-purify-internal-css-plugin');

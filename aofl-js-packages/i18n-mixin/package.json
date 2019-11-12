@@ -10,9 +10,10 @@
     "env:prod": "cross-env NODE_ENV=production",
     "env:dev": "cross-env NODE_ENV=development",
     "env:test": "cross-env NODE_ENV=test",
+    "build-ci": "npm run env:prod -- npx aofl build --debug",
     "build": "npm run env:prod -- npx aofl build",
     "build:dev": "npm run env:dev -- npx aofl build",
-    "prepublishOnly": "npm run build && npm run docs",
+    "prepublishOnly": "npm run build-ci && npm run docs",
     "docs": "jsdoc -c .jsdocrc.json ."
   },
   "keywords": [
