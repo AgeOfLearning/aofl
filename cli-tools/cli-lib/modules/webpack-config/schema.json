@@ -338,13 +338,13 @@
           "type": "object"
         },
         "serviceworker": {
-          "type": "object"
+          "type": ["object", "null"]
         },
         "favicon": {
           "type": "object"
         },
         "pwaManifest": {
-          "type": "object"
+          "type": ["object", "null"]
         },
         "middleware": {
           "type": "array"

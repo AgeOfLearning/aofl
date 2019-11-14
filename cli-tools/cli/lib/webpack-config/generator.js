@@ -277,10 +277,18 @@ const getConfig = (root, configObject, defaultOptions) => {
         getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
       );
       config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
-      config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
-      config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
 
-      config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+      if (configObject.build.favicon) {
+        config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
+      }
+
+      if (configObject.build.pwaManifest) {
+        config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
+      }
+
+      if (configObject.build.serviceworker) {
+        config.plugins.push(new InjectManifest(configObject.build.serviceworker));
+      }
     }
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {

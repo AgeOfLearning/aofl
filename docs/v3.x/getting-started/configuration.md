@@ -105,7 +105,7 @@ build: {
       exclude: []
     }
   },
-  eslint: { // rules for eslint modules (configure loaders, parser options, etc.) https://webpack.js.org/configuration/
+  eslint: { // rules for eslint modules (configure loaders, parser options, etc.) https://webpack.js.org/configuration/ or false to disable eslint
     test: /\.js$/,
     include: [path.join(root, 'src')],
     exclude: [],    issuer: {}',
@@ -164,16 +164,16 @@ build: {
     sourceMap: true,
     extractComments: true,
   },
-  serviceworker: { // https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
+  serviceworker: { // Set to null to disable. https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin
     swSrc: path.join(__dirname, 'sw.js'),
     swDest: 'sw.js',
     exclude: [/\.LICENSE$/, /\.map\.js$/]
   },
-  favicon: { // https://www.npmjs.com/package/copy-webpack-plugin
+  favicon: { // Set to null to disable. https://www.npmjs.com/package/copy-webpack-plugin
     from: 'assets/favicon.ico',
     to: 'favicon.ico',
   },
-  pwaManifest: { // https://www.npmjs.com/package/webpack-pwa-manifest
+  pwaManifest: { // Set to null to disable. https://www.npmjs.com/package/webpack-pwa-manifest
     'name': 'Aofl Starter App',
     'short_name': 'AoflStarter',
     'description': 'Aofl Starter App',

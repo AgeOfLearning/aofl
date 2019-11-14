@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/cli - server supports hot and hot only options
 - @aofl/cli - generate -  Added i18n template
 - @aofl/cli - added cache-loader to webpack config
+- @aofl/cli - serviceworker, pwaManifest and favicon can be disabled by setting to null.
 - @aofl/cli-lib - webpack config support stand-alone and project modes
 - @aofl/cli-lib - webpack config allows replace and append for include, exclude objects
 - @aofl/cli-lib - git - added archive
