@@ -10,6 +10,7 @@
     "env:test": "cross-env NODE_ENV=test",
     "test": "npm run env:test -- npx aofl test",
     "test:sl": "cross-env SAUCE=1 npm test -- --debug --skip-all",
+    "test:sl:2": "cross-env SAUCE=2 npm test -- --debug --skip-all",
     "start": "echo 'Nothing to see here ;)'",
     "docs": "jsdoc -c .jsdocrc.json .",
     "lint": "eslint ."
