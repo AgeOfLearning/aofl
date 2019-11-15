@@ -25,27 +25,47 @@ const config = {
       },
       browsers: [
         {
-          "browserName": "chrome",
-          "platform": "macOS 10.13",
+          ...sharedSettings,
+          "browserName": "Safari",
+          "appiumVersion": "1.15.0",
+          "deviceName": "iPhone X Simulator",
+          "platformVersion": "13.0",
+          "platformName": "iOS",
+        },
+        {
+          ...sharedSettings,
+          "appiumVersion": "1.9.1",
+          "deviceName": "Google Pixel GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": '8.1',
+          "platformName": "Android",
+        },
+        {
+          ...sharedSettings,
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "6.0",
+          "platformName": "Android",
+        },
+        {
+          "browserName": "MicrosoftEdge",
+          "platform": "Windows 10",
           "version": "latest",
           "sauce:options": {
-            ...sharedSettings
+            ...sharedSettings,
+            "priority": 0
           }
         },
         {
-          "browserName": "firefox",
-          "version": "latest",
-          "platform": "macOS 10.13",
+          "browserName": "internet explorer",
+          "platform": "Windows 7",
+          "version": "11.0",
           "sauce:options": {
-            ...sharedSettings
-          }
-        },
-        {
-          "browserName": "safari",
-          "version": "latest",
-          "platform": "macOS 10.13",
-          "sauce:options": {
-            ...sharedSettings
+            ...sharedSettings,
+            "priority": 0
           }
         }
       ]
