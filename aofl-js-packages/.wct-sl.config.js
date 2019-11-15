@@ -3,18 +3,19 @@ const npmPkg = require('./package.json');
 const jobName = process.env.TRAVIS_REPO_SLUG || 'AgeOfLearning/aofl';
 
 const sharedSettings = {
-  avoidProxy: true,
-  idleTimeout: 1000,
-  commandTimeout: 600,
-  recordScreenshots: false,
-  recordLogs: false,
-  webdriverRemoteQuietExceptions: false,
-  videoUploadOnPass: false,
+  "recordLogs": false,
+  "recordVideo": false,
+  "recordScreenshots": false,
+  "timeout": 300,
+  "avoidProxy": true,
+  "idleTimeout": 1000,
+  "commandTimeout": 600,
+  "webdriverRemoteQuietExceptions": false,
+  "videoUploadOnPass": false
 };
 
 const config = {
   verbose: false,
-  testTimeout: 600000,
   plugins: {
     sauce: {
       jobName,
@@ -25,83 +26,70 @@ const config = {
       browsers: [
         {
           ...sharedSettings,
-          browserName: 'Safari',
-          appiumVersion: '1.13.0',
-          deviceName: 'iPhone X Simulator',
-          platformVersion: '12.2',
-          platformName: 'iOS',
+          "browserName": "Safari",
+          "appiumVersion": "1.15.0",
+          "deviceName": "iPhone X Simulator",
+          "platformVersion": "13.0",
+          "platformName": "iOS",
         },
         {
           ...sharedSettings,
-          appiumVersion: '1.9.1',
-          deviceName: 'Google Pixel GoogleAPI Emulator',
-          deviceOrientation: 'portrait',
-          browserName: 'Chrome',
-          platformVersion: '8.1',
-          platformName: 'Android',
+          "appiumVersion": "1.9.1",
+          "deviceName": "Google Pixel GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": '8.1',
+          "platformName": "Android",
         },
         {
           ...sharedSettings,
-          appiumVersion: '1.9.1',
-          deviceName: 'Android GoogleAPI Emulator',
-          deviceOrientation: 'portrait',
-          browserName: 'Browser',
-          platformVersion: '6.0',
-          platformName: 'Android',
+          "appiumVersion": "1.9.1",
+          "deviceName": "Android GoogleAPI Emulator",
+          "deviceOrientation": "portrait",
+          "browserName": "Chrome",
+          "platformVersion": "6.0",
+          "platformName": "Android",
         },
         {
-          ...sharedSettings,
-          browserName: 'chrome',
-          platform: 'Windows 10',
-          version: 'latest',
+          "browserName": "MicrosoftEdge",
+          "platform": "Windows 10",
+          "version": "latest",
           "sauce:options": {
-            "recordVideo": false,
-            "recordScreenshots": false,
-            "screenResolution": '800x600',
+            ...sharedSettings,
+            "priority": 0
           }
         },
         {
-          ...sharedSettings,
-          browserName: 'firefox',
-          platform: 'Windows 10',
-          version: 'latest',
+          "browserName": "internet explorer",
+          "platform": "Windows 7",
+          "version": "11.0",
           "sauce:options": {
-            "recordVideo": false,
-            "recordScreenshots": false,
-            "screenResolution": '800x600',
+            ...sharedSettings,
+            "priority": 0
           }
         },
         {
-          ...sharedSettings,
-          browserName: 'MicrosoftEdge',
-          platform: 'Windows 10',
-          version: 'latest',
+          "browserName": "chrome",
+          "platform": "macOS 10.13",
+          "version": "latest",
           "sauce:options": {
-            recordVideo: false,
-            recordScreenshots: false,
-            screenResolution: '800x600',
+            ...sharedSettings
           }
         },
         {
-          ...sharedSettings,
-          browserName: 'internet explorer',
-          platform: 'Windows 7',
-          version: '11.0',
+          "browserName": "firefox",
+          "version": "latest",
+          "platform": "macOS 10.13",
           "sauce:options": {
-            "recordVideo": false,
-            "recordScreenshots": false,
-            "screenResolution": '800x600',
+            ...sharedSettings
           }
         },
         {
-          ...sharedSettings,
-          browserName: 'safari',
-          platform: 'macOS 10.13',
-          version: 'latest',
+          "browserName": "safari",
+          "version": "latest",
+          "platform": "macOS 10.13",
           "sauce:options": {
-            "recordVideo": false,
-            "recordScreenshots": false,
-            "screenResolution": '1024x768',
+            ...sharedSettings
           }
         }
       ]
