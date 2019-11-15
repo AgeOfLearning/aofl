@@ -53,7 +53,7 @@ const config = {
         {
           "browserName": "MicrosoftEdge",
           "platform": "Windows 10",
-          "version": "latest",
+          "version": "latest-1",
           "sauce:options": {
             ...sharedSettings,
             "priority": 0
