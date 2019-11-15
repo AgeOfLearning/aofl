@@ -103,7 +103,7 @@ module.exports = {
   },
   unitTesting: {
     include: ['**/*.spec.js'],
-    config: process.env.SAUCE === '1'? path.join(__dirname, '.wct-sl.config.js'): path.join(__dirname, '.wctrc.json'),
+    config: process.env.SAUCE === '1'? path.join(__dirname, '.wct-sl.config.js'): process.env.SAUCE === '2'? path.join(__dirname, '.wct-sl-2.config.js'): path.join(__dirname, '.wctrc.json'),
     polyfill: path.join(__dirname, '__config', 'polyfills.js'),
     exclude: [
       '**/__build*',
