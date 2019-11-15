@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "3.0.0-beta.46",
+  "version": "3.0.0-beta.47",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@aofl/cli": "^3.0.0-beta.46",
-    "@aofl/middleware": "^3.0.0-beta.46",
+    "@aofl/middleware": "^3.0.0-beta.47",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "jsdoc-babel": "^0.5.0",
