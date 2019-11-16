@@ -14,7 +14,8 @@
     "install-all": "lerna exec --stream -- npm install",
     "build-all": "lerna run --stream build-ci",
     "docs-all": "lerna run --stream docs",
-    "publish-all": "lerna publish"
+    "publish-all": "lerna publish",
+    "postinstall": "cd aofl-js-packages && npm i"
   },
   "repository": {
     "type": "git",

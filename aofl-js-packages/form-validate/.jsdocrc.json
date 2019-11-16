@@ -1,11 +1,11 @@
 {
-  "plugins": ["node_modules/jsdoc-babel"],
+  "plugins": ["../node_modules/jsdoc-babel"],
   "source": {
     "includePattern": ".*\\.js$",
     "excludePattern": "(node_modules|dist|examples|test)"
   },
   "opts": {
-    "template": "./node_modules/tsd-jsdoc/dist",
+    "template": "../node_modules/tsd-jsdoc/dist",
     "encoding": "utf8",
     "destination": ".",
     "recurse": true,

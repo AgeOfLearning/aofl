@@ -15,7 +15,7 @@
     "build": "cross-env NODE_ENV=production npx aofl build",
     "build:dev": "cross-env NODE_ENV=development npx aofl build",
     "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "jsdoc -c .jsdocrc.json ."
+    "docs": "npx jsdoc -c .jsdocrc.json ."
   },
   "repository": {
     "type": "git",

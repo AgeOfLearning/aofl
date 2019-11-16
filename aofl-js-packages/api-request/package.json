@@ -18,7 +18,7 @@
     "build-ci": "cross-env NODE_ENV=production aofl build --debug",
     "build": "cross-env NODE_ENV=production aofl build",
     "build:dev": "cross-env NODE_ENV=development aofl build",
-    "docs": "jsdoc -c .jsdocrc.json .",
+    "docs": "npx jsdoc -c .jsdocrc.json .",
     "prepublishOnly": "npm run build-ci && npm run docs"
   },
   "author": "Arian Khosravi <arian.khosravi@aofl.com>",
