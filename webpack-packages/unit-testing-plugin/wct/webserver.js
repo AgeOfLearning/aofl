@@ -22,7 +22,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const bowerConfig = require("bower-config");
 const cleankill = require("cleankill");
 const fs = require("fs");
 const _ = require("lodash");
@@ -135,63 +134,7 @@ function webserver(wct) {
             const additionalRoutes = new Map();
             const packageName = config_1.getPackageName(options);
             let componentDir;
-            // Check for client-side compatibility.
-            // Non-npm case.
-            if (!options.npm) {
-                componentDir = bowerConfig.read(options.root).directory;
-                const pathToLocalWct = path.join(options.root, componentDir, 'web-component-tester');
-                let version = undefined;
-                const mdFilenames = ['package.json', 'bower.json', '.bower.json'];
-                for (const mdFilename of mdFilenames) {
-                    const pathToMetadata = path.join(pathToLocalWct, mdFilename);
-                    try {
-                        if (!version) {
-                            version = require(pathToMetadata).version;
-                        }
-                    }
-                    catch (e) {
-                        // Handled below, where we check if we found a version.
-                    }
-                }
-                if (!version) {
-                    throw new Error(`
-The web-component-tester Bower package is not installed as a dependency of this project (${packageName}).
 
-Please run this command to install:
-    bower install --save-dev web-component-tester
-
-Web Component Tester >=6.0 requires that support files needed in the browser are installed as part of the project's dependencies or dev-dependencies. This is to give projects greater control over the versions that are served, while also making Web Component Tester's behavior easier to understand.
-
-Expected to find a ${mdFilenames.join(' or ')} at: ${pathToLocalWct}/
-`);
-                }
-                const allowedRange = require(path.join(__dirname, '..', 'package.json'))['--private-wct--']['client-side-version-range'];
-                if (!semver.satisfies(version, allowedRange)) {
-                    throw new Error(`
-    The web-component-tester Bower package installed is incompatible with the
-    wct node package you're using.
-
-    The test runner expects a version that satisfies ${allowedRange} but the
-    bower package you have installed is ${version}.
-`);
-                }
-                let hasWarnedBrowserJs = false;
-                additionalRoutes.set('/browser.js', function (request, response) {
-                    if (!hasWarnedBrowserJs) {
-                        console.warn(`
-
-          WARNING:
-          Loading WCT's browser.js from /browser.js is deprecated.
-
-          Instead load it from ../web-component-tester/browser.js
-          (or with the absolute url /components/web-component-tester/browser.js)
-        `);
-                        hasWarnedBrowserJs = true;
-                    }
-                    const browserJsPath = path.join(pathToLocalWct, 'browser.js');
-                    send(request, browserJsPath).pipe(response);
-                });
-            }
             const pathToGeneratedIndex = `/components/${packageName}/generated-index.html`;
             additionalRoutes.set(pathToGeneratedIndex, (_request, response) => {
                 response.set(DEFAULT_HEADERS);
