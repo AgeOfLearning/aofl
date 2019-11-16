@@ -1,8 +1,9 @@
-# Aofl-JS
+# Introduction
 
 > TL;DR
 >
 > AofL JS defines standards and conventions for developing web applications. It's built on top of Web Components and comes with a set of components, services, and development tools to make life easier.
+> v3.x focuses on developer experience and fast development builds.
 
 AofL JS is different from other frameworks in that it really is just a set of standards and conventions based on our approach to web application development. We believe in utilizing the ecosystem to its fullest potential and we encourage developers to learn web technologies (JavaScript, HTML, and CSS), as the browser manufactures intended. It goes without saying that no one framework/technique will cover all your use cases and you should use the right tool for the right job.
 
