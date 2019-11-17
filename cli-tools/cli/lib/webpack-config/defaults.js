@@ -30,7 +30,7 @@ module.exports = (root) => {
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        include: [path.join(root, 'src'), path.join(root, 'node_modules', '@aofl', 'unit-testing'), path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')],
+        include: [path.join(root, 'src'), path.join(root, 'node_modules', '@aofl', 'unit-testing'), path.join(root, 'node_modules', '.cache', 'AoflUnitTestingPlugin'), path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')],
         exclude: [],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
@@ -82,6 +82,7 @@ module.exports = (root) => {
         include: [
           path.join(root, 'src'),
           path.join(root, 'node_modules', '@aofl', 'unit-testing'),
+          path.join(root, 'node_modules', '.cache', 'AoflUnitTestingPlugin'),
           path.join(root, 'node_modules', '@aofl', 'polyfill-service'),
           path.join(root, 'node_modules', 'lit-element'),
           path.join(root, 'node_modules', 'lit-html'),
@@ -176,7 +177,7 @@ module.exports = (root) => {
       historyApiFallback: true,
     },
     unitTesting: {
-      root,
+      root: path.join(root, 'src'),
       output: '__build_tests',
       publicPath: '/__build_tests/',
       config: path.join(root, '.wctrc.json'),

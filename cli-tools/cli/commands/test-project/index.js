@@ -41,6 +41,7 @@ class TestProject {
     this.profile = profile;
     this.debug = debug;
     this.reporter = reporter;
+    this.skipAll = skipAll;
 
     if (debug) {
       this.reporter = new DebugReporter();
@@ -172,14 +173,14 @@ class TestProject {
         '**/' + this.config.unitTesting.output,
         '**/*.spec.js'
       ],
-      cwd: this.config.root
+      cwd: this.config.unitTesting.root
     });
 
     const cacheDir = findCacheDir({name: UnitTestingPlugin.name});
     const entryName = md5('cover-all');
     const jsOutputPath = path.join(cacheDir, entryName + '.spec.js');
     const content = files.reduce((acc, item) => {
-      acc += `import './${path.relative(path.dirname(jsOutputPath), path.join(this.config.root, item))}';\n`;
+      acc += `import './${path.relative(path.dirname(jsOutputPath), path.join(this.config.unitTesting.root, item))}';\n`;
       return acc;
     }, '');
 

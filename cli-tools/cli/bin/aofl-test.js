@@ -23,5 +23,5 @@ program
   .parse(process.argv);
 
 const testProject = new TestProject(program.config, program.watch, program.stats, program.profile,
-  program.debug, program.reporter);
+  program.debug, program.reporter, program.skipAll);
 testProject.init();
