@@ -34,7 +34,7 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
   ].filter((item, index, arr) => arr.indexOf(item) === index);
 
   const devDependencies = [
-    'eslint-config-aofl',
+    'eslint-config-aofl@2',
     'cross-env@6.0.3',
     'eslint@6.5.1',
     'ink-docstrap',
@@ -67,8 +67,8 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
   };
 
   if (commit) {
-    await Npm.installDependency(devDependencies, '-D', false, true);
-    await Npm.installDependency(prodDependencies, '-S', false, true);
+    await Npm.installDependency(devDependencies, '-D');
+    await Npm.installDependency(prodDependencies, '-S');
   }
 
   return result;

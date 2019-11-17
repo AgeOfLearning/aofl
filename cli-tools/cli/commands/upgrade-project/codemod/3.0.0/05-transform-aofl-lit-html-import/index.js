@@ -10,7 +10,7 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
   };
 
   const files = glob.sync(['**/*.js'], {
-    ignore: ['node_modules', 'coverage', 'api-docs', '__build', '__build_tests', '**/test'],
+    ignore: ['node_modules', 'coverage', 'api-docs', '__build', '__build_tests'],
     onlyFiles: true,
     cwd: projectRoot
   });
