@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## unreleased
+## [3.0.0](https://github.com/AgeOfLearning/aofl/compare/v2.0.7...v3.0.0) - 2019-11-16
 
 ### [Added]
 - Much faster dev builds
@@ -74,6 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - possible variable overrides
 
 ### [Security]
+- @aofl/unit-testing - re-implemented dependencies to fix npm audit issues
 
 ---
 ## [2.0.8] - 2019-07-09
