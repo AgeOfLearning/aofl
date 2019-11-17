@@ -29,7 +29,7 @@ class InitProject {
       this.repo = repos[base];
     }
 
-    this.cloneDir = path.resolve(os.tmpdir(), md5(this.repo));
+    this.cloneDir = path.resolve(os.tmpdir(), md5(this.repo.url));
   }
 
   static removeGitFromFiles(files = []) {
@@ -51,7 +51,7 @@ class InitProject {
    * @memberof InitProject
    */
   cloneRepo() {
-    return Git.clone(this.repo, this.cloneDir);
+    return Git.clone(this.repo.url, this.cloneDir, this.repo.ref);
   }
 
   /**
