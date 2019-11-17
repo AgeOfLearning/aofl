@@ -39,7 +39,6 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
     'eslint@6.5.1',
     'ink-docstrap',
     'jsdoc@3.6.3',
-    'jsdoc-babel@0.5.0',
     'tsd-jsdoc@2.4.0'
   ];
 

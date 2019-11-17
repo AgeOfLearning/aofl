@@ -1,8 +1,4 @@
 {
-  "plugins": ["../node_modules/jsdoc-babel"],
-  "babel": {
-    "plugins": ["@babel/plugin-syntax-dynamic-import"]
-  },
   "source": {
     "includePattern": ".*\\.js$",
     "excludePattern": "(node_modules|dist|examples|test|-loader|-polyfill)"

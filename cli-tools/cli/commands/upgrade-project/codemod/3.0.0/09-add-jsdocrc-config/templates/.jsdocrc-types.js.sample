@@ -1,10 +1,4 @@
-const babelrc = require('@aofl/cli-lib/modules/webpack-config/.babelrc.js');
-
 module.exports = {
-  "plugins": ["node_modules/jsdoc-babel"],
-  "babel": {
-    ...babelrc
-  },
   "source": {
     "include": ".",
     "includePattern": "\\.js$",
