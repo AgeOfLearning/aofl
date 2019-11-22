@@ -61,7 +61,7 @@ module.exports = (root) => {
         },
       },
       fonts: {
-        test: /\.(woff2?|ttf|eot|svg)[?|#]?.*/,
+        test: /\.(woff2?|ttf|eot\??|svg#).*/,
         include: [path.join(root, 'src')],
         exclude: [],
         fileLoader: {
