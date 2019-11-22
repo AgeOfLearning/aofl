@@ -8,6 +8,10 @@ const postcss = require('postcss');
 const atImport = require('postcss-import');
 const url = require('postcss-url');
 const glob = require('fast-glob');
+const ResolverFactory = require('enhanced-resolve/lib/ResolverFactory');
+const NodeJsInputFileSystem = require('enhanced-resolve/lib/NodeJsInputFileSystem');
+const CachedInputFileSystem = require('enhanced-resolve/lib/CachedInputFileSystem');
+
 
 const COMPONENT_REGEX = /\/\*\*?!\s*@aofl-component[^]*?\*\//igm;
 /**
@@ -23,6 +27,8 @@ module.exports = async function(source) {
     force: false,
     whitelist: []
   }, getOptions(this)); // eslint-disable-line
+
+  const compilationOptions = this._compilation.options;
 
   validationOptions(schema, options, '@aofl/webcomponent-css-loader');
   if (options.cache === false) {
@@ -51,9 +57,29 @@ module.exports = async function(source) {
 
 
     let combinedCss = '';
+
     const localCss = await postcss()
       .use(atImport({
-        root: path.dirname(this.resourcePath)
+        root: path.dirname(this.resourcePath),
+        resolve: (id, basedir) => {
+          const fileSystem = new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000);
+          const tildeAliases = Object.keys(compilationOptions.resolve.alias).reduce((acc, item) => {
+            acc[`~${item}`] = compilationOptions.resolve.alias[item];
+            return acc;
+          }, {});
+
+          const resolver = ResolverFactory.createResolver({
+            fileSystem,
+            ...compilationOptions.resolve,
+            useSyncFileSystemCalls: true,
+            alias: {
+              ...compilationOptions.resolve.alias,
+              ...tildeAliases
+            }
+          });
+
+          return resolver.resolveSync({}, basedir, id);
+        }
       }))
       .use(url({
         url: 'rebase'

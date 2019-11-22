@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## unreleased
 
 ### [Added]
+- @aofl/webcomponents-css-loader - Support ~alias style @import
+
 ### [Changed]
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
 - @aofl/cli - Webpack config fonts regex
+
 ### [Security]
 
 ---

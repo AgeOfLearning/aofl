@@ -25,6 +25,7 @@
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
     "fast-glob": "^3.0.4",
+    "enhanced-resolve": "^4.1.1",
     "loader-utils": "^1.2.3",
     "postcss": "^7.0.18",
     "postcss-import": "^12.0.1",
