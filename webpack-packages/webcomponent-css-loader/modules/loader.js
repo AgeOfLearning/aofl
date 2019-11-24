@@ -11,9 +11,9 @@ const glob = require('fast-glob');
 const ResolverFactory = require('enhanced-resolve/lib/ResolverFactory');
 const NodeJsInputFileSystem = require('enhanced-resolve/lib/NodeJsInputFileSystem');
 const CachedInputFileSystem = require('enhanced-resolve/lib/CachedInputFileSystem');
+const settingsParser = require('./settings-parser');
 
 
-const COMPONENT_REGEX = /\/\*\*?!\s*@aofl-component[^]*?\*\//igm;
 /**
  *
  * @param {*} source
@@ -23,9 +23,7 @@ const COMPONENT_REGEX = /\/\*\*?!\s*@aofl-component[^]*?\*\//igm;
 module.exports = async function(source) {
   const callback = this.async();
   const options = Object.assign({
-    cache: true,
-    force: false,
-    whitelist: []
+    cache: true
   }, getOptions(this)); // eslint-disable-line
 
   const compilationOptions = this._compilation.options;
@@ -35,15 +33,15 @@ module.exports = async function(source) {
     this.cacheable(false);
   }
 
-  COMPONENT_REGEX.lastIndex = 0;
-  const isComponent = COMPONENT_REGEX.exec(source.toString());
-  if (isComponent === null || process.env.NODE_ENV === 'development') {
-    callback(null, source);
-    return;
-  }
-
   try {
     const sourceStr = source.toString();
+    const userSettings = settingsParser(sourceStr);
+
+    if (userSettings === null || process.env.NODE_ENV === 'development') {
+      callback(null, source);
+      return;
+    }
+
     const addDependencies = (messages) => {
       if (Array.isArray(messages)) {
         for (let i = 0; i < messages.length; i++) {
@@ -117,10 +115,10 @@ module.exports = async function(source) {
         }
       ],
       rejected: true,
-      whitelist: options.whitelist
+      ...userSettings
     };
-    const purgeCss = new Purgecss(config);
 
+    const purgeCss = new Purgecss(config);
     const purified = purgeCss.purge();
 
     callback(null, purified[0].css);

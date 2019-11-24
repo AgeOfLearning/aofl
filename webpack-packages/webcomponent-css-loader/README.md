@@ -1,6 +1,6 @@
 # @aofl/webcomponent-css-loader
 
-The **\@aofl/webcomponent-css-loader** is a webpack loader that shares pruned global styles between web components.
+The **\@aofl/webcomponent-css-loader** is a webpack loader that inlines imported css in your component's bundle and prunes unused css.
 
 ## Getting started
 
@@ -17,16 +17,30 @@ module: {
         {
           loader: '@aofl/webcomponent-css-loader',
           options: {
-            path: path.resolve(__dirname, '..', 'templates', 'main', 'css', 'index.css'),
-            cache: true,
-            force: false, // when true prunes current css file even if no template.js or index.js files exist
-            whitelist: [
-              '.dynamic-class'
-            ]
+            cache: true
           }
         }
       ]
     }
   ]
+}
+```
+
+In addition to adding the loader to webpack config you must also place a comment block in css files that you want to be picked up by the loader. This allows us to set the pruning behavior per component/css file.
+
+For more information visit [Purgecss docs.](https://www.purgecss.com/configuration)
+```css
+/**!
+ * @aoflComponent
+ * @whitelist ['modal']
+ * @whitelistPatterns ['btn']
+ * @whitelistPatternsChildren ['alert']
+ * @keyFrames true
+ * @fontFace true
+ */
+@import "~Root/node_modules/bootstrap/dist/css/bootstrap.css";
+
+:host {
+  display: inline-block;
 }
 ```

@@ -17,13 +17,14 @@
     "webback",
     "loader"
   ],
-  "author": "Micah Blu",
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/AgeOfLearning/aofl/issues"
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
+    "doc-parser": "^0.4.9",
     "enhanced-resolve": "^4.1.1",
     "fast-glob": "^3.0.4",
     "loader-utils": "^1.2.3",
