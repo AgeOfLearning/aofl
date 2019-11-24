@@ -20,10 +20,10 @@
     "router",
     "client side router"
   ],
-  "author": "Micah Blu",
+  "author": "Arian Khosravi <arian.khosravi@aofl.com>",
   "contributors": [
     "Daniel Belisle <daniel.belisle@aofl.com>",
-    "Arian Khosravi <arian.khosravi@aofl.com>"
+    "Micah Blu <micah.blu@aofl.com>"
   ],
   "license": "MIT",
   "repository": {
