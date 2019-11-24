@@ -69,7 +69,9 @@ const parseFile = (content) => {
       if (d.kind === 'aoflcomponent') {
         aoflComponent = true;
       } else if (regexArr.indexOf(d.kind) > -1) {
-        parsedData[configMap[d.kind]].push(new RegExp(d.value));
+        for (let i = 0; i < d.value.length; i++) {
+          parsedData[configMap[d.kind]].push(new RegExp(d.value[i]));
+        }
       } else {
         parsedData[configMap[d.kind]] = d.value;
       }
