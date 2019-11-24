@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Implements `__()`, `_r()` and `_c()` functions for translations.",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "devDependencies": {
-    "@aofl/cli": "^3.2.0",
+    "@aofl/cli": "^3.2.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"
