@@ -229,3 +229,51 @@ class MyElement extends validationMixin(AoflElement) {
 ...
 }
 ```
+### pattern
+Test whether the value matches a pattern.
+
+```javascript
+import {pattern} from '@aofl/aofl-validate';
+
+class MyElement extends validationMixin(AoflElement) {
+...
+  get validators() {
+    return {
+      email: {
+        validEmail: pattern(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$/)
+      },
+      ...
+    };
+  }
+...
+}
+```
+### compare
+Compare values of 2 form fields based on a comparator function
+
+```javascript
+import {compare, isRequired} from '@aofl/aofl-validate';
+
+class MyElement extends validationMixin(AoflElement) {
+...
+  get validators() {
+    return {
+      questions: {
+        question1: {
+          isRequired
+        },
+        question2: {
+          isRequired,
+          unique: compare('questions.question1', (value, otherValue) => value !== otherValue)
+        },
+        question3: {
+          isRequired,
+          unique: compare('questions.question2', (value, otherValue) => value !== otherValue)
+        }
+      },
+      ...
+    };
+  }
+...
+}
+```

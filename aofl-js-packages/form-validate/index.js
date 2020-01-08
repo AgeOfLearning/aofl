@@ -7,17 +7,12 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import {validationMixin} from './modules/validation-mixin';
-import {isAllDigits} from './modules/is-all-digits';
-import {isEqual} from './modules/is-equal';
-import {minLength, maxLength} from './modules/length';
-import {isRequired} from './modules/is-required';
-
-export {
-  validationMixin,
-  isAllDigits,
-  isEqual,
-  isRequired,
-  minLength,
-  maxLength
-};
+export {validationMixin} from './modules/validation-mixin';
+export {isAllDigits} from './modules/is-all-digits';
+export {isEqual} from './modules/is-equal';
+export {minLength, maxLength} from './modules/length';
+export {isRequired} from './modules/is-required';
+export {ValidationFunction} from './modules/validation-function';
+export {ValidationProperty} from './modules/validation-property';
+export {pattern} from './modules/pattern';
+export {compare} from './modules/compare';
