@@ -104,6 +104,8 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   shouldUpdate(changedProperties) {
     if (changedProperties.has('src') && typeof this.src === 'string') {
       this.loadImage(this.src);
+      this.height = void 0;
+      this.width = void 0;
     }
     return true;
   }
@@ -126,11 +128,11 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    */
   imageLoaded(e) {
     if (typeof this.width === 'undefined') {
-      this.width = e.target.width;
+      this.width = e.target.naturalWidth;
     }
 
     if (typeof this.height === 'undefined') {
-      this.height = e.target.height;
+      this.height = e.target.naturalHeight;
     }
     this.dispatchEvent(new CustomEvent('load'));
   }

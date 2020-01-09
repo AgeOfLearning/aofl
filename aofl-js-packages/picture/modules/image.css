@@ -5,8 +5,10 @@
 }
 
 :host canvas {
-  width: 100%;
-  height: 100%;
+  width: inherit;
+  height: inherit;
+  max-height: inherit;
+  max-width: inherit;
 }
 
 :host img {

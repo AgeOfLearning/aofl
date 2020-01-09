@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @aofl/form-validate - compare validator
 - @aofl/form-validate - pattern validator
 ### [Changed]
+- @aofl/picture - img inherits height, width, max-height, max-width from aofl-img
+- @aofl/picture - Uses naturalWidth and naturalHeight of the image
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
