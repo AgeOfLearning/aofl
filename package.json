@@ -15,8 +15,8 @@
     "lint": "eslint .",
     "postinstall": "cd aofl-js-packages && npm i",
     "publish-all": "lerna publish",
-    "publish-all-beta": "lerna exec --stream -- npm publish --tag beta",
-    "publish-all-alpha": "lerna exec --stream -- npm publish --tag alpha",
+    "publish-all-beta": "lerna exec --stream --no-bail -- npm publish --tag beta",
+    "publish-all-alpha": "lerna exec --stream --no-bail -- npm publish --tag alpha",
     "test": "echo \"Error: no test specified\" && exit 1",
     "version-up": "lerna version --no-git-tag-version"
   },

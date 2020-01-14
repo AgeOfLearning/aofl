@@ -17,9 +17,9 @@ import {get} from '@aofl/object-utils';
  * @return {Function} True or false if the given value passes the
  *                   given regex test is valid.
  */
-const compare = (propPath, comparator) => {
-  return /** @this HTMLElement */ function compareValidator(value) {
-    const otherVal = get(this.target, propPath);
+const compare = /** @this HTMLElement */function(propPath, comparator) {
+  return (value, target) => {
+    const otherVal = get(target, propPath);
     if (typeof otherVal === 'undefined') { return false; }
     return comparator(value, otherVal);
   };

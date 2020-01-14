@@ -5,7 +5,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-
+import {get} from '@aofl/object-utils';
 /**
  * ValidationFunction implementation
  *
@@ -24,8 +24,12 @@ class ValidationFunction {
       target: {
         value: target
       },
-      propName: {
+      path: {
         value: path
+      },
+      propName: {
+        value: path.split('.').slice(0, -1)
+          .join('.')
       },
       resolve: {
         writable: true
@@ -71,14 +75,8 @@ class ValidationFunction {
    */
   validate() {
     this.observed = true;
-    let target = this.target; // @todo: move to object utils
-    const propChain = this.propName.split('.');
-
-    for (let i = 0; i < propChain.length - 1; i++) {
-      target = target[propChain[i]];
-    }
-
-    const promise = Promise.resolve(this.validatorFn(target));
+    const value = get(this.target, this.propName);
+    const promise = Promise.resolve(this.validatorFn(value, this.target));
 
     this.cachedPromise = promise;
 

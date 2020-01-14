@@ -26,6 +26,13 @@ module.exports = {
         },
         optimization: {
           runtimeChunk: false
+        },
+        externals: {
+          '@aofl/object-utils': {
+            commonjs2: '@aofl/object-utils',
+            commonjs: '@aofl/object-utils',
+            amd: '@aofl/object-utils',
+          }
         }
       }
     }
