@@ -171,6 +171,35 @@ class Npm {
 
     return Npm.__run(params, options);
   }
+
+  /**
+   *
+   * @static
+   * @param {string} [command='']
+   * @param {Boolean} [silent=false]
+   * @param {string[]} [args=[]]
+   * @param {object} [options={}]
+   * @return {Promise}
+   * @memberof Npm
+   */
+  static run(command, silent = false, args = [], options = {}) {
+    const params = ['run'];
+
+    if (typeof command === 'string') {
+      params.push(command);
+    }
+
+    if (silent) {
+      params.push('--silent');
+    }
+
+    if (args.length) {
+      params.push('--');
+      params.push(...args);
+    }
+
+    return Npm.__run(params, options);
+  }
 }
 
 module.exports.Npm = Npm;
