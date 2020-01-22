@@ -9,7 +9,7 @@
  * @memberof module:@aofl/map-state-properties-mixin
  * @pram {HtmlElement} superClass
  */
-export default (superClass) => {
+const mapStatePropertiesMixin = (superClass) => {
   /**
    * Mixes the superClass with MapStatePropertiesMixin. It subscribes to store on
    * connectedCallback and calls mapStateProperties before element is connected to
@@ -54,4 +54,8 @@ export default (superClass) => {
   }
 
   return MapStatePropertiesMixin;
+};
+
+export {
+  mapStatePropertiesMixin
 };

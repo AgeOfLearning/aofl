@@ -1,6 +1,6 @@
 {
   "name": "@aofl/form-validate",
-  "version": "3.2.2-alpha.3",
+  "version": "3.3.0",
   "description": "Form validation mixin for AoflElement",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -38,8 +38,8 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.2.2-alpha.3",
-    "@aofl/object-utils": "^3.2.2-alpha.3",
+    "@aofl/cli": "^3.3.0",
+    "@aofl/object-utils": "^3.3.0",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli-lib",
-  "version": "3.2.2-alpha.3",
+  "version": "3.3.0",
   "description": "Shared library for cli and various webpack plugins.",
   "main": "index.js",
   "scripts": {
@@ -30,7 +30,6 @@
     "esprima": "^4.0.1",
     "fast-glob": "^3.0.4",
     "js-string-escape": "^1.0.1",
-    "lodash.defaultsdeep": "^4.6.1",
     "rimraf": "^3.0.0",
     "schema-utils": "^2.2.0",
     "uniki": "^1.0.3",

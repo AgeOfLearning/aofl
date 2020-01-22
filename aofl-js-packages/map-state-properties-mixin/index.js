@@ -7,8 +7,4 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import mapStatePropertiesMixin from './modules/map-state-properties-mixin';
-
-export {
-  mapStatePropertiesMixin
-};
+export * from './modules/map-state-properties-mixin';
