@@ -2,6 +2,7 @@
 import {minLength} from '../modules/length';
 import {validationMixin} from '../modules/validation-mixin';
 import {isRequired} from '../modules/is-required';
+import {expect} from 'chai';
 
 describe('@aofl/aofl-validate/validationMixin', function() {
   before(function() {

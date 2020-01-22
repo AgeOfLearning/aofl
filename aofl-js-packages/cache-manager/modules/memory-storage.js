@@ -18,7 +18,7 @@ class MemoryStorage {
   static clear() {
     for (const key in MemoryStorage) {
       /* istanbul ignore else */
-      if (Object.hasOwnProperty.call(MemoryStorage, key)) {
+      if (Object.prototype.hasOwnProperty.call(MemoryStorage, key)) {
         MemoryStorage.removeItem(key);
       }
     }
@@ -35,7 +35,7 @@ class MemoryStorage {
     let length = 0;
     for (const key in MemoryStorage) {
       /* istanbul ignore else */
-      if (Object.hasOwnProperty.call(MemoryStorage, key)) {
+      if (Object.prototype.hasOwnProperty.call(MemoryStorage, key)) {
         length++;
       }
     }
@@ -51,7 +51,7 @@ class MemoryStorage {
    */
   static getItem(key) {
     /* istanbul ignore else */
-    if (Object.hasOwnProperty.call(MemoryStorage, key)) {
+    if (Object.prototype.hasOwnProperty.call(MemoryStorage, key)) {
       return MemoryStorage[key];
     }
     return null;

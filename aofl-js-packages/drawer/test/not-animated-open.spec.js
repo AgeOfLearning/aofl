@@ -1,6 +1,9 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
+import sinon from 'sinon';
+
 
 describe('@aofl/drawer#not-animated-open', function() {
   before(function() {
@@ -12,7 +15,7 @@ describe('@aofl/drawer#not-animated-open', function() {
 
     render(html`<aofl-drawer id="drawerNotAnimatedOpen" open>content</aofl-drawer>`, this.testContainer);
 
-      this.elementNotAnimatedOpen = this.testContainer.querySelector('#drawerNotAnimatedOpen');
+    this.elementNotAnimatedOpen = this.testContainer.querySelector('#drawerNotAnimatedOpen');
   });
 
   it('should trigger change when open attribute is removed', async function() {
@@ -28,5 +31,5 @@ describe('@aofl/drawer#not-animated-open', function() {
 
   after(function() {
     AoflDrawer.prototype.dispatchEvent.restore();
-  })
+  });
 });

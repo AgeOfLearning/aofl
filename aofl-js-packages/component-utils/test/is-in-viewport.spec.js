@@ -1,6 +1,7 @@
 /* eslint no-invalid-this: "off" */
 import {isInViewport} from '../modules/is-in-viewport';
 import {render, html} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/component-utils/src/is-in-viewport', function() {
   beforeEach(function() {

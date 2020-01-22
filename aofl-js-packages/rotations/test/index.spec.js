@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import {Rotations} from '../modules/rotations';
+import {expect} from 'chai';
 
 describe('@aofl/rotations/rotation', function() {
   beforeEach(function() {

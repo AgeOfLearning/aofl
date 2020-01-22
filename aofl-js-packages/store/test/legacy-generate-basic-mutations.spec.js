@@ -1,4 +1,5 @@
 /* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import {generateMutations} from '../modules/legacy/generate-basic-mutations';
 
 describe('@aofl/store/modules/generate-basic-mutations', function() {

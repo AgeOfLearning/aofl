@@ -52,6 +52,7 @@ module.exports = {
   name: 'Aofl JS',
   mode: 'stand-alone',
   build: {
+    devtool: 'none',
     // publicPath: '/__build_tests/',
     eslint: {
       options: {
@@ -62,7 +63,7 @@ module.exports = {
       replace: {
         include: [
           ...include,
-          path.join(__dirname, 'node_modules', '@aofl')
+          path.join(__dirname, 'node_modules', 'mocha')
         ],
       }
     },
@@ -79,9 +80,11 @@ module.exports = {
       replace: {
         include: [
           path.join(__dirname, 'node_modules', '@aofl'),
+          path.join(__dirname, '..', 'cli-tools', 'cli'),
           path.join(__dirname, 'node_modules', 'lit-element'),
           path.join(__dirname, 'node_modules', 'lit-html'),
           path.join(__dirname, 'node_modules', 'chai'),
+          path.join(__dirname, 'node_modules', 'sinon'),
           path.join(__dirname, 'node_modules', 'chai-as-promised'),
           path.join(__dirname, 'node_modules', '@webcomponents'),
           ...include
@@ -102,13 +105,16 @@ module.exports = {
     }
   },
   unitTesting: {
-    include: ['**/*.spec.js'],
-    config: process.env.SAUCE === '1'? path.join(__dirname, '.wct-sl.config.js'): process.env.SAUCE === '2'? path.join(__dirname, '.wct-sl-2.config.js'): path.join(__dirname, '.wctrc.json'),
+    root: __dirname,
+    host: process.env.TRAVIS? 'travis': 'lh',
+    port: 3035,
+    specs: ['**/*.spec.js'],
+    config: process.env.SAUCE_USERNAME? path.join(__dirname, '.wct-sl.config.js'): path.join(__dirname, '.wct.config.js'),
     polyfill: path.join(__dirname, '__config', 'polyfills.js'),
     exclude: [
       '**/__build*',
-      '**/node_modules',
-      '**/node_modules_sourced',
+      '**/node_modules/**',
+      '**/node_modules_sourced/**',
       '**/documentation{,!(/tests/**)}',
       '**/docs',
       '**/__config',
@@ -125,7 +131,8 @@ module.exports = {
       '**/*-plugin/**',
       '**/router/examples',
       '**/web-components',
-      '**/dist'
+      '**/dist',
+      '**/picture',
     ]
   }
 };

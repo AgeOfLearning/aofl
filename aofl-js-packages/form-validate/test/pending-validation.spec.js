@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
 import {validationMixin} from '../modules/validation-mixin';
+import {expect} from 'chai';
 
 describe('@aofl/aofl-validate/validationMixin', function() {
   before(function() {

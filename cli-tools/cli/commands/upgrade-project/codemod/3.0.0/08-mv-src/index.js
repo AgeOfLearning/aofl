@@ -2,7 +2,6 @@ const path = require('path');
 const {Git} = require('@aofl/cli-lib');
 const glob = require('fast-glob');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
 
 
 module.exports = async (projectRoot, projectInfo, commit = false) => {
@@ -34,7 +33,7 @@ module.exports = async (projectRoot, projectInfo, commit = false) => {
 
 
   if (commit) {
-    mkdirp.sync(path.join(projectRoot, 'src'));
+    fs.mkdirSync(path.join(projectRoot, 'src'), {recursive: true});
     try {
       fs.statSync(assets);
       await Git.mv(assets, path.join(projectRoot, 'src', 'assets'), true);

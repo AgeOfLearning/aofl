@@ -1,3 +1,5 @@
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import {PathUtils} from '../modules/path-utils';
 
 describe('@aofl/router/modules/path-utils', function() {

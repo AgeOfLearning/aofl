@@ -1,6 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import {deepFreeze} from '../modules/deep-freeze';
-
+import {expect} from 'chai';
 
 describe('object-utils#deepFreeze', function() {
   beforeEach(function() {

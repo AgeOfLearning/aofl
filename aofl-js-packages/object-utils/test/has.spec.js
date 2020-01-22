@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import {has} from '../modules/has';
+import {expect} from 'chai';
 
 describe('object-utils#has', function() {
   beforeEach(function() {

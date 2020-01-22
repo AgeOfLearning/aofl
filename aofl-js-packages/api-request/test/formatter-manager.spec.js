@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import FormatterManager from '../modules/formatter-manager';
+import {expect} from 'chai';
 
 describe('@aofl/api-request/src/formatter-manager', function() {
   beforeEach(function() {

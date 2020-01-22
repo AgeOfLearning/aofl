@@ -1,6 +1,7 @@
-/* eslint-disable */
-import AoflDrawer from '../modules/drawer';
+/* eslint no-invalid-this: "off" */
+import '../modules/drawer';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/drawer#animated-close', function() {
   beforeEach(function() {
@@ -33,18 +34,18 @@ describe('@aofl/drawer#animated-close', function() {
   });
 
   it('Should remove animation classes after opening', async function() {
-      const elementDrawerAnimatedClosed = this.elementDrawerAnimatedClosed;
-      await elementDrawerAnimatedClosed.updateComplete;
+    const elementDrawerAnimatedClosed = this.elementDrawerAnimatedClosed;
+    await elementDrawerAnimatedClosed.updateComplete;
 
-      await new Promise((resolve) => {
-        elementDrawerAnimatedClosed.addEventListener('drawer-toggle', function listener() {
-          elementDrawerAnimatedClosed.removeEventListener('drawer-toggle', listener);
-          expect(elementDrawerAnimatedClosed.classList.contains('ease-out')).to.be.true;
-          resolve();
-        });
-
-        elementDrawerAnimatedClosed.setAttribute('open', '');
+    await new Promise((resolve) => {
+      elementDrawerAnimatedClosed.addEventListener('drawer-toggle', function listener() {
+        elementDrawerAnimatedClosed.removeEventListener('drawer-toggle', listener);
+        expect(elementDrawerAnimatedClosed.classList.contains('ease-out')).to.be.true;
+        resolve();
       });
+
+      elementDrawerAnimatedClosed.setAttribute('open', '');
+    });
   });
 
   afterEach(function() {

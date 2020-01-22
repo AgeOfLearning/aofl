@@ -22,26 +22,22 @@ jobs:
 
     - stage: branch-unit-test
       name: "Unit Test"
+      addons:
+        sauce_connect: true
       env:
         - secure: "oKFvbx8J3/mNWbCLTK0VVdQJy2YiITeVfcNgwKwprTuxiXi7qddjQKidACMr+Xq45cu5ptVy3NeCKNT+Rc2XIlBVbNhkqV0l8q3ArgnS83ZF+DNHVM5vNi0kkl7qI2rbZqrq5SNXZ+cPI3fVatSzj/fGO6sKmskol4OODex03vsdgBPeNrRxfRFUvhgeLvyItlrxUs7FTRSTDOMK9CAtmGRZtcFA5DfjWwijfijslNMY4RCFnWthDlXKPFx4eXD73T77db4a8zbH5TZLxWM8AvMogmf9XZNvPxKwKoMiyCzX5eNoMzY8aSaIHYK0dkijQ6J6F1/YCtREKLr7G4S51U4IfxsoFXTVTeeCY+W16MGqkyoVwYwtn2GZuHCqhtJb2RUOe5n/2UTaEhL7yKqAvaomB07tM/kh+lWrdrJHkN9deFCb5cOcbMK1vdDkhwYsNuf/peJ9arM9Di8v9FoAHK2ZaA/w4UQAhdyWjbVF4Ph+HgluXlkHvcA+2hIDM/ySUR+3Ndog2p87ZMreqARw1oFmKnQX2+Z7GehRJyVAwLDnHLPGn1baCrTMoUjiYWPOVqHEk9RNR2OzbQnrDGitC43caMnY3e82b7slURHMgOP3ujR+XjE8C7ROmQKR4WD5CKdV18RZALai0HFWfhrbVSx5NbtXSR+8J9Q6K6WjlDk="
         - secure: "QbQjmVcmQQ6jpE6nhKX0IKSCcsYKPwr/v2ujoipB5Sepa7Grt/XCPbE0JGPif/CMMBOQv+ydmawzcycIZUFVdy5gjkEec7RNQjuH5FWGIopQ0509s0NklP498qWUrS5a3f4Ukhq4gzMIV5EQWlLrPE3KCWc3K/rcqWDlq6O+1/IjhrCXnCL3bhsnNC9SUcVBdVI48OAp0f8ZgRCk4+1uBTSh1VyPu0Z5WlAlknbW+/kn8MAIebunQvuihMCUfOYJaYwe0NpQ1diddsp7y/Poso96zac9RYjvLK2qHgrZwMeKW9/BI3jOFMMgWHU4PWabIhfnWuqddsLdBVNLTLIrSSIelheH4V/4pFLYe6ivG9bZQmXp6ah7Fz06dI8dEN5I0qNQ/uhtB+O1wChzSZCaytrFq/Xrs/Az5hZdxzTyTjkoNxECQ84SKsewH2tq9XK32wgbIYAJg6TiC1fBBqY3iI7hQgdHc4OYBX00+sf3LiY7zS58KxuGG1To4zEnLSAReH0Bybt+WGDMBU0sNmpZo2+vzdPxPOXG4rAHIcIogNeSje9ipbgo5bEi4UushK/eYi2r4faQoGuyNXUKCCcLFZ+FJvIWd7tT85CPaB/6r2n8lC0AY364x4XYC0VA7pjuZsoGs/OudGn64zaWQTBloXWM3WfTYX0DLMIeZvrDRyY="
-      script: npm run test:sl && npm run test:sl:2
+      script: JOB_ID=$TRAVIS_BUILD_NUMBER npm run test:sl
 
     - stage: master-unit-test
       name: "Unit Test"
+      addons:
+        sauce_connect: true
       env:
         - secure: "G3aoIiZY4vJrxPs3u69ZFFfatozB/RCpljqDdObGCdWvvTg2Y0TBwqTYYxnQiHKqcagQ52FT+VlIWgg93dAbcdhWg/zDJJIVm9LrFT8SFWhKEA5oYlkZ8iLXPQdXE+UmkUGsGVDFZen787MkC0b0GFYi1gKn0LgxjKI/9gsoaZ9jdfeCGJhlWzBG/kjeuRs2nih6ai2tRY3uGwhYunFvL8UdTFbD3ATfyus4YjV/zLOHPcYaWeZPkGtkDnAL0/P6zW9/T7u3M362opvoLhl0BXV1wy/OmsH6s6dLCvQMg96H5YrYrYOado6XRY9QFBlwmL6mIcJx7BOj07QqocFG3VeoSr1vV05S9Kxsh5jMGmIIijsOX5mNTtTWheJbPfqPzU1VP0pPz+ERLAYywnMP4zs0yxhU9rDA0e1/XDdr+R18U6oCajTVgQ+/eMBG5pHw8JeuaEhUJYv5P30db4ZUOEhP0R6qIkL7jXQdatrTkHIPWS/ck6gVFFlotvLuJQBnmTo5oHVIUCSyHXE9TtdbNSgl1E1Gy+ExaaYvBxm9CMXmhg393ugEIcTR6PdaIDXfdH0GmWZ/09+qkGIohjJ/kvqImQPMYh1g1zwEsmPfWHVuMwyMB79CLDnEgyEcJFySyIYoIWOVMBdPOI+D3wniwVRtQNf0fEpum8Bd8a9l1GQ="
         - secure: "rmM3ZeKvEENvMakI5GVK26W02mBchDRupv3ZcxJmsb8W0319jGboP44R5LCwvbcNiPLco/KKL5/PG8PtsK/kEm8PpVYpolSufVYS59u3xqZ9MYHOmKVO+c251/Xs6lOMiFpo9Ei2khh59SuU1bFNoIqMdt2mDgZoMfT/wEyJEAUdh5uMmfkAzXxJbukvnCZl9CxG+9Yi7xtGlCeK0SXjqLACwGG1gDZsCTzGZMuxkATgyBYbuAA2alkjh6ZRkllHZgh7/6XeZoElnXNmBRxwhW3WGvt3/qpxbyqotPyQn2cJ/9Sz+4huSlM3w1Zf2zK5Vc+GIIT1CPsY5GLDp6Lkai81kpWlmDvOtgW81+aqjuXntZkjMBMmmpsr9a5sBlitzrZQ6RLj75j5t41/Q0+a6jmm4u8VGNe7f8TNUY6to03s0zwKKVmrpkgc3S6mGZawHNbQLnma3GcQUr3a1TuOGezg6CaQ8ZYgHKxGJxf0ScyHGyePYtqi2LUOfSy71vGCAYpyptS0CfIxJI4+MOFCrf1rqU4JOPAKFIdlan+dfQA2Gict9Z8VPoEuLK9Ed876bDGO+QLtosCImYL7+XGeWMlzrU+8LTsZROvs2hFOiHwOAIND7Isc5kk5uPc9xw/gLJdtX1QPa6aYDMvH4fCPbxrNniMhphpm0OZFjjpPIhc="
-      script: npm run test:sl && npm run test:sl:2
-
-    - stage: coverage
-      name: CodeCov Report
-      addons:
-        chrome: stable
-        firefox: latest
-      env:
         - secure: "tRqyCCBE9HE+RR0S0lk8QQo+w94qOZ7VPZ5LfJurLO10DApCwHVEBzGvMy7G5aIAz93aF/saOxUQI/2FXPGGx/28hYxgo4FKzEC9YcnQTbxZaxR0A4kuk+qP+iP6laTUXJgZIhrp3r7SsY92Pl+iQ0JS6CdZjLGXK/pn94QOcNdZLCW49VjAfcI92IfLRjWLIZNpWGgdoCicJQOIAdL+siMd1v/kUbmGAaHDSRJw0AOfdYfIHxZl9Hkri1DglV/y3V08B9zxTXSsJ+51dd7OT27zJXyGIGUOAu25WGqrRBmf2uRZnSWZQyPzwof4Sz64WLVrV4RhiZWC7JpZW3SBRdKcsJD6ls7ilF3gK0wINTa/Yrw2jSu8GF6ZN6t3izmrc3x2qdaRO3IkSXPwqPIxk0K0BCpOT4MVDFfVyqLEuZK9xSAj8PFT8WFusv3Q3QVEAQyUzxnr1Scj9P/28bCiEEtHtpNLt7jGMoguTKJXAA6vA2kVncAFMoOMQ/E3f7MWjvqo+1ktLp++ymwZUS+PJEPmSKjtDsLKv0I6LzquAnfXWw5frWxnRQI4CbAZpBu/Q2hYt+O98y4sts6X67R6kkZGCSa5XkSaljvYdaBQinhhsxEBqjjA1JNbfbdD/1UV4dhvOtJ0EukG5PndaVo51gQjpkCUtIq62qZ1T1PDAok="
-      script: npm test -- --debug && npx codecov -f ./coverage/lcov.info
+      script: JOB_ID=$TRAVIS_BUILD_NUMBER npm run test:sl && npx codecov -f ./logs/coverage/lcov.info
 
 stages:
   - lint
@@ -51,5 +47,4 @@ stages:
     if: (fork = false) AND (branch != master)
   - name: master-unit-test
     if: (fork = false) AND (branch = master)
-  - name: coverage
-    if: (fork = false) AND (branch = master)
+

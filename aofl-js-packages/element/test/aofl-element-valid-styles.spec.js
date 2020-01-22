@@ -1,6 +1,7 @@
 /* eslint no-invalid-this: "off" */
 import {AoflElement} from '../modules/aofl-element';
 import {render, html} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/element >> valid style', function() {
   before(function() {

@@ -9,7 +9,8 @@ const {ProjectHelper} = require('./modules/project-helper');
 const {TerminalHelper} = require('./modules/terminal-helper');
 const {TtTag} = require('./modules/tt-tags');
 const {DebugReporter} = require('./modules/webpackbar-debug-reporter');
-
+const {defaults, defaultsDeep} = require('./modules/defaults');
+const {PrepareConfig} = require('./modules/wdio-config/wdio-prepare-config');
 
 module.exports.CommanderHelper = CommanderHelper;
 module.exports.environments = environments;
@@ -24,3 +25,6 @@ module.exports.ProjectHelper = ProjectHelper;
 module.exports.TerminalHelper = TerminalHelper;
 module.exports.TtTag = TtTag;
 module.exports.DebugReporter = DebugReporter;
+module.exports.defaults = defaults;
+module.exports.defaultsDeep = defaultsDeep;
+module.exports.WdioPrepareConfig = PrepareConfig;

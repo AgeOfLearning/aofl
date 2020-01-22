@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off" */
 import {deepAssign} from '../modules/deep-assign';
+import {expect} from 'chai';
 
 describe('object-utils#deepAssign', function() {
   beforeEach(function() {

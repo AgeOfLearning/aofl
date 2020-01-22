@@ -108,7 +108,7 @@ const getEsLintRules = (build, defaultBuild) => {
         {
           loader: 'eslint-loader',
           options: {
-            cache: build.cache,
+            cache: false,
             ...build.eslint.options
           }
         }

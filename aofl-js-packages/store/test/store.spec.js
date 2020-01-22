@@ -1,3 +1,5 @@
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import {Store} from '../modules/store';
 
 describe('@aofl/store/store', function() {

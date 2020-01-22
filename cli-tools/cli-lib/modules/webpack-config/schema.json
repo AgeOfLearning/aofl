@@ -359,27 +359,40 @@
     },
     "unitTesting": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "root": {
           "type": "string"
         },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        },
         "output": {
           "type": "string"
         },
-        "publicPath": {
-          "type": "string"
+        "specs": {
+          "type": "array"
+        },
+        "suites": {
+          "type": "object"
+        },
+        "nycArgs": {
+          "anyOf": [
+            {"type": "array"},
+            {"type": "boolean"}
+          ]
+        },
+        "mocha": {
+          "type": "object"
         },
         "config": {
           "type": "string"
         },
-        "maxChunks": {
-          "type": "number"
-        },
         "polyfill": {
           "type": "string"
-        },
-        "include": {
-          "type": "array"
         },
         "exclude": {
           "type": "array"

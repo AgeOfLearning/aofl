@@ -15,7 +15,6 @@ const config = {
   globals: {
     getTestContainer: true,
     cleanTestContainer: true,
-    sinon: true,
     Promise: true,
     Symbol: true,
     Map: true,

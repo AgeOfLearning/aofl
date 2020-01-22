@@ -1,5 +1,7 @@
 /* eslint no-invalid-this: "off" */
 import {Polyfill} from '../modules/polyfill';
+import {expect} from 'chai';
+import sinon from 'sinon';
 
 describe('@aofl/polyfill-service/polyfill', function() {
   context('supported()', function() {

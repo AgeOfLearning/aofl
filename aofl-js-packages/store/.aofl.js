@@ -43,31 +43,5 @@ module.exports = {
         }
       }
     }
-  },
-  unitTesting: {
-    include: ['**/*.spec.js'],
-    config: process.env.SAUCE === '1'? path.join(__dirname, '.wct-sl.config.js'): path.join(__dirname, '.wctrc.json'),
-    polyfill: path.join(__dirname, '__config', 'polyfills.js'),
-    exclude: [
-      '**/__build*',
-      '**/node_modules',
-      '**/node_modules_sourced',
-      '**/documentation{,!(/tests/**)}',
-      '**/docs',
-      '**/__config',
-      '**/*-instance/**',
-      '**/*-polyfill/**',
-      'sw.js',
-      'coverage',
-      '.wct.config.js',
-      '**/examples/**',
-      '**/*.sample.js',
-      '**/cli',
-      '**/*-loader/**',
-      '**/*-plugin/**',
-      '**/router/examples',
-      '**/web-components',
-      '**/dist'
-    ]
   }
 };

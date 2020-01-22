@@ -2,6 +2,7 @@ import {AoflElement} from '../modules/aofl-element';
 import {customElement, property} from '../modules/decorators';
 import {Sdo, state, storeInstance} from '@aofl/store';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
 
 class CountSdo extends Sdo {
   static namespace = 'count';

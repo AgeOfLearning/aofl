@@ -1,4 +1,5 @@
 import {I18n} from '../modules/i18n';
+import {expect} from 'chai';
 
 context('I18n', function() {
   before(/** @this */ function() {

@@ -1,2 +1,7 @@
 examples
 test
+.aofl.js
+.browserslistrc
+.gitignore
+.jsdocrc.json
+README.md

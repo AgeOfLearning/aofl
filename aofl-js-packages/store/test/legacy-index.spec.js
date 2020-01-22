@@ -1,4 +1,6 @@
 /* eslint no-invalid-this: "off" */
+import sinon from 'sinon';
+import {expect} from 'chai';
 import Store from '../modules/legacy/store';
 import {deepAssign} from '@aofl/object-utils';
 

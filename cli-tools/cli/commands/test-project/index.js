@@ -5,12 +5,10 @@ const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
 const {environments, DebugReporter, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
 const glob = require('fast-glob');
-const md5 = require('tiny-js-md5');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const jsStringEscape = require('js-string-escape');
 const findCacheDir = require('find-cache-dir');
 const UnitTestingPlugin = require('@aofl/unit-testing-plugin');
-const mkdirp = require('mkdirp');
 const {loadConfig} = require('../../lib/webpack-config');
 
 const defaultEntries = {
@@ -18,7 +16,6 @@ const defaultEntries = {
   'test-vendors': path.join(__dirname, 'test-vendors', 'index.js'),
   'mocha': path.join(__dirname, 'test-vendors', 'mocha.js')
 };
-
 /**
  *
  *
@@ -34,7 +31,11 @@ class TestProject {
    * @param {Boolean} profile
    * @param {Boolean} debug
    */
-  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy', skipAll = false) {
+  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy', skipAll = false, specs = [], suites = []) {
+    if (typeof process.env.NODE_ENV === 'undefined') {
+      process.env.NODE_ENV = environments.TEST;
+    }
+
     this.configPath = path.resolve(config);
     this.watch = watch;
     this.stats = stats;
@@ -42,27 +43,26 @@ class TestProject {
     this.debug = debug;
     this.reporter = reporter;
     this.skipAll = skipAll;
+    this.config = loadConfig(this.configPath);
+    this.setSuites(specs, suites);
+
 
     if (debug) {
       this.reporter = new DebugReporter();
     }
 
-    if (typeof process.env.NODE_ENV === 'undefined') {
-      process.env.NODE_ENV = environments.TEST;
-    }
 
     const reporters = [this.reporter];
     this.profile && reporters.push('profile');
     this.stats && reporters.push('stats');
 
-    this.config = loadConfig(this.configPath);
     if (typeof this.config.unitTesting.polyfill !== 'undefined') {
       const polyfillPath = this.config.unitTesting.polyfill;
       this.config.webpack.module.rules.unshift({
         test: defaultEntries['test-vendors'],
         include: path.dirname(defaultEntries['test-vendors']),
         use: {
-          loader: path.join(__dirname, 'loader.js'),
+          loader: path.join(__dirname, 'polyfills-loader.js'),
           options: {
             polyfillPath
           }
@@ -70,9 +70,21 @@ class TestProject {
       });
     }
 
+    if (typeof this.config.unitTesting.mocha !== 'undefined') {
+      this.config.webpack.module.rules.unshift({
+        test: defaultEntries['test-vendors'],
+        include: path.dirname(defaultEntries['test-vendors']),
+        use: {
+          loader: path.join(__dirname, 'mocha-loader.js'),
+          options: {
+            mocha: this.config.unitTesting.mocha
+          }
+        }
+      });
+    }
+
     const entries = {
-      ...TestProject.getEntries(this.config),
-      ...this.getCoverAllFiles()
+      ...this.getEntries()
     };
 
     this.config.build.entry = {...entries, ...defaultEntries};
@@ -80,21 +92,21 @@ class TestProject {
     if (this.watch) {
       this.config.webpack.devtool = 'none';
     }
-    // this.config.webpack.output.path = path.join(this.config.root, this.config.unitTesting.output);
-    // this.config.webpack.output.publicPath = '';
+
     this.config.webpack.performance = {hints: false};
-
     this.addHtmlWebpackPlugin(entries);
-
 
     this.config.webpack.plugins.push(new UnitTestingPlugin({
       root: this.config.root,
       config: this.config.unitTesting.config,
-      include: this.config.unitTesting.include,
       exclude: this.config.unitTesting.exclude,
       output: this.config.unitTesting.output,
+      host: this.config.unitTesting.host,
+      port: this.config.unitTesting.port,
       entries: Object.keys(entries),
-      watch: this.watch
+      watch: this.watch,
+      nycArgs: this.config.unitTesting.nycArgs,
+      debug: this.debug
     }));
 
     this.config.webpack.plugins.push(new WebpackBar({
@@ -103,18 +115,80 @@ class TestProject {
       color: '#1e90ff',
       reporters
     }));
+
+    this.config.webpack.optimization = {
+      runtimeChunk: 'single',
+      splitChunks: {
+        cacheGroups: {
+          vendors: false,
+          default: false
+        }
+      }
+    };
+
+    // fix mocha import
+    this.config.webpack.module.exprContextCritical = false;
+    this.config.webpack.node = this.config.webpack.node || {};
+    this.config.webpack.node.fs = 'empty';
   }
 
-  static getEntries(config) {
-    const entries = glob.sync(config.unitTesting.include, {
-      ignore: config.unitTesting.exclude,
-      cwd: config.root
+  setSuites(specs = [], suites = []) {
+    this.suites = {};
+    if (suites.length > 0) {
+      const patterns = [];
+
+      for (let i = 0; i < suites.length; i++) {
+        patterns.push(...this.config.unitTesting.suites[suites[i]]);
+        this.suites[suites[i]] = glob.sync(patterns, {
+          ignore: this.config.unitTesting.exclude,
+          cwd: this.config.unitTesting.root
+        });
+      }
+    } else if (specs.length === 0) {
+      this.suites['default_suite'] = glob.sync(this.config.unitTesting.specs, { // eslint-disable-line
+        ignore: this.config.unitTesting.exclude,
+        cwd: this.config.unitTesting.root
+      });
+    } else {
+      this.suites['default_suite'] = specs; // eslint-disable-line
+    }
+
+    if (!this.skipAll) {
+      this.suites['total_coverage_suite'] = this.getCoverAllFiles(); // eslint-disable-line
+    }
+  }
+
+  getEntries(config, specs = []) {
+    const cacheDir = findCacheDir({name: '@aofl/cli-test', create: true});
+    const entries = {};
+
+    for (const suite in this.suites) {
+      if (!Object.prototype.hasOwnProperty.call(this.suites, suite)) continue;
+      const suiteFileName = suite + '.spec.js';
+      const specPath = path.join(cacheDir, suiteFileName);
+      const spec = this.suites[suite].reduce((acc, item) => {
+        acc += `import './${path.relative(path.dirname(specPath), path.join(this.config.unitTesting.root, item))}';\n`;
+        return acc;
+      }, '');
+      fs.writeFileSync(specPath, spec, {encoding: 'utf-8'});
+      entries[suiteFileName] = specPath;
+    }
+
+    return entries;
+  }
+
+  getCoverAllFiles() {
+    if (this.watch || this.skipAll) return [];
+    const files = glob.sync('**/*.js', {
+      ignore: [
+        ...this.config.unitTesting.exclude,
+        '**/' + this.config.unitTesting.output,
+        '**/*.spec.js'
+      ],
+      cwd: this.config.unitTesting.root
     });
 
-    return entries.reduce((acc, item) => {
-      acc[md5(item)] = path.join(config.root, item);
-      return acc;
-    }, {});
+    return files;
   }
 
   addHtmlWebpackPlugin(entries) {
@@ -164,38 +238,15 @@ class TestProject {
       }));
     }
   }
-
-  getCoverAllFiles() {
-    if (this.watch || this.skipAll) return;
-    const files = glob.sync(['**/*.js'], {
-      ignore: [
-        ...this.config.unitTesting.exclude,
-        '**/' + this.config.unitTesting.output,
-        '**/*.spec.js'
-      ],
-      cwd: this.config.unitTesting.root
-    });
-
-    const cacheDir = findCacheDir({name: UnitTestingPlugin.name});
-    const entryName = md5('cover-all');
-    const jsOutputPath = path.join(cacheDir, entryName + '.spec.js');
-    const content = files.reduce((acc, item) => {
-      acc += `import './${path.relative(path.dirname(jsOutputPath), path.join(this.config.unitTesting.root, item))}';\n`;
-      return acc;
-    }, '');
-
-    mkdirp.sync(cacheDir);
-    fs.writeFileSync(jsOutputPath, content, {encoding: 'utf-8'});
-
-    return {
-      [entryName]: jsOutputPath
-    };
-  }
-
   /**
    *
    */
-  init() {
+  async init() {
+    await new Promise((resolve) => { // wait for mac to update cache file :`(
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
     let compiler = null;
     try {
       compiler = webpack(this.config.webpack);

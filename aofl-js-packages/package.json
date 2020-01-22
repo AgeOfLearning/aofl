@@ -9,8 +9,7 @@
     "env:dev": "cross-env NODE_ENV=development",
     "env:test": "cross-env NODE_ENV=test",
     "test": "npm run env:test -- npx aofl test",
-    "test:sl": "cross-env SAUCE=1 npm test -- --debug --skip-all",
-    "test:sl:2": "cross-env SAUCE=2 npm test -- --debug --skip-all",
+    "test:sl": "npm test -- --debug",
     "start": "echo 'Nothing to see here ;)'",
     "docs": "npx jsdoc -c .jsdocrc.json .",
     "lint": "eslint ."
@@ -20,7 +19,7 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^3.0.0",
+    "@aofl/cli": "^3.5.0-beta.6",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/drawer": "file:drawer",
     "@aofl/element": "file:element",
@@ -40,8 +39,7 @@
     "@aofl/server-environment": "file:server-environment",
     "@aofl/store": "file:store",
     "@aofl/uuid": "file:uuid",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@webcomponents/webcomponentsjs": "^2.3.0",
+    "@webcomponents/webcomponentsjs": "^2.4.1",
     "codecov": "^3.1.0",
     "core-js": "^3.2.1",
     "cross-env": "^5.2.0",
@@ -54,6 +52,7 @@
     "lit-element": "2.2.1",
     "lit-html": "1.1.2",
     "sinon": "^7.5.0",
+    "tiny-js-md5": "^1.1.2",
     "tsd-jsdoc": "^2.4.0"
   }
 }

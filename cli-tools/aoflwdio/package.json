@@ -1,0 +1,33 @@
+{
+  "name": "@aofl/wdio",
+  "version": "3.5.0-beta.6",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AgeOfLearning/aofl.git"
+  },
+  "author": "Alex Dinari <alex.dinari@aofl.com>",
+  "license": "MIT",
+  "bin": {
+    "aoflwdio": "./bin/aoflwdio.js"
+  },
+  "dependencies": {
+    "@aofl/cli-lib": "^3.5.0-beta.6",
+    "@wdio/cli": "^5.16.16",
+    "@wdio/local-runner": "^5.16.15",
+    "@wdio/mocha-framework": "^5.16.15",
+    "@wdio/spec-reporter": "^5.16.11",
+    "@wdio/sync": "^5.18.6",
+    "chai": "^4.2.0",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "find-cache-dir": "^3.0.0"
+  }
+}

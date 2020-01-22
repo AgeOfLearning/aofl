@@ -2,7 +2,8 @@
 import {CacheManager} from '../modules/cache-manager';
 import {cacheTypeEnumerate} from '../modules/cache-type-enumerate';
 import {MemoryStorage} from '../modules/memory-storage';
-
+import {expect} from 'chai';
+import sinon from 'sinon';
 
 describe('@aofl/cache-manager#CacheManager', function() {
   const namespace = 'ns';

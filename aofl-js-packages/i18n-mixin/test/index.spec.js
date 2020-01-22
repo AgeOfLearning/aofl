@@ -1,8 +1,9 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import i18nMixin from '../modules/i18n-mixin';
 import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
 import {until} from 'lit-html/directives/until';
+import {expect} from 'chai';
 
 describe('@aofl/i18n-mixin', function() {
   before(function() {
@@ -31,12 +32,12 @@ describe('@aofl/i18n-mixin', function() {
       })
     };
     const templates = {
-      default: {
+      'default': {
         template(ctx, html) {
           return html`
             <h1>${until(ctx.__('<tt-1>', 'Greeting and salutations!'), '...')}</h1>
             <h2>${until(ctx._r(ctx.__('<tt-2>', 'How are you %r1%'), ctx.person))}</h2>
-          `
+          `;
         },
         styles: []
       },
@@ -46,10 +47,10 @@ describe('@aofl/i18n-mixin', function() {
             <h1>German version</h1>
             <h2>${until(ctx._r(ctx.__('<tt-3>', 'How are you %r1%'), ctx.person))}</h2>
             <p>${until(ctx._r(ctx._c('<tt-4>', 'There %c1%', {
-              1: 'is one person here and that person is %r1%',
-              2: 'are two people here',
-              '%other%': 'are many people here!'
-            }, ctx.count), ctx.person))}</p>
+    '1': 'is one person here and that person is %r1%',
+    '2': 'are two people here',
+    '%other%': 'are many people here!'
+  }, ctx.count), ctx.person))}</p>
           `;
         },
         styles: []
@@ -65,7 +66,7 @@ describe('@aofl/i18n-mixin', function() {
       static get properties() {
         return {
           count: Number
-        }
+        };
       }
       static get is() {
         return 'i18n-mixin-element';
@@ -73,7 +74,7 @@ describe('@aofl/i18n-mixin', function() {
       render() {
         return super.render(templates);
       }
-    };
+    }
     class MyCompNoAttrs extends i18nMixin(AoflElement) {
       constructor() {
         super();
@@ -84,7 +85,7 @@ describe('@aofl/i18n-mixin', function() {
       static get properties() {
         return {
           foo: String
-        }
+        };
       }
       static get is() {
         return 'i18n-mixin-element-no-attrs';
@@ -92,10 +93,9 @@ describe('@aofl/i18n-mixin', function() {
       render() {
         return super.render(templates);
       }
-    };
+    }
     customElements.define(MyComp.is, MyComp);
     customElements.define(MyCompNoAttrs.is, MyCompNoAttrs);
-
   });
 
   beforeEach(function() {

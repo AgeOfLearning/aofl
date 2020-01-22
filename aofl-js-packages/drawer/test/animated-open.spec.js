@@ -1,6 +1,7 @@
-/* eslint-disable */
-import AoflDrawer from '../modules/drawer';
+/* eslint no-invalid-this: "off" */
+import '../modules/drawer';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/drawer#animated-open', function() {
   beforeEach(function() {

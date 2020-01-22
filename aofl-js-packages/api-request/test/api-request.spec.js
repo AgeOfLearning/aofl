@@ -1,5 +1,8 @@
 /* eslint no-invalid-this: "off" */
 import ApiRequest from '../modules/api-request';
+import {expect} from 'chai';
+import sinon from 'sinon';
+
 describe('@aofl/api-request/modules/api-request', function() {
   before(function() {
     this.formatter = {

@@ -1,6 +1,6 @@
 const parse5 = require('parse5');
 const {getStyleNodes, purifyStyles, getStyleFreeHtml, getScriptNodes} = require('../purify-internal-style');
-const defaultsDeep = require('lodash.defaultsdeep');
+const {defaultsDeep} = require('@aofl/cli-lib');
 
 /**
  *

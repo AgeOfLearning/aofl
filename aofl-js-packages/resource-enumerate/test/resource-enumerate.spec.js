@@ -1,6 +1,8 @@
 /* eslint no-invalid-this: "off" */
 import {ResourceEnumerate} from '../modules/resource-enumerate';
 import {CacheManager} from '@aofl/cache-manager';
+import sinon from 'sinon';
+import {expect} from 'chai';
 
 describe('@aofl/resource-enumerate/src/resource-enumerate', function() {
   beforeEach(function() {

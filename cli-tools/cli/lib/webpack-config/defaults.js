@@ -30,7 +30,12 @@ module.exports = (root) => {
       extend: () => {},
       css: {
         test: /\.(css|s[ac]ss)$/,
-        include: [path.join(root, 'src'), path.join(root, 'node_modules', '@aofl', 'unit-testing'), path.join(root, 'node_modules', '.cache', 'AoflUnitTestingPlugin'), path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')],
+        include: [
+          path.join(root, 'src'),
+          path.join(root, 'node_modules', '@aofl', 'unit-testing'),
+          path.join(root, 'node_modules', '.cache', 'AoflUnitTestingPlugin'),
+          path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')
+        ],
         exclude: [],
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
@@ -86,8 +91,6 @@ module.exports = (root) => {
           path.join(root, 'node_modules', '@aofl', 'polyfill-service'),
           path.join(root, 'node_modules', 'lit-element'),
           path.join(root, 'node_modules', 'lit-html'),
-          path.join(root, 'node_modules', 'chai'),
-          path.join(root, 'node_modules', 'chai-as-promised'),
           path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project'),
           path.join(root, 'node_modules', '@webcomponents')
         ],
@@ -179,21 +182,32 @@ module.exports = (root) => {
     unitTesting: {
       root: path.join(root, 'src'),
       output: '__build_tests',
-      publicPath: '/__build_tests/',
-      config: path.join(root, '.wctrc.json'),
-      maxChunks: 1,
+      host: 'localhost',
+      port: 3035,
+      config: path.join(root, '.wct.config.js'),
       polyfill: path.join(root, 'src', 'modules', '__config', 'polyfills.js'),
-      include: ['src/**/*.spec.js'],
+      specs: ['**/*.spec.js'],
+      suites: {},
+      nycArgs: [
+        'report',
+        '--reporter=lcov',
+        '--reporter=text-summary',
+        '--report-dir=./logs/coverage'
+      ],
+      mocha: {
+        ui: 'bdd',
+        timeout: 10000
+      },
       exclude: [
         '**/__build*',
         '**/node_modules',
         '**/node_modules_sourced',
-        '**/documentation{,!(/tests/**)}',
         '**/__config',
         '**/*-instance/**',
         '**/*-polyfill/**',
         'sw.js',
-        'coverage'
+        'coverage',
+        'logs'
       ]
     },
   };

@@ -1,3 +1,5 @@
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import {environmentTypeEnumerate} from '../modules/environment-type-enumerate';
 import {getServerEnvironment} from '../modules/server-environment-service';
 

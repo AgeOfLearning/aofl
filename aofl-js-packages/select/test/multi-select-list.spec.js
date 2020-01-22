@@ -1,4 +1,5 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import '../modules/multi-select-list';
 import '../modules/list-option';
 import {render, html} from 'lit-html';
@@ -23,7 +24,7 @@ describe('@aofl/select/aofl-multiselect-list', function() {
 
       await Promise.all(children);
     } catch (e) {
-      return Promise.reject(e)
+      return Promise.reject(e);
     }
   });
 
@@ -56,14 +57,14 @@ describe('@aofl/select/aofl-multiselect-list', function() {
     });
 
     it('should decrement focusIndex and focus list option on shift-tab', function() {
-        const event = new Event('keydown');
-        event.keyCode = 9;
-        this.element.dispatchEvent(event);
-        event.shiftKey = true;
-        const focusIndex = this.element.focusIndex;
-        this.element.dispatchEvent(event);
+      const event = new Event('keydown');
+      event.keyCode = 9;
+      this.element.dispatchEvent(event);
+      event.shiftKey = true;
+      const focusIndex = this.element.focusIndex;
+      this.element.dispatchEvent(event);
 
-        expect(this.element.focusIndex).to.equal(focusIndex - 1);
+      expect(this.element.focusIndex).to.equal(focusIndex - 1);
     });
 
     it('should increment focusIndex and focus list option on down arrow', function() {
@@ -121,7 +122,7 @@ describe('@aofl/select/aofl-multiselect-list', function() {
     it('should focus list options on hover', function() {
       const e = {
         target: this.element.querySelectorAll('aofl-list-option')[1]
-      }
+      };
       this.element.mouseoverCallback(e);
 
       expect(this.element.focusIndex).to.eql(1);
@@ -171,7 +172,7 @@ describe('@aofl/select/aofl-multiselect-list', function() {
 
   context('addOption()', function() {
     it('Should call addOption when a new option is added', async function() {
-      let listOption = document.createElement('aofl-list-option');
+      const listOption = document.createElement('aofl-list-option');
       this.element.appendChild(listOption);
       await listOption.updateComplete;
       expect(this.element.options.length).to.be.equal(4);

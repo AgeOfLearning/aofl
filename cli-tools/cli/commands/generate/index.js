@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const glob = require('fast-glob');
-const mkdirp = require('mkdirp');
 const templateFunctions = require('./js/template-functions');
 
 const REPLACE_STR = '__placeholder__';
@@ -110,7 +109,7 @@ class Generate {
    * @param {String} files
    */
   generate(files) {
-    mkdirp.sync(this.dest);
+    fs.mkdirSync(this.dest, {recursive: true});
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const filename = path.basename(file).replace(REPLACE_REGEX, this.name)

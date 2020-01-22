@@ -1,3 +1,6 @@
+/* eslint no-invalid-this: "off" */
+import sinon from 'sinon';
+import {expect} from 'chai';
 import {Sdo} from '../modules/sdo';
 import {Store} from '../modules/store';
 import {state, decorate} from '../modules/decorators';

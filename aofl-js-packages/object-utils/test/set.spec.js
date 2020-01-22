@@ -1,6 +1,7 @@
 /* eslint no-invalid-this: "off" */
 import {set} from '../modules/set';
 import {get} from '../modules/get';
+import {expect} from 'chai';
 
 describe('object-utils#set', function() {
   beforeEach(function() {

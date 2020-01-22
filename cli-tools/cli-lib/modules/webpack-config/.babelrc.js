@@ -41,7 +41,7 @@ const plugins = [
   ]
 ];
 
-if (process.env.NODE_ENV === environments.TEST && typeof process.env.SAUCE_USERNAME !== 'string' && process.env.WATCH_FS !== true) {
+if (process.env.NODE_ENV === environments.TEST && process.env.WATCH_FS !== true) {
   plugins.unshift([
     'istanbul', {
       'exclude': [

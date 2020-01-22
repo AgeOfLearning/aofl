@@ -1,4 +1,5 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import {Store} from '@aofl/store/modules/legacy';
 import {AoflElement} from '@aofl/element';
 import {mapStatePropertiesMixin} from '../modules/map-state-properties-mixin';
@@ -14,7 +15,7 @@ describe('@aofl/map-state-properties-mixin', function() {
         init() {
           return {
             device: 'desktop'
-          }
+          };
         },
         setDevice(subState, device) {
           return Object.assign({}, subState, {device});
@@ -64,7 +65,6 @@ describe('@aofl/map-state-properties-mixin', function() {
     if (!customElements.get(ParentComp.is)) {
       customElements.define(ParentComp.is, ParentComp);
     }
-
   });
 
   beforeEach(function() {

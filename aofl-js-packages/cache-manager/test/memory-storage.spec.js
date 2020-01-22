@@ -1,4 +1,5 @@
 import {MemoryStorage} from '../modules/memory-storage';
+import {expect} from 'chai';
 
 describe('@aofl/cache-manager/memory-storage', function() {
   beforeEach(function() {

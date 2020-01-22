@@ -1,7 +1,8 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import {findParentByAttributes} from '../modules/traverse-parents';
 import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/component-utils', function() {
   context('findParentByAttribute()', function() {
@@ -14,7 +15,7 @@ describe('@aofl/component-utils', function() {
         static get properties() {
           return {
             count: {type: Number}
-          }
+          };
         }
         static get is() {
           return 'find-parent-parent-attribute-comp';
@@ -57,7 +58,7 @@ describe('@aofl/component-utils', function() {
       cleanTestContainer(this.testContainer);
     });
 
-    it('Should find the parent', function () {
+    it('Should find the parent', function() {
       expect(findParentByAttributes(this.childElement, 'my-attribute')).to.not.be.false;
     });
 

@@ -1,7 +1,9 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
+import {expect} from 'chai';
 import '../modules/list-option';
 import '../modules/select-list';
 import {render, html} from 'lit-html';
+
 
 describe('@aofl/picture/aofl-list-option', function() {
   beforeEach(function() {

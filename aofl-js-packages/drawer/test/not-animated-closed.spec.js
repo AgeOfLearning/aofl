@@ -1,6 +1,8 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
+import sinon from 'sinon';
 
 describe('@aofl/drawer#not-animated-closed', function() {
   before(function() {
@@ -28,5 +30,5 @@ describe('@aofl/drawer#not-animated-closed', function() {
 
   after(function() {
     AoflDrawer.prototype.dispatchEvent.restore();
-  })
+  });
 });

@@ -1,7 +1,8 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import {findParent} from '../modules/traverse-parents';
 import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
+import {expect} from 'chai';
 
 describe('@aofl/component-utils', function() {
   context('findParent()', function() {

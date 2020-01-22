@@ -1,13 +1,15 @@
-/* eslint-disable */
+/* eslint no-invalid-this: "off" */
 import AoflDrawer from '../modules/drawer';
 import {html, render} from 'lit-html';
+import {expect} from 'chai';
+import sinon from 'sinon';
 
 describe('@aofl/drawer#animated-close', function() {
   before(function() {
-    sinon.spy(AoflDrawer.prototype, 'openChanged')
+    sinon.spy(AoflDrawer.prototype, 'openChanged');
   });
 
-  beforeEach(async function() {
+  beforeEach(function() {
     this.testContainer = getTestContainer();
 
     render(html`

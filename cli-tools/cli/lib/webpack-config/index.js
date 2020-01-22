@@ -3,7 +3,7 @@ const validateOptions = require('schema-utils');
 const schema = require('@aofl/cli-lib/modules/webpack-config/schema.json');
 const generator = require('./generator');
 const defaults = require('./defaults');
-const defaultsDeep = require('lodash.defaultsdeep');
+const {defaultsDeep} = require('@aofl/cli-lib');
 
 
 const loadConfig = (configPath) => {

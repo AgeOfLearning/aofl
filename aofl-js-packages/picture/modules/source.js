@@ -48,7 +48,7 @@ class AoflSource extends AoflElement {
    * @return {Object}
    */
   render() {
-    return super.render((ctx, html) => '');
+    return super.render((ctx, html) => '', []);
   }
 }
 

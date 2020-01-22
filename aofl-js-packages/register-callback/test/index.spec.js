@@ -1,5 +1,7 @@
 /* eslint no-invalid-this: "off" */
 import {RegisterCallback} from '../modules/register-callback';
+import {expect} from 'chai';
+import sinon from 'sinon';
 
 describe('@aofl/register-callback/src/register-callback', function() {
   beforeEach(function() {

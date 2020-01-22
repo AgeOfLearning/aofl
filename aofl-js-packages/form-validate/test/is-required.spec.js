@@ -1,5 +1,6 @@
 /* eslint no-invalid-this: "off", require-jsdoc: "off" */
 import {isRequired} from '../modules/is-required';
+import {expect} from 'chai';
 
 describe('@aofl/aofl-validate/is-required', function() {
   it('should be true when a string of length > 0 is passed', function() {

@@ -2,6 +2,8 @@
 import {isInViewportMixin} from '../modules/is-in-viewport-mixin';
 import {AoflElement} from '@aofl/element';
 import {render, html} from 'lit-html';
+import {expect} from 'chai';
+import {spy} from 'sinon';
 
 describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
   before(function() {
@@ -36,10 +38,10 @@ describe('@aofl/component-utils/src/is-in-viewport-mixin', function() {
     this.element = this.testContainer.querySelector('#ViewportMixinVisibleOnLoad');
     this.elementOutside = this.testContainer.querySelector('#ViewportMixinNotVisibleOnLoad');
 
-    this.firstWithinViewport = sinon.spy(this.element, 'firstWithinViewport');
-    this.withinViewportUpdated = sinon.spy(this.element, 'withinViewportUpdated');
-    this.firstWithinViewportOutside = sinon.spy(this.elementOutside, 'firstWithinViewport');
-    this.withinViewportUpdatedOutside = sinon.spy(this.elementOutside, 'withinViewportUpdated');
+    this.firstWithinViewport = spy(this.element, 'firstWithinViewport');
+    this.withinViewportUpdated = spy(this.element, 'withinViewportUpdated');
+    this.firstWithinViewportOutside = spy(this.elementOutside, 'firstWithinViewport');
+    this.withinViewportUpdatedOutside = spy(this.elementOutside, 'withinViewportUpdated');
   });
 
   afterEach(function() {
