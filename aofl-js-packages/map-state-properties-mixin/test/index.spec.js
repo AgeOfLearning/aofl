@@ -1,7 +1,7 @@
 /* eslint-disable */
 import {Store} from '@aofl/store/modules/legacy';
 import {AoflElement} from '@aofl/element';
-import mapStatePropertiesMixin from '../modules/map-state-properties-mixin';
+import {mapStatePropertiesMixin} from '../modules/map-state-properties-mixin';
 import {render, html} from 'lit-html';
 
 const storeInstance = new Store();
