@@ -91,7 +91,7 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   render() {
     return super.render((ctx, html) => html`
       <canvas width="${this.width}" height="${this.height}"></canvas>
-      <img alt="${this.alt}" height="${this.height}" width="${this.width}" src="${this.imgSrc}"
+      <img alt="${this.alt}" src="${this.imgSrc}"
       @load="${this.imageLoaded}">
     `, [styles]);
   }
@@ -104,8 +104,6 @@ class AoflImg extends isInViewportMixin(AoflElement) {
   shouldUpdate(changedProperties) {
     if (changedProperties.has('src') && typeof this.src === 'string') {
       this.loadImage(this.src);
-      this.height = void 0;
-      this.width = void 0;
     }
     return true;
   }
@@ -127,13 +125,9 @@ class AoflImg extends isInViewportMixin(AoflElement) {
    * @fires AoflImg#load
    */
   imageLoaded(e) {
-    if (typeof this.width === 'undefined') {
-      this.width = e.target.naturalWidth;
-    }
+    this.width = e.target.naturalWidth;
+    this.height = e.target.naturalHeight;
 
-    if (typeof this.height === 'undefined') {
-      this.height = e.target.naturalHeight;
-    }
     this.dispatchEvent(new CustomEvent('load'));
   }
 }
