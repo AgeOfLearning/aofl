@@ -4,7 +4,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import PathUtils from '../path-utils';
+import {PathUtils} from './path-utils';
 
 /**
  * Evaluates and returns the best matching route for the given path
@@ -57,7 +57,7 @@ const matchBestPath = (_path, routes) => {
  * @param {Object} router
  * @return {Function}
  */
-export default (router) => (request, response, next) => {
+const matchRouteMiddleware = (router) => (request, response, next) => {
   const matchedRoute = matchBestPath(request.to, request.routes);
   let currentRoute = null;
   if (matchedRoute !== null) {
@@ -68,4 +68,8 @@ export default (router) => (request, response, next) => {
   }
   router.currentRoute = currentRoute; // add MatchedRoute to the router instance
   next(currentRoute);
+};
+
+export {
+  matchRouteMiddleware
 };

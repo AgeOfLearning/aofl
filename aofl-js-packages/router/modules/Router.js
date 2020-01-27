@@ -4,10 +4,11 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import PathUtils from '../path-utils';
+import {PathUtils} from './path-utils';
 import {Middleware} from '@aofl/middleware';
-import matchRouteMiddleware from '../match-route-middleware';
-import {redirectMiddleware} from '../redirect-middleware';
+import {matchRouteMiddleware} from './match-route-middleware';
+import {redirectMiddleware} from './redirect-middleware';
+import {updateUrlMiddleware} from './update-url-middleware';
 
 
 /**
@@ -51,7 +52,8 @@ class Router {
     };
 
     this.removeMatchRouteMiddleware = this.beforeEach(matchRouteMiddleware(this));
-    this.removeRedirectMiddleware = this.afterEach(redirectMiddleware(this));
+    this.removeRedirectMiddleware = this.after(redirectMiddleware(this));
+    this.removeRedirectMiddleware = this.after(updateUrlMiddleware);
 
     this.removeListener = this.listen();
   }
@@ -98,17 +100,11 @@ class Router {
    * @param {Object} request
    */
   async applyMiddleware(request) {
-    const beforeEachResponse = await this.middleware.iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
-    await this.middleware.iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
-    const afterResponse = await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, beforeEachResponse));
-
-    if (!request.meta.poppedState) {
-      if (request.meta.replaceState) {
-        window.history.replaceState(null, null, afterResponse.to);
-      } else {
-        window.history.pushState(null, null, afterResponse.to);
-      }
-    }
+    const beforeEachResponse = await this.middleware
+      .iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
+    const afterEachResponse = await this.middleware
+      .iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
+    await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, afterEachResponse));
 
     this.resolve();
   }
@@ -178,4 +174,4 @@ class Router {
   }
 }
 
-export default Router;
+export {Router};

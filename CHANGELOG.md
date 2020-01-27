@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Added]
 ### [Changed]
+- @aofl/router - Redirect moved to first middleware in after
+- @aofl/router - Update url converted to a middleware and is the second action in after.
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]

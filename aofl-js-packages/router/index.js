@@ -7,12 +7,6 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-import Router from './modules/Router';
-import routerInstance from './modules/router-instance';
-import PathUtils from './modules/path-utils';
-
-export {
-  Router,
-  routerInstance,
-  PathUtils
-};
+export * from './modules/Router';
+export * from './modules/router-instance';
+export * from './modules/path-utils';

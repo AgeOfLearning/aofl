@@ -57,7 +57,7 @@ class PathUtils {
       regexStr += path.substr(nextMatchIndex);
     }
 
-    const regex = new RegExp('^' + regexStr + '$');
+    const regex = new RegExp('^' + regexStr + '\\/?$');
     return {
       regex,
       parse(p) {
@@ -147,4 +147,6 @@ class PathUtils {
   }
 }
 
-export default PathUtils;
+export {
+  PathUtils
+};

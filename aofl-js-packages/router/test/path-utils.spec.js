@@ -1,4 +1,4 @@
-import PathUtils from '../modules/path-utils';
+import {PathUtils} from '../modules/path-utils';
 
 describe('@aofl/router/modules/path-utils', function() {
   it('Should remove # from path', function() {

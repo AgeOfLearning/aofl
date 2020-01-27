@@ -1,4 +1,4 @@
-import Router from '../modules/Router';
+import {Router} from '../modules/Router';
 
 /* eslint-disable */
 describe('@aofl/router/router', function() {
