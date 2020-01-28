@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "browser": "dist/index.js",
