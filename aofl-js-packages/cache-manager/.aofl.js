@@ -27,13 +27,21 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          'tiny-js-md5': {
-            commonjs2: 'tiny-js-md5',
-            commonjs: 'tiny-js-md5',
-            amd: 'tiny-js-md5',
+        externals: [
+          {
+            'tiny-js-md5': {
+              commonjs2: 'tiny-js-md5',
+              commonjs: 'tiny-js-md5',
+              amd: 'tiny-js-md5',
+            }
+          },
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }

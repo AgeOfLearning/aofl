@@ -27,33 +27,41 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          'lit-element': {
-            commonjs2: 'lit-element',
-            commonjs: 'lit-element',
-            amd: 'lit-element',
+        externals: [
+          {
+            'lit-element': {
+              commonjs2: 'lit-element',
+              commonjs: 'lit-element',
+              amd: 'lit-element',
+            },
+            'lit-element/lib/decorators': {
+              commonjs2: 'lit-element',
+              commonjs: 'lit-element',
+              amd: 'lit-element',
+            },
+            'lit-html': {
+              commonjs2: 'lit-html',
+              commonjs: 'lit-html',
+              amd: 'lit-html'
+            },
+            '@aofl/store': {
+              commonjs2: '@aofl/store',
+              commonjs: '@aofl/store',
+              amd: '@aofl/store'
+            },
+            '@aofl/object-utils': {
+              commonjs2: '@aofl/object-utils',
+              commonjs: '@aofl/object-utils',
+              amd: '@aofl/object-utils'
+            }
           },
-          'lit-element/lib/decorators': {
-            commonjs2: 'lit-element',
-            commonjs: 'lit-element',
-            amd: 'lit-element',
-          },
-          'lit-html': {
-            commonjs2: 'lit-html',
-            commonjs: 'lit-html',
-            amd: 'lit-html'
-          },
-          '@aofl/store': {
-            commonjs2: '@aofl/store',
-            commonjs: '@aofl/store',
-            amd: '@aofl/store'
-          },
-          '@aofl/object-utils': {
-            commonjs2: '@aofl/object-utils',
-            commonjs: '@aofl/object-utils',
-            amd: '@aofl/object-utils'
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }

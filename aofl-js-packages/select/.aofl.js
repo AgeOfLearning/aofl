@@ -32,18 +32,26 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          '@aofl/element': {
-            commonjs2: '@aofl/element',
-            commonjs: '@aofl/element',
-            amd: '@aofl/element'
+        externals: [
+          {
+            '@aofl/element': {
+              commonjs2: '@aofl/element',
+              commonjs: '@aofl/element',
+              amd: '@aofl/element'
+            },
+            '@aofl/component-utils': {
+              commonjs2: '@aofl/component-utils',
+              commonjs: '@aofl/component-utils',
+              amd: '@aofl/component-utils'
+            }
           },
-          '@aofl/component-utils': {
-            commonjs2: '@aofl/component-utils',
-            commonjs: '@aofl/component-utils',
-            amd: '@aofl/component-utils'
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }

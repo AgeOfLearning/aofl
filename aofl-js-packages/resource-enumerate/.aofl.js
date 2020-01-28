@@ -27,28 +27,36 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          '@aofl/api-request': {
-            commonjs2: '@aofl/api-request',
-            commonjs: '@aofl/api-request',
-            amd: '@aofl/api-request',
+        externals: [
+          {
+            '@aofl/api-request': {
+              commonjs2: '@aofl/api-request',
+              commonjs: '@aofl/api-request',
+              amd: '@aofl/api-request',
+            },
+            '@aofl/cache-manager': {
+              commonjs2: '@aofl/cache-manager',
+              commonjs: '@aofl/cache-manager',
+              amd: '@aofl/cache-manager',
+            },
+            '@aofl/middleware': {
+              commonjs2: '@aofl/middleware',
+              commonjs: '@aofl/middleware',
+              amd: '@aofl/middleware',
+            },
+            '@aofl/server-environment': {
+              commonjs2: '@aofl/server-environment',
+              commonjs: '@aofl/server-environment',
+              amd: '@aofl/server-environment',
+            },
           },
-          '@aofl/cache-manager': {
-            commonjs2: '@aofl/cache-manager',
-            commonjs: '@aofl/cache-manager',
-            amd: '@aofl/cache-manager',
-          },
-          '@aofl/middleware': {
-            commonjs2: '@aofl/middleware',
-            commonjs: '@aofl/middleware',
-            amd: '@aofl/middleware',
-          },
-          '@aofl/server-environment': {
-            commonjs2: '@aofl/server-environment',
-            commonjs: '@aofl/server-environment',
-            amd: '@aofl/server-environment',
-          },
-        }
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
+          }
+        ]
       }
     }
   }

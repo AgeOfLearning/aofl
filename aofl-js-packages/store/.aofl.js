@@ -29,18 +29,26 @@ module.exports = {
           runtimeChunk: false,
           splitChunks: false
         },
-        externals: {
-          '@aofl/object-utils': {
-            commonjs2: '@aofl/object-utils',
-            commonjs: '@aofl/object-utils',
-            amd: '@aofl/object-utils'
+        externals: [
+          {
+            '@aofl/object-utils': {
+              commonjs2: '@aofl/object-utils',
+              commonjs: '@aofl/object-utils',
+              amd: '@aofl/object-utils'
+            },
+            '@aofl/register-callback': {
+              commonjs2: '@aofl/register-callback',
+              commonjs: '@aofl/register-callback',
+              amd: '@aofl/register-callback'
+            },
           },
-          '@aofl/register-callback': {
-            commonjs2: '@aofl/register-callback',
-            commonjs: '@aofl/register-callback',
-            amd: '@aofl/register-callback'
-          },
-        }
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
+          }
+        ]
       }
     }
   }

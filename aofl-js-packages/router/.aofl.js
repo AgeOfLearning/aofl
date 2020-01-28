@@ -27,13 +27,21 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          '@aofl/middleware': {
-            commonjs2: '@aofl/middleware',
-            commonjs: '@aofl/middleware',
-            amd: '@aofl/middleware',
+        externals: [
+          {
+            '@aofl/middleware': {
+              commonjs2: '@aofl/middleware',
+              commonjs: '@aofl/middleware',
+              amd: '@aofl/middleware',
+            }
+          },
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }

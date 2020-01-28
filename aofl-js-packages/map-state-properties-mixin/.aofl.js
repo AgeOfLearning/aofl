@@ -27,13 +27,21 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          'lit-element': {
-            commonjs2: 'lit-element',
-            commonjs: 'lit-element',
-            amd: 'lit-element',
+        externals: [
+          {
+            'lit-element': {
+              commonjs2: 'lit-element',
+              commonjs: 'lit-element',
+              amd: 'lit-element',
+            }
+          },
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }

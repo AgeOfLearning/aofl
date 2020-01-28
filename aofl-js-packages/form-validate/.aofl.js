@@ -27,13 +27,21 @@ module.exports = {
         optimization: {
           runtimeChunk: false
         },
-        externals: {
-          '@aofl/object-utils': {
-            commonjs2: '@aofl/object-utils',
-            commonjs: '@aofl/object-utils',
-            amd: '@aofl/object-utils',
+        externals: [
+          {
+            '@aofl/object-utils': {
+              commonjs2: '@aofl/object-utils',
+              commonjs: '@aofl/object-utils',
+              amd: '@aofl/object-utils',
+            }
+          },
+          function(context, request, callback) {
+            if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
+              return callback(null, 'commonjs ' + request);
+            }
+            callback();
           }
-        }
+        ]
       }
     }
   }
