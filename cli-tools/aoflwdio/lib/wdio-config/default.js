@@ -21,23 +21,25 @@ exports.config = {
   logLevel: 'info',
   bail: 0,
   baseUrl: null,
-  waitforTimeout: 10000,
+  waitforTimeout: 120000,
   waitforInterval: 500,
-  connectionRetryCount: 3,
+  connectionRetryCount: 10,
   services: [''],
   framework: 'mocha',
   reporters: [
     'spec',
-    ['mochawesome', {
-      outputDir: './results',
-      outputFileFormat: (opts) => { 
-        return `results-${opts.cid}.${opts.capabilities.browserName}.json`
+    [
+      'mochawesome', {
+        outputDir: './results',
+        outputFileFormat: (opts) => {
+          return `results-${opts.cid}.${opts.capabilities.browserName}.json`;
+        }
       }
-    }]
+    ]
   ],
   mochaOpts: {
-      ui: 'bdd',
-      timeout: 60000
+    ui: 'bdd',
+    timeout: 600000
   },
   //
   // =====
@@ -49,11 +51,11 @@ exports.config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before: function (capabilities, specs) {
+  before(capabilities, specs) {
     // Using Chai
-    global.expect = chai.expect
-    chai.Should();
-    
+    global.expect = chai.expect;
+    chai.should();
+
     // New Commands
     browser.addCommand('waitForNavigation', waitForNavigation);
     browser.addCommand('typeKeys', typeKeys);
@@ -69,10 +71,10 @@ exports.config = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {<Object>} results object containing test results
-   * @param {String} mochaOutputRoot 
+   * @param {String} mochaOutputRoot
    */
-  onComplete: function(exitCode, config, capabilities, results, mochaOutputRoot) {
-    const outputPath = mochaOutputRoot ? `${mochaOutputRoot}/results` : './results'
+  onComplete(exitCode, config, capabilities, results, mochaOutputRoot) {
+    const outputPath = mochaOutputRoot ? `${mochaOutputRoot}/results` : './results';
     mergeResults(outputPath, 'results-*');
   },
-}
+};

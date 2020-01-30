@@ -9,7 +9,7 @@ program
   .option('--suite [suiteName]', 'Run specific test suites, i.e. --suite login', CommanderHelper.collect, [])
   .option('--spec [path]', 'Run specific test spec files', CommanderHelper.collect, [])
   .option('--debug', 'Sets logging to verbose globally')
-  .option('--config [path]', 'Specify the path to the config file.')
+  .option('-c, --config [path]', 'Specify the path to the config file.')
   .on('--help', () => {
     process.stdout.write(`
   Examples:

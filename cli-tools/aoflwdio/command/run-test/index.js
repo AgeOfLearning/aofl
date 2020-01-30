@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const findCacheDir = require('find-cache-dir');
-const Launcher = require('@wdio/cli').default
+const Launcher = require('@wdio/cli').default;
 
 const CACHE_DIR = 'aoflwdio';
 
@@ -36,12 +36,12 @@ class RunTest {
 
     const wdio = new Launcher(outputPath, {spec, suite, watch});
     wdio.run()
-    .then((code) => {
-      process.exit(code)
-    }, (error) => {
-      console.error('Launcher failed to start the test', error.stacktrace)
-      process.exit(1)
-    })
+      .then((code) => {
+        process.exit(code);
+      }, (error) => {
+        console.error('Launcher failed to start the test', error.stacktrace);
+        process.exit(1);
+      });
   }
 
   /**

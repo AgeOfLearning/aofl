@@ -8,7 +8,7 @@ class MergeConfig {
    * @param {String} key
    * @param {Object} defaultConfig
    * @param {Object} userConfig
-   * @return {Mixed} 
+   * @return {Mixed}
    */
   static replaceKey(key, defaultConfig, userConfig) {
     if (typeof userConfig[key] !== 'undefined') {
@@ -21,16 +21,16 @@ class MergeConfig {
    *
    * @param {Object} defaultConfig
    * @param {Object} userConfig
-   * @return {Function} 
+   * @return {Function}
    */
   static applicationSpecificKeys(defaultConfig, userConfig) {
     const applicationKeys = {};
 
     for (const key in userConfig) {
-      if (!userConfig.hasOwnProperty(key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(userConfig, key)) continue;
       if (typeof userConfig[key] !== 'function' && !(key in defaultConfig)) {
         applicationKeys[key] = userConfig[key];
-      };
+      }
     }
 
     return applicationKeys;
@@ -39,9 +39,9 @@ class MergeConfig {
    *
    * @param {Object} defaultConfig
    * @param {Object} userConfig
-   * @return {Function} 
+   * @return {Function}
    */
-  static getMochaOutputDir(defaultConfig, userConfig){
+  static getMochaOutputDir(defaultConfig, userConfig) {
     if (typeof userConfig.mochaOutputRoot !== 'undefined') {
       defaultConfig.reporters[1][1].outputDir = `${userConfig.mochaOutputRoot}/results`;
     }
@@ -53,13 +53,13 @@ class MergeConfig {
    * @param {Boolean} debug
    * @param {Object} defaultConfig
    * @param {Object} userConfig
-   * @return {Object} 
+   * @return {Object}
    */
   static getLogLevels(debug, defaultConfig, userConfig) {
     const isKeyValid = typeof userConfig.logLevels === 'object';
     if (debug && isKeyValid) {
       for (const key in userConfig.logLevels) {
-        if (!userConfig.logLevels.hasOwnProperty(key)) continue;
+        if (!Object.prototype.hasOwnProperty.call(userConfig.logLevels, key)) continue;
         userConfig.logLevels[key] = 'debug';
       }
     }
@@ -78,9 +78,9 @@ class MergeConfig {
       // ====================
       // Runner Configuration
       // ====================
-      // 
+      //
       // Below are application specific keys that should only be present if they are present in the userConfig
-      // Examples are this are keys for 'user', 'key', which are only valid if cloud services are passed 
+      // Examples are this are keys for 'user', 'key', which are only valid if cloud services are passed
       // in the 'services' key.
       ...MergeConfig.applicationSpecificKeys(defaultConfig, userConfig),
       //
@@ -134,7 +134,7 @@ class MergeConfig {
       capabilities: MergeConfig.replaceKey('capabilities', defaultConfig, userConfig),
       //
       // Default request retries count
-      connectionRetryCount:  MergeConfig.replaceKey('connectionRetryCount', defaultConfig, userConfig),
+      connectionRetryCount: MergeConfig.replaceKey('connectionRetryCount', defaultConfig, userConfig),
       //
       // Test runner services
       // Services take over a specific job you don't want to take care of. They enhance
@@ -193,7 +193,7 @@ class MergeConfig {
        * @param {Object} config wdio configuration object
        * @param {Array.<Object>} capabilities list of capabilities details
        */
-      onPrepare: function(config, capabilities) {
+      onPrepare(config, capabilities) {
         if (typeof userConfig.onPrepare === 'function') {
           return userConfig.onPrepare(config, capabilities);
         }
@@ -205,7 +205,7 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        * @param {Array.<String>} specs List of spec file paths that are to be run
        */
-      beforeSession: function(config, capabilities, specs) {
+      beforeSession(config, capabilities, specs) {
         if (typeof userConfig.beforeSession === 'function') {
           return userConfig.beforeSession(config, capabilities, specs);
         }
@@ -216,7 +216,7 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        * @param {Array.<String>} specs List of spec file paths that are to be run
        */
-      before: function(capabilities, specs) {
+      before(capabilities, specs) {
         defaultConfig.before(capabilities, specs);
         if (typeof userConfig.before === 'function') {
           return userConfig.before(capabilities, specs);
@@ -227,16 +227,16 @@ class MergeConfig {
        * @param {String} commandName hook command name
        * @param {Array} args arguments that command would receive
        */
-      beforeCommand: function(commandName, args) {
+      beforeCommand(commandName, args) {
         if (typeof userConfig.beforeCommand === 'function') {
-          return userConfig.beforeCommand(capabilities, specs);
+          return userConfig.beforeCommand(commandName, args);
         }
       },
       /**
        * Hook that gets executed before the suite starts
        * @param {Object} suite suite details
        */
-      beforeSuite: function(suite) {
+      beforeSuite(suite) {
         if (typeof userConfig.beforeSuite === 'function') {
           return userConfig.beforeSuite(suite);
         }
@@ -246,7 +246,7 @@ class MergeConfig {
        * @param {*} test
        * @param {*} context
        */
-      beforeTest: function(test, context) {
+      beforeTest(test, context) {
         if (typeof userConfig.beforeTest === 'function') {
           return userConfig.beforeTest(test, context);
         }
@@ -257,7 +257,7 @@ class MergeConfig {
        * @param {*} test
        * @param {*} context
        */
-      beforeHook: function(test, context) {
+      beforeHook(test, context) {
         if (typeof userConfig.beforeHook === 'function') {
           return userConfig.beforeHook(test, context);
         }
@@ -269,16 +269,16 @@ class MergeConfig {
        * @param {*} context
        * @param {Object}
        */
-      afterHook: function(test, context, { error, result, duration, passed, retries }) {
+      afterHook(test, context, {error, result, duration, passed, retries}) {
         if (typeof userConfig.afterHook === 'function') {
-          return userConfig.afterHook(test, context, { error, result, duration, passed, retries });
+          return userConfig.afterHook(test, context, {error, result, duration, passed, retries});
         }
       },
       /**
        * Hook that gets executed after the suite has ended
        * @param {Object} suite suite details
        */
-      afterSuite: function(suite) {
+      afterSuite(suite) {
         if (typeof userConfig.afterSuite === 'function') {
           return userConfig.afterSuite(suite);
         }
@@ -290,10 +290,10 @@ class MergeConfig {
        * @param {Number} result 0 - command success, 1 - command error
        * @param {Object} error error object if any
        */
-      afterCommand: function(commandName, args, result, error) {
+      afterCommand(commandName, args, result, error) {
         if (typeof userConfig.afterCommand === 'function') {
           return userConfig.afterCommand(commandName, args, result, error);
-        }      
+        }
       },
       /**
        * Gets executed after all tests are done. You still have access to all global variables from
@@ -302,10 +302,10 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        * @param {Array.<String>} specs List of spec file paths that ran
        */
-      after: function(result, capabilities, specs) {
+      after(result, capabilities, specs) {
         if (typeof userConfig.after === 'function') {
           return userConfig.after(result, capabilities, specs);
-        }    
+        }
       },
       /**
        * Gets executed right after terminating the webdriver session.
@@ -313,10 +313,10 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        * @param {Array.<String>} specs List of spec file paths that ran
        */
-      afterSession: function(config, capabilities, specs) {
+      afterSession(config, capabilities, specs) {
         if (typeof userConfig.afterSession === 'function') {
           return userConfig.afterSession(config, capabilities, specs);
-        } 
+        }
       },
       /**
        * Gets executed after all workers got shut down and the process is about to exit. An error
@@ -326,7 +326,7 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        * @param {<Object>} results object containing test results
        */
-      onComplete: function(exitCode, config, capabilities, results) {
+      onComplete(exitCode, config, capabilities, results) {
         const mochaOutputRoot = typeof userConfig.mochaOutputRoot !== 'undefined' ? userConfig.mochaOutputRoot : null;
 
         defaultConfig.onComplete(exitCode, config, capabilities, results, mochaOutputRoot);
@@ -339,12 +339,12 @@ class MergeConfig {
       * @param {String} oldSessionId session ID of the old session
       * @param {String} newSessionId session ID of the new session
       */
-      onReload: function(oldSessionId, newSessionId) {
+      onReload(oldSessionId, newSessionId) {
         if (typeof userConfig.onReload === 'function') {
           return userConfig.onReload(oldSessionId, newSessionId);
-        }  
+        }
       }
-    }
+    };
   }
 }
 
