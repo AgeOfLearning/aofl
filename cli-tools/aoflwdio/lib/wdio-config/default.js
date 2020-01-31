@@ -74,7 +74,7 @@ exports.config = {
    * @param {String} mochaOutputRoot
    */
   onComplete(exitCode, config, capabilities, results, mochaOutputRoot) {
-    const outputPath = mochaOutputRoot ? `${mochaOutputRoot}/results` : './results';
-    mergeResults(outputPath, 'results-*');
+    // const outputPath = mochaOutputRoot ? `${mochaOutputRoot}/results` : './results';
+    // mergeResults(outputPath, 'results-*');
   },
 };

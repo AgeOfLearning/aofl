@@ -30,18 +30,18 @@ class RunTest {
    * Initializes the test runner
    *
    */
-  init() {
+  async init() {
     const {spec, suite, watch} = this;
     const outputPath = this.setupCacheDirectory();
 
     const wdio = new Launcher(outputPath, {spec, suite, watch});
-    wdio.run()
-      .then((code) => {
-        process.exit(code);
-      }, (error) => {
-        console.error('Launcher failed to start the test', error.stacktrace);
-        process.exit(1);
-      });
+    try {
+      const code = await wdio.run();
+      process.exit(code);
+    } catch (e) {
+      console.error('Launcher failed to start the test', e.stacktrace);
+      process.exit(1);
+    }
   }
 
   /**
