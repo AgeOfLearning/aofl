@@ -3,7 +3,7 @@ const typeKeys = require('./custom_commands/typeKeys');
 const click = require('./custom_commands/click');
 const focus = require('./custom_commands/focus');
 const waitForNavigation = require('./custom_commands/waitForNavigation');
-const mergeResults = require('wdio-mochawesome-reporter/mergeResults');
+// const mergeResults = require('wdio-mochawesome-reporter/mergeResults');
 
 exports.config = {
   //
