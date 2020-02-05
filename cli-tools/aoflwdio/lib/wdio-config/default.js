@@ -1,9 +1,6 @@
 const chai = require('chai');
-const typeKeys = require('./custom_commands/typeKeys');
-const click = require('./custom_commands/click');
-const focus = require('./custom_commands/focus');
-const waitForNavigation = require('./custom_commands/waitForNavigation');
-// const mergeResults = require('wdio-mochawesome-reporter/mergeResults');
+const waitForNavigation = require('../custom-commands/waitForNavigation');
+const mergeResults = require('wdio-mochawesome-reporter/mergeResults');
 
 exports.config = {
   //
@@ -58,11 +55,6 @@ exports.config = {
 
     // New Commands
     browser.addCommand('waitForNavigation', waitForNavigation);
-    browser.addCommand('typeKeys', typeKeys);
-    browser.addCommand('focus', focus, true);
-
-    // Overrides
-    browser.overwriteCommand('click', click, true);
   },
   /**
    * Gets executed after all workers got shut down and the process is about to exit. An error
