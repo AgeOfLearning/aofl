@@ -58,7 +58,7 @@ const getCssRules = (build, defaultBuild) => {
         loader: 'css-loader',
         options: {
           sourceMap: false,
-          importLoaders: 3,
+          importLoaders: 2,
           ...build.css.cssLoader
         }
       },
@@ -73,7 +73,6 @@ const getCssRules = (build, defaultBuild) => {
       {
         loader: '@aofl/webcomponent-css-loader',
         options: {
-          sourceMap: false,
           cache: build.cache
         }
       },
@@ -209,6 +208,12 @@ const getConfig = (root, configObject, defaultOptions) => {
   });
   rules.push(getCssRules(configObject.build, defaultOptions.build));
   rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
+  rules.push({
+    test: /\.js$/,
+    include: [path.join(root, 'node_modules')],
+    use: ['source-map-loader'],
+    enforce: 'pre'
+  });
   rules.push(...getJsRules(configObject.build, defaultOptions.build));
   if (configObject.mode === 'project') {
     rules.push({

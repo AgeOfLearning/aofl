@@ -24,7 +24,7 @@ module.exports = (root) => {
       target: 'web',
       path: path.join(root, '__build'),
       publicPath: '/',
-      devtool: (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'eval'), // cheap-module-eval-source-map
+      devtool: (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'source-map'), // cheap-module-eval-source-map
       cache: true,
       middleware: [],
       extend: () => {},

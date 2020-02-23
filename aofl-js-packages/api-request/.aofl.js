@@ -6,6 +6,7 @@ module.exports = {
   build: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
+    devtool: 'source-map',
     entryReplace: {
       'index': path.join(__dirname, 'index.js')
     },
