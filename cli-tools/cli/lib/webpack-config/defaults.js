@@ -79,7 +79,8 @@ module.exports = (root) => {
         exclude: [],
         enforce: 'pre',
         options: {
-          config: path.join(resources.WEBPACK_CONFIG, '.eslintrc.js'),
+          config: path.join(root, '.eslintrc.js'),
+          cache: false
         },
       },
       js: {
@@ -114,6 +115,7 @@ module.exports = (root) => {
         },
         loaderOptions: {
           path: path.join(root, 'src', 'modules', '__config', 'routes.js'),
+          cache: false
         },
       },
       terser: {
@@ -180,7 +182,7 @@ module.exports = (root) => {
       historyApiFallback: true,
     },
     unitTesting: {
-      root: root,
+      root,
       output: '__build_tests',
       host: 'localhost',
       port: 3035,

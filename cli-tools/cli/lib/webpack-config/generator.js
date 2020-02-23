@@ -107,7 +107,6 @@ const getEsLintRules = (build, defaultBuild) => {
         {
           loader: 'eslint-loader',
           options: {
-            cache: false,
             ...build.eslint.options
           }
         }
@@ -185,8 +184,7 @@ const getFontsRules = (build, defaultBuild) => {
 
 const getTemplatingPluginOptions = (config, cache) => {
   config.loaderOptions = {
-    ...config.loaderOptions,
-    cache: false
+    ...config.loaderOptions
   };
 
   return config;
