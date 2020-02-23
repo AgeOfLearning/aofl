@@ -185,8 +185,8 @@ const getFontsRules = (build, defaultBuild) => {
 
 const getTemplatingPluginOptions = (config, cache) => {
   config.loaderOptions = {
-    cache,
-    ...config.loaderOptions
+    ...config.loaderOptions,
+    cache: false
   };
 
   return config;
