@@ -8,6 +8,7 @@ const Launcher = require('@wdio/cli').default;
 const {configMap} = require('./modules/wdio-config/wdio-presets');
 const spawn = require('cross-spawn');
 const rimraf = require('rimraf');
+const titleCase = require('title-case');
 
 class UnitTestingPlugin {
   static get name() {
@@ -145,6 +146,7 @@ class UnitTestingPlugin {
     const wdioSuites = [];
     for (let i = 0; i < suites.length; i++) {
       const suite = suites[i];
+      const suiteName = titleCase(suite.path.replace(/\.spec\.js$/, ''));
       const target = path.join(UnitTestingPlugin.cacheDir, suite.path);
       const suiteContent = `const {expect} = require('chai');
 const logger =  require('@wdio/logger').default;
@@ -176,7 +178,7 @@ const getEnvironmentCombo = (caps) => {
   return browser + (version ? ' (v' + version + ')' : '') + (platform ? ' on ' + platform : '')
 }
 
-describe('${suite.path}', () => {
+describe('${suiteName}', () => {
   before(function() {
     if (driver.isMobile === false) {
       try {

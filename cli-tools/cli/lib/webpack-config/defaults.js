@@ -180,13 +180,13 @@ module.exports = (root) => {
       historyApiFallback: true,
     },
     unitTesting: {
-      root: path.join(root, 'src'),
+      root: root,
       output: '__build_tests',
       host: 'localhost',
       port: 3035,
       config: path.join(root, '.wct.config.js'),
       polyfill: path.join(root, 'src', 'modules', '__config', 'polyfills.js'),
-      specs: ['**/*.spec.js'],
+      specs: ['src/**/*.spec.js'],
       suites: {},
       nycArgs: [
         'report',

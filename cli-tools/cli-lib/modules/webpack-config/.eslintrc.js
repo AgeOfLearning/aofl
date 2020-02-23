@@ -9,15 +9,11 @@ const config = {
   env: {
     browser: true,
     node: true,
-    mocha: true,
-    jasmine: true
+    mocha: true
   },
   globals: {
     getTestContainer: true,
     cleanTestContainer: true,
-    sinon: true,
-    Promise: true,
-    fixture: true,
     __webpack_public_path__: true,
     aofljsConfig: true
   }

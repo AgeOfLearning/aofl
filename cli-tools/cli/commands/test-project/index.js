@@ -166,10 +166,21 @@ class TestProject {
       if (!Object.prototype.hasOwnProperty.call(this.suites, suite)) continue;
       const suiteFileName = suite + '.spec.js';
       const specPath = path.join(cacheDir, suiteFileName);
-      const spec = this.suites[suite].reduce((acc, item) => {
+      let spec = this.suites[suite].reduce((acc, item) => {
         acc += `import './${path.relative(path.dirname(specPath), path.join(this.config.unitTesting.root, item))}';\n`;
         return acc;
       }, '');
+
+      if (suite === 'total_coverage_suite') {
+        spec += `import {expect} from 'chai';
+
+describe('Total Coverage Suite', function() {
+  it('Should generate total coverage report', function() {
+    expect(true).to.be.true;
+  });
+});
+`;
+      }
       fs.writeFileSync(specPath, spec, {encoding: 'utf-8'});
       entries[suiteFileName] = specPath;
     }

@@ -31,6 +31,7 @@
     "saucelabs": "^3.0.1",
     "selenium-standalone": "^6.17.0",
     "serve-index": "^1.9.1",
+    "title-case": "^3.0.2",
     "uuid": "^3.4.0"
   }
 }
