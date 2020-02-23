@@ -33,7 +33,7 @@ build: {
   filename: '[name]-[chunkhash].js', // https://webpack.js.org/configuration/output/#outputfilename
   path: 'project-root/__build', // https://webpack.js.org/configuration/output/#outputpath
   publicPath: '/', // https://webpack.js.org/configuration/output/#outputpublicpath
-  devtool: 'eval', // or source-map when NODE_ENV=development https://webpack.js.org/configuration/devtool/
+  devtool: 'nosource-sourcemap', // or source-map when NODE_ENV=development https://webpack.js.org/configuration/devtool/
   cache: true, // Enable/disable cache for loaders
   target: 'web', // https://webpack.js.org/configuration/target/
   entry: { // values defined in config will be appended to this list. Use entryReplace to replace this list.
@@ -111,7 +111,8 @@ build: {
     exclude: [],    issuer: {}',
     enforce: 'pre',
     options: {
-      config: path.join(__dirname, '.eslintrc.js')
+      config: path.join(__dirname, '.eslintrc.js'),
+      cache: false
     },
     replace: { // override include, exclude patterns
       include: [],
@@ -157,6 +158,7 @@ build: {
     },
     loaderOptions: {
       path: path.join(root, 'src', 'modules', '__config', 'routes.js'),
+      cache: false
     }
   },
   terser: { // https://www.npmjs.com/package/terser-webpack-plugin
@@ -235,23 +237,35 @@ devServer: {
 
 ```js
 unitTesting: {
-  root,
-  output: '__build_tests',
-  publicPath: '/__build_tests/',
-  config: path.join(root, '.wctrc.json'),
-  maxChunks: 1,
+  root, // project root
+  output: '__build_tests', // output directory of compiled test files.
+  host: 'localhost',
+  port: 3035,
+  config: path.join(root, '.wct.config.js'),
   polyfill: path.join(root, 'src', 'modules', '__config', 'polyfills.js'),
-  include: ['src/**/*.spec.js'],
+  specs: ['src/**/*.spec.js'],
+  suites: {}, // subset of tests e.g. mobile, ie11
+  nycArgs: [ // cli arguments passed to nyc to generate coverage report
+    'report',
+    '--reporter=lcov',
+    '--reporter=text-summary',
+    '--report-dir=./logs/coverage'
+  ],
+  mocha: { // mocha config
+    ui: 'bdd',
+    timeout: 10000
+  },
   exclude: [
     '**/__build*',
     '**/node_modules',
     '**/node_modules_sourced',
-    '**/documentation{,!(/tests/**)}',
     '**/__config',
     '**/*-instance/**',
     '**/*-polyfill/**',
     'sw.js',
-    'coverage'
+    'coverage',
+    'logs'
   ]
 }
 ```
+*Note - these settings correspond to v3.5+ refer to <a href="/aofl/#/v2.x/getting-started/configuration?id=unittesting" rel="noopener noreferrer">v2</a> documentation for earlier versions*
