@@ -9,12 +9,11 @@ const updateJob = (jobId, body) => {
   return sauceInstance.updateJob(process.env.SAUCE_USERNAME, jobId, body);
 };
 
-const commonOpts = {
+const sharedSettings = {
   recordLogs: true,
   recordVideo: true,
   recordScreenshots: false,
   timeout: 300,
-  avoidProxy: true,
   idleTimeout: 1000,
   commandTimeout: 600,
   webdriverRemoteQuietExceptions: false,
@@ -30,33 +29,32 @@ const config = {
   user,
   key,
   region: 'us',
-  sauceConnect: true,
-  sauceConnectOpts: {
-    noSslBumpDomains: 'all',
-    noProxyCaching: true,
-    directDomains: []
-  },
+  sauceConnect: false,
+  sauceConnectOpts: {},
   capabilities: [
     {
-      'maxInstances': 5,
       'browserName': 'chrome',
       'browserVersion': 'latest',
-      'platformName': 'macOS 10.13',
-      'sauce:options': {...commonOpts}
+      'platformName': 'macOS 10.15',
+      'sauce:options': {
+        ...sharedSettings
+      }
     },
     {
-      'maxInstances': 5,
       'browserName': 'firefox',
       'browserVersion': 'latest',
-      'platformName': 'macOS 10.13',
-      'sauce:options': {...commonOpts}
+      'platformName': 'macOS 10.15',
+      'sauce:options': {
+        ...sharedSettings
+      }
     },
     {
-      'maxInstances': 5,
       'browserName': 'safari',
-      'browserVersion': '13.0',
-      'platformName': 'macOS 10.13',
-      'sauce:options': {...commonOpts}
+      'browserVersion': 'latest',
+      'platformName': 'macOS 10.15',
+      'sauce:options': {
+        ...sharedSettings
+      }
     }
   ],
   services: ['sauce'],
@@ -70,8 +68,9 @@ const config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before(capabilities, specs) {
-    defaults.before(capabilities, specs);
+  async before(capabilities, specs) {
+    await Promise.resolve(defaults.before(capabilities, specs));
+
     if (typeof process.env.JOB_ID === 'undefined') return;
     updateJob(browser.sessionId, {
       build: process.env.JOB_ID,

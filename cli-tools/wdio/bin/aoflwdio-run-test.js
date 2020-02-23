@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const {CommanderHelper} = require('@aofl/cli-lib');
-const RunTest = require('../command/run-test');
+const {RunTest} = require('../command/run-test');
 const program = require('commander');
 
 program

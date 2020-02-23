@@ -17,7 +17,8 @@ const config = {
     cleanTestContainer: true,
     sinon: true,
     Promise: true,
-    Set: true
+    Set: true,
+    browser: true
   }
 };
 

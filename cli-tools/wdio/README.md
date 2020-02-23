@@ -8,7 +8,7 @@ npm i -D @aofl/wdio
 ```
 2) {Placeholder for running the aoflwdio init command}
 3) In the `.aoflwdio.js` file created by the `aoflwdio init` command, setup your applications config options
-   - This file serves as your configuration file for defining your test runner options. 
+   - This file serves as your configuration file for defining your test runner options.
    - Configurations such as device capabilities, logging, and others are defined in this file
    - Refer to https://webdriver.io/docs/options.html for a breakdown of options for this file.
 4) Your all set! Start writing your tests!
@@ -63,6 +63,12 @@ You can use the help command at program level and at command level.
 #    aoflwdio run-test --suite login
 #    aoflwdio run-test
 ```
+
+## Presets
+(wip)
+
+## Page and Element Docs
+(wip)
 
 ## Addtional Information
 WebDriver.io has a great ecosystem of plug-ins and services that extend the functionality of the WebDriver.io test runner. For our purposes, we provide support for only a subset of those services. The following services are supported by `@aofl/wdio`:

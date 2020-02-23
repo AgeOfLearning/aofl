@@ -14,6 +14,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Security]
 
 ---
+## [v3.5.0](https://github.com/AgeOfLearning/aofl/compare/v3.4.0...v3.5.0) - 2020-02-25
+
+### [Added]
+- @aofl/wdio - Web Components support with Local and SauceLabs presets
+- @aofl/cli - source-map-loader
+- npmignore unnecessary files from the packages
+
+### [Changed]
+- @aofl/unit-testing-plugin - refactored to use WebdriverIO
+- unit testing config to work with new version
+- @aofl/cli - devtool source-map as default for development builds
+- @aofl/cli - updated workbox and pwa-manifest
+
+### [Deprecated]
+### [Removed]
+- lodash
+- mkdirp
+- webcomponents-tester
+
+### [Fixed]
+- Exclude babel built-ins from generated bundles
+- Source map files of generated bundles
+- @aofl/cli - eslint loader cache set to false
+- @aofl/templating-plugin - routes loader cache set to false. Build will pick up updated routes configs.
+
+### [Security]
+- Replaced WebComponentsTester with WebdriverIO
+- Updated npm packages
+- Changed .gitignore
+
+---
 ## [v3.4.0](https://github.com/AgeOfLearning/aofl/compare/v3.3.0...v3.4.0) - 2020-01-27
 
 ### [Added]

@@ -14,7 +14,7 @@ aoflwdio --help
 aoflwdio run-test
 `);
   })
-  .command('run-test', 'Runs the WebDriverIO test runner')
+  .command('run-test', 'Runs the WebDriverIO test runner');
 
 program
   .parse(process.argv);

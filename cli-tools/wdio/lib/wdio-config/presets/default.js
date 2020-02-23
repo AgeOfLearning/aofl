@@ -7,7 +7,7 @@ exports.config = {
   // ====================
   runner: 'local',
   path: '/wd/hub',
-  specs: ['wdio-tests/specs/**/*.spec.js'],
+  specs: ['wdio-tests/**/*.spec.js'],
   exclude: [],
   suites: {},
   specFileRetries: 0,
@@ -16,25 +16,18 @@ exports.config = {
   logLevel: 'error',
   bail: 0,
   baseUrl: null,
-  waitforTimeout: 120000,
+  waitforTimeout: 300000,
   waitforInterval: 500,
-  connectionRetryCount: 10,
-  services: [''],
+  connectionRetryCount: 3,
+  outputDir: 'logs/wdio',
+  mochaOutputRoot: 'logs/mocha',
+  services: ['selenium-standalone'],
+  seleniumLogs: './logs/seleniumLogs/',
   framework: 'mocha',
-  reporters: [
-    'spec',
-    [
-      'mochawesome', {
-        outputDir: 'wdio-tests/results',
-        outputFileFormat: (opts) => {
-          return `results-${opts.cid}.${opts.capabilities.browserName}.json`;
-        }
-      }
-    ]
-  ],
+  reporters: ['spec'],
   mochaOpts: {
     ui: 'bdd',
-    timeout: 600000
+    timeout: 300000
   },
   //
   // =====
@@ -49,6 +42,7 @@ exports.config = {
   before(capabilities, specs) {
     // Using Chai
     global.expect = chai.expect;
+    chai.config.includeStack = true;
     chai.should();
   }
 };

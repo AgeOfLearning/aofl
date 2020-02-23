@@ -8,7 +8,7 @@ const Launcher = require('@wdio/cli').default;
 const {configMap} = require('./modules/wdio-config/wdio-presets');
 const spawn = require('cross-spawn');
 const rimraf = require('rimraf');
-const titleCase = require('title-case');
+const {titleCase} = require('title-case');
 
 class UnitTestingPlugin {
   static get name() {

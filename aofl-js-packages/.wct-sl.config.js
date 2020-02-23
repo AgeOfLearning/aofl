@@ -13,6 +13,7 @@ const sharedSettings = {
 const config = {
   preset: 'sauce',
   specFileRetries: 1,
+  sauceConnect: true,
   capabilities: [
     {
       ...sharedSettings,

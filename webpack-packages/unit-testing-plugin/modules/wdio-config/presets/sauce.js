@@ -1,4 +1,3 @@
-/* eslint-disable */
 const SauceLabs = require('saucelabs').default;
 const defaults = require('./default').config;
 
@@ -77,8 +76,9 @@ const config = {
    * @param {Array.<Object>} capabilities list of capabilities details
    * @param {Array.<String>} specs List of spec file paths that are to be run
    */
-  before(capabilities, specs) {
-    defaults.before(capabilities, specs);
+  async before(capabilities, specs) {
+    await Promise.resolve(defaults.before(capabilities, specs));
+
     if (typeof process.env.JOB_ID === 'undefined') return;
     updateJob(browser.sessionId, {
       build: process.env.JOB_ID,
@@ -116,7 +116,7 @@ const config = {
     updateJob(browser.sessionId, {
       passed: testPassed
     });
-    defaults.after(result, capabilities, specs);
+    return Promise.resolve(defaults.after(result, capabilities, specs));
   },
 };
 

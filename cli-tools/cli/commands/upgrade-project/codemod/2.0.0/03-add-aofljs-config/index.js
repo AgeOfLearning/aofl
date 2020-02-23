@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
-const titleCase = require('title-case');
+const {titleCase} = require('title-case');
 
 
 module.exports = (projectRoot, projectInfo, commit = false) => {
