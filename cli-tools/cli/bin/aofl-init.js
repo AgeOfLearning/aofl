@@ -6,6 +6,7 @@ const program = require('commander');
 program
   .option('--repo [repo]', 'repo url')
   .option('--base [base]', 'starter application alias')
+  .option('--ref [branch]', 'Git ref to clone from. Branch, tag, ...')
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -18,5 +19,5 @@ program
   .parse(process.argv);
 
 
-const initProject = new InitProject(program.args[0], program.repo, program.base);
+const initProject = new InitProject(program.args[0], program.base, program.ref, program.repo);
 initProject.init();

@@ -269,8 +269,16 @@ class Git {
    * @return {Promise}
    * @memberof Git
    */
-  static clone(repo, directory = '', options = {}) {
-    return Git.__run(['clone', repo, directory], options);
+  static clone(repo, directory = '', branch, options = {}) {
+    const params = ['clone'];
+    if (branch) {
+      params.push('--branch', branch);
+    }
+    params.push(repo);
+    if (directory !== '') {
+      params.push(directory);
+    }
+    return Git.__run(params, options);
   }
 
   /**

@@ -61,7 +61,7 @@ You can use the help command at program level and at command level.
 The init command is used to initialize a new aofl project. You can specify a repo or use one of the base application. It works by cloning the specified repo into the tmp folder and copying necessary files to the specified target directory and finishes with running npm install in the target directory.
 
 ### Options
-`$ aofl init [--base base | --repo path/to/repo] [target]`
+`$ aofl init [--base base | --repo path/to/repo] [--ref branch|tag] [target]`
 
 #### target
 Target is the location of the project we want to initialize. By default the current working directory is used. Target directory must be empty and it will be created if it doesn't exist.
@@ -74,19 +74,19 @@ Repo can be used to initialize an application from any repo. You can create your
 
 ### `$ aofl help init`
 ```bash
-#  Usage: aofl-init [options]
+# Usage: aofl-init [options]
 #
-#  Options:
+# Options:
+#   --repo [repo]   repo url
+#   --base [base]   starter application alias
+#   --ref [branch]  Git ref to clone from. Branch, tag, ...
+#   -h, --help      output usage information
 #
-#    --repo [repo]  repo url
-#    --base [base]  starter application alias
-#    -h, --help     output usage information
+#   Examples:
 #
-#  Examples:
-#
-#    aofl help init
-#    aofl init path/to/project ## generate a bare bone aofl project
-#    aofl init --base doc ## generate a documentation project just like @aofl components example projects
+#     aofl help init
+#     aofl init path/to/project ## generate a bare bone aofl project
+#     aofl init --base doc ## generate a documentation project just like @aofl components example projects
 ```
 
 ## g

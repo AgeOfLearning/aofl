@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const {repos} = require('./js/repo-enumerate');
 const os = require('os');
-const md5 = require('tiny-js-md5');
+const {v4} = require('uuid');
 const glob = require('fast-glob');
 const rimraf = require('rimraf');
 
@@ -17,20 +17,27 @@ class InitProject {
    * Creates an instance of InitProject.
    *
    * @param {String} target
-   * @param {String} repo
    * @param {String} base
+   * @param {String} ref
+   * @param {String} repo
    * @memberof InitProject
    */
-  constructor(target = '.', repo = repos.default, base) {
+  constructor(target = '.', base = 'default', ref, repo) {
     this.target = path.resolve(target);
-    this.base = base;
-    this.repo = repo;
+    this.repo = repos[base];
 
-    if (typeof repos[base] !== 'undefined') {
-      this.repo = repos[base];
+    if (typeof repo !== 'undefined') {
+      this.repo = {
+        url: repo,
+        ref: 'master'
+      };
     }
 
-    this.cloneDir = path.resolve(os.tmpdir(), md5(this.repo.url));
+    if (typeof ref !== 'undefined') {
+      this.repo.ref = ref;
+    }
+
+    this.cloneDir = path.resolve(os.tmpdir(), v4());
   }
 
   static removeExcludedFromFiles(files = []) {

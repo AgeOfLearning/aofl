@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Source map files of generated bundles
 - @aofl/cli - eslint loader cache set to false
 - @aofl/templating-plugin - routes loader cache set to false. Build will pick up updated routes configs.
+- @aofl/cli - init - repo and branch name support
 
 ### [Security]
 - Replaced WebComponentsTester with WebdriverIO
