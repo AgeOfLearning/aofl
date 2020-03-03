@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Added]
 - @aofl/cli - init will invoke `postinit` script
+- @aofl/wdio - testing bot and crossbrowser support
 ### [Changed]
 ### [Deprecated]
 ### [Removed]

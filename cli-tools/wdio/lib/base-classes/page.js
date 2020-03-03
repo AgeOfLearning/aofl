@@ -15,6 +15,14 @@ class Page {
     this.title = 'My Page';
     this.cache = {};
   }
+
+  static maximize() {
+    if (driver.isMobile === false) {
+      try {
+        browser.maximizeWindow();
+      } catch (e) {}
+    }
+  }
   /**
    *
    * @return {Object}

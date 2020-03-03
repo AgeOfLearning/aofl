@@ -198,7 +198,7 @@ class MergeConfig {
        * @param {Array.<Object>} capabilities list of capabilities details
        */
       onPrepare(config, capabilities) {
-        return MergeConfig.applyHook('onPrepare', config, capabilities);
+        return MergeConfig.applyHook('onPrepare', defaultConfig, userConfig, config, capabilities);
       },
       /**
        * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -208,7 +208,7 @@ class MergeConfig {
        * @param {Array.<String>} specs List of spec file paths that are to be run
        */
       beforeSession(config, capabilities, specs) {
-        return MergeConfig.applyHook('beforeSession', config, capabilities, specs);
+        return MergeConfig.applyHook('beforeSession', defaultConfig, userConfig, config, capabilities, specs);
       },
       /**
        * Gets executed before test execution begins. At this point you can access to all global
@@ -220,27 +220,11 @@ class MergeConfig {
         return MergeConfig.applyHook('before', defaultConfig, userConfig, capabilities, specs);
       },
       /**
-       * Runs before a WebdriverIO command gets executed.
-       * @param {String} commandName hook command name
-       * @param {Array} args arguments that command would receive
-       */
-      beforeCommand(commandName, args) {
-        return MergeConfig.applyHook('beforeCommand', defaultConfig, userConfig, commandName, args);
-      },
-      /**
        * Hook that gets executed before the suite starts
        * @param {Object} suite suite details
        */
       beforeSuite(suite) {
         return MergeConfig.applyHook('beforeSuite', defaultConfig, userConfig, suite);
-      },
-      /**
-       * Function to be executed before a test (in Mocha/Jasmine) starts.
-       * @param {*} test
-       * @param {*} context
-       */
-      beforeTest(test, context) {
-        return MergeConfig.applyHook('beforeTest', defaultConfig, userConfig, test, context);
       },
       /**
        * Hook that gets executed _before_ a hook within the suite starts (e.g. runs before calling
@@ -268,21 +252,43 @@ class MergeConfig {
         return MergeConfig.applyHook('afterHook', defaultConfig, userConfig, test, context, stepData, world);
       },
       /**
+       * Function to be executed before a test (in Mocha/Jasmine) starts.
+       * @param {*} test
+       * @param {*} context
+       */
+      beforeTest(test, context) {
+        return MergeConfig.applyHook('beforeTest', defaultConfig, userConfig, test, context);
+      },
+      /**
+       * Runs before a WebdriverIO command gets executed.
+       * @param {String} commandName hook command name
+       * @param {Array} args arguments that command would receive
+       */
+      beforeCommand(commandName, args) {
+        return MergeConfig.applyHook('beforeCommand', defaultConfig, userConfig, commandName, args);
+      },
+      /**
+     * Runs after a WebdriverIO command gets executed
+     * @param {String} commandName hook command name
+     * @param {Array} args arguments that command would receive
+     * @param {Number} result 0 - command success, 1 - command error
+     * @param {Object} error error object, if any
+     */
+      afterCommand(commandName, args, result, error) {
+        return MergeConfig.applyHook('afterCommand', defaultConfig, userConfig, commandName, args, result, error);
+      },
+      /**
+       * Function to be executed after a test (in Mocha/Jasmine)
+       */
+      afterTest(test, context, {error, result, duration, passed, retries}) {
+        return MergeConfig.applyHook('afterTest', defaultConfig, userConfig, test, context, {error, result, duration, passed, retries});
+      },
+      /**
        * Hook that gets executed after the suite has ended
        * @param {Object} suite suite details
        */
       afterSuite(suite) {
         return MergeConfig.applyHook('afterSuite', defaultConfig, userConfig, suite);
-      },
-      /**
-       * Runs after a WebdriverIO command gets executed
-       * @param {String} commandName hook command name
-       * @param {Array} args arguments that command would receive
-       * @param {Number} result 0 - command success, 1 - command error
-       * @param {Object} error error object if any
-       */
-      afterCommand(commandName, args, result, error) {
-        return MergeConfig.applyHook('afterCommand', defaultConfig, userConfig, commandName, args, result, error);
       },
       /**
        * Gets executed after all tests are done. You still have access to all global variables from
@@ -321,6 +327,27 @@ class MergeConfig {
       */
       onReload(oldSessionId, newSessionId) {
         return MergeConfig.applyHook('onReload', defaultConfig, userConfig, oldSessionId, newSessionId);
+      },
+      /**
+       * Cucumber-specific hooks
+       */
+      beforeFeature(uri, feature, scenarios) {
+        return MergeConfig.applyHook('beforeFeature', defaultConfig, userConfig, uri, feature, scenarios);
+      },
+      beforeScenario(uri, feature, scenario, sourceLocation) {
+        return MergeConfig.applyHook('beforeScenario', defaultConfig, userConfig, uri, feature, scenario, sourceLocation);
+      },
+      beforeStep(uri, feature, stepData, context) {
+        return MergeConfig.applyHook('beforeStep', defaultConfig, userConfig, uri, feature, stepData, context);
+      },
+      afterStep(uri, feature, {error, result, duration, passed}, stepData, context) {
+        return MergeConfig.applyHook('afterStep', defaultConfig, userConfig, uri, feature, {error, result, duration, passed}, stepData, context);
+      },
+      afterScenario(uri, feature, scenario, result, sourceLocation) {
+        return MergeConfig.applyHook('afterScenario', defaultConfig, userConfig, uri, feature, scenario, result, sourceLocation);
+      },
+      afterFeature(uri, feature, scenarios) {
+        return MergeConfig.applyHook('afterFeature', defaultConfig, userConfig, uri, feature, scenarios);
       }
     };
   }
