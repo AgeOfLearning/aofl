@@ -73,10 +73,14 @@ class Middleware {
    * @return {Promise}
    */
   iterateMiddleware(request, hook, response = null) {
-    return new Promise((resolve) => {
-      const iterator = this.getMiddlewareIterator(hook);
+    return new Promise((resolve, reject) => {
+      let iterator = this.getMiddlewareIterator(hook);
       let mw = null;
-      const next = (/* istanbul ignore next */argResponse = null) => {
+      const next = (/* istanbul ignore next */argResponse = null, err = null) => {
+        if (err !== null) {
+          iterator = null;
+          return reject(err);
+        }
         mw = iterator.next();
         if (mw.done !== true) {
           mw.value.callback(request, argResponse, next);

@@ -35,6 +35,9 @@ class Router {
       resolve: {
         writable: true
       },
+      reject: {
+        writable: true
+      },
       currentRoute: {
         writable: true
       }
@@ -100,13 +103,16 @@ class Router {
    * @param {Object} request
    */
   async applyMiddleware(request) {
-    const beforeEachResponse = await this.middleware
-      .iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
-    const afterEachResponse = await this.middleware
-      .iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
-    await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, afterEachResponse));
-
-    this.resolve();
+    try {
+      const beforeEachResponse = await this.middleware
+        .iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
+      const afterEachResponse = await this.middleware
+        .iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
+      await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, afterEachResponse));
+      this.resolve();
+    } catch (e) {
+      this.reject(e);
+    }
   }
 
   /**
@@ -156,6 +162,7 @@ class Router {
 
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
+      this.reject = reject;
       const request = {
         to: path,
         from: this.currentRoute? this.currentRoute.to: document.referrer,

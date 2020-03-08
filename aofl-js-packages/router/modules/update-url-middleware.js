@@ -15,14 +15,19 @@
  * @param {Functien} next
  */
 const updateUrlMiddleware = (request, response, next) => {
-  if (!request.meta.poppedState) {
-    if (request.meta.replaceState) {
-      window.history.replaceState(null, null, response.to);
-    } else {
-      window.history.pushState(null, null, response.to);
+  let err = null;
+  try {
+    if (!request.meta.poppedState) {
+      if (request.meta.replaceState) {
+        window.history.replaceState(null, null, response.to);
+      } else {
+        window.history.pushState(null, null, response.to);
+      }
     }
+  } catch (e) {
+    err = e;
   }
-  next(response);
+  next(response, err);
 };
 
 export {updateUrlMiddleware};

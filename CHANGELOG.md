@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.4.0...development) - Date
 
 ### [Added]
+- @aofl/router - navigate will reject/throw error if any of the hooks throw.
 ### [Changed]
+- @aofl/middleware - next() takes additional parameter `error` and iterateMiddleware will reject if error is not null
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "3.5.0",
+  "version": "3.6.0-alpha.1",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-ci": "cross-env NODE_ENV=production aofl build --debug",
     "build": "cross-env NODE_ENV=production npx aofl build",
+    "watch": "npm run build -- -w",
     "build:dev": "cross-env NODE_ENV=development npx aofl build",
     "prepublishOnly": "npm run build-ci && npm run docs",
     "docs": "npx jsdoc -c .jsdocrc.json ."
@@ -32,7 +33,7 @@
   },
   "devDependencies": {
     "@aofl/cli": "^3.5.0",
-    "@aofl/middleware": "^3.5.0",
+    "@aofl/middleware": "^3.6.0-alpha.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"

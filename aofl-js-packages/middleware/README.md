@@ -24,7 +24,7 @@ npm i -S @aofl/middleware
 const matchRoutes = (request, response, next) => {
   // match route logic based on request and response
 
-  next(response); // next should be called to process the next middleware function in the queue. Otherwise, the operation stops.
+  next(response, [err || null]); // next should be called to process the next middleware function in the queue. Otherwise, the operation stops.
 };
 
 class Router {
