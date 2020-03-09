@@ -15,7 +15,7 @@
  * @return {Boolean}
  */
 function isRequired(value) {
-  return typeof value === 'string' && value !== '';
+  return Boolean(value && String(value) !== '');
 }
 
 export {

@@ -108,6 +108,11 @@ module.exports = {
     root: __dirname,
     host: process.env.TRAVIS? 'travis': 'lh',
     port: 3035,
+    suites: {
+      'form-validate': [
+        './form-validate/test/*'
+      ]
+    },
     specs: ['**/*.spec.js'],
     config: process.env.SAUCE_USERNAME? path.join(__dirname, '.wct-sl.config.js'): path.join(__dirname, '.wct.config.js'),
     polyfill: path.join(__dirname, '__config', 'polyfills.js'),

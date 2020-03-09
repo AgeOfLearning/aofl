@@ -15,7 +15,13 @@
   * @return {Function}
   */
 const minLength = (length) => {
-  return (value) => typeof value === 'string' && value.length >= length;
+  return (value) => {
+    if (!value) return false;
+    if (typeof value.length === 'undefined') {
+      value = String(value);
+    }
+    return Boolean(value.length >= length);
+  };
 };
 
 /**
@@ -27,7 +33,13 @@ const minLength = (length) => {
   * @return {Function}
   */
 const maxLength = (length) => {
-  return (value) => typeof value === 'string' && value.length <= length;
+  return (value) => {
+    if (!value) return false;
+    if (typeof value.length === 'undefined') {
+      value = String(value);
+    }
+    return Boolean(value.length <= length);
+  };
 };
 
 export {

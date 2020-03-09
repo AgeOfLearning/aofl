@@ -25,7 +25,7 @@ const allDigitRegex = /^[0-9]+$/;
  * @return {boolean}
  */
 const isAllDigits = (value) => {
-  return typeof value === 'string' && allDigitRegex.test(value);
+  return Boolean(value && allDigitRegex.test(String(value)));
 };
 
 export {

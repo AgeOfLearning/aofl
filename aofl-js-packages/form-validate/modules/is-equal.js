@@ -17,8 +17,7 @@ import {compare} from './compare';
  */
 const isEqual = (propPath) => {
   return compare(propPath, (value, otherValue) => {
-    if (typeof otherValue === 'undefined') { return false; }
-    return value === otherValue;
+    return Boolean(value && value === otherValue);
   });
 };
 

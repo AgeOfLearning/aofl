@@ -7,8 +7,8 @@ describe('@aofl/aofl-validate/is-all-digit', function() {
     expect(isAllDigits('1234')).to.be.true;
   });
 
-  it('should be false when input is all digits and not a string', function() {
-    expect(isAllDigits(1234)).to.be.false;
+  it('should be true when input is all digits and and has type number', function() {
+    expect(isAllDigits(1234)).to.be.true;
   });
 
   it('should be false when input contains non-digits', function() {

@@ -19,8 +19,11 @@ describe('@aofl/aofl-validate/max-length', function() {
     expect(this.max('12')).to.be.true;
   });
 
-  it('should be false when input is not a string', function() {
-    expect(this.max([])).to.be.false;
+  it('should be true when value has length property and less than maxLength', function() {
+    expect(this.max([])).to.be.true;
+  });
+  it('should be false when value has length property and greater than maxLength', function() {
+    expect(this.max([1, 2, 3, 4])).to.be.false;
   });
 });
 
@@ -42,7 +45,10 @@ describe('@aofl/aofl-validate/min-length', function() {
     expect(this.min('12')).to.be.false;
   });
 
-  it('should be false when input is not a string', function() {
+  it('should be true when value has length property and greater than minLength', function() {
+    expect(this.min([1, 2, 3, 4])).to.be.true;
+  });
+  it('should be false when value has length property and less than minLength', function() {
     expect(this.min([])).to.be.false;
   });
 });

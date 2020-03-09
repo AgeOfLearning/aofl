@@ -42,9 +42,9 @@ describe('@aofl/aofl-validate/is-equal', function() {
     }
   });
 
-  it('should be false when values match', async function() {
+  it('should be false when values do not match', async function() {
     try {
-      this.testForm.password = 'password';
+      this.testForm.password = 'password2';
       this.testForm.form.validate();
       await this.testForm.form.validateComplete;
 

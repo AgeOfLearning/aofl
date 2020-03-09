@@ -19,10 +19,7 @@ describe('@aofl/aofl-validate/is-required', function() {
     expect(isRequired('')).to.be.false;
   });
 
-  it('should be false when a object is passed', function() {
-    expect(isRequired({})).to.be.false;
-  });
-  it('should be false when a object is passed', function() {
-    expect(isRequired({})).to.be.false;
+  it('should be true when a object is passed', function() {
+    expect(isRequired({})).to.be.true;
   });
 });

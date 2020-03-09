@@ -45,11 +45,6 @@ describe('@aofl/picture', function() {
   it('should set the correct source depending on window size', async function() {
     await this.basicPictureElement.updateComplete;
     const src = this.basicPictureElement.querySelector('aofl-img').src;
-
-    console.log('wiw', window.outerWidth);
-    console.log('src', src);
-    console.log(this.getSource(window.outerWidth));
-
     expect(src).to.be.equal(this.getSource(window.outerWidth));
   });
 

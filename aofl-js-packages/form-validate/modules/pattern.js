@@ -20,7 +20,7 @@ const pattern = (regex, flags) => {
     regex = new RegExp(regex, flags);
   }
   return /** @this HTMLElement */ function patternsMathValidator(value) {
-    return regex.test(value);
+    return regex.test(String(value));
   };
 };
 
