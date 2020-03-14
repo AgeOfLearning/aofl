@@ -87,7 +87,7 @@ class Router {
    * @return {void}
    */
   afterEach(fn) {
-    console.warn('Deprecation Warning: "Router.afterEach" has been deprecated and will be removed in a future release. Use beforeEach instead.');
+    console.warn('Deprecation Warning: "Router.afterEach" has been deprecated and will be removed in a future release. Use beforeEach instead.'); // eslint-disable-line
     return this.beforeEach(fn);
   }
 
@@ -122,7 +122,7 @@ class Router {
    * @param {Object} routes
    * @return {Object}
    */
-  addRegexRoutes(routes = []) {
+  addRegexRoutes(/* istanbul ignore next */routes = []) {
     for (let i = 0; i < routes.length; i++) {
       const {regex, parse} = PathUtils.getRegex(routes[i].path);
       routes[i] = Object.assign({}, routes[i], {
@@ -141,8 +141,7 @@ class Router {
   listen() {
     const popStateHandler = (e) => {
       e.preventDefault();
-      this.navigate(location.href.replace(location.origin, ''), {
-        forceReload: true,
+      this.navigate(location.href.replace(location.origin, '').replace('index.html', ''), {
         poppedState: true
       });
     };
@@ -157,12 +156,11 @@ class Router {
    * @param {String} path
    * @param {Object} _meta
    * @param {Boolean} _meta.poppedState
-   * @param {Boolean} _meta.forceReload
    * @param {Boolean} _meta.replaceState
    * @return {Promise}
    */
   navigate(path, _meta) {
-    const meta = Object.assign({poppedState: false, forceReload: false, replaceState: false}, _meta);
+    const meta = Object.assign({poppedState: false, replaceState: false}, _meta);
 
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
@@ -173,14 +171,11 @@ class Router {
         routes: this.config.routes,
         meta
       };
-      if (path !== location.href.replace(location.origin, '') || meta.forceReload) {
-        this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
-          .then(() => {
-            this.applyMiddleware(request);
-          });
-      } else {
-        reject('Can\'t navigate to current path');
-      }
+
+      this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request))
+        .then(() => {
+          this.applyMiddleware(request);
+        });
     });
   }
 }

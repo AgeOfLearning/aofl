@@ -247,19 +247,6 @@ describe('@aofl/router/router', function() {
       }
     });
 
-    it('Should not navigate to same path', async function() {
-      try {
-        await new Promise((resolve) => {
-          this.router.navigate(location.href.replace(location.origin, '')).catch((e) => {
-            expect(e).to.equal('Can\'t navigate to current path');
-            resolve();
-          });
-        });
-      } catch (e) {
-        return Promise.reject(e);
-      }
-    });
-
     it('Should redirect', async function() {
       try {
         this.router.beforeEach((request, response, next) => {
@@ -343,6 +330,30 @@ describe('@aofl/router/router', function() {
       } catch (e) {
         return Promise.reject(e);
       }
+    });
+
+    it('Should throw an error when a middleware throws', async function() {
+      const unsub = this.router.beforeEach((req, resp, next) => {
+        throw new Error('test');
+      });
+      try {
+        await this.router.navigate(location.href.replace(location.origin, ''));
+      } catch (e) {
+        expect(e.message).to.equal('test');
+      }
+      unsub();
+    });
+
+    it('Should throw an error when a middleware returns error', async function() {
+      const unsub = this.router.beforeEach((req, resp, next) => {
+        next(null, new Error('test 2'));
+      });
+      try {
+        await this.router.navigate(location.href.replace(location.origin, ''));
+      } catch (e) {
+        expect(e.message).to.equal('test 2');
+      }
+      unsub();
     });
   });
 });
