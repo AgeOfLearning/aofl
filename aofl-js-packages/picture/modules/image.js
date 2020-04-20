@@ -65,15 +65,14 @@ class AoflImg extends isInViewportMixin(AoflElement) {
     super.connectedCallback(...args);
     setTimeout(() => {
       this.checkInViewport();
+      try {
+        const parent = findParent(this, 'setImg');
+        /* istanbul ignore next */
+        parent.setImg(this);
+      } catch (e) {
+        this.loadImage(this.src);
+      }
     });
-    this.loadImage(this.src);
-    try {
-      const parent = findParent(this, 'setImg');
-      /* istanbul ignore next */
-      parent.setImg(this);
-    } catch (e) {
-      this.loadImage(this.src);
-    }
   }
 
   /**

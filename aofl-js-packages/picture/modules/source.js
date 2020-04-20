@@ -19,13 +19,15 @@ class AoflSource extends AoflElement {
    */
   connectedCallback(...args) {
     super.connectedCallback(...args);
-    const parent = findParent(this, 'addSource');
-    /* istanbul ignore next */
-    if (!parent) {
-      throw new Error('aofl-source must be used inside of aofl-picture');
-    }
+    setTimeout(() => {
+      const parent = findParent(this, 'addSource');
+      /* istanbul ignore next */
+      if (!parent) {
+        throw new Error('aofl-source must be used inside of aofl-picture');
+      }
 
-    parent.addSource(this);
+      parent.addSource(this);
+    });
   }
   /**
    * @readonly

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Removed]
 ### [Fixed]
 - @aofl/cli-lib/git - fixed issue with archive command throwing an error when pulling multiple files.
+- @aofl/picture - delay interacting with parent by a micro task. Fixes loading issues when picture elements are used outside of an Aofl JS app.
 ### [Security]
 
 ---
