@@ -1,6 +1,6 @@
 {
   "name": "@aofl/object-utils",
-  "version": "3.8.0",
+  "version": "3.8.1",
   "description": "A small collection of Object utility functions designed to have a small footprint (20b gz) and be performant",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.8.0",
+    "@aofl/cli": "^3.8.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"
