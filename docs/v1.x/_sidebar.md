@@ -35,4 +35,4 @@
 - [Browser devtools](v1.x/devtools/index.md)
 - <a href="v1.x/api-docs/index.html" target="_blank">Api Reference</a>
 - <a href="https://codecov.io/gh/AgeOfLearning/aofl" target="_blank">Coverage Report</a>
-- Performance Bechmarks <small>(WIP...)</small>
+- Performance Benchmarks <small>(WIP...)</small>
