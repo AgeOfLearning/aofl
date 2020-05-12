@@ -318,11 +318,11 @@ class Git {
    * @param {string} [output='']
    * @param {string} [remote='']
    * @param {String} treeish
-   * @param {String} path
+   * @param {Array} paths
    * @param {*} [options={}]
    * @return {Promise}
    */
-  static archive(format = 'tar', verbose = false, prefix = '', output = '', remote = '', treeish, path, options = {}) {
+  static archive(format = 'tar', verbose = false, prefix = '', output = '', remote = '', treeish, paths = [], options = {}) {
     const params = [
       'archive',
       `--format=${format}`
@@ -332,7 +332,7 @@ class Git {
     if (prefix !== '') params.push(`--prefix=${prefix}`);
     if (remote !== '') params.push(`--remote=${remote}`);
     if (typeof treeish !== 'undefined') params.push(treeish);
-    if (typeof path !== 'undefined') params.push(path);
+    if (typeof paths.length > 0) params.push(...path);
 
     return Git.__run(params, options);
   }
