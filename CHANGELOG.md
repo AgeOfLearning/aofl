@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Added]
 ### [Changed]
 ### [Deprecated]
+- @aofl/router - afterEach middleware. Use beforeEach instead.
 ### [Removed]
 ### [Fixed]
 - @aofl/cli-lib/git - fixed issue with archive command throwing an error when pulling multiple files.

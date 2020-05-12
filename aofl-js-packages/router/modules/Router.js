@@ -26,11 +26,12 @@ class Router {
   constructor() {
     this.removeMatchRouteMiddleware = /* istanbul ignore next */ () => {};
     this.removeRedirectMiddleware = /* istanbul ignore next */ () => {};
+    this.removeUpdateUrlMiddleware = /* istanbul ignore next */ () => {};
     this.removeListener = /* istanbul ignore next */ () => {};
 
     Object.defineProperties(this, {
       middleware: {
-        value: new Middleware('before', 'after', 'afterEach', 'beforeEach')
+        value: new Middleware('before', 'after', 'beforeEach')
       },
       resolve: {
         writable: true
@@ -56,7 +57,7 @@ class Router {
 
     this.removeMatchRouteMiddleware = this.beforeEach(matchRouteMiddleware(this));
     this.removeRedirectMiddleware = this.after(redirectMiddleware(this));
-    this.removeRedirectMiddleware = this.after(updateUrlMiddleware);
+    this.removeUpdateUrlMiddleware = this.after(updateUrlMiddleware);
 
     this.removeListener = this.listen();
   }
@@ -81,11 +82,13 @@ class Router {
 
   /**
    * Registers a post middleware function
+   * @deprecated
    * @param {Function} fn
    * @return {void}
    */
   afterEach(fn) {
-    return this.middleware.use(fn, 'afterEach');
+    console.warn('Deprecation Warning: "Router.afterEach" has been deprecated and will be removed in a future release. Use beforeEach instead.');
+    return this.beforeEach(fn);
   }
 
   /**
@@ -106,9 +109,7 @@ class Router {
     try {
       const beforeEachResponse = await this.middleware
         .iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
-      const afterEachResponse = await this.middleware
-        .iterateMiddleware(request, 'afterEach', Object.assign({}, beforeEachResponse));
-      await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, afterEachResponse));
+      await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, beforeEachResponse));
       this.resolve();
     } catch (e) {
       this.reject(e);
@@ -155,6 +156,9 @@ class Router {
    * public method which attempts to load the given path
    * @param {String} path
    * @param {Object} _meta
+   * @param {Boolean} _meta.poppedState
+   * @param {Boolean} _meta.forceReload
+   * @param {Boolean} _meta.replaceState
    * @return {Promise}
    */
   navigate(path, _meta) {

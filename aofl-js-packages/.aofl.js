@@ -111,6 +111,9 @@ module.exports = {
     suites: {
       'form-validate': [
         './form-validate/test/*'
+      ],
+      'router': [
+        './router/test/*'
       ]
     },
     specs: ['**/*.spec.js'],
