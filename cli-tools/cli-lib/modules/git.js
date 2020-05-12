@@ -332,7 +332,7 @@ class Git {
     if (prefix !== '') params.push(`--prefix=${prefix}`);
     if (remote !== '') params.push(`--remote=${remote}`);
     if (typeof treeish !== 'undefined') params.push(treeish);
-    if (typeof paths.length > 0) params.push(...path);
+    if (paths.length > 0) params.push(...paths);
 
     return Git.__run(params, options);
   }
