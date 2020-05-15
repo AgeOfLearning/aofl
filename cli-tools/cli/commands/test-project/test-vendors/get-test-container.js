@@ -8,16 +8,16 @@ const cleanTestContainer = () => {
 
 const getTestContainer = () => {
   const iframe = document.createElement('div');
-  iframe.style.width = "100%";
-  iframe.style.height = "100vh";
-  testContainer.appendChild(iframe)
+  iframe.style.width = '100%';
+  iframe.style.height = '100vh';
+  testContainer.appendChild(iframe);
 
   return iframe;
 };
 
 const getTestFrame = () => {
   return testContainer.firstChild;
-}
+};
 
 window.getTestContainer = getTestContainer;
 window.cleanTestContainer = cleanTestContainer;

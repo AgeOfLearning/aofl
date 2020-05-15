@@ -6,3 +6,5 @@ api-docs
 modules/__config/routes.js
 **/wct
 docs-source
+**/dist
+docs

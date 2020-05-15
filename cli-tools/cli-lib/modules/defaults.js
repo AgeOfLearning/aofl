@@ -1,7 +1,6 @@
 const defaults = (options = {}, defaults) => {
   for (const key in defaults) {
     if (!Object.prototype.hasOwnProperty.call(defaults, key)) continue;
-    console.log(key);
     if (typeof options[key] === 'undefined') {
       options[key] = defaults[key];
     }

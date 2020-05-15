@@ -3,6 +3,7 @@ const fs = require('fs');
 
 const TRAILING_SLASH_REGEX = new RegExp(`\\${path.sep}$`, 'i');
 const LEADING_SLASH_REGEX = new RegExp(`^\\${path.sep}`, 'i');
+const CLEAN_PATH_REGEX = /[#?].*/i;
 
 /**
  * shared methods for path operations
@@ -53,7 +54,7 @@ class PathHelper {
       .map((_path) => path.join(_path, '**', _matchPattern));
   }
 
-    /**
+  /**
    * @param {*} path
    * @return {String}
    * @throws {Error}

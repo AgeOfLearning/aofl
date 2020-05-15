@@ -7,9 +7,8 @@ module.exports = function(content) {
 
   try {
     const mochaStr = JSON.stringify(options.mocha);
-    return content.replace(/window\.mochaConfig = {}/, 'window.mochaConfig = ' + mochaStr);;
+    return content.replace(/window\.mochaConfig = {}/, 'window.mochaConfig = ' + mochaStr);
   } catch (e) {
-    console.log(e);
     return content;
   }
 };

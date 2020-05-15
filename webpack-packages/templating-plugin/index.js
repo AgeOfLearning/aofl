@@ -161,9 +161,11 @@ class TemplatingPlugin {
       for (const key in assets) {
         if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
         const assetPath = key;
-        const s = await server(compilation.assets, compiler.options.output.path, compiler.options.output.publicPath, this.options.prerender);
+        const s = await server(compilation.assets, compiler.options.output.path,
+          compiler.options.output.publicPath, this.options.prerender);
         const body = await prerender(
-          s.url + compiler.options.output.publicPath + assets[key].routeInfo.outputName.replace(/index\.html$/, ''),
+          s.url + compiler.options.output.publicPath +
+          assets[key].routeInfo.outputName.replace(/index\.html$/, ''),
           this.options.prerender
         );
         const source = compilation.assets[assetPath].source();
