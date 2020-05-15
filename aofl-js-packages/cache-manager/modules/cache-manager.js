@@ -203,11 +203,15 @@ class CacheManager {
 
     const namespaceKey = this.getNamespaceKey(key);
     let obj = this.storage.getItem(namespaceKey);
+
     if (this.storageType === cacheTypeEnumerate.LOCAL ||
     this.storageType === cacheTypeEnumerate.SESSION) {
-      obj = JSON.parse(obj);
+      try {
+        obj = JSON.parse(obj);
+      } catch (e) {}
     }
-    if (obj.t < (Date.now() - this.expire)) { // expired
+
+    if (obj === null || obj.t < (Date.now() - this.expire)) { // expired
       return true;
     }
     return false;

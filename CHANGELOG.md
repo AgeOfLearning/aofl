@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Removed]
 - @aofl/router - removed forceReload option and can't navigate to current route restriction
 ### [Fixed]
-- @aofl/cli-lib/git - archive paths reference
+- @aofl/cache-manager - fixed cannot read property 't' of null when keys expire.
 ### [Security]
 
 ---
