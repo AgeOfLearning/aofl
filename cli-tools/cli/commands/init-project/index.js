@@ -92,6 +92,9 @@ class InitProject {
         fs.copyFileSync(path.join(this.cloneDir, file), target);
       }
       await Npm.install({cwd: this.target});
+
+      await Npm.__run(['run', 'postinit', '--if-present'], {cwd: this.target});
+
       process.stdout.write(chalk.green(`
 Success :)
 

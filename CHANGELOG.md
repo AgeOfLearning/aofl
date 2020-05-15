@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.8.1...development) - Date
 
 ### [Added]
+- @aofl/cli - init will invoke `postinit` script
 ### [Changed]
 ### [Deprecated]
 ### [Removed]
