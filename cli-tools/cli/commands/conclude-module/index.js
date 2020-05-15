@@ -3,6 +3,7 @@ const {Git, Npm} = require('@aofl/cli-lib');
 const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');
+const {exitOnUncommittedChanges} = require('../../lib/uncommitted-changes');
 /**
  *
  *
@@ -30,7 +31,8 @@ class ConcludeModule {
    *
    * @memberof ConcludeModule
    */
-  init() {
+  async init() {
+    await exitOnUncommittedChanges();
     const modules = [].concat(this.modules);
     const gen = function* gen() {
       yield* modules;
@@ -44,6 +46,7 @@ class ConcludeModule {
       }
       const m = next.value;
       try {
+        await this.checkOtherInstalledPackages(m);
         let version = '';
         if (this.revert) {
           version = '@' + m.package.version;
@@ -53,13 +56,16 @@ class ConcludeModule {
             version = '@' + updatedPackage.version;
           }
         }
-        await Npm.removeDependency([m.name], m.type.flag, true);
+        process.stdout.write(chalk.yellow(`\nUninstalling ${m.name}\n`) + '\n');
+        await Npm.removeDependency([m.name], m.type.flag);
+        process.stdout.write(chalk.yellow(`\nRemoving submodule ${m.localPath}\n`) + '\n');
         await Git.removeSubmodule(m.localPath);
-        await Npm.installDependency([m.name + version], m.type.flag, true);
+        process.stdout.write(chalk.yellow(`\nInstalling ${m.name}@${version}\n`) + '\n');
+        await Npm.installDependency([m.name + version], m.type.flag);
         const index = this.config.modules.findIndex((item) => item.name === m.name);
         this.config.modules.splice(index, 1);
       } catch (e) {
-        process.stdout.write('caught' + '\n');
+        process.stdout.write(chalk.red('Conclude Failed') + '\n');
         process.stdout.write(e + '\n');
       }
       concludeModule();
@@ -78,7 +84,7 @@ class ConcludeModule {
     try {
       config = require(this.configPath);
     } catch (e) {
-      process.stdout.write(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated`) + '\n');
+      process.stdout.write(chalk.yellow(`Could not load .aofl.json in ${path.dirname(this.configPath)} a new config file will be generated\n`) + '\n');
       fs.writeFileSync(this.configPath, JSON.stringify(config, null, 2), {encoding: 'utf-8'});
     }
     return config;
@@ -124,6 +130,49 @@ class ConcludeModule {
       } catch (e) {}
     }
     return {};
+  }
+
+  async checkOtherInstalledPackages(m) {
+    const otherModules = [];
+    const moduleLocation = 'file:' + this.findModuleLocation(m.name);
+    const submodule = 'file:' + m.localPath;
+
+    process.stdout.write(chalk.yellow(`\nChecking installed packages from ${m.localPath}\n`) + '\n');
+    const listStr = await Npm.__run(['list', '--depth', '0', '--json', '--parseable', '--link', '--long'], {stdio: 'pipe'});
+    const list = JSON.parse(listStr);
+    for (const key in list._dependencies) {
+      if (!Object.prototype.hasOwnProperty.call(list._dependencies, key)) continue;
+      const path = list._dependencies[key];
+      if (path === moduleLocation) continue;
+      if (path.indexOf(submodule) === 0) {
+        otherModules.push(key);
+      }
+    }
+
+    if (otherModules.length) {
+      process.stdout.write(chalk.red(`Uninstall the following modules to continue`) + '\n');
+      process.stdout.write(otherModules.join('\n') + '\n\n');
+      throw new Error(`Found other packages installed from ${m.localPath}`);
+    }
+  }
+
+  /**
+   *
+   * @param {*} name
+   * @return {String}
+   * @memberof SourceModule
+   */
+  findModuleLocation(name) {
+    const files = glob.sync([path.join('node_modules_sourced', name, '**', 'package.json')]);
+    for (let i = 0; i < files.length; i++) {
+      try {
+        const p = require(path.resolve(files[i]));
+        if (p.name === name) {
+          return path.relative(this.cwd, path.dirname(files[i]));
+        }
+      } catch (e) {}
+    }
+    return '';
   }
 }
 

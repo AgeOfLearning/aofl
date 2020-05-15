@@ -3,6 +3,8 @@ const path = require('path');
 const fs = require('fs');
 const {Git, Npm} = require('@aofl/cli-lib');
 const glob = require('fast-glob');
+const {exitOnUncommittedChanges} = require('../../lib/uncommitted-changes');
+
 const moduleRefRegex = /(.+)@(.*)/;
 /**
  *
@@ -32,7 +34,8 @@ class SourceModule {
    *
    * @memberof SourceModule
    */
-  init() {
+  async init() {
+    await exitOnUncommittedChanges();
     if (this.list) {
       this.listModules();
       return;
@@ -61,39 +64,34 @@ class SourceModule {
         try {
           const lsRemoteData = await Git.lsRemote(repo, false, false, false, '', false, false, false, '', false, [], {stdio: 'pipe'});
           const fullModulePath = path.join(this.cwd, m.localPath);
+          process.stdout.write(chalk.yellow(`\nExporting ${m.name} as a local submodule ${m.localPath}\n`) + '\n');
           await Git.addSubmodule(m.localPath, repo);
           const ref = Git.filterRef(lsRemoteData, m.ref);
           if (ref.length) {
+            process.stdout.write(chalk.yellow(`\nChecking out ${ref[0][0]} in ${m.localPath}...\n`) + '\n');
             await Git.checkout(ref[0][0], {
               cwd: fullModulePath
             });
+
+            // await Npm.removeDependency([m.name], m.type.flag, true);
+            const moduleLocation = this.findModuleLocation(m.name);
+
+            process.stdout.write(chalk.yellow(`\nInstalling ${m.name} from ${moduleLocation}\n`) + '\n');
+            await Npm.installDependency([moduleLocation], m.type.flag);
           } else {
-            process.stdout.write(chalk.bgYellow.black.underline(`Could not match ref ${m.ref}. Make sure to checkout correct branch/tag in ${m.localPath}`) + '\n');
-          }
-
-          await Npm.removeDependency([m.name], m.type.flag, true);
-          const moduleLocation = this.findModuleLocation(m.name);
-
-          await Npm.install({
-            cwd: moduleLocation
-          });
-          try {
-            await Npm.installDependency([moduleLocation], m.type.flag, true);
-          } catch (e) {
-            process.stdout.write(chalk.red(`Something went wrong :(`) + '\n');
-            process.stdout.write(chalk.cyan(`Reverting ${m.name}...`) + '\n');
-            await Npm.installDependency([m.name], m.type.flag, true);
-            await Git.removeSubmodule(m.localPath);
-            throw e;
+            process.stdout.write(chalk.bgYellow.black.underline(`\nCould not match ref ${m.ref}. Make sure to checkout correct branch/tag in ${m.localPath} and install the package from ${m.localPath}`) + '\n');
           }
         } catch (e) {
           sourceFailed.push(m.name);
-          process.stdout.write(e + '\n');
           process.stdout.write(chalk.red(`Could not source ${m.name}`) + '\n');
+          process.stdout.write(e + '\n');
           if (e.command === 'git' && e.subCommand === 'ls-remote') {
-            process.stdout.write(chalk.yellow(`Failed to talk to repo [${repo}]`) + '\n');
+            process.stdout.write(chalk.yellow(`\nFailed to talk to repo [${repo}]`) + '\n');
             process.stdout.write(chalk.yellow(`try`) + '\n');
             process.stdout.write(chalk.yellow(`\t$ aofl source ${m.name} --repo [url]\n\n`));
+          } else {
+            process.stdout.write(chalk.yellow(`\nReverting: Removing submodule ${m.localPath}...`) + '\n');
+            await Git.removeSubmodule(m.localPath);
           }
         }
       }

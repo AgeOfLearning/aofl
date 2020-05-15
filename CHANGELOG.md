@@ -4,10 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.9.0...development) - Date
+## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.10.0...development) - Date
 
 ### [Added]
 ### [Changed]
+### [Deprecated]
+### [Removed]
+### [Fixed]
+### [Security]
+
+---
+## [v3.10.0](https://github.com/AgeOfLearning/aofl/compare/v3.9.0...v3.10.0) - 2020-05-15
+
+### [Added]
+### [Changed]
+- @aofl/cli - source - only runs when git status is clean
+- @aofl/cli - source - more debug logs and does not run install in the package's folder
+- @aofl/cli - conclude - checks for other packages installed from the submodule and exits if finds any
+- @aofl/cli - conclude - only runs if git status is clean
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]

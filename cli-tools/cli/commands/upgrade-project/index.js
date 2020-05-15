@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const inquirer = require('inquirer');
 const {Npm, ProjectHelper, Git} = require('@aofl/cli-lib');
 const runner = require('./codemod');
+const {exitOnUncommittedChanges} = require('../../lib/uncommitted-changes');
 
 const upgradeConfig = require('./upgrade-config');
 
@@ -43,13 +44,7 @@ class UpgradeProject {
   }
 
   async init() {
-    try {
-      const status = await Git.status(false, false, false, true, false, false, {stdio: 'pipe'});
-      if (status.length) throw new Error();
-    } catch (e) {
-      process.stdout.write(chalk.yellow('Working tree has uncommitted changes, please commit or remove the following changes before continuing' + '\n'));
-      process.exit(1);
-    }
+    await exitOnUncommittedChanges();
 
     const upgradeObject = await this.promptUpgradeVersion();
     const {analyze, upgrade} = runner(upgradeObject.path);
