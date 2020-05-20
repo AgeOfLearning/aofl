@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Added]
 ### [Changed]
+- @aofl/picture - remove font-size to 0 in image.css to fix chrome scaling bug
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
