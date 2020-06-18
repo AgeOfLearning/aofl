@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.10.0...development) - Date
 
 ### [Added]
+- @aofl/wdio - isDisplayed, isDisplayedInViewport, isEnabled, isEqual, isSelected, selectByAttribute, selectByIndex, selectByVisible, scrollIntoView, isClickable, waitForClickable, waitForEnabled, waitForDisplayed
 ### [Changed]
 ### [Deprecated]
 ### [Removed]
