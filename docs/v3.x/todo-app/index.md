@@ -485,9 +485,7 @@ export const template = (ctx, html) => html`
 ...
 class HomePage extends AoflElement {
   ...
-    toggleTodo(e) {
-    const index = parseInt(e.target.dataset.index, 10);
-
+  toggleTodo(e, index) {
     todosSdo.toggleComplete(index);
   }
   ...
