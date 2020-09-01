@@ -1,6 +1,6 @@
 # Documentation Standards
 
-When building apps for AofL JS we encourage the community toadhere to specific guidelines. The intention of creating documentation standard is to be able to document our code in a consistent and meaningful manner regardless of who wrote it, thereby increasing support and understanding of code within our technology portfolio.
+When building apps for AofL JS we encourage the community to adhere to specific guidelines. The intention of creating documentation standard is to be able to document our code in a consistent and meaningful manner regardless of who wrote it, thereby increasing support and understanding of code within our technology portfolio.
 
 Our documentation standard has been designed to use tools and techniques which allow us to meet these goals and additionally automate the publishing of documentation to technology portfolio code documentation library.
 
