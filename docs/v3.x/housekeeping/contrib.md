@@ -15,7 +15,7 @@ today! Before contributing please familiarize yourself with our guidelines:
 
 ## Code of Conduct
 
-Before contributing please read and follow our [Code of Conduct](https://github.com/ageoflearning/aofl/blob/master/code_of_conduct.md) and read our [Coding Rules](v2.x/housekeeping/coding-standards)
+Before contributing please read and follow our [Code of Conduct](https://github.com/ageoflearning/aofl/blob/master/CODE_OF_CONDUCT.md) and read our [Coding Rules](v2.x/housekeeping/coding-standards)
 that adds a few exceptions to [Google's JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml). To ensure consistency throughout the source code keep these rules in mind as you are working.
 
 ## Questions, Bugs, Features
