@@ -211,7 +211,7 @@ export const template = (ctx, html) => html`
   <ul>
     ${repeat(ctx.filteredTodos, (todo) => todo.index, (todo) => html`<li>${todo.description}</li>`)}
     <li>
-      <form @submit="${(e) => ctx.insertTodo(e)}">
+      <form @submit="${ctx.insertTodo}">
         <input name="description" />
       </form>
     </li>
@@ -341,7 +341,7 @@ We have modified version of the `insertTodo` function that validates the form be
 ```javascript
 // src/modules/add-todo-form/template.js
 export default (ctx, html) => html`
-  <form @submit="${(e) => ctx.insertTodo(e)}">
+  <form @submit="${ctx.insertTodo}">
     <input name="description" @input="${ctx.descriptionChange}" .value="${ctx.description}">
     <button type="submit" ?disabled="${!ctx.form.valid}">Add</button>
     ${!ctx.form.description.isRequired.valid? html`<p>Description is required</p>`: ''}
@@ -437,9 +437,9 @@ We added 3 click handler functions clearFilter, filterCompleted, filterIncomplet
 ```javascript
 // src/modules/todo-filters/template.js
 export default (ctx, html) => html`
-  <button @click="${(e) => ctx.clearFilter(e)}">Show All</button>
-  <button @click="${(e) => ctx.filterCompleted(e)}">Show Remaining</button>
-  <button @click="${(e) => ctx.filterIncomplete(e)}">Show Completed</button>
+  <button @click="${ctx.clearFilter}">Show All</button>
+  <button @click="${ctx.filterCompleted}">Show Remaining</button>
+  <button @click="${ctx.filterIncomplete}">Show Completed</button>
 `;
 ```
 
@@ -458,7 +458,7 @@ export const template = (ctx, html) => html`
     ${repeat(ctx.filteredTodos, (todo) => todo.index, (todo) => html`
       <li>
         <span class="${todo.completed ? 'completed' : ''}">${todo.description}</span>
-        <button @click="${(e) => ctx.toggleTodo(e, todo.index)}">toggle</button>
+        <button @click="${ctx.toggleTodo}" data-index="${todo.index)}>toggle</button>
       </li>`
     )}
     <li><add-todo-form></add-todo-form></li>
@@ -633,9 +633,9 @@ Apply the these changes to todo-filters and add-todo-form components. (You'll ne
 import {until} from 'lit-html/directives/until';
 
 export default (ctx, html) => html`
-  <button @click="${(e) => ctx.clearFilter(e)}">${until(ctx.__('Show All'))}</button>
-  <button @click="${(e) => ctx.filterCompleted(e)}">${until(ctx.__('Show Remaining'))}</button>
-  <button @click="${(e) => ctx.filterIncomplete(e)}">${until(ctx.__('Show Completed'))}</button>
+  <button @click="${ctx.clearFilter}">${until(ctx.__('Show All'))}</button>
+  <button @click="${ctx.filterCompleted}">${until(ctx.__('Show Remaining'))}</button>
+  <button @click="${ctx.filterIncomplete}">${until(ctx.__('Show Completed'))}</button>
 `;
 ```
 
@@ -644,7 +644,7 @@ export default (ctx, html) => html`
 import {until} from 'lit-html/directives/until';
 
 export default (ctx, html) => html`
-  <form @submit="${(e) => ctx.insertTodo(e)}">
+  <form @submit="${ctx.insertTodo}">
     <input name="description" @input="${(ctx.descriptionChange)}" .value="${ctx.description}">
     <button type="submit" ?disabled="${!ctx.form.valid}">${until(ctx.__('Add'))}</button>
     ${ctx.form.description.isRequired.valid? '': html`
