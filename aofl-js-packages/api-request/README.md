@@ -4,7 +4,8 @@ A module for making api calls easier. Key features include caching responses and
 
 Caching is implemented using @aofl/cache-manager and uses MemoryCache. @aofl/api-request caches the promises created by fetch api.
 
-Request/response formatting referes to constructing a request payload and parsing the response payload. A formatter object should implement `pack()` and `unpack()` properties. `pack()` is to construct the request payload and `unpack()` is used to parse the response. Any number of formatters can be added to `apiRequestInstance` using the `addFormatter()` method. E.g. `GetFormatter`, `PostFormatter`, `CorsFormatter`, `FileUploadFormatter`, `GoogleMapsFormatter`, ....
+
+Request/response formatting refers to constructing a request payload and parsing the response payload. A formatter object should implement `pack()` and `unpack()` properties. `pack()` is to construct the request payload and `unpack()` is used to parse the response. Any number of formatters can be added to `apiRequestInstance` using the `addFromatter()` method. E.g. `GetFormatter`, `PostFormatter`, `CorsFormatter`, `FileUploadFormatter`, `GoogleMapsFormatter`, ....
 
 [Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_api-request.html)
 
