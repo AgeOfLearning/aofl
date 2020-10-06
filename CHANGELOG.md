@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Security]
 
 ---
-## [v3.11.0](https://github.com/AgeOfLearning/aofl/compare/v3.11.0...v3.10.0) - 2020-09-01
+## [v3.11.0](https://github.com/AgeOfLearning/aofl/compare/v3.10.0...v3.11.0) - 2020-09-01
 
 ### [Added]
 - @aofl/wdio - isDisplayed, isDisplayedInViewport, isEnabled, isEqual, isSelected, selectByAttribute, selectByIndex, selectByVisible, scrollIntoView, isClickable, waitForClickable, waitForEnabled, waitForDisplayed
