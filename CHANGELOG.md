@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
+- @aofl/wdio: fixed isExisting command to return true/false, even in the case of a reference error on the element
 ### [Security]
 
 ---

@@ -231,7 +231,7 @@ class Element {
    * @return {Boolean}
    */
   isExisting() {
-    return Boolean(this.query());
+    return browser.execute(`try { return Boolean(${this.queryCmd}); } catch(e) { return false; }`);
   }
   /**
    *
