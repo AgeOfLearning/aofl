@@ -193,6 +193,13 @@ class MergeConfig {
       // methods to it. If one of them returns with a promise, WebdriverIO will wait until that promise got
       // resolved to continue.
       /**
+       * Gets executed before a worker process is spawned and can be used to initialise specific service for that
+       * worker as well as modify runtime environments in an async fashion.
+       */
+      onWorkerStart(cid, caps, specs, args, execArgv) {
+        return MergeConfig.applyHook('onWorkerStart', defaultConfig, userConfig, cid, caps, specs, args, execArgv);
+      },
+      /**
        * Gets executed once before all workers get launched.
        * @param {Object} config wdio configuration object
        * @param {Array.<Object>} capabilities list of capabilities details

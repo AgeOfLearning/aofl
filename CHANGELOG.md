@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### [Added]
 ### [Changed]
+- @aofl/wdio: Updated wdio to v6, added support for additional onWorkerStart hook
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
