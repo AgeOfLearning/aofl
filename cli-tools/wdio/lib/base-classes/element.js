@@ -96,7 +96,7 @@ class Element {
    * @return {Object}
    */
   selectByVisible(text) {
-    browser.execute(`var elem = null; var str = '${text}'; var normalized = str.trim().replace(/\s+/, ' '); for (var i = 0; i < ${this.queryCmd}.options.length; i++) {var opt = ${this.queryCmd}.options[i]; if(opt.innerText === normalized) {opt.selected = true; elem = opt; break;}}; if (!elem) {throw new Error('Option with text ${text} not found.')};`);
+    browser.execute(`var elem = null; var str = '${text}'; var normalized = str.trim().replace(/\\s+/, ' '); for (var i = 0; i < ${this.queryCmd}.options.length; i++) {var opt = ${this.queryCmd}.options[i]; if(opt.innerText === normalized) {opt.selected = true; elem = opt; break;}}; if (!elem) {throw new Error('Option with text ${text} not found.')};`);
     return this;
   }
   /**
@@ -263,14 +263,14 @@ class Element {
    * @return {Object}
    */
   waitForClickable(timeout, interval, reverse, timeoutMsg) {
-    timeout = timeout || browser.config.waitforTimeout,
-    interval = interval || browser.config.waitforInterval,
-    reverse = reverse || false,
+    timeout = timeout || browser.config.waitforTimeout;
+    interval = interval || browser.config.waitforInterval;
+    reverse = reverse || false;
     timeoutMsg = timeoutMsg || `element ("${this.queryCmd}") still ${reverse ? '' : 'not '}clickable after ${timeout}ms`;
 
     browser.waitUntil(() => {
       return reverse !== this.isClickable();
-    }, {timeout, timeoutMsg, interval})
+    }, {timeout, timeoutMsg, interval});
     return this;
   }
   /**
@@ -278,14 +278,14 @@ class Element {
    * @return {Object}
    */
   waitForEnabled(timeout, interval, reverse, timeoutMsg) {
-    timeout = timeout || browser.config.waitforTimeout,
-    interval = interval || browser.config.waitforInterval,
-    reverse = reverse || false,
+    timeout = timeout || browser.config.waitforTimeout;
+    interval = interval || browser.config.waitforInterval;
+    reverse = reverse || false;
     timeoutMsg = timeoutMsg || `element ("${this.queryCmd}") still ${reverse ? '' : 'not '}enabled after ${timeout}ms`;
 
     browser.waitUntil(() => {
       return reverse !== this.isEnabled();
-    }, {timeout, timeoutMsg, interval})
+    }, {timeout, timeoutMsg, interval});
     return this;
   }
   /**
@@ -293,14 +293,14 @@ class Element {
    * @return {Object}
    */
   waitForDisplayed(timeout, interval, reverse, timeoutMsg) {
-    timeout = timeout || browser.config.waitforTimeout,
-    interval = interval || browser.config.waitforInterval,
-    reverse = reverse || false,
+    timeout = timeout || browser.config.waitforTimeout;
+    interval = interval || browser.config.waitforInterval;
+    reverse = reverse || false;
     timeoutMsg = timeoutMsg || `element ("${this.queryCmd}") still ${reverse ? '' : 'not '}displayed after ${timeout}ms`;
 
     browser.waitUntil(() => {
       return reverse !== this.isDisplayed();
-    }, {timeout, timeoutMsg, interval})
+    }, {timeout, timeoutMsg, interval});
     return this;
   }
 }

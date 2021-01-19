@@ -22,15 +22,13 @@ const sharedSettings = {
 
 const config = {
   ...defaults,
-  //
   // ====================
   // Default Runner Configuration
   // ====================
+  path: '/wd/hub',
   user,
   key,
   region: 'us',
-  sauceConnect: false,
-  sauceConnectOpts: {},
   capabilities: [
     {
       'browserName': 'chrome',
@@ -57,8 +55,6 @@ const config = {
       }
     }
   ],
-  services: ['sauce'],
-  //
   // =====
   // Hooks
   // =====

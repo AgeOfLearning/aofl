@@ -6,15 +6,17 @@ exports.config = {
   // Default Runner Configuration
   // ====================
   runner: 'local',
-  path: '/wd/hub',
+  path: '/',
   specs: ['wdio-tests/**/*.spec.js'],
   exclude: [],
   suites: {},
   specFileRetries: 0,
   maxInstances: 10,
+  maxInstancesPerCapability: 10,
   capabilities: null,
   logLevel: 'error',
   bail: 0,
+  execArgv: [],
   baseUrl: null,
   waitforTimeout: 300000,
   waitforInterval: 500,
@@ -29,25 +31,16 @@ exports.config = {
     ui: 'bdd',
     timeout: 300000
   },
-  //
   // =====
   // Hooks
   // =====
-  /**
-   * Gets executed before test execution begins. At this point you can access to all global
-   * variables like `browser`. It is the perfect place to define custom commands.
-   * @param {Array.<Object>} capabilities list of capabilities details
-   * @param {Array.<String>} specs List of spec file paths that are to be run
-   */
-  before(capabilities, specs) {
+  before(capabilities, specs, browser) {
     // Using Chai
     global.expect = chai.expect;
     chai.config.includeStack = true;
     chai.should();
   },
   afterTest(test) {
-    // if (typeof test.error !== 'undefined') {
     browser.takeScreenshot();
-    // }
   }
 };
