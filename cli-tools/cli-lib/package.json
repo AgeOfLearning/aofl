@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli-lib",
-  "version": "3.9.0",
+  "version": "3.12.1",
   "description": "Shared library for cli and various webpack plugins.",
   "main": "index.js",
   "scripts": {

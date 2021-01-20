@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cache-manager",
-  "version": "3.10.0",
+  "version": "3.12.1",
   "description": "Provides a unified class for storing objects in Storage-like Objects",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.10.0",
+    "@aofl/cli": "^3.12.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tiny-js-md5": "^1.1.2",
