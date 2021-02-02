@@ -274,7 +274,7 @@ const getConfig = (root, configObject, defaultOptions) => {
   };
 
   if (process.env.NODE_ENV === environments.PRODUCTION) {
-    config.plugins.push(new webpack.HashedModuleIdsPlugin());
+    config.plugins.push(new webpack.ids.DeterministicModuleIdsPlugin());
     if (configObject.mode === 'project') {
       config.plugins.push(new AofLTemplatingPlugin(
         getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
