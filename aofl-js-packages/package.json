@@ -19,7 +19,7 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^4.0.0-alpha.0",
+    "@aofl/cli": "^4.0.0-alpha.2",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/drawer": "file:drawer",
     "@aofl/element": "file:element",

@@ -1,5 +1,5 @@
 const path = require('path');
-const validateOptions = require('schema-utils');
+const {validate} = require('schema-utils');
 const schema = require('@aofl/cli-lib/modules/webpack-config/schema.json');
 const generator = require('./generator');
 const defaults = require('./defaults');
@@ -15,7 +15,7 @@ const loadConfig = (configPath) => {
   const defs = defaults(root);
   const config = defaultsDeep(aoflConfig, defs);
 
-  validateOptions(schema, config, 'AofL JS');
+  validate(schema, config, {name: 'AofL JS'});
 
   return {
     ...config,

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const getRoutes = require('./get-routes');
 const server = require('./server');
 const prerender = require('./prerender');
-const validateOptions = require('schema-utils');
+const {validate} = require('schema-utils');
 const schema = require('./__config/schema.json');
 const partialsSchema = require('./__config/partials-schema.json');
 const replaceString = require('replace-string');
@@ -42,12 +42,12 @@ class TemplatingPlugin {
    * @memberof TemplatingPlugin
    */
   constructor(options = {}) {
-    validateOptions(schema, options, TemplatingPlugin.name);
+    validate(schema, options, {name: TemplatingPlugin.name});
 
     if (typeof options.partials !== 'undefined') {
       for (const key in options.partials) {
         if (!options.partials.hasOwnProperty(key)) continue;
-        validateOptions(partialsSchema, options.partials[key], TemplatingPlugin.name);
+        validate(partialsSchema, options.partials[key], {name: TemplatingPlugin.name});
       }
     }
 

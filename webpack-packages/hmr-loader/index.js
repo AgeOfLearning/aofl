@@ -1,6 +1,6 @@
 const parseImports = require('parse-es6-imports');
 const {getOptions} = require('loader-utils');
-const validationOptions = require('schema-utils');
+const {validate} = require('schema-utils');
 const schema = {
   'type': 'object',
   'properties': {
@@ -16,7 +16,7 @@ module.exports = function(source) {
     cache: true,
   }, getOptions(this));
 
-  validationOptions(schema, options, {name: 'Aofl HMR Loader'});
+  validate(schema, options, {name: 'Aofl HMR Loader'});
 
   if (options.cache === false) {
     this.cacheable(false);
