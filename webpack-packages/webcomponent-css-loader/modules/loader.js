@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const {getOptions} = require('loader-utils');
-const validationOptions = require('schema-utils');
+const {validate} = require('schema-utils');
 const Purgecss = require('purgecss');
 const schema = require('./__config/schema.json');
 const postcss = require('postcss');
@@ -28,7 +28,7 @@ module.exports = async function(source) {
 
   const compilationOptions = this._compilation.options;
 
-  validationOptions(schema, options, '@aofl/webcomponent-css-loader');
+  validate(schema, options, {name: '@aofl/webcomponent-css-loader'});
   if (options.cache === false) {
     this.cacheable(false);
   }

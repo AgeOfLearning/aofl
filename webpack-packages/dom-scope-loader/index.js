@@ -2,8 +2,7 @@ const fs = require('fs');
 const {getOptions} = require('loader-utils');
 const uniki = require('uniki');
 const schema = require('./__config/schema.json');
-const validationOptions = require('schema-utils');
-
+const {validate} = require('schema-utils');
 const escapeRegExp = (str) => {
   return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
 };
@@ -17,7 +16,7 @@ module.exports = function(content) {
   }, getOptions(this));
   let updated = false;
 
-  validationOptions(schema, options, 'Web components css loader');
+  validate(schema, options, {name: 'Web components css loader'});
 
   if (options.cache === false) {
     this.cacheable(false);
