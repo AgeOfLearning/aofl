@@ -1,4 +1,4 @@
-const uuidv4 = require('uuid/v4');
+const {v4: uuidv4} = require('uuid');
 const uniki = require('uniki');
 
 const translationRegex = /(\._[_c]\()[^`'"{]*[`'"{)](?!<tt-.*?>)/g;
