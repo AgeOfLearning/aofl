@@ -32,11 +32,11 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "cross-env": "^6.0.3",
-    "docsify-cli": "^4.3.0",
-    "eslint": "^5.11.0",
+    "@babel/eslint-parser": "^7.12.1",
+    "cross-env": "^7.0.3",
+    "docsify-cli": "^4.4.2",
+    "eslint": "^7.19.0",
     "eslint-config-aofl": "^1.0.0-alpha.1",
-    "lerna": "^3.8.0"
+    "lerna": "^3.22.1"
   }
 }

@@ -442,7 +442,7 @@ const eventHandler = (e) => {
 ```javascript
 const config = {
   extends: 'eslint-config-google',
-  parser: 'babel-eslint',
+  parser: "@babel/eslint-parser",
   root: true,
   parserOptions: {
     ecmaVersion: 8,
