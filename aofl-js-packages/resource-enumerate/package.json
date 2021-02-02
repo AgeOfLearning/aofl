@@ -1,6 +1,6 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "3.13.1",
+  "version": "4.0.0-alpha.1",
   "description": "Resource enumerate is a special case API call that returns the interface of the API code in a single endpoint",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -31,14 +31,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/api-request": "^3.13.1",
-    "@aofl/cache-manager": "^3.13.1",
-    "@aofl/cli": "^3.13.1",
-    "@aofl/middleware": "^3.13.1",
-    "@aofl/server-environment": "^3.13.1",
-    "cross-env": "^6.0.3",
-    "jsdoc": "^3.6.3",
-    "tsd-jsdoc": "^2.4.0"
+    "@aofl/api-request": "^3.12.1",
+    "@aofl/cache-manager": "^3.12.1",
+    "@aofl/cli": "^4.0.0-alpha.1",
+    "@aofl/middleware": "^3.12.1",
+    "@aofl/server-environment": "^3.12.1",
+    "cross-env": "^7.0.3",
+    "jsdoc": "^3.6.6",
+    "tsd-jsdoc": "^2.5.0"
   },
   "peerDependencies": {
     "@aofl/api-request": ">=3.0.0-beta.5 < 4.0.0",

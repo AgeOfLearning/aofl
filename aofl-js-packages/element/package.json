@@ -1,6 +1,6 @@
 {
   "name": "@aofl/element",
-  "version": "3.13.1",
+  "version": "4.0.0-alpha.1",
   "description": "aofl-element extends lit-element and overrides the _render() function. It accepts a template function and an String[] of styles. It is intented to be used in place of lit-element as the base class for elements. In it's current version it doesn't do much other than provide a clean interface to sperate HTML, CSS and JavaScript context. It makes it easier to change the template on the fly (see @aofl/i18n-mixin.)",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -36,17 +36,17 @@
   "peerDependencies": {
     "@aofl/object-utils": ">= 3.0.0-beta.1 < 4.0.0",
     "@aofl/store": ">= 3.0.0-beta.1 < 4.0.0",
-    "lit-element": ">= 2.0.0 < 3.0.0",
-    "lit-html": ">= 1.0.0 < 2.0.0"
+    "lit-element": "^2.4.0",
+    "lit-html": "^1.3.0"
   },
   "devDependencies": {
-    "@aofl/cli": "^3.13.1",
-    "@aofl/object-utils": "^3.13.1",
-    "@aofl/store": "^3.13.1",
-    "cross-env": "^6.0.3",
-    "jsdoc": "^3.6.3",
-    "lit-element": "2.2.1",
-    "lit-html": "1.1.2",
-    "tsd-jsdoc": "^2.4.0"
+    "@aofl/cli": "^4.0.0-alpha.1",
+    "@aofl/object-utils": "^3.12.1",
+    "@aofl/store": "^3.12.1",
+    "cross-env": "^7.0.3",
+    "jsdoc": "^3.6.6",
+    "lit-element": "2.4.0",
+    "lit-html": "1.3.0",
+    "tsd-jsdoc": "^2.5.0"
   }
 }

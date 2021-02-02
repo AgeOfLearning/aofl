@@ -1,6 +1,6 @@
 {
   "name": "@aofl/hmr-loader",
-  "version": "3.5.0",
+  "version": "4.0.0-alpha.1",
   "description": "Hot Module replacement (HMR) Webpack Loader ",
   "main": "index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "loader-utils": "^1.1.0",
+    "loader-utils": "^2.0.0",
     "parse-es6-imports": "^1.0.1",
-    "schema-utils": "^1.0.0"
+    "schema-utils": "^3.0.0"
   }
 }

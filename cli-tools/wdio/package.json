@@ -1,6 +1,6 @@
 {
   "name": "@aofl/wdio",
-  "version": "3.13.1",
+  "version": "4.0.0-alpha.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,8 +19,7 @@
     "aoflwdio": "./bin/aoflwdio.js"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@aofl/cli-lib": "^3.13.1",
+    "@aofl/cli-lib": "^4.0.0-alpha.1",
     "@wdio/cli": "^7.7.3",
     "@wdio/crossbrowsertesting-service": "^7.0.2",
     "@wdio/local-runner": "^7.7.3",
@@ -29,17 +28,6 @@
     "@wdio/spec-reporter": "^7.7.3",
     "@wdio/sync": "^7.7.3",
     "@wdio/testingbot-service": "^7.7.3",
-=======
-    "@aofl/cli-lib": "^3.12.1",
-    "@wdio/cli": "^6.12.1",
-    "@wdio/crossbrowsertesting-service": "^6.10.10",
-    "@wdio/local-runner": "^6.12.1",
-    "@wdio/mocha-framework": "^6.11.0",
-    "@wdio/selenium-standalone-service": "^6.12.1",
-    "@wdio/spec-reporter": "^6.11.0",
-    "@wdio/sync": "^6.11.0",
-    "@wdio/testingbot-service": "^6.11.4",
->>>>>>> Updating dependencies to latest
     "chai": "^4.2.0",
     "chalk": "^4.1.0",
     "commander": "^7.0.0",
