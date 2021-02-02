@@ -1,6 +1,6 @@
 const config = {
   extends: ['aofl'],
-  parser: 'babel-eslint',
+  parser: "@babel/eslint-parser",
   root: true,
   parserOptions: {
     ecmaVersion: 2019,
