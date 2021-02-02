@@ -2,7 +2,7 @@ const chai = require('chai');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const uuidv4 = require('uuid/v4');
+const {v4: uuidv4} = require('uuid');
 const {nycOutputDir} = require('../../../');
 
 module.exports.config = {
