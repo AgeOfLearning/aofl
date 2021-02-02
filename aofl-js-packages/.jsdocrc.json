@@ -8,7 +8,7 @@
   "opts": {
     "template": "./node_modules/ink-docstrap/template",
     "encoding": "utf8",
-    "destination": "../docs/v3.x/api-docs/",
+    "destination": "../docs/v4.x/api-docs/",
     "recurse": true,
     "verbose": true
   },

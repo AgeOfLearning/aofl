@@ -37,5 +37,5 @@
 - <a href="v3.x/api-docs/index.html" target="_blank">Api Reference</a>
 - <a href="https://codecov.io/gh/AgeOfLearning/aofl" target="_blank">Coverage Report</a>
 - <a href="/aofl/benchmark-results/" target="_blank" rel="noopener noreferrer">Performance Benchmarks</a>
-- <a href="/aofl/#/v2.x/getting-started/index" target="_blank" rel="noopener noreferrer">AofL JS v1.x</a>
+- <a href="/aofl/#/v1.x/getting-started/index" target="_blank" rel="noopener noreferrer">AofL JS v1.x</a>
 - <a href="/aofl/#/v2.x/getting-started/index" target="_blank" rel="noopener noreferrer">AofL JS v2.x</a>
