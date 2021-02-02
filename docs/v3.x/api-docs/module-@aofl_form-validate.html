@@ -194,6 +194,193 @@
             
 <hr>
 <dt>
+    <h4 class="name" id=".compare"><span class="type-signature">&lt;static> </span>compare(propPath, comparator)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Tracks two properties of any class to be equal.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>propPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>comparator</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="form-validate_modules_compare.js.html">form-validate/modules/compare.js</a>,
+				 <a href="form-validate_modules_compare.js.html#sunlight-1-line-20">line 20</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    True or false if the given value passes the
+                  given regex test is valid.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id=".isAllDigits"><span class="type-signature">&lt;static> </span>isAllDigits(value)</h4>
     
     
@@ -352,7 +539,7 @@
             
 <hr>
 <dt>
-    <h4 class="name" id=".isEqual"><span class="type-signature">&lt;static> </span>isEqual(propName)</h4>
+    <h4 class="name" id=".isEqual"><span class="type-signature">&lt;static> </span>isEqual(propPath)</h4>
     
     
 </dt>
@@ -395,7 +582,7 @@
 
         <tr>
             
-                <td class="name"><code>propName</code></td>
+                <td class="name"><code>propPath</code></td>
             
 
             <td class="type">
@@ -457,7 +644,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="form-validate_modules_is-equal.js.html">form-validate/modules/is-equal.js</a>,
-				 <a href="form-validate_modules_is-equal.js.html#sunlight-1-line-19">line 19</a>
+				 <a href="form-validate_modules_is-equal.js.html#sunlight-1-line-18">line 18</a>
 			</li>
 		</ul>
 	</dd>
@@ -778,7 +965,7 @@
 		<ul class="dummy">
 			<li>
 				<a href="form-validate_modules_length.js.html">form-validate/modules/length.js</a>,
-				 <a href="form-validate_modules_length.js.html#sunlight-1-line-29">line 29</a>
+				 <a href="form-validate_modules_length.js.html#sunlight-1-line-35">line 35</a>
 			</li>
 		</ul>
 	</dd>
@@ -964,6 +1151,196 @@
     <h5>Returns:</h5>
     
             
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">function</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".pattern"><span class="type-signature">&lt;static> </span>pattern(regex, flags)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Tests if input matches the given pattern.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>regex</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">RegExp</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="form-validate_modules_pattern.js.html">form-validate/modules/pattern.js</a>,
+				 <a href="form-validate_modules_pattern.js.html#sunlight-1-line-18">line 18</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    True or false if the given value passes the
+                  given regex test is valid.
+</div>
+
 
 
 <dl>
@@ -1187,9 +1564,9 @@
 
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2019-11-16T17:07:09-08:00
+		on 2021-02-02T12:02:31-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

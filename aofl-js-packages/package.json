@@ -8,7 +8,7 @@
     "env:prod": "cross-env NODE_ENV=production",
     "env:dev": "cross-env NODE_ENV=development",
     "env:test": "cross-env NODE_ENV=test",
-    "test": "npm run env:test -- npx aofl test",
+    "test": "npm run env:test -- npx @aofl/cli test",
     "test:sl": "npm test -- --debug",
     "start": "echo 'Nothing to see here ;)'",
     "docs": "npx jsdoc -c .jsdocrc.json .",
