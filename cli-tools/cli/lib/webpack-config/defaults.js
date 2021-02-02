@@ -70,7 +70,7 @@ module.exports = (root) => {
         include: [path.join(root, 'src')],
         exclude: [],
         fileLoader: {
-          name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name].[ext]',
+          name: process.env.NODE_ENV === environments.PRODUCTION ? '[contenthash:7].[ext]': '[name].[ext]',
         },
       },
       eslint: {
