@@ -9,7 +9,6 @@ const atImport = require('postcss-import');
 const url = require('postcss-url');
 const glob = require('fast-glob');
 const ResolverFactory = require('enhanced-resolve/lib/ResolverFactory');
-const NodeJsInputFileSystem = require('enhanced-resolve/lib/NodeJsInputFileSystem');
 const CachedInputFileSystem = require('enhanced-resolve/lib/CachedInputFileSystem');
 const settingsParser = require('./settings-parser');
 
@@ -20,7 +19,7 @@ const settingsParser = require('./settings-parser');
  * @param {*} map
  * @param {*} meta
  */
-module.exports = async function(source) {
+module.exports = async function(source, sourceMap, meta) {
   const callback = this.async();
   const options = Object.assign({
     cache: true
@@ -60,7 +59,7 @@ module.exports = async function(source) {
       .use(atImport({
         root: path.dirname(this.resourcePath),
         resolve: (id, basedir) => {
-          const fileSystem = new CachedInputFileSystem(new NodeJsInputFileSystem(), 60000);
+          const fileSystem = new CachedInputFileSystem(fs, 60000);
           const tildeAliases = Object.keys(compilationOptions.resolve.alias).reduce((acc, item) => {
             acc[`~${item}`] = compilationOptions.resolve.alias[item];
             return acc;
@@ -121,7 +120,7 @@ module.exports = async function(source) {
     const purgeCss = new Purgecss(config);
     const purified = purgeCss.purge();
 
-    callback(null, purified[0].css);
+    callback(null, purified[0].css, map, meta);
   } catch (e) {
     callback(e);
   }

@@ -27,6 +27,7 @@ class BuildProject {
     this.profile = profile;
     this.debug = debug;
     this.reporter = reporter;
+
     if (debug) {
       this.reporter = new DebugReporter();
     }
@@ -76,12 +77,12 @@ class BuildProject {
       const info = stats.toJson();
 
       if (stats.hasErrors()) {
-        process.stdout.write(info.errors + '\n');
+        process.stdout.write(JSON.stringify(info.errors, null, 2) + '\n');
         !this.watch && process.exit(2);
       }
 
       if (stats.hasWarnings()) {
-        process.stdout.write(info.warnings + '\n');
+        process.stdout.write(JSON.stringify(info.warnings, null, 2) + '\n');
         !this.watch && process.exit(0);
       }
     };

@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const merge = require('webpack-merge');
+const {merge} = require('webpack-merge');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
 
@@ -38,13 +38,6 @@ const getReplace = (key, userDefined, defaultOption) => {
   return merged;
 };
 
-const getCacheLoader = (cache) => {
-  if (cache === true) {
-    return ['cache-loader'];
-  }
-  return [];
-};
-
 const getCssRules = (build, defaultBuild) => {
   const css = {
     test: build.css.test,
@@ -53,7 +46,6 @@ const getCssRules = (build, defaultBuild) => {
     issuer: build.css.issuer,
     enforce: build.css.enforce,
     use: [
-      ...getCacheLoader(build.cache),
       {
         loader: 'css-loader',
         options: {
@@ -66,8 +58,12 @@ const getCssRules = (build, defaultBuild) => {
         loader: 'postcss-loader',
         options: {
           sourceMap: false,
-          cache: build.cache,
-          ...build.css.postCssLoader
+          postcssOptions: {
+            ...build.css.postCssLoader.options,
+            plugins: [
+              ...build.css.postCssLoader.plugins
+            ]
+          }
         }
       },
       {
@@ -75,7 +71,7 @@ const getCssRules = (build, defaultBuild) => {
         options: {
           cache: build.cache
         }
-      },
+      }
       // {
       //   loader: 'sass-loader',
       //   options: {
@@ -124,7 +120,6 @@ const getJsRules = (build, defaultBuild) => {
       issuer: build.js.issuer,
       enforce: build.js.enforce,
       use: [
-        ...getCacheLoader(build.cache),
         {
           loader: 'babel-loader',
           options: {
@@ -202,7 +197,12 @@ const getConfig = (root, configObject, defaultOptions) => {
   const rules = [];
   rules.push({
     test: /@webcomponents/,
-    loader: 'imports-loader?this=>window'
+    loader: 'imports-loader',
+    options: {
+      wrapper: {
+        thisArg: 'window',
+      }
+    }
   });
   rules.push(getCssRules(configObject.build, defaultOptions.build));
   rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
@@ -217,7 +217,6 @@ const getConfig = (root, configObject, defaultOptions) => {
     rules.push({
       test: /i18n\/index\.js$/,
       use: [
-        ...getCacheLoader(configObject.build.cache),
         '@aofl/i18n-loader'
       ],
       exclude: /node_modules/
