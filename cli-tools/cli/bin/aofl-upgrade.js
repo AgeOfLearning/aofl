@@ -3,6 +3,11 @@ const UpgradeProject = require('../commands/upgrade-project');
 const program = require('commander');
 
 program
+  .arguments('[path]', 'Path to project\'s directory')
+  .action((path = '.') => {
+    const upgradeProject = new UpgradeProject(path);
+    upgradeProject.init();
+  })
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -13,5 +18,3 @@ program
   })
   .parse(process.argv);
 
-const upgradeProject = new UpgradeProject(program.args[0]);
-upgradeProject.init();

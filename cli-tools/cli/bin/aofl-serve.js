@@ -13,6 +13,12 @@ program
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
   .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
+  .action(() => {
+    const options = program.opts();
+    const serveProject = new ServeProject(options.config, options.port, options.host,
+      options.stats, options.profile, options.debug, options.reporter, options.hot, options.hotOnly);
+    serveProject.init();
+  })
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -24,6 +30,3 @@ program
   })
   .parse(process.argv);
 
-const serveProject = new ServeProject(program.config, program.port, program.host,
-  program.stats, program.profile, program.debug, program.reporter, program.hot, program.hotOnly);
-serveProject.init();

@@ -19,8 +19,11 @@ program
     NODE_ENV=production aofl build ${chalk.dim('## Will run in production mode.')}
 `);
   })
+  .action(() => {
+    const options = program.opts();
+    const buildProject = new BuildProject(options.config, options.watch, options.stats, options.profile,
+      options.debug, options.reporter);
+    buildProject.init();
+  })
   .parse(process.argv);
 
-const buildProject = new BuildProject(program.config, program.watch, program.stats, program.profile,
-  program.debug, program.reporter);
-buildProject.init();

@@ -1,6 +1,6 @@
 {
   "name": "@aofl/drawer",
-  "version": "4.0.0-alpha.5",
+  "version": "4.0.0-alpha.6",
   "description": "The <aofl-drawer> element toggles content between an open and closed state. Opening and closing animations are provided as classes to allow for any possible method of toggling content.",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -34,7 +34,7 @@
     "@aofl/element": "> 3.0.0-beta.5 < 5.0.0"
   },
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.5",
+    "@aofl/cli": "^4.0.0-alpha.6",
     "@aofl/element": "^3.12.1",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",

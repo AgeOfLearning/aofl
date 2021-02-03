@@ -5,7 +5,11 @@ const program = require('commander');
 program
   .option('--repo [repo]', 'repo url')
   .option('-l, --list', 'List sourced modules')
+  .action(() => {
+    const options = program.opts();
+
+    const sourceModule = new SourceModule(options.args, options.repo, options.list);
+    sourceModule.init();
+  })
   .parse(process.argv);
 
-const sourceModule = new SourceModule(program.args, program.repo, program.list);
-sourceModule.init();

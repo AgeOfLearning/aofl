@@ -4,6 +4,7 @@ const InitProject = require('../commands/init-project');
 const program = require('commander');
 
 program
+  .arguments('[path]', 'Path to project directory')
   .option('--repo [repo]', 'repo url')
   .option('--base [base]', 'starter application alias')
   .option('--ref [branch]', 'Git ref to clone from. Branch, tag, ...')
@@ -16,8 +17,12 @@ program
     aofl init --base doc ${chalk.dim('## generate a documentation project just like @aofl components example projects')}
 `);
   })
+  .actions((path = '.') => {
+    const options = program.opts();
+
+    const initProject = new InitProject(path, options.base, options.ref, options.repo);
+    initProject.init();
+  })
   .parse(process.argv);
 
 
-const initProject = new InitProject(program.args[0], program.base, program.ref, program.repo);
-initProject.init();

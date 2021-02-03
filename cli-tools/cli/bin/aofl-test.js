@@ -14,6 +14,13 @@ program
   .option('-s, --skip-all', 'Skip generating all scripts for full coverage report')
   .option('--spec [path]', 'Run specific test spec files', CommanderHelper.collect, [])
   .option('--suite [suite]', 'Run specific test suites', CommanderHelper.collect, [])
+  .action(() => {
+    const options = program.opts();
+
+    const testProject = new TestProject(options.config, options.watch, options.stats, options.profile,
+      options.debug, options.reporter, options.skipAll, options.spec, options.suite);
+    testProject.init();
+  })
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -25,6 +32,3 @@ program
   })
   .parse(process.argv);
 
-const testProject = new TestProject(program.config, program.watch, program.stats, program.profile,
-  program.debug, program.reporter, program.skipAll, program.spec, program.suite);
-testProject.init();
