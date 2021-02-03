@@ -36,7 +36,7 @@ module.exports = {
               amd: '@aofl/object-utils',
             }
           },
-          function(context, request, callback) {
+          function({context, request}, callback) {
             if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
               return callback(null, 'commonjs ' + request);
             }

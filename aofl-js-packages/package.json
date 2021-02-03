@@ -19,7 +19,7 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^4.0.0-alpha.3",
+    "@aofl/cli": "^4.0.0-alpha.4",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/drawer": "file:drawer",
     "@aofl/element": "file:element",
@@ -54,5 +54,8 @@
     "sinon": "^9.2.4",
     "tiny-js-md5": "^1.1.2",
     "tsd-jsdoc": "^2.5.0"
+  },
+  "dependencies": {
+    "postcss-preset-env": "^6.7.0"
   }
 }

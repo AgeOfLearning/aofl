@@ -1,13 +1,10 @@
 const path = require('path');
 const {environments, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
 
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-
-const postCssPlugins = [autoprefixer()];
+const postCssPlugins = ['autoprefixer'];
 
 if (process.env.NODE_ENV === environments.PRODUCTION) {
-  postCssPlugins.push(cssnano());
+  postCssPlugins.push('cssnano');
 }
 
 module.exports = (root) => {
@@ -45,6 +42,7 @@ module.exports = (root) => {
         },
         cssLoader: {}, // options
         postCssLoader: {
+          options: {},
           plugins: postCssPlugins
         }, // options
       },
@@ -120,7 +118,6 @@ module.exports = (root) => {
       },
       terser: {
         parallel: true,
-        sourceMap: true,
         extractComments: true,
       },
       serviceworker: {

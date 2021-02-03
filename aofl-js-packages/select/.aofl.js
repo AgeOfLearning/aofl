@@ -30,9 +30,6 @@ module.exports = {
         output: {
           libraryTarget: 'commonjs2'
         },
-        optimization: {
-          runtimeChunk: false
-        },
         externals: [
           {
             '@aofl/element': {
@@ -46,7 +43,7 @@ module.exports = {
               amd: '@aofl/component-utils'
             }
           },
-          function(context, request, callback) {
+          function({context, request}, callback) {
             if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
               return callback(null, 'commonjs ' + request);
             }
