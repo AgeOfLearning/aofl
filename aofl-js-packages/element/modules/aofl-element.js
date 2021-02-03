@@ -16,6 +16,7 @@ const cachedStyles = Symbol('cachedStyles');
  * Base class for all aofl-js elements.
  *
  * @memberof module:@aofl/element
+ * @extends LitElement
  */
 class AoflElement extends LitElement {
   /**
@@ -49,6 +50,7 @@ class AoflElement extends LitElement {
 
     return false;
   }
+
   /**
    *
    * @param {Function} template
@@ -85,6 +87,7 @@ class AoflElement extends LitElement {
   }
   /**
    * disconnectedCallback
+   * @protected
    */
   disconnectedCallback() {
     this._observedPropertiesMap.forEach((cb) => {
