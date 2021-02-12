@@ -39,8 +39,5 @@ exports.config = {
     global.expect = chai.expect;
     chai.config.includeStack = true;
     chai.should();
-  },
-  afterTest(test) {
-    browser.takeScreenshot();
   }
 };
