@@ -1,6 +1,6 @@
 {
   "name": "@aofl/server-environment",
-  "version": "3.12.1",
+  "version": "3.13.0",
   "description": "Helps determine dev, stage, prod environments based on hostname",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.12.1",
+    "@aofl/cli": "^3.13.0",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"
