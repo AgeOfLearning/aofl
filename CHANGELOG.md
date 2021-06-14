@@ -4,10 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.13.0...development) - Date
+## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.13.1...development) - Date
 
 ### [Added]
 ### [Changed]
+### [Deprecated]
+### [Removed]
+### [Fixed]
+### [Security]
+
+---
+## [v3.13.1](https://github.com/AgeOfLearning/aofl/compare/v3.13.0...v3.13.1) - 2021-06-15
+
+### [Added]
+### [Changed]
+  - @aofl/wdio - Updating @wdio modules to latest version that includes private device fix
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
