@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "3.13.0",
+  "version": "3.13.1",
   "description": "AOFL Router is a simple client side router",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -32,8 +32,8 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "@aofl/cli": "^3.13.0",
-    "@aofl/middleware": "^3.13.0",
+    "@aofl/cli": "^3.13.1",
+    "@aofl/middleware": "^3.13.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
     "tsd-jsdoc": "^2.4.0"
