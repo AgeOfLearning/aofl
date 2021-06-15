@@ -60,9 +60,7 @@ const getCssRules = (build, defaultBuild) => {
           sourceMap: false,
           postcssOptions: {
             ...build.css.postCssLoader.options,
-            plugins: [
-              ...build.css.postCssLoader.plugins
-            ]
+            plugins: [...build.css.postCssLoader.plugins]
           }
         }
       },
@@ -216,9 +214,7 @@ const getConfig = (root, configObject, defaultOptions) => {
   if (configObject.mode === 'project') {
     rules.push({
       test: /i18n\/index\.js$/,
-      use: [
-        '@aofl/i18n-loader'
-      ],
+      use: ['@aofl/i18n-loader'],
       exclude: /node_modules/
     });
   }
@@ -281,7 +277,9 @@ const getConfig = (root, configObject, defaultOptions) => {
       config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
 
       if (configObject.build.favicon) {
-        config.plugins.push(new CopyWebpackPlugin([configObject.build.favicon]));
+        config.plugins.push(new CopyWebpackPlugin({
+          patterns: [configObject.build.favicon]
+        }));
       }
 
       if (configObject.build.pwaManifest) {
@@ -307,7 +305,7 @@ const getConfig = (root, configObject, defaultOptions) => {
     };
   }
 
-  return merge(config, configObject.build.extend());
+  return merge(config, configObject.build.extend() || {});
 };
 
 module.exports = getConfig;

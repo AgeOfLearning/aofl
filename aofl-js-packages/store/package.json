@@ -1,6 +1,6 @@
 {
   "name": "@aofl/store",
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.11",
   "description": "Centralized state management for aofljs applications",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -38,9 +38,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.9",
-    "@aofl/object-utils": "^4.0.0-alpha.9",
-    "@aofl/register-callback": "^4.0.0-alpha.9",
+    "@aofl/cli": "^4.0.0-alpha.11",
+    "@aofl/object-utils": "^4.0.0-alpha.11",
+    "@aofl/register-callback": "^4.0.0-alpha.11",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tsd-jsdoc": "^2.5.0"

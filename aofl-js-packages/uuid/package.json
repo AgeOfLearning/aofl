@@ -1,6 +1,6 @@
 {
   "name": "@aofl/uuid",
-  "version": "4.0.0-alpha.9",
+  "version": "4.0.0-alpha.11",
   "description": "An ultra-light (192b gzip) uuid like random value generator",
   "keywords": [
     "aofljs",
@@ -31,7 +31,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.9",
+    "@aofl/cli": "^4.0.0-alpha.11",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tsd-jsdoc": "^2.5.0"
