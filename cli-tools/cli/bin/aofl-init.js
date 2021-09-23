@@ -24,5 +24,3 @@ program
     initProject.init();
   })
   .parse(process.argv);
-
-

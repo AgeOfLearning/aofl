@@ -17,5 +17,3 @@ program
     i18NModule.init();
   })
   .parse(process.argv);
-
-

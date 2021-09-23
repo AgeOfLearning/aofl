@@ -193,15 +193,15 @@ const getConfig = (root, configObject, defaultOptions) => {
   const devtool = configObject.build.devtool || (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'none');
 
   const rules = [];
-  rules.push({
-    test: /@webcomponents/,
-    loader: 'imports-loader',
-    options: {
-      wrapper: {
-        thisArg: 'window',
-      }
-    }
-  });
+  // rules.push({
+  //   test: /@webcomponents/,
+  //   loader: 'imports-loader',
+  //   options: {
+  //     wrapper: {
+  //       thisArg: 'window',
+  //     }
+  //   }
+  // });
   rules.push(getCssRules(configObject.build, defaultOptions.build));
   rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
   rules.push({

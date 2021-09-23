@@ -124,15 +124,25 @@ class TemplatingPlugin {
       this.assets.partials[key] = partialHWP;
     }
 
-    compiler.hooks.emit.tapAsync(TemplatingPlugin.name, async (compilation, cb) => {
-      try {
-        this.assets.template.outputPath = templateHWP.childCompilationOutputName;
-        this.assets.routes = await getRoutes(this.options);
-        await this.updateTemplates(compiler, compilation);
-        cb(null);
-      } catch (e) {
-        cb(e);
-      }
+    compiler.hooks.make.tap(TemplatingPlugin.name, async (compilation) => {
+      compilation.hooks.processAssets.tapAsync({
+        name: TemplatingPlugin.name + '#processAssets',
+        stage: compilation.hooks.processAssets.PROCESS_ASSETS_STAGE_ADDITIONAL,
+        additionalAssets: true
+      }, async (assets, cb) => {
+        if (typeof assets[this.assets.template.template.filename] !== 'undefined') {
+          try {
+            this.assets.template.outputPath = templateHWP.options.filename;
+            this.assets.routes = await getRoutes(this.options);
+            await this.updateTemplates(compiler, compilation);
+            cb(null);
+          } catch (e) {
+            cb(e);
+          }
+        } else {
+          cb(null);
+        }
+      });
     });
   }
 
@@ -191,6 +201,8 @@ class TemplatingPlugin {
    * @param {Object} compilation
    */
   async updateTemplates(compiler, compilation) {
+    // console.log(this.assets.template);
+    // console.log(Object.keys(compilation.assets))
     const template = compilation.assets[this.assets.template.outputPath];
     const templateSource = template.source();
     const assets = this.getStaticTemplateAssets(compiler, compilation);

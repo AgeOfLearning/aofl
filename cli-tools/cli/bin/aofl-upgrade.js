@@ -17,4 +17,3 @@ program
 `);
   })
   .parse(process.argv);
-

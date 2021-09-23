@@ -1,7 +1,7 @@
 const glob = require('fast-glob');
 const LANG_CODE_REGEX = /translations_(.*)\.json/;
 const schema = require('./__config/schema.json');
-const {validate} = require('schema-utils');
+const validationOptions = require('schema-utils');
 const {getOptions} = require('loader-utils');
 
 module.exports = function() {
@@ -9,7 +9,7 @@ module.exports = function() {
     cache: true,
   }, getOptions(this));
 
-  validate(schema, options, {name: '@aofl/i18n-loader'});
+  validationOptions(schema, options, '@aofl/i18n-loader');
 
   if (options.cache === false) {
     this.cacheable(false);

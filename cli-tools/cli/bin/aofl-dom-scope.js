@@ -14,4 +14,3 @@ program
     domScope.init();
   })
   .parse(process.argv);
-

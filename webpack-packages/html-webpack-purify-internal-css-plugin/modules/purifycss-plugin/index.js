@@ -1,6 +1,7 @@
 const parse5 = require('parse5');
 const {getStyleNodes, purifyStyles, getStyleFreeHtml, getScriptNodes} = require('../purify-internal-style');
 const {defaultsDeep} = require('@aofl/cli-lib');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  *
@@ -53,7 +54,7 @@ class PurifycssPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap(PurifycssPlugin.name,
       (compilation) => {
-        compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing
+        HtmlWebpackPlugin.getHooks(compilation).beforeEmit
           .tapAsync(PurifycssPlugin.name + '#befeHtmlGeneration', async (data, cb) => {
             try {
               if (this.options.level !== 'none') {

@@ -15,12 +15,12 @@ module.exports = (environment = environments.DEVELOPMENT) => {
     templateParameters(compilation, assets, options) {
       const assetsMap = {};
 
-      for (const key in compilation.chunks) {
-        if (!compilation.chunks.hasOwnProperty(key)) continue;
-        const chunk = compilation.chunks[key];
+      compilation.chunks.forEach((chunk) => {
         if (typeof chunk.name === 'string' && chunk.name.length > 0) {
-          const url = assets.publicPath + chunk.files[0];
-          const source = compilation.assets[chunk.files[0].replace(/\?.*/, '')].source();
+          const filesIter = chunk.files.values();
+          const file = filesIter.next().value;
+          const url = assets.publicPath + file;
+          const source = compilation.assets[file.replace(/\?.*/, '')].source();
           const sourceStr = jsStringEscape(source);
           assetsMap[chunk.name] = {
             url,
@@ -28,7 +28,7 @@ module.exports = (environment = environments.DEVELOPMENT) => {
             sourceStr
           };
         }
-      }
+      });
 
       return {
         compilation,

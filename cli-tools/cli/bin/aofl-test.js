@@ -31,4 +31,3 @@ program
 `);
   })
   .parse(process.argv);
-

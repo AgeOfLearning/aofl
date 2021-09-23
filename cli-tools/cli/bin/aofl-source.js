@@ -12,4 +12,3 @@ program
     sourceModule.init();
   })
   .parse(process.argv);
-

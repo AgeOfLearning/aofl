@@ -14,6 +14,10 @@ const repos = {
   v2: {
     url: 'https://github.com/AgeOfLearning/aofl-starter.git',
     ref: 'v2.0.0'
+  },
+  v3: {
+    url: 'https://github.com/AgeOfLearning/aofl-starter.git',
+    ref: 'v3.0.0'
   }
 };
 

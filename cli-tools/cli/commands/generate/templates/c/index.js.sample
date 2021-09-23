@@ -16,11 +16,12 @@ class __uppercamelcase__placeholder__ extends AoflElement {
   }
   /**
    * @readonly
+   * @type {String}
    */
   static is = '__adddash__placeholder__';
   /**
-   *
-   * @return {Object}
+   * @protected
+   * @return {TemplateResult}
    */
   render() {
     return super.render(template, [styles]);

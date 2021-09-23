@@ -29,4 +29,3 @@ program
 `);
   })
   .parse(process.argv);
-

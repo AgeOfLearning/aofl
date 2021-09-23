@@ -21,12 +21,13 @@ class __uppercamelcase__placeholder__ extends i18nMixin(AoflElement) {
 
   /**
    * @readonly
+   * @type {String}
    */
   static is = '__adddash__placeholder__';
 
   /**
-   *
-   * @return {Object}
+   * @protected
+   * @return {TemplateResult}
    */
   render() {
     return super.render({
