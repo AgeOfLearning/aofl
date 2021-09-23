@@ -8,7 +8,7 @@
     "env:prod": "cross-env NODE_ENV=production",
     "env:dev": "cross-env NODE_ENV=development",
     "env:test": "cross-env NODE_ENV=test",
-    "test": "npm run env:test -- npx @aofl/cli test",
+    "test": "npm run env:test -- aofl test",
     "test:sl": "npm test -- --debug",
     "start": "echo 'Nothing to see here ;)'",
     "docs": "npx jsdoc -c .jsdocrc.json .",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@aofl/api-request": "file:api-request",
     "@aofl/cache-manager": "file:cache-manager",
-    "@aofl/cli": "^4.0.0-alpha.6",
+    "@aofl/cli": "file:../cli-tools/cli",
     "@aofl/component-utils": "file:component-utils",
     "@aofl/drawer": "file:drawer",
     "@aofl/element": "file:element",
