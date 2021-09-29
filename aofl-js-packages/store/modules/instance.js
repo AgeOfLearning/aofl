@@ -7,11 +7,11 @@
 import {Store} from './store';
 
 /**
- * Persistent instance of Store.
- *
- * @memberof module:@aofl/store
- * @type {Store}
- */
+  * Persistent instance of Store.
+  *
+  * @memberof module:@aofl/store
+  * @type {Store}
+  */
 const storeInstance = new Store(process.env.NODE_ENV === 'development');
 
 export {

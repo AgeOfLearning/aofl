@@ -11,15 +11,15 @@ const TICK = Symbol('tick');
 const MICRO_TASK = Symbol('microtask');
 
 /**
- * Simple yet powerful implementation of flux type data store.
- *
- * @memberof module:@aofl/store
- */
+  * Simple yet powerful implementation of flux type data store.
+  *
+  * @memberof module:@aofl/store
+  */
 class Store {
   /**
-   * Creates an instance of Store.
-   * @param {Boolean} debug
-   */
+    * Creates an instance of Store.
+    * @param {Boolean} debug
+    */
   constructor(debug = false) {
     this.debug = debug;
     this.state = {};
@@ -49,39 +49,55 @@ class Store {
     }
   }
   /**
-   * subscribe() register the callback function with registerCallback and returns
-   * the unsubscribe function.
-   *
-   * @param {Furtion} callback
-   * @return {Function}
-   */
+    * subscribe() register the callback function with registerCallback and returns
+    * the unsubscribe function.
+    *
+    * @param {Furtion} callback
+    * @return {Function}
+    */
   subscribe(callback) {
     return this.registerCallback.register(callback);
   }
   /**
-   * getState() return the current state.
-   *
-   * @return {Object}
-   */
+    * getState() return the current state.
+    *
+    * @return {Object}
+    */
   getState() {
     return this.state;
   }
+
+  getRedactedState() {
+    const state = {};
+    for (const key in this.namespaces) {
+      /* istanbul ignore next */
+      if (!Object.hasOwnProperty.call(this.namespaces, key)) continue;
+      const sdo = this.namespaces[key];
+      state[sdo.namespace] = sdo.redactedState;
+    }
+    return state;
+  }
   /**
-   *
-   * @param {SDO} sdo
-   */
+    *
+    * @param {SDO} sdo
+    */
   addState(sdo) {
+    if (typeof module.hot !== 'undefined' && typeof this.namespaces[sdo.namespace] !== 'undefined') {
+      sdo.initialState = Object.assign(sdo.initialState ||
+        sdo.constructor.initialState, this.namespaces[sdo.namespace].state);
+    }
     /* istanbul ignore next */
-    if (typeof this.namespaces[sdo.namespace] !== 'undefined') {
+    if (typeof this.namespaces[sdo.namespace] !== 'undefined' && typeof module.hot === 'undefined') {
       throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.namespace}`);
     }
+
 
     this.namespaces[sdo.namespace] = sdo;
     this.commit(sdo.namespace, sdo.initialState || sdo.constructor.initialState);
   }
   /**
-   * Copies staged changes to state and notifies subscribers
-   */
+    * Copies staged changes to state and notifies subscribers
+    */
   commit(namespace, subState) {
     const state = Object.assign({}, this.state, {
       [namespace]: subState
@@ -89,10 +105,10 @@ class Store {
     this.replaceState(state);
   }
   /**
-   * replaceState() take a state object, replaces the state property and notifies subscribers.
-   *
-   * @param {Object} state
-   */
+    * replaceState() take a state object, replaces the state property and notifies subscribers.
+    *
+    * @param {Object} state
+    */
   replaceState(state) {
     this.state = state;
     if (this.debug) {
@@ -102,8 +118,8 @@ class Store {
   }
 
   /**
-   * Resets the state to the initial state of Sdos.
-   */
+    * Resets the state to the initial state of Sdos.
+    */
   flushState() {
     const state = {};
     for (const key in this.namespaces) {
@@ -115,8 +131,8 @@ class Store {
     this.replaceState(state);
   }
   /**
-   * Batches all calls to dispatch and notifies subscribers on next tick.
-   */
+    * Batches all calls to dispatch and notifies subscribers on next tick.
+    */
   dispatch() {
     if (this[TICK]) {
       return;

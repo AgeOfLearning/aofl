@@ -8,8 +8,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     devtool: 'source-map',
     entryReplace: {
-      'index': path.join(__dirname, 'index.js'),
-      'legacy': path.join(__dirname, 'modules', 'legacy', 'index.js'),
+      'index': path.join(__dirname, 'index.js')
     },
     eslint: {
       options: {

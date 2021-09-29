@@ -48,7 +48,7 @@ class PathUtils {
     } else {
       let nextMatchIndex = 0;
       while (matches) {
-        regexStr += path.substring(nextMatchIndex, matches.index) + '([^\\/\\s]*)' + matches[2];
+        regexStr += path.substring(nextMatchIndex, matches.index) + '([^\\/\\s]+)' + matches[2];
         nextMatchIndex = matches.index + matches[0].length;
         keys.push(matches[1]);
         matches = DYNAMIC_PATH_REGEX.exec(path);

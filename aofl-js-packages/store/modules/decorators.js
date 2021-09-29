@@ -17,7 +17,7 @@ function decorate(...args) {
   return (descriptor, name) => {
     /* istanbul ignore next */
     if (args.length === 0) {
-      throw new TypeError('@aofl/store#decorate requires at least 1 argumen, but only 0 were passed');
+      throw new TypeError('@aofl/store#decorate requires at least 1 argument, but only 0 were passed');
     }
     descriptor.finisher = (clazz) => {
       /* istanbul ignore else */
@@ -36,14 +36,19 @@ function decorate(...args) {
   };
 }
 
+const StateOptionsDeclaration = {
+  redact: [],
+};
 /**
  * Proxies state properties to store and converts instance properties to getters that return
  * values from store.
  *
  * @memberof module:@aofl/store
+ * @param {Object} options
+ * @param {Boolean|String|RegExp[]} options.redact
  * @return {Object}
  */
-function state() {
+function state(options = StateOptionsDeclaration) {
   return (descriptor) => {
     const key = descriptor.key;
     return {
@@ -60,6 +65,16 @@ function state() {
         /* istanbul ignore else */
         if (typeof this.constructor.initialState[key] === 'undefined') {
           this.constructor.initialState[key] = val;
+        }
+        if (typeof options.redact !== 'undefined') {
+          /* istanbul ignore else */
+          if (typeof this.constructor.redact === 'undefined') {
+            this.constructor.redact = {};
+          }
+          /* istanbul ignore else */
+          if (typeof this.constructor.redact[key] === 'undefined') {
+            this.constructor.redact[key] = options.redact;
+          }
         }
 
         Object.defineProperty(this, key, {

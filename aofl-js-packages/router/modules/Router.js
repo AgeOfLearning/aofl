@@ -7,7 +7,6 @@
 import {PathUtils} from './path-utils';
 import {Middleware} from '@aofl/middleware';
 import {matchRouteMiddleware} from './match-route-middleware';
-import {redirectMiddleware} from './redirect-middleware';
 import {updateUrlMiddleware} from './update-url-middleware';
 
 
@@ -25,7 +24,6 @@ class Router {
    */
   constructor() {
     this.removeMatchRouteMiddleware = /* istanbul ignore next */ () => {};
-    this.removeRedirectMiddleware = /* istanbul ignore next */ () => {};
     this.removeUpdateUrlMiddleware = /* istanbul ignore next */ () => {};
     this.removeListener = /* istanbul ignore next */ () => {};
 
@@ -54,12 +52,29 @@ class Router {
     this.config = {
       routes: this.addRegexRoutes(config)
     };
-
     this.removeMatchRouteMiddleware = this.beforeEach(matchRouteMiddleware(this));
-    this.removeRedirectMiddleware = this.after(redirectMiddleware(this));
     this.removeUpdateUrlMiddleware = this.after(updateUrlMiddleware);
 
     this.removeListener = this.listen();
+  }
+
+  seal() {
+    for (let i = 0; i < this.config.routes.length; i++) {
+      const conf = this.config.routes[i];
+
+      for (const key in conf.middleware) {
+        if (!Object.prototype.hasOwnProperty.call(conf.middleware, key)) continue;
+        const mw = conf.middleware[key];
+        conf.middleware[key] = this[key]((req, resp, next) => {
+          if (resp.matchedRoute !== null &&
+            conf.regex.test(resp.to)) {
+            mw(req, resp, next);
+          } else {
+            next(resp);
+          }
+        });
+      }
+    }
   }
 
   /**
@@ -81,17 +96,6 @@ class Router {
   }
 
   /**
-   * Registers a post middleware function
-   * @deprecated
-   * @param {Function} fn
-   * @return {void}
-   */
-  afterEach(fn) {
-    console.warn('Deprecation Warning: "Router.afterEach" has been deprecated and will be removed in a future release. Use beforeEach instead.'); // eslint-disable-line
-    return this.beforeEach(fn);
-  }
-
-  /**
    * Registers a pre middle function
    * @param {Function} fn
    * @return {void}
@@ -108,7 +112,13 @@ class Router {
   async applyMiddleware(request) {
     try {
       const beforeEachResponse = await this.middleware
-        .iterateMiddleware(request, 'beforeEach', Object.assign({}, request));
+        .iterateMiddleware(request, 'beforeEach', Object.assign({}, request), (req, resp) => {
+          if (req.to !== resp.to) {
+            this.applyMiddleware(resp);
+            return false;
+          }
+          return true;
+        });
       await this.middleware.iterateMiddleware(request, 'after', Object.assign({}, beforeEachResponse));
       this.resolve();
     } catch (e) {

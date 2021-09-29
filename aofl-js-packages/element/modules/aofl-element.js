@@ -1,16 +1,17 @@
 /**
  * Implements AoflElement
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
-import {LitElement, html, css} from 'lit-element';
+import {html, css, LitElement, adoptStyles} from 'lit';
 
 /**
- * @private
- * @memberof module:@aofl/element
- */
+  * @private
+  * @memberof module:@aofl/element
+  * @type {Symbol}
+  */
 const cachedStyles = Symbol('cachedStyles');
 /**
  * Base class for all aofl-js elements.
@@ -20,21 +21,20 @@ const cachedStyles = Symbol('cachedStyles');
  */
 class AoflElement extends LitElement {
   /**
-   * Creates an instance of AoflElement.
-   */
+    * Creates an instance of AoflElement.
+    */
   constructor() {
     super();
     this[cachedStyles] = [];
     this._observedPropertiesMap = new Map();
   }
-
   /**
-   * Check if styles have been updated
-   *
-   * @private
-   * @param {Array} styles
-   * @return {Boolean}
-   */
+    * Check if styles have been updated
+    *
+    * @private
+    * @param {Array} styles
+    * @return {Boolean}
+    */
   stylesUpdated(styles) {
     if (this[cachedStyles].length !== styles.length) {
       return true;
@@ -52,12 +52,12 @@ class AoflElement extends LitElement {
   }
 
   /**
-   *
-   * @param {Function} template
-   * @param {Array} [styles=[]]
-   * @param {Array} args
-   * @return {Object}
-   */
+    * @protected
+    * @param {Function} template
+    * @param {Array} [styles=[]]
+    * @param {Array} args
+    * @return {Object}
+    */
   render(template, styles = []) {
     if (this.stylesUpdated(styles)) {
       this[cachedStyles] = styles;
@@ -80,15 +80,21 @@ class AoflElement extends LitElement {
         }
       }
 
-      this.adoptStyles();
+      adoptStyles(this.renderRoot, s);
     }
 
     return template(this, html);
   }
   /**
+<<<<<<< HEAD
    * disconnectedCallback
    * @protected
    */
+=======
+    * disconnectedCallback
+    * @protected
+    */
+>>>>>>> r1
   disconnectedCallback() {
     this._observedPropertiesMap.forEach((cb) => {
       cb();

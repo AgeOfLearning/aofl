@@ -30,20 +30,15 @@ module.exports = {
         },
         externals: [
           {
-            'lit-element': {
-              commonjs2: 'lit-element',
-              commonjs: 'lit-element',
-              amd: 'lit-element',
+            'lit': {
+              commonjs2: 'lit',
+              commonjs: 'lit',
+              amd: 'lit',
             },
-            'lit-element/lib/decorators': {
-              commonjs2: 'lit-element',
-              commonjs: 'lit-element',
-              amd: 'lit-element',
-            },
-            'lit-html': {
-              commonjs2: 'lit-html',
-              commonjs: 'lit-html',
-              amd: 'lit-html'
+            'lit/decorators.js': {
+              commonjs2: 'lit/decorators.js',
+              commonjs: 'lit/decorators.js',
+              amd: 'lit/decorators.js',
             },
             '@aofl/store': {
               commonjs2: '@aofl/store',

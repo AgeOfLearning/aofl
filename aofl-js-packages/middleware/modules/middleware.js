@@ -70,9 +70,10 @@ class Middleware {
    * @param {*} request
    * @param {String} hook
    * @param {*} response
+   * @param {Function} fn
    * @return {Promise}
    */
-  iterateMiddleware(request, hook, response = null) {
+  iterateMiddleware(request, hook, response = null, fn = null) {
     return new Promise((resolve, reject) => {
       let iterator = this.getMiddlewareIterator(hook);
       let mw = null;
@@ -82,10 +83,16 @@ class Middleware {
           return reject(err);
         }
         mw = iterator.next();
-        if (mw.done !== true) {
-          mw.value.callback(request, argResponse, next);
-        } else {
-          resolve(argResponse);
+        let proceed = true;
+        if (typeof fn === 'function') {
+          proceed = fn(request, argResponse);
+        }
+        if (proceed) {
+          if (mw.done !== true) {
+            mw.value.callback(request, argResponse, next);
+          } else {
+            resolve(argResponse);
+          }
         }
       };
       next(response);
