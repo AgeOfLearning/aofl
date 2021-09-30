@@ -22,10 +22,6 @@ module.exports = function(source) {
     this.cacheable(false);
   }
 
-  if (options.cache === false) {
-    this.cacheable(false);
-  }
-
   if (process.env.NODE_ENV === 'production' || !this.hot) {
     callback(null, source);
     return;

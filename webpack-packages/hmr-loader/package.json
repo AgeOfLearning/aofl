@@ -26,8 +26,8 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
+    "es-module-lexer": "^0.9.1",
     "loader-utils": "^2.0.0",
-    "parse-es6-imports": "^1.0.1",
     "schema-utils": "^3.0.0"
   }
 }
