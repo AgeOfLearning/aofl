@@ -2,18 +2,24 @@ const DocParser = require('doc-parser');
 
 const docRegex = /^\/\*\*[^]*?\*\//;
 const configMap = {
-  whitelist: 'whitelist',
-  whitelistpatterns: 'whitelistPatterns',
-  whitelistpatternschildren: 'whitelistPatternsChildren',
+  fontface: 'fontFace',
   keyframes: 'keyframes',
-  fontface: 'fontface',
-  variables: 'variables'
+  variables: 'variables',
+  safelist: 'safelist',
+  blocklist: 'blocklist',
 };
-const regexArr = ['whitelistpatterns', 'whitelistpatternschildren'];
+const regexArr = ['blocklist', 'safelist'];
 
 const reader = new DocParser({
   aoflcomponent: [],
   safelist: [
+    {
+      property: 'value',
+      parser: 'array',
+      optional: false
+    }
+  ],
+  blocklist: [
     {
       property: 'value',
       parser: 'array',
@@ -48,6 +54,7 @@ const parseFile = (content) => {
   let aoflComponent = false;
   const parsedData = {
     safelist: [':host'],
+    blocklist: [],
     keyframes: true,
     fontFace: true,
     variables: true
