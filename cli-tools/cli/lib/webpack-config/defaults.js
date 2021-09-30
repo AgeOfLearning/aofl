@@ -170,12 +170,12 @@ module.exports = (root) => {
       },
     },
     devServer: {
-      contentBase: path.join(root, '__build'),
+      // contentBase: path.join(root, '__build'),
       port: 8080,
-      host: 'localhost',
-      openPage: '',
+      // host: 'localhost',
+      // openPage: '',
       open: true,
-      stats: 'minimal',
+      // stats: 'minimal',
       historyApiFallback: true,
     },
     unitTesting: {

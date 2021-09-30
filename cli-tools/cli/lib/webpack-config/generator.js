@@ -229,8 +229,9 @@ const getConfig = (root, configObject, defaultOptions) => {
     mode,
     devtool,
     module: {
-      rules
+      rules,
     },
+    ignoreWarnings: [/warning/, /Failed to parse source map/],
     plugins,
     watchOptions: {
       ignored: ['node_modules']
@@ -243,6 +244,7 @@ const getConfig = (root, configObject, defaultOptions) => {
       cacheWithContext: false
     },
     devServer: configObject.devServer,
+    stats: 'minimal',
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {

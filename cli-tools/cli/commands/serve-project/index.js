@@ -2,10 +2,6 @@ const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const WebpackBar = require('webpackbar');
-const addEntries = require('webpack-dev-server/lib/utils/addEntries');
-const createDomain = require('webpack-dev-server/lib/utils/createDomain');
-const createLogger = require('webpack-dev-server/lib/utils/createLogger');
-const status = require('webpack-dev-server/lib/utils/status');
 const {DebugReporter} = require('@aofl/cli-lib');
 const {loadConfig} = require('../../lib/webpack-config');
 /**
@@ -54,7 +50,7 @@ class ServeProject {
     }
 
     if (this.hotOnly) {
-      this.options.hotOnly = true;
+      this.options.hot = true;
     }
 
     if (this.hot || this.hotOnly) {
@@ -76,31 +72,13 @@ class ServeProject {
    *
    */
   init() {
-    const log = createLogger(this.options);
     const port = this.port || this.options.port;
     const host = this.host || this.options.host;
     const suffix = (this.options.inline !== false || this.options.lazy === true ? '/' : '/webpack-dev-server/');
 
-    addEntries(this.config.webpack, this.options);
-
     const compiler = webpack(this.config.webpack);
-    const server = new WebpackDevServer(compiler, this.options, log);
-
-    server.listen(port, host, (err) => {
-      if (err && this.debug) {
-        process.stdout.write(err.stack || err + '\n');
-        if (err.details) {
-          process.stdout.write(err.details + '\n');
-        }
-        return;
-      }
-
-      const uri = createDomain(this.options, server.listeningApp) + suffix;
-      status(uri, {
-        ...this.options,
-        open: false
-      }, log);
-    });
+    const server = new WebpackDevServer(this.options, compiler);
+    server.start();
   }
 }
 

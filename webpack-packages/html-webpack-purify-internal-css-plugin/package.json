@@ -1,6 +1,6 @@
 {
   "name": "@aofl/html-webpack-purify-internal-css-plugin",
-  "version": "4.0.0-alpha.11",
+  "version": "4.0.0-alpha.13",
   "description": "",
   "main": "index.js",
   "scripts": {
