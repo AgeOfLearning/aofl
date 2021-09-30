@@ -24,14 +24,14 @@ const MapStateDeclaration = {
   * @memberof module:@aofl/element
   *
   * @param {Object} options
-  * @param {Boolean|String} options.attribute
-  * @param {TypeHint} options.type
-  * @param {Function} options.converter
-  * @param {Boolean} options.reflect
-  * @param {Function} options.hasChanged
-  * @param {Boolean} options.noAccessor
-  * @param {Store} options.store,
-  * @param {String} options.mapState
+  * @param {Boolean|String} [options.attribute]
+  * @param {TypeHint} [options.type]
+  * @param {Function} [options.converter]
+  * @param {Boolean} [options.reflect]
+  * @param {Function} [options.hasChanged]
+  * @param {Boolean} [options.noAccessor]
+  * @param {Store} [options.store]
+  * @param {String} [options.mapState]
   * @return {Object}
   */
 export function property(options = MapStateDeclaration) {
@@ -57,7 +57,7 @@ export function property(options = MapStateDeclaration) {
           };
           updateValue();
           const unsubscribe = _options.store.subscribe(updateValue);
-          this._observedPropertiesMap.set(protoOrDescriptor.key, unsubscribe);
+          this._mapStateProperties.set(protoOrDescriptor.key, unsubscribe);
         }
       }
     });
@@ -71,14 +71,14 @@ export function property(options = MapStateDeclaration) {
   * @memberof module:@aofl/element
   *
   * @param {Object} options
-  * @param {Boolean|String} options.attribute
-  * @param {TypeHint} options.type
-  * @param {Function} options.converter
-  * @param {Boolean} options.reflect
-  * @param {Function} options.hasChanged
-  * @param {Boolean} options.noAccessor
-  * @param {Store} options.store,
-  * @param {String} options.mapState
+  * @param {Boolean|String} [options.attribute]
+  * @param {TypeHint} [options.type]
+  * @param {Function} [options.converter]
+  * @param {Boolean} [options.reflect]
+  * @param {Function} [options.hasChanged]
+  * @param {Boolean} [options.noAccessor]
+  * @param {Store} [options.store]
+  * @param {String} [options.mapState]
   * @return {Object}
   */
 export function state(options = MapStateDeclaration) {
@@ -108,13 +108,12 @@ export function state(options = MapStateDeclaration) {
 
           updateValue();
           const unsubscribe = _options.store.subscribe(updateValue);
-          this._observedPropertiesMap.set(protoOrDescriptor.key, unsubscribe);
+          this._mapStateProperties.set(protoOrDescriptor.key, unsubscribe);
         }
       }
     });
   };
 }
-
 
 /**
    * extends lit-element's custom-element decorator and prevents an error being thrown when
@@ -126,7 +125,7 @@ export function state(options = MapStateDeclaration) {
    */
 export function customElement(tagName) {
   return (descriptor) => {
-    if (typeof module.hot !== 'undefined' &&
+    if (window.aofljsConfig.hot &&
      window.customElements.get(tagName) !== void 0) {
       return descriptor;
     }

@@ -5,6 +5,7 @@
  * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
+import {get, has} from '@aofl/object-utils';
 import {html, css, LitElement, adoptStyles} from 'lit';
 
 /**
@@ -26,7 +27,7 @@ class AoflElement extends LitElement {
   constructor() {
     super();
     this[cachedStyles] = [];
-    this._observedPropertiesMap = new Map();
+    this._mapStatePropertiesUnsub = new Map();
   }
   /**
     * Check if styles have been updated
@@ -51,6 +52,24 @@ class AoflElement extends LitElement {
     return false;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    if (typeof this._mapStateProperties === 'undefined') return;
+    this._mapStateProperties.forEach((value, property) => {
+      const updateValue = () => {
+        const state = value.store.state;
+        if (has(state, value.path)) {
+          this[property] = get(state, value.path);
+        } else {
+          this[property] = get(value.store, value.path);
+        }
+      };
+
+      updateValue();
+      const unsubscribe = value.store.subscribe(updateValue);
+      this._mapStatePropertiesUnsub.set(property, unsubscribe);
+    });
+  }
   /**
     * @protected
     * @param {Function} template
@@ -86,20 +105,14 @@ class AoflElement extends LitElement {
     return template(this, html);
   }
   /**
-<<<<<<< HEAD
    * disconnectedCallback
    * @protected
    */
-=======
-    * disconnectedCallback
-    * @protected
-    */
->>>>>>> r1
   disconnectedCallback() {
-    this._observedPropertiesMap.forEach((cb) => {
-      cb();
+    this._mapStatePropertiesUnsub.forEach((unsubscribe) => {
+      unsubscribe();
     });
-    this._observedPropertiesMap.clear();
+    this._mapStatePropertiesUnsub.clear();
     super.disconnectedCallback();
   }
 }

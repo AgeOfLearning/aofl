@@ -1,7 +1,7 @@
 {
   "source": {
     "includePattern": ".*\\.js$",
-    "excludePattern": "(node_modules|dist|examples|test)"
+    "excludePattern": "(node_modules$|dist|examples|test)"
   },
   "opts": {
     "template": "../node_modules/tsd-jsdoc/dist",

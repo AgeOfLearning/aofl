@@ -4,6 +4,7 @@
  * @since 3.0.0
  * @author Arian Khosravi<arian.khosravi@aofl.com>
  */
+import {storeInstance} from './instance';
 /**
  * v2 decorator adds observed properties to an Sdo's instance to support memoized
  * getters.
@@ -93,6 +94,60 @@ function state(options = StateOptionsDeclaration) {
     };
   };
 }
+
+/**
+  * @memberof module:@aofl/store
+  * @private
+  * @type {Object}
+  */
+const MapStateDeclaration = {
+  store: storeInstance,
+  mapState: ''
+};
+
+
+/**
+  * extends lit-element's state decorator and adds support for map state to @aofl/store.
+  *
+  * @memberof module:@aofl/store
+  *
+  * @param {Object} options
+  * @param {Store} [options.store]
+  * @param {String} [options.mapState]
+  * @return {Object}
+  */
+export function mapState(options = MapStateDeclaration) {
+  const addProperty = (protoOrDescriptor, name) => {
+    const map = protoOrDescriptor._mapStateProperties || new Map();
+    map.set(name, {
+      store: options.store,
+      path: options.mapState
+    });
+
+    Object.defineProperty(protoOrDescriptor, '_mapStateProperties', {
+      enumerable: false,
+      configurable: false,
+      writable: true,
+      value: map
+    });
+  };
+
+  return (protoOrDescriptor, name) => {
+    if (typeof name === 'undefined') {
+      const init = protoOrDescriptor.initializer;
+      return {
+        ...protoOrDescriptor,
+        initializer() {
+          init();
+          addProperty(this, protoOrDescriptor.key);
+        }
+      };
+    }
+
+    addProperty(protoOrDescriptor, name); // legacy decorator
+  };
+}
+
 
 export {
   decorate,

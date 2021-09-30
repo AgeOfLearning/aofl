@@ -11,12 +11,13 @@
 import {Store} from './modules/store';
 import {storeInstance} from './modules/instance';
 import {Sdo} from './modules/sdo';
-import {decorate, state} from './modules/decorators';
+import {decorate, state, mapState} from './modules/decorators';
 
 export {
   Sdo,
   Store,
   storeInstance,
   decorate,
-  state
+  state,
+  mapState
 };

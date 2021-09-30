@@ -82,12 +82,12 @@ class Store {
     * @param {SDO} sdo
     */
   addState(sdo) {
-    if (typeof module.hot !== 'undefined' && typeof this.namespaces[sdo.namespace] !== 'undefined') {
+    if (window.aofljsConfig.hot === true && typeof this.namespaces[sdo.namespace] !== 'undefined') {
       sdo.initialState = Object.assign(sdo.initialState ||
         sdo.constructor.initialState, this.namespaces[sdo.namespace].state);
     }
     /* istanbul ignore next */
-    if (typeof this.namespaces[sdo.namespace] !== 'undefined' && typeof module.hot === 'undefined') {
+    if (typeof this.namespaces[sdo.namespace] !== 'undefined' && window.aofljsConfig.hot !== true) {
       throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.namespace}`);
     }
 
