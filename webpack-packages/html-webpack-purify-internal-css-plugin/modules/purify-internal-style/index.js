@@ -1,5 +1,5 @@
 const parse5 = require('parse5');
-const Purgecss = require('purgecss');
+const {PurgeCSS} = require('purgecss');
 
 /**
  *
@@ -11,7 +11,7 @@ const traverseChildNodes = async (docFrag, op) => {
   await op(docFrag);
   if (Array.isArray(docFrag.childNodes)) {
     for (let i = 0; i < docFrag.childNodes.length; i++) {
-      await traverseChildNodes(docFrag.childNodes[i], op);
+      await traverseChildNodes(docFrag.childNodes[i], op); // eslint-disable-line
     }
   }
 };
@@ -97,11 +97,13 @@ const getStyleFreeHtml = (document, styles, scripts) => {
  * @param {Array} styles
  * @param {Object} options
  */
-const purifyStyles = (html, styles, options) => {
+const purifyStyles = async (html, styles, options) => {
   for (let i = 0; i < styles.length; i++) {
     const style = styles[i];
 
-    const purgeCss = new Purgecss({
+    const purgeCss = new PurgeCSS();
+
+    const purged = await purgeCss.purge({ // eslint-disable-line
       content: [
         {
           raw: html,
@@ -117,7 +119,6 @@ const purifyStyles = (html, styles, options) => {
       ...options
     });
 
-    const purged = purgeCss.purge();
     style.value = purged[0].css;
   }
 };
