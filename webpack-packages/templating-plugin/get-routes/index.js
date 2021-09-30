@@ -1,8 +1,6 @@
 const path = require('path');
-const fs = require('fs');
 const glob = require('fast-glob');
 const esm = require('esm');
-// const parseRoute = require('../parse-route');
 
 const DEFAULT_ROTATION = 'routes';
 const TRAILING_PATH_SEP_REGEX = new RegExp('\\' + path.sep + '$');
@@ -17,7 +15,7 @@ const getRoutePatterns = (pattern) => {
   return pattern;
 };
 
-const parseRouteFile = async (file, options) => {
+const parseRouteFile = (file, options) => {
   const routeFile = esm(module)(path.resolve(file));
   return routeFile.routes.map((item, index) => {
     const parsedData = Object.assign({}, {
@@ -25,7 +23,7 @@ const parseRouteFile = async (file, options) => {
       title: '',
       metaTags: [],
       linkTags: [],
-      mata: {},
+      meta: {},
       locale: '',
       prerender: false
     }, item);
@@ -43,7 +41,7 @@ const parseRouteFile = async (file, options) => {
       metaTags: parsedData.metaTags.reduce((acc, item) => {
         acc += `<meta`;
         for (const key in item) {
-          if (!item.hasOwnProperty(key)) continue;
+          if (!Object.prototype.hasOwnProperty.call(item, key)) continue;
           acc += ` ${key}="${item[key]}"`;
         }
         acc += '>\n';
@@ -52,7 +50,7 @@ const parseRouteFile = async (file, options) => {
       linkTags: parsedData.linkTags.reduce((acc, item) => {
         acc += `<link`;
         for (const key in item) {
-          if (!item.hasOwnProperty(key)) continue;
+          if (!Object.prototype.hasOwnProperty.call(item, key)) continue;
           acc += ` ${key}="${item[key]}"`;
         }
         acc += '>\n';
@@ -88,7 +86,7 @@ module.exports = async (options, context = process.cwd()) => {
       continue; // not route and not rotation??? whit is it?
     }
 
-    const routes = await parseRouteFile(routeFile, options);
+    const routes = await parseRouteFile(routeFile, options); // eslint-disable-line
     for (let i = 0; i < routes.length; i++) {
       const routeInfo = routes[i];
       if (typeof routeInfo.url === 'undefined' || routeInfo.url === '') {

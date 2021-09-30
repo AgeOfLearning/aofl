@@ -31,9 +31,6 @@
         }
       }
     },
-    "partials": {
-      "type": "object"
-    },
     "locale": {
       "type": "string"
     },

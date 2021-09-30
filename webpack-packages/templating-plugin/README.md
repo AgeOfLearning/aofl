@@ -39,7 +39,6 @@ const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 |-----------|--------|------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
 | template  | Object | {}                                                                                                               | html-webpack-plugin options plus a `name` attribute that will be part of the route object.                                          |
 | routes    | Object | {}                                                                                                               | Define route entry points. `mainRoutes`, `pattern` and optional `ignore`.                                                           |
-| partials  | Object | {}                                                                                                               | Used to define static partial templates object where the keys are the partials name and the values are html-webpack-plugin options. |
 | locale    | String | en-US                                                                                                            | Default locale for entry points.                                                                                                    |
 | prerender | Object | ` {   timeout: 0,   externalServer: false,   schema: 'http',   host: 'localhost',   port: 8090 }` | Add timeout in ms on top of the when there are no more than 2 network connections for at least 500 ms.                              |
 
@@ -77,30 +76,6 @@ The `template` object is used with html-webpack-plugin to generate the html for 
 ### locale
 `options.locale` specifes the default locale for the application. Each route can specify a locale in the route annotations as explained below.
 
-### partials
-Static parial templates can be defined using partials key and can be added to template using template variables `aoflTemplate:partial:[partial-name]`. For Example, header and footer areas. Partials should be html-webpack-plugin options.
-
-```javascript
-// webpack.config.js
-...
-  partials: {
-    header: {
-      template: path.join(__dirname, '..', 'js', 'header', 'view.ejs'),
-      filename: path.join('js', 'header', 'view.html'),
-      ...other-html-webpack-plugin-options
-    }
-  }
-...
-```
-
-```html
-<!-- template.ejs -->
-...
-<body>
-  aoflTemplate:partial:header
-  ...
-```
-
 ### prerender
 `options.prerender` allows for customizing the prerender server.
 
@@ -130,14 +105,6 @@ Static parial templates can be defined using partials key and can be added to te
     <meta name="viewport" content="width=device-width, initial-scale=1">
     aoflTemplate:metaTags
     ...
-```
-### aoflTemplate:parial:[partial-name]
-```html
-<!-- template.ejs -->
-...
-<body>
-  aoflTemplate:partial:header
-  ...
 ```
 
 ## Route Annotation

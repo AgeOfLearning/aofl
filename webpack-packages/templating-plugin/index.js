@@ -75,7 +75,7 @@ class TemplatingPlugin {
     });
     templateHWP.apply(compiler);
 
-    compiler.hooks.make.tap(TemplatingPlugin.name, async (compilation) => {
+    compiler.hooks.make.tap(TemplatingPlugin.name, (compilation) => {
       compilation.hooks.processAssets.tapAsync({
         name: TemplatingPlugin.name + '#processAssets',
         stage: compilation.hooks.processAssets.PROCESS_ASSETS_STAGE_ADDITIONAL,
@@ -110,7 +110,7 @@ class TemplatingPlugin {
     const assets = this.getStaticTemplateAssets(compiler, compilation);
 
     for (const key in assets) {
-      if (!assets.hasOwnProperty(key)) continue;
+      if (!Object.prototype.hasOwnProperty.call(assets, key)) continue;
       const t = templateSource;
 
       const regex = new RegExp(Object.keys(assets[key].partialMap).join('|'), 'gi');
@@ -182,13 +182,13 @@ class TemplatingPlugin {
     const promises = [];
     if (compiler.options.mode === 'production') {
       for (const key in assets) {
-        if (!assets.hasOwnProperty(key) || assets[key].routeInfo.prerender !== true) continue;
+        if (!Object.prototype.hasOwnProperty.call(assets, key) || assets[key].routeInfo.prerender !== true) continue;
         const assetPath = key;
-        const s = await server( // eslint-disable-line
-          compilation.assets, compiler.options.output.path,
-          compiler.options.output.publicPath, this.options.prerender
-        );
-        const body = await prerender( // eslint-disable-line no-await-in-loop
+        // eslint-disable-next-line no-await-in-loop
+        const s = await server(compilation.assets, compiler.options.output.path,
+          compiler.options.output.publicPath, this.options.prerender);
+        // eslint-disable-next-line no-await-in-loop
+        const body = await prerender(
           s.url + compiler.options.output.publicPath +
           assets[key].routeInfo.outputName.replace(/index\.html$/, ''),
           this.options.prerender

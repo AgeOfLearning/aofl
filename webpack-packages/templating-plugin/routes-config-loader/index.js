@@ -16,7 +16,7 @@ module.exports = async function() {
     const dependencies = [];
     const importStatements = {};
     for (let i = 0; i < options.configs.length; i++) {
-      routes.push(...(await getRoutes(options.configs[i], this.resourcePath)));
+      routes.push(...(await getRoutes(options.configs[i], this.resourcePath))); // eslint-disable-line no-await-in-loop
     }
 
     const routeConfigObj = {};
