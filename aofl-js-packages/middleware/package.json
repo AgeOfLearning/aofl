@@ -1,6 +1,6 @@
 {
   "name": "@aofl/middleware",
-  "version": "4.0.0-alpha.13",
+  "version": "4.0.0-alpha.14",
   "description": "Simple base middleware class",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -31,7 +31,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.13",
+    "@aofl/cli": "^4.0.0-alpha.14",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tsd-jsdoc": "^2.5.0"

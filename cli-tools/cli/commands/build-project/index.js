@@ -40,7 +40,7 @@ class BuildProject {
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,
       profile: true,
-      color: '#1e90ff',
+      color: '#FFFF00',
       reporters
     }));
   }
@@ -62,7 +62,6 @@ class BuildProject {
     }
 
     const errorHandler = (err, stats) => {
-      console.log('error handler invoked');
       if (!this.watch || err) {
         // Do not keep cache anymore
         compiler.purgeInputFileSystem();
@@ -95,13 +94,19 @@ class BuildProject {
         ...this.config.webpack.watchOptions
       }, errorHandler);
     } else {
-      console.log('build hered ------------------<>');
       compiler.run((err, stats) => {
         if (compiler.close) {
           compiler.close((err2) => {
-            errorHandler(err || err2, stats);
+            if (err || err2) {
+              errorHandler(err || err2, stats);
+            } else {
+              process.stdout.write(stats.toString({
+                // Add console colors
+                colors: true,
+              }) + '\n');
+            }
           });
-        } else {
+        } else if (err) {
           errorHandler(err, stats);
         }
       });

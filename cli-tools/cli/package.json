@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "4.0.0-alpha.13",
+  "version": "4.0.0-alpha.14",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,14 +19,14 @@
     "aofl": "./bin/aofl.js"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.13",
-    "@aofl/hmr-loader": "^4.0.0-alpha.13",
-    "@aofl/html-webpack-purify-internal-css-plugin": "^4.0.0-alpha.13",
+    "@aofl/cli-lib": "^4.0.0-alpha.14",
+    "@aofl/hmr-loader": "^4.0.0-alpha.14",
+    "@aofl/html-webpack-purify-internal-css-plugin": "^4.0.0-alpha.14",
     "@aofl/i18n-loader": "^2.0.0",
-    "@aofl/polyfill-service": "^4.0.0-alpha.13",
-    "@aofl/templating-plugin": "^4.0.0-alpha.13",
-    "@aofl/unit-testing-plugin": "^4.0.0-alpha.13",
-    "@aofl/webcomponent-css-loader": "^4.0.0-alpha.13",
+    "@aofl/polyfill-service": "^4.0.0-alpha.14",
+    "@aofl/templating-plugin": "^4.0.0-alpha.14",
+    "@aofl/unit-testing-plugin": "^4.0.0-alpha.14",
+    "@aofl/webcomponent-css-loader": "^4.0.0-alpha.14",
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
@@ -77,6 +77,5 @@
     "webpackbar": "^5.0.0-3",
     "workbox-precaching": "^6.3.0",
     "workbox-webpack-plugin": "^6.3.0"
-  },
-  "devDependencies": {}
+  }
 }

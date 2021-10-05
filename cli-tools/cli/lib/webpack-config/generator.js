@@ -260,7 +260,6 @@ const getConfig = (root, configObject, defaultOptions) => {
     module: {
       rules,
     },
-    ignoreWarnings: [/warning/, /Failed to parse source map/],
     plugins,
     watchOptions: {
       ignored: ['node_modules']
@@ -275,6 +274,12 @@ const getConfig = (root, configObject, defaultOptions) => {
     },
     devServer: configObject.devServer,
     stats: 'minimal',
+    ignoreWarnings: [/warning/i, /Failed to parse source map/i],
+    performance: {
+      assetFilter: (asset) => {
+        return asset.match(/polyfills/i) === null;
+      }
+    },
     optimization: {
       runtimeChunk: 'single',
       splitChunks: {

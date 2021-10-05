@@ -208,7 +208,6 @@ module.exports = (root) => {
       open: true,
       port: 8080,
       host: 'localhost',
-      openPage: '',
       historyApiFallback: true,
     },
     unitTesting: {

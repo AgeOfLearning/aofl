@@ -50,12 +50,12 @@ class ServeProject {
     }
 
     if (this.hotOnly) {
-      this.options.hot = true;
+      this.options.hot = 'only';
     }
 
-    if (this.hot || this.hotOnly) {
+    if (this.options.hot) {
       this.config.webpack.module.rules.push({
-        test: /\.js$/,
+        test: /\.(js|ts)$/i,
         include: path.join(this.config.root, 'src'),
         loader: '@aofl/hmr-loader'
       });
@@ -64,7 +64,7 @@ class ServeProject {
     this.config.webpack.plugins.push(new WebpackBar({
       name: this.config.name,
       profile: true,
-      color: '#1e90ff',
+      color: '#FFFF00',
       reporters
     }));
   }
@@ -72,10 +72,6 @@ class ServeProject {
    *
    */
   init() {
-    const port = this.port || this.options.port;
-    const host = this.host || this.options.host;
-    const suffix = (this.options.inline !== false || this.options.lazy === true ? '/' : '/webpack-dev-server/');
-
     const compiler = webpack(this.config.webpack);
     const server = new WebpackDevServer(this.options, compiler);
     server.start();
