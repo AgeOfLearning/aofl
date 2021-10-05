@@ -11,7 +11,7 @@ module.exports = (root) => {
   return {
     name: 'Aofl JS App',
     root,
-    mode: 'project',
+    mode: 'app', // app | standalone
     build: {
       filename: process.env.NODE_ENV === environments.PRODUCTION ? '[name]-[chunkhash].js': '[name].js',
       entry: {
@@ -23,10 +23,11 @@ module.exports = (root) => {
       publicPath: '/',
       devtool: (process.env.NODE_ENV === environments.PRODUCTION ? 'nosources-source-map': 'source-map'), // cheap-module-eval-source-map
       cache: true,
+      clean: true,
       middleware: [],
       extend: () => {},
       css: {
-        test: /\.(css|s[ac]ss)$/,
+        test: /\.s?[ac]ss$/i,
         include: [
           path.join(root, 'src'),
           path.join(root, 'node_modules', '@aofl', 'unit-testing'),
@@ -37,7 +38,7 @@ module.exports = (root) => {
         global: {
           level: process.env.NODE_ENV === 'development'? 'none': 'auto',
           purgeCss: {
-            whitelist: ['route-view'],
+            safelist: ['route-view', 'loaded', '.loaded'],
           },
         },
         cssLoader: {}, // options
@@ -45,44 +46,66 @@ module.exports = (root) => {
           options: {},
           plugins: postCssPlugins
         }, // options
+        sassLoader: {
+          sourceMap: false,
+          sassOptions: {
+            fiber: require('fibers')
+          }
+        }
       },
-      images: {
-        test: /\.(png|jpe?g|gif|svg)$/,
+      assets: {
+        test: /\.(jpe?g|png|gif|tif|webp|svg|avif|mp3|aac|ogg|webm|mp4|ogv|pdf)$/i,
         include: [path.join(root, 'src')],
         exclude: [],
-        fileLoader: {
-          // name: process.env.NODE_ENV === environments.PRODUCTION ? '[hash:7].[ext]': '[name]-[hash:7].[ext]',
-          // limit: 1000
+        parser: {
+          dataUrlCondition: {
+            maxSize: 4 * 1024 // 4kb
+          }
         },
-        imgLoader: {
-          plugins: process.env.NODE_ENV === 'production' && [
-            require('imagemin-gifsicle')(),
-            require('imagemin-jpegtran')(),
-            require('imagemin-optipng')(),
-            require('imagemin-svgo')(),
-          ],
-        },
+        options: {
+          minimizerOptions: {
+            plugins: process.env.NODE_ENV === 'production' && [
+              ['gifsicle', {interlaced: true}],
+              ['jpegtran', {progressive: true}],
+              ['optipng', {optimizationLevel: 5}],
+              // Svgo configuration here https://github.com/svg/svgo#configuration
+              [
+                'svgo',
+                {
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                        },
+                      },
+                    },
+                  ]
+                }
+              ]
+            ]
+          }
+        }
       },
       fonts: {
-        test: /\.(woff2?|ttf|eot\??|svg#).*/,
+        test: /\.(woff|woff2|eot\??|ttf|otf|svg#.*)$/i,
         include: [path.join(root, 'src')],
         exclude: [],
-        fileLoader: {
-          name: process.env.NODE_ENV === environments.PRODUCTION ? '[contenthash:7].[ext]': '[name].[ext]',
-        },
+        type: 'asset/resource'
       },
-      eslint: {
-        test: /\.js$/,
-        include: [path.join(root, 'src')],
-        exclude: [],
-        enforce: 'pre',
-        options: {
-          config: path.join(root, '.eslintrc.js'),
-          cache: false
-        },
-      },
+      // eslint: {
+      //   test: /\.js$/,
+      //   include: [path.join(root, 'src')],
+      //   exclude: [],
+      //   enforce: 'pre',
+      //   options: {
+      //     config: path.join(root, '.eslintrc.js'),
+      //     cache: false
+      //   },
+      // },
       js: {
-        test: /\.js$/,
+        test: /\.m?js$/,
         include: [
           path.join(root, 'src'),
           path.join(root, 'node_modules', '@aofl', 'unit-testing'),
@@ -95,9 +118,17 @@ module.exports = (root) => {
         ],
         exclude: [],
         babel: {
+          cacheCompression: false,
           cacheDirectory: true,
           ...require('@aofl/cli-lib/modules/webpack-config/.babelrc.js'),
         },
+      },
+      ts: {
+        test: /\.tsx?$/i,
+        include: [path.join(root, 'src')],
+        options: {
+          transpileOnly: true,
+        }
       },
       templating: {
         template: {
@@ -108,17 +139,13 @@ module.exports = (root) => {
         },
         routes: {
           mainRoutes: path.join(root, 'src', 'routes'),
-          pattern: [path.join('src', 'routes', '**', 'index.js')],
+          pattern: [path.join('src', 'routes', '**', 'route.js')],
           ignore: ['**/__build/**/*', '**/node_modules/**/*'],
         },
         loaderOptions: {
           path: path.join(root, 'src', 'modules', '__config', 'routes.js'),
           cache: false
         },
-      },
-      terser: {
-        parallel: true,
-        extractComments: true,
       },
       serviceworker: {
         swSrc: path.join(resources.WEBPACK_CONFIG, 'sw.js'),
@@ -168,14 +195,20 @@ module.exports = (root) => {
           },
         ],
       },
+      dll: {
+        source: path.join(root, 'dll'),
+        references: []
+      }
     },
     devServer: {
-      // contentBase: path.join(root, '__build'),
-      port: 8080,
-      // host: 'localhost',
-      // openPage: '',
+      static: {
+        directory: path.join(root, '__build'),
+      },
+      hot: true,
       open: true,
-      // stats: 'minimal',
+      port: 8080,
+      host: 'localhost',
+      openPage: '',
       historyApiFallback: true,
     },
     unitTesting: {

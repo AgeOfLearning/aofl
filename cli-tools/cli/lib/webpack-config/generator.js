@@ -7,8 +7,9 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const {merge} = require('webpack-merge');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const path = require('path');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const getOutput = (config) => {
   if (process.env.NODE_ENV === environments.TEST) {
@@ -16,6 +17,7 @@ const getOutput = (config) => {
       path: path.join(config.root, config.unitTesting.output),
       publicPath: config.unitTesting.publicPath,
       filename: config.build.filename,
+      clean: config.build.clean,
       sourceMapFilename: '[file].map',
       pathinfo: false
     };
@@ -24,6 +26,7 @@ const getOutput = (config) => {
     path: config.build.path,
     publicPath: config.build.publicPath,
     filename: config.build.filename,
+    clean: config.build.clean,
     sourceMapFilename: '[file].map',
     pathinfo: false
   };
@@ -50,7 +53,7 @@ const getCssRules = (build, defaultBuild) => {
         loader: 'css-loader',
         options: {
           sourceMap: false,
-          importLoaders: 2,
+          importLoaders: 3,
           ...build.css.cssLoader
         }
       },
@@ -69,45 +72,42 @@ const getCssRules = (build, defaultBuild) => {
         options: {
           cache: build.cache
         }
+      },
+      {
+        loader: 'sass-loader',
+        options: {
+          // Prefer `dart-sass`
+          implementation: require('sass'),
+          ...build.css.sassLoader
+        },
       }
-      // {
-      //   loader: 'sass-loader',
-      //   options: {
-      //     // Prefer `dart-sass`
-      //     implementation: require('sass'),
-      //     webpackImporter: false,
-      //     sassOptions: {
-      //       fibers: require('fibers')
-      //     }
-      //   },
-      // }
     ]
   };
 
   return css;
 };
 
-const getEsLintRules = (build, defaultBuild) => {
-  if (build.eslint === false) { return []; }
+// const getEsLintRules = (build, defaultBuild) => {
+//   if (build.eslint === false) { return []; }
 
-  return [
-    {
-      test: build.eslint.test,
-      include: getReplace('include', build.eslint, defaultBuild.eslint),
-      exclude: getReplace('exclude', build.eslint, defaultBuild.eslint),
-      issuer: build.eslint.issuer,
-      enforce: build.eslint.enforce,
-      use: [
-        {
-          loader: 'eslint-loader',
-          options: {
-            ...build.eslint.options
-          }
-        }
-      ]
-    }
-  ];
-};
+//   return [
+//     {
+//       test: build.eslint.test,
+//       include: getReplace('include', build.eslint, defaultBuild.eslint),
+//       exclude: getReplace('exclude', build.eslint, defaultBuild.eslint),
+//       issuer: build.eslint.issuer,
+//       enforce: build.eslint.enforce,
+//       use: [
+//         {
+//           loader: 'eslint-loader',
+//           options: {
+//             ...build.eslint.options
+//           }
+//         }
+//       ]
+//     }
+//   ];
+// };
 
 const getJsRules = (build, defaultBuild) => {
   return [
@@ -121,6 +121,7 @@ const getJsRules = (build, defaultBuild) => {
         {
           loader: 'babel-loader',
           options: {
+            cacheCompression: build.js.babel.cacheCompression,
             cacheDirectory: build.cache,
             ...build.js.babel
           }
@@ -130,27 +131,37 @@ const getJsRules = (build, defaultBuild) => {
   ];
 };
 
-const getImageRules = (build, defaultBuild) => {
+const getTsRules = (build, defaultBuild) => {
   return [
     {
-      test: build.images.test,
-      include: getReplace('include', build.images, defaultBuild.images),
-      exclude: getReplace('exclude', build.images, defaultBuild.images),
-      issuer: build.images.issuer,
-      enforce: build.images.enforce,
+      test: build.ts.test,
+      include: getReplace('include', build.js, defaultBuild.js),
+      exclude: getReplace('exclude', build.js, defaultBuild.js),
+      issuer: build.js.issuer,
+      enforce: build.js.enforce,
       use: [
         {
-          loader: 'file-loader',
+          loader: 'ts-loader',
           options: {
-            ...build.images.fileLoader
-          }
-        }, {
-          loader: 'img-loader',
-          options: {
-            ...build.images.imgLoader
+            transpileOnly: true,
+            ...build.ts.options
           }
         }
       ]
+    }
+  ];
+};
+
+const getAssetRules = (build, defaultBuild) => {
+  return [
+    {
+      test: build.assets.test,
+      type: 'asset',
+      include: getReplace('include', build.assets, defaultBuild.assets),
+      exclude: getReplace('exclude', build.assets, defaultBuild.assets),
+      issuer: build.assets.issuer,
+      enforce: build.assets.enforce,
+      parser: build.assets.parser
     }
   ];
 };
@@ -163,14 +174,7 @@ const getFontsRules = (build, defaultBuild) => {
       exclude: getReplace('exclude', build.fonts, defaultBuild.fonts),
       issuer: build.fonts.issuer,
       enforce: build.fonts.enforce,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            ...build.fonts.fileLoader
-          }
-        }
-      ]
+      type: 'asset/resource'
     }
   ];
 };
@@ -203,25 +207,50 @@ const getConfig = (root, configObject, defaultOptions) => {
   //   }
   // });
   rules.push(getCssRules(configObject.build, defaultOptions.build));
-  rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
+  // rules.push(...getEsLintRules(configObject.build, defaultOptions.build));
   rules.push({
     test: /\.js$/,
     include: [path.join(root, 'node_modules')],
     use: ['source-map-loader'],
     enforce: 'pre'
   });
+
   rules.push(...getJsRules(configObject.build, defaultOptions.build));
-  if (configObject.mode === 'project') {
+  rules.push(...getTsRules(configObject.build, defaultOptions.build));
+
+  if (configObject.mode === 'app') {
     rules.push({
       test: /i18n\/index\.js$/,
       use: ['@aofl/i18n-loader'],
       exclude: /node_modules/
     });
   }
-  rules.push(...getImageRules(configObject.build, defaultOptions.build));
+  rules.push(...getAssetRules(configObject.build, defaultOptions.build));
   rules.push(...getFontsRules(configObject.build, defaultOptions.build));
 
-  const plugins = [new CleanWebpackPlugin()];
+  rules.push(
+    {
+      resourceQuery: /inline/,
+      type: 'asset/inline',
+      include: path.join(__dirname, 'src'),
+    },
+    {
+      resourceQuery: /raw/,
+      type: 'asset/source',
+      include: path.join(__dirname, 'src'),
+    }
+  );
+
+  const plugins = [];
+  for (let i = 0; i < configObject.build.dll.references.length; i++) {
+    plugins.push(new webpack.DllReferencePlugin(configObject.build.dll.references[i]));
+  }
+
+  if (configObject.build.dll.references.length > 0) {
+    plugins.push(new CopyPlugin({
+      patterns: [{from: configObject.build.dll.source, to: 'dll'}]
+    }));
+  }
 
   const config = {
     entry: configObject.build.entryReplace || configObject.build.entry,
@@ -240,6 +269,7 @@ const getConfig = (root, configObject, defaultOptions) => {
       alias: {
         'Root': root
       },
+      extensions: ['.ts', '.tsx', '.js', '.json', 'wasm', '.css', '.scss'],
       symlinks: false,
       cacheWithContext: false
     },
@@ -270,13 +300,21 @@ const getConfig = (root, configObject, defaultOptions) => {
     }
   };
 
+  if (configObject.build.cache === true) {
+    config.cache = {
+      type: 'filesystem',
+    };
+  }
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.ids.DeterministicModuleIdsPlugin());
-    if (configObject.mode === 'project') {
+    if (configObject.mode === 'app') {
       config.plugins.push(new AofLTemplatingPlugin(
         getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
       );
+
       config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
+
+      config.plugins.push(new ImageMinimizerPlugin(configObject.build.assets.options));
 
       if (configObject.build.favicon) {
         config.plugins.push(new CopyWebpackPlugin({
@@ -294,17 +332,13 @@ const getConfig = (root, configObject, defaultOptions) => {
     }
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
-    if (configObject.mode === 'project') {
+    if (configObject.mode === 'app') {
       config.plugins.push(new AofLTemplatingPlugin(
         getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
       );
     }
 
-    config.optimization = {
-      removeAvailableModules: false,
-      removeEmptyChunks: false,
-      splitChunks: false,
-    };
+    delete config.optimization;
   }
 
   return merge(config, configObject.build.extend() || {});

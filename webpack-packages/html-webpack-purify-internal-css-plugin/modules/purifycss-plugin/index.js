@@ -33,17 +33,18 @@ class PurifycssPlugin {
    */
   setOptions(options) {
     this.options = defaultsDeep({}, options, {
-      level: 'auto' || 'whitelist' || 'all' || 'none',
+      level: 'auto' || 'safelist' || 'all' || 'none',
       purgeCss: {
         rejected: false,
-        whitelist: []
+        output: false,
+        safelist: []
       }
     });
 
     this.options.purgeCss.output = false; // force
 
     if (this.options.level === 'all') {
-      this.options.purgeCss.whitelist = [];
+      this.options.purgeCss.safelist = [];
     }
   }
   /**
@@ -55,7 +56,7 @@ class PurifycssPlugin {
     compiler.hooks.compilation.tap(PurifycssPlugin.name,
       (compilation) => {
         HtmlWebpackPlugin.getHooks(compilation).beforeEmit
-          .tapAsync(PurifycssPlugin.name + '#befeHtmlGeneration', async (data, cb) => {
+          .tapAsync(PurifycssPlugin.name + '#beforeEmit', async (data, cb) => {
             try {
               if (this.options.level !== 'none') {
                 const document = parse5.parse(data.html);
@@ -65,9 +66,12 @@ class PurifycssPlugin {
                 if (this.options.level === 'auto') {
                   html = getStyleFreeHtml(document, styles, scripts);
                 }
-
-                await purifyStyles(html, styles, this.options.purgeCss);
-                data.html = parse5.serialize(document);
+                try {
+                  await purifyStyles(html, styles, this.options.purgeCss);
+                  data.html = parse5.serialize(document);
+                } catch (e) {
+                  cb(e, null);
+                }
               }
 
               cb(null, data);

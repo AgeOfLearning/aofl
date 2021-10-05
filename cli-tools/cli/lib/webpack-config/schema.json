@@ -1,0 +1,505 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "root": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "allowedValues": ["app", "standalone"]
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "filename": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string",
+          "allowedValues": ["web", "async-node", "electron-main", "electron-renderer", "electron-preload", "node", "node-webkit", "webworker"]
+        },
+        "entry": {
+          "anyOf": [
+            {"type": "string"},
+            {"type": "array"},
+            {"type": "object"}
+          ]
+        },
+        "entryReplace": {
+          "type": "object"
+        },
+        "path": {
+          "type": "string"
+        },
+        "publicPath": {
+          "type": "string"
+        },
+        "devtool": {
+          "type": "string"
+        },
+        "cache": {
+          "type": "boolean"
+        },
+        "clean": {
+          "type": "boolean"
+        },
+        "dll": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "source": {
+              "type": "string"
+            },
+            "references": {
+              "type": "array"
+            }
+          }
+        },
+        "css": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "type": "array"
+            },
+            "exclude": {
+              "type": "array"
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "global": {
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "string",
+                  "allowedValues": ["all", "none", "auto"]
+                },
+                "purgeCss": {
+                  "type": "object",
+                  "properties": {
+                    "fontFace": {
+                      "type": "boolean"
+                    },
+                    "keyframes": {
+                      "type": "boolean"
+                    },
+                    "rejected": {
+                      "type": "boolean"
+                    },
+                    "variables": {
+                      "type": "boolean"
+                    },
+                    "safelist": {
+                      "type": "array"
+                    },
+                    "blocklist": {
+                      "type": "array"
+                    }
+                  }
+                }
+              }
+            },
+            "cssLoader": {
+              "type": "object"
+            },
+            "postCssLoader": {
+              "type": "object"
+            },
+            "sassLoader": {
+              "type": "object",
+              "properties": {
+                "sourceMap": {
+                  "type": "boolean"
+                },
+                "implementation": {
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "sassOptions": {
+                  "anyOf": [
+                    {
+                      "type": "object"
+                    }
+                  ]
+                },
+                "additionalData": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ]
+                },
+                "webpackImporter": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "assets": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "parser": {
+              "type": "object"
+            },
+            "options": {
+              "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "eslint": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            }
+          },
+          "replace": {
+            "type": "object",
+            "properties": {
+              "include": {
+                "anyOf": [
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "instanceof": "RegExp"
+                  }
+                ]
+              },
+              "exclude": {
+                "anyOf": [
+                  {
+                    "type": "array"
+                  },
+                  {
+                    "instanceof": "RegExp"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "js": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "babel": {
+              "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "ts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "test": {
+              "instanceof": "RegExp"
+            },
+            "include": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "exclude": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "instanceof": "RegExp"
+                }
+              ]
+            },
+            "issuer": {
+              "type": "object"
+            },
+            "enforce": {
+              "type": "string"
+            },
+            "options": {
+              "type": "object"
+            },
+            "replace": {
+              "type": "object",
+              "properties": {
+                "include": {
+                  "type": "array"
+                },
+                "exclude": {
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "templating": {
+          "type": "object"
+        },
+        "serviceworker": {
+          "type": ["object", "null"]
+        },
+        "favicon": {
+          "type": "object"
+        },
+        "pwaManifest": {
+          "type": ["object", "null"]
+        },
+        "middleware": {
+          "type": "array"
+        },
+        "extend": {
+          "instanceof": "Function"
+        }
+      }
+    },
+    "devServer": {
+      "type": "object"
+    },
+    "unitTesting": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "host": {
+          "type": "string"
+        },
+        "port": {
+          "type": "number"
+        },
+        "output": {
+          "type": "string"
+        },
+        "specs": {
+          "type": "array"
+        },
+        "suites": {
+          "type": "object"
+        },
+        "nycArgs": {
+          "anyOf": [
+            {"type": "array"},
+            {"type": "boolean"}
+          ]
+        },
+        "mocha": {
+          "type": "object"
+        },
+        "config": {
+          "type": "string"
+        },
+        "polyfill": {
+          "type": "string"
+        },
+        "exclude": {
+          "type": "array"
+        }
+      }
+    }
+  }
+}

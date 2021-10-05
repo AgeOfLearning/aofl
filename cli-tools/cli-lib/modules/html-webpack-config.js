@@ -30,6 +30,8 @@ module.exports = (environment = environments.DEVELOPMENT) => {
         }
       });
 
+      // console.log(Object.keys(assetsMap));
+
       return {
         compilation,
         webpack: compilation.getStats().toJson(),

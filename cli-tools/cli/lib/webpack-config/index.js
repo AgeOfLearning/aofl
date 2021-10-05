@@ -1,6 +1,6 @@
 const path = require('path');
 const {validate} = require('schema-utils');
-const schema = require('@aofl/cli-lib/modules/webpack-config/schema.json');
+const schema = require('./schema.json');
 const generator = require('./generator');
 const defaults = require('./defaults');
 const {defaultsDeep} = require('@aofl/cli-lib');

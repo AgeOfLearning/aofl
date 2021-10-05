@@ -5,28 +5,15 @@ const configMap = {
   whitelist: 'whitelist',
   whitelistpatterns: 'whitelistPatterns',
   whitelistpatternschildren: 'whitelistPatternsChildren',
-  keyframes: 'keyFrames',
-  fontgace: 'fontFace'
+  keyframes: 'keyframes',
+  fontface: 'fontface',
+  variables: 'variables'
 };
 const regexArr = ['whitelistpatterns', 'whitelistpatternschildren'];
 
 const reader = new DocParser({
   aoflcomponent: [],
-  whitelist: [
-    {
-      property: 'value',
-      parser: 'array',
-      optional: false
-    }
-  ],
-  whitelistpatterns: [
-    {
-      property: 'value',
-      parser: 'array',
-      optional: false
-    }
-  ],
-  whitelistpatternschildren: [
+  safelist: [
     {
       property: 'value',
       parser: 'array',
@@ -46,6 +33,13 @@ const reader = new DocParser({
       parser: 'boolean',
       optional: false
     }
+  ],
+  variables: [
+    {
+      property: 'value',
+      parser: 'boolean',
+      optional: false
+    }
   ]
 });
 
@@ -53,11 +47,10 @@ const reader = new DocParser({
 const parseFile = (content) => {
   let aoflComponent = false;
   const parsedData = {
-    whitelist: [],
-    whitelistPatterns: [],
-    whitelistPatternsChildren: [],
-    keyFrames: true,
-    fontFace: true
+    safelist: [':host'],
+    keyframes: true,
+    fontFace: true,
+    variables: true
   };
   const matches = docRegex.exec(content);
   if (matches !== null) {

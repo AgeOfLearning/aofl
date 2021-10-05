@@ -62,6 +62,7 @@ class BuildProject {
     }
 
     const errorHandler = (err, stats) => {
+      console.log('error handler invoked');
       if (!this.watch || err) {
         // Do not keep cache anymore
         compiler.purgeInputFileSystem();
@@ -94,6 +95,7 @@ class BuildProject {
         ...this.config.webpack.watchOptions
       }, errorHandler);
     } else {
+      console.log('build hered ------------------<>');
       compiler.run((err, stats) => {
         if (compiler.close) {
           compiler.close((err2) => {
