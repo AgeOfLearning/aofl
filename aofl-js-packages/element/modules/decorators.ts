@@ -10,14 +10,14 @@ import {customElement as litCustomElement} from 'lit/decorators.js';
  * Allow for custom element classes with private constructors and tagName
  */
 interface CustomElementClass extends Omit<typeof HTMLElement, 'new'> {
-  tagName: string
+  tagName?: string
 };
 
 /**
  * Allow for custom ClassDecorator with tagName
  */
 interface CustomClassDecorator extends ClassDecorator {
-  tagName: string
+  tagName?: string
 };
 
 /**
