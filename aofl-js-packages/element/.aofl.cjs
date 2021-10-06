@@ -2,13 +2,13 @@ const path = require('path');
 
 module.exports = {
   name: '@aofl/element',
-  mode: 'stand-alone',
+  mode: 'standalone',
   build: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
     devtool: 'source-map',
     entryReplace: {
-      'index': path.join(__dirname, 'index.js')
+      'index': path.join(__dirname, 'modules', 'index.ts')
     },
     eslint: {
       options: {
@@ -16,6 +16,11 @@ module.exports = {
       }
     },
     js: {
+      include: [
+        path.join(__dirname, 'modules')
+      ]
+    },
+    ts: {
       include: [
         path.join(__dirname, 'modules')
       ]
