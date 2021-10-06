@@ -1,6 +1,6 @@
 {
   "name": "@aofl/element",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "aofl-element extends lit-element and overrides the _render() function. It accepts a template function and an String[] of styles. It is intented to be used in place of lit-element as the base class for elements. In it's current version it doesn't do much other than provide a clean interface to sperate HTML, CSS and JavaScript context. It makes it easier to change the template on the fly (see @aofl/i18n-mixin.)",
   "type": "module",
   "main": "lib/index.js",
@@ -10,15 +10,22 @@
   "directories": {
     "test": "test"
   },
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./lib/decorators": {
+      "default": "./lib/decorators.js"
+    }
+  },
   "scripts": {
     "clean": "rm -rf dist lib",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "cross-env NODE_ENV=production tsc -p tsconfig.json",
-    "build-ci": "npm run clean && npm run tsc && cross-env NODE_ENV=production && aofl build --debug --config .aofl.cjs",
+    "build-ci": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --debug --config .aofl.cjs",
     "build": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --config .aofl.cjs",
     "build:dev": "npm run tsc && cross-env NODE_ENV=development aofl build --config .aofl.cjs",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
+    "prepublishOnly": "npm run build-ci"
   },
   "repository": {
     "type": "git",
@@ -37,7 +44,7 @@
   },
   "homepage": "https://ageoflearning.github.io/aofl/",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.14",
+    "@aofl/cli": "^4.0.0-alpha.16",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {

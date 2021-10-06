@@ -8,7 +8,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     devtool: 'source-map',
     entryReplace: {
-      'index': path.join(__dirname, 'modules', 'index.ts')
+      'index': path.join(__dirname, 'lib', 'index.js')
     },
     eslint: {
       options: {
@@ -17,12 +17,12 @@ module.exports = {
     },
     js: {
       include: [
-        path.join(__dirname, 'modules')
+        path.join(__dirname, 'lib')
       ]
     },
     ts: {
       include: [
-        path.join(__dirname, 'modules')
+        path.join(__dirname, 'lib')
       ]
     },
     extend() {

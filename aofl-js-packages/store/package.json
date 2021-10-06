@@ -1,19 +1,12 @@
 {
   "name": "@aofl/store",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "Centralized state management for aofljs applications",
   "main": "index.js",
   "browser": "dist/index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ci": "cross-env NODE_ENV=production aofl build --debug",
-    "build": "cross-env NODE_ENV=production aofl build",
-    "build:dev": "cross-env NODE_ENV=development aofl build",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
-  },
+  "scripts": {},
   "keywords": [
     "aofljs",
     "@aofl/store",
@@ -38,9 +31,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.14",
-    "@aofl/object-utils": "^4.0.0-alpha.14",
-    "@aofl/register-callback": "^4.0.0-alpha.14",
+    "@aofl/cli": "^4.0.0-alpha.16",
+    "@aofl/object-utils": "^4.0.0-alpha.16",
+    "@aofl/register-callback": "^4.0.0-alpha.16",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tsd-jsdoc": "^2.5.0"

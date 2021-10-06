@@ -1,6 +1,6 @@
 {
   "name": "@aofl/templating-plugin",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.14",
+    "@aofl/cli-lib": "^4.0.0-alpha.16",
     "compression": "^1.7.4",
     "doc-parser": "^0.4.9",
     "esm": "^3.2.25",

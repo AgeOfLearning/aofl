@@ -1,21 +1,12 @@
 {
   "name": "@aofl/i18n-mixin",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "Adds i18n support to elements",
   "main": "index.js",
   "browser": "dist/index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {
-    "env:prod": "cross-env NODE_ENV=production",
-    "env:dev": "cross-env NODE_ENV=development",
-    "env:test": "cross-env NODE_ENV=test",
-    "build-ci": "npm run env:prod -- aofl build --debug",
-    "build": "npm run env:prod -- aofl build",
-    "build:dev": "npm run env:dev -- aofl build",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
-  },
+  "scripts": {},
   "keywords": [
     "aofljs",
     "@aofl/i18n-mixin",
@@ -34,10 +25,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.14",
-    "@aofl/cli-lib": "^4.0.0-alpha.14",
-    "@aofl/element": "^4.0.0-alpha.14",
-    "@aofl/i18n": "^4.0.0-alpha.14",
+    "@aofl/cli": "^4.0.0-alpha.16",
+    "@aofl/cli-lib": "^4.0.0-alpha.16",
+    "@aofl/element": "^4.0.0-alpha.16",
+    "@aofl/i18n": "^4.0.0-alpha.16",
     "core-js": "^3.8.3",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",

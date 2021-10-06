@@ -1,19 +1,12 @@
 {
   "name": "@aofl/select",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "The <aofl-select-list> takes any number of <aofl-list-option>. Selecting any option will give it a selected attribute with. Selecting an option emits an event with the selected value. The <aofl-multiselect-list> takes any number of <aofl-list-option>. Selecting any option will give it a selected attribute and add it to the selected array. Selecting an option emits an event with the selected array. The <aofl-list-option> is a simple selectable component that takes a value. It typically lives in an <aofl-select-list> but it can be used in any component where selections are made. It must have a parent with of a component with an addToParent method.",
   "main": "index.js",
   "browser": "dist/index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ci": "cross-env NODE_ENV=production aofl build --debug",
-    "build": "cross-env NODE_ENV=production aofl build",
-    "build:dev": "cross-env NODE_ENV=development aofl build",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/AgeOfLearning/aofl.git"
@@ -36,9 +29,9 @@
     "@aofl/element": "^4.0.0-alpha.9"
   },
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.14",
-    "@aofl/component-utils": "^4.0.0-alpha.14",
-    "@aofl/element": "^4.0.0-alpha.14",
+    "@aofl/cli": "^4.0.0-alpha.16",
+    "@aofl/component-utils": "^4.0.0-alpha.16",
+    "@aofl/element": "^4.0.0-alpha.16",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "lit-html": "^1.3.0",

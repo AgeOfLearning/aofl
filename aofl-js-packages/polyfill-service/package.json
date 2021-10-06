@@ -1,15 +1,11 @@
 {
   "name": "@aofl/polyfill-service",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "Uses dynamic imports to load polyfills",
   "main": "index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
-  },
+  "scripts": {},
   "keywords": [
     "aofljs",
     "@aofl/polyfill-service",

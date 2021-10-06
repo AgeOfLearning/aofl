@@ -1,19 +1,12 @@
 {
   "name": "@aofl/resource-enumerate",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "Resource enumerate is a special case API call that returns the interface of the API code in a single endpoint",
   "main": "index.js",
   "browser": "dist/index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ci": "cross-env NODE_ENV=production aofl build --debug",
-    "build": "cross-env NODE_ENV=production aofl build",
-    "build:dev": "cross-env NODE_ENV=development aofl build",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
-  },
+  "scripts": {},
   "keywords": [
     "aofljs",
     "@aofl/resource-enumerate",
@@ -31,11 +24,11 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/api-request": "^4.0.0-alpha.14",
-    "@aofl/cache-manager": "^4.0.0-alpha.14",
-    "@aofl/cli": "^4.0.0-alpha.14",
-    "@aofl/middleware": "^4.0.0-alpha.14",
-    "@aofl/server-environment": "^4.0.0-alpha.14",
+    "@aofl/api-request": "^4.0.0-alpha.16",
+    "@aofl/cache-manager": "^4.0.0-alpha.16",
+    "@aofl/cli": "^4.0.0-alpha.16",
+    "@aofl/middleware": "^4.0.0-alpha.16",
+    "@aofl/server-environment": "^4.0.0-alpha.16",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tsd-jsdoc": "^2.5.0"

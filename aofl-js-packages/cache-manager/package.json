@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cache-manager",
-  "version": "4.0.0-alpha.14",
+  "version": "4.0.0-alpha.16",
   "description": "Provides a unified class for storing objects in Storage-like Objects",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -14,12 +14,7 @@
     "storage"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build-ci": "cross-env NODE_ENV=production aofl build --debug",
-    "build": "cross-env NODE_ENV=production aofl build",
-    "build:dev": "cross-env NODE_ENV=development aofl build",
-    "prepublishOnly": "npm run build-ci && npm run docs",
-    "docs": "npx jsdoc -c .jsdocrc.json ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -32,7 +27,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.14",
+    "@aofl/cli": "^4.0.0-alpha.16",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",
     "tiny-js-md5": "1.1.2",
