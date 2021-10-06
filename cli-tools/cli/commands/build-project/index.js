@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
 const {loadConfig} = require('../../lib/webpack-config');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 /**
  *
@@ -20,13 +21,14 @@ class BuildProject {
    * @param {Boolean} profile
    * @param {Boolean} debug
    */
-  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy') {
+  constructor(config = '.aofl.js', watch = false, stats = false, profile = false, debug = false, reporter = 'fancy', analyze = false) {
     this.configPath = path.resolve(config);
     this.watch = watch;
     this.stats = stats;
     this.profile = profile;
     this.debug = debug;
     this.reporter = reporter;
+    this.analyze = analyze;
 
     if (debug) {
       this.reporter = new DebugReporter();
@@ -43,6 +45,10 @@ class BuildProject {
       color: '#FFFF00',
       reporters
     }));
+
+    if (this.analyze) {
+      this.config.webpack.plugins.push(new BundleAnalyzerPlugin());
+    }
   }
 
   /**

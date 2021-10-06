@@ -10,6 +10,7 @@ program
   .option('--debug', 'Switch loaders to debug mode.')
   .option('--config [path]', 'Specify the path to the config file.')
   .option('--reporter [reporter]', 'Specify a reporter [fancy, basic]')
+  .option('--analyze', 'Enable webpack bundle analyzer')
   .on('--help', () => {
     process.stdout.write(`
   Examples:
@@ -22,7 +23,7 @@ program
   .action(() => {
     const options = program.opts();
     const buildProject = new BuildProject(options.config, options.watch, options.stats, options.profile,
-      options.debug, options.reporter);
+      options.debug, options.reporter, options.analyze);
     buildProject.init();
   })
   .parse(process.argv);
