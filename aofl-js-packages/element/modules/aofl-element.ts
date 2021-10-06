@@ -7,8 +7,8 @@
  */
 import {html, LitElement, TemplateResult} from 'lit';
 
-type htmlType = typeof html;
-type AoflElementTemplate = (ctx: AoflElement, html: htmlType) => TemplateResult;
+type HtmlType = typeof html;
+type AoflElementTemplate = (ctx: AoflElement, html: HtmlType) => TemplateResult;
 /**
  * Base class for all aofl-js elements.
  *
@@ -28,7 +28,9 @@ class AoflElement extends LitElement {
    * @param html
    * @return TemplateResult
    */
-  template: AoflElementTemplate = (ctx, html) : TemplateResult => html``;
+  get template() : AoflElementTemplate {
+    return (ctx: AoflElement, html: HtmlType) : TemplateResult => html``;
+  };
 
   protected render() : unknown {
     return this.template(this, html);
@@ -36,5 +38,7 @@ class AoflElement extends LitElement {
 }
 
 export {
-  AoflElement
+  AoflElement,
+  AoflElementTemplate,
+  HtmlType
 };

@@ -7,9 +7,18 @@
 import {customElement as litCustomElement} from 'lit/decorators.js';
 
 /**
- * Allow for custom element classes with private constructors
+ * Allow for custom element classes with private constructors and tagName
  */
- declare type CustomElementClass = Omit<typeof HTMLElement, 'new'>;
+interface CustomElementClass extends Omit<typeof HTMLElement, 'new'> {
+  tagName: string
+};
+
+/**
+ * Allow for custom ClassDecorator with tagName
+ */
+interface CustomClassDecorator extends ClassDecorator {
+  tagName: string
+};
 
 /**
  * extends lit-element's custom-element decorator and prevents an error being thrown when
@@ -20,11 +29,14 @@ import {customElement as litCustomElement} from 'lit/decorators.js';
  * @return any
  */
 export function customElement(tagName: string) {
-  return (descriptor: CustomElementClass | ClassDecorator) => {
+  return (descriptor: CustomElementClass | CustomClassDecorator) => {
+    descriptor.tagName = tagName;
+
     if (window.aofljsConfig.hot &&
      window.customElements.get(tagName) !== void 0) {
       return descriptor;
     }
+
     return litCustomElement(tagName)(descriptor);
   };
 }
