@@ -8,7 +8,7 @@
 import {html, LitElement, TemplateResult} from 'lit';
 
 type HtmlType = typeof html;
-type AoflElementTemplate = (ctx: AoflElement, html: HtmlType) => TemplateResult;
+type AoflElementTemplate = (ctx: any, html: HtmlType) => TemplateResult;
 /**
  * Base class for all aofl-js elements.
  *
