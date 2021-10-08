@@ -9,14 +9,14 @@ import {customElement as litCustomElement} from 'lit/decorators.js';
 /**
  * Allow for custom element classes with private constructors and tagName
  */
-interface CustomElementClass extends Omit<typeof HTMLElement, 'new'> {
+export interface CustomElementClass extends Omit<typeof HTMLElement, 'new'> {
   tagName?: string
 };
 
 /**
  * Allow for custom ClassDecorator with tagName
  */
-interface CustomClassDecorator extends ClassDecorator {
+export interface CustomClassDecorator extends ClassDecorator {
   tagName?: string
 };
 
@@ -24,9 +24,7 @@ interface CustomClassDecorator extends ClassDecorator {
  * extends lit-element's custom-element decorator and prevents an error being thrown when
  * the element is already defined when hot module replacement is enabled.
  *
- * @memberof module:@aofl/element
- * @param tagName
- * @return any
+ * @param tagName custom html element tag name
  */
 export function customElement(tagName: string) {
   return (descriptor: CustomElementClass | CustomClassDecorator) => {

@@ -1,31 +1,34 @@
 # @aofl/element
 
-`aofl-element` extends `lit-element` and overrides the `_render()` function. It accepts a template function and an String[] of styles. It is intented to be used in place of `lit-element` as the base class for elements. In it's current version it doesn't do much other than provide a clean interface to sperate HTML, CSS and JavaScript context. It makes it easier to change the template on the fly (see @aofl/i18n-mixin.)
 
-[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_element.html)
+AoflElement is a simple base class that extends litElement. It allows us to implement custom
+functionality at the base class level while utilizing the awesome power of lit. These include
+integration with @aofl/store, @aofl/hmr-loader and @aofl/i18n-mixin.
 
-## Methods
+#
 
-| Name     | Parameters                                       | Description                  |
-| -------- | ------------------------------------------------ | ---------------------------- |
-| _render  | {Function} template, {String[]} styles           | Re-evaluate the example code |
+[Api Documentation](https://ageoflearning.github.io/aofl/v4.x/api-docs/modules/_aofl_element.html)
 
 
 ## code example
 ```javascript
-import {AoflElement} from '@aofl/web-components/aofl-element';
-import template from './template.js',
-import styles from 'index.css'
+import {AoflElement, customElement, HtmlType} from '@aofl/aofl-element';
+import {css} from 'lit';
 
-class MyElement extends AoflElement {
-  static get is() {
-    return 'my-element';
-  }
-
-  _render() {
-    return super.render(template, [styles])
+@customElement('home-element')
+class Home extends AoflElement {
+  static get styles() {
+    return css`
+    :host {
+      display: block;
+    }
+    `;
   };
-}
 
-customElements.define(MyElement.is, MyElement)
+  get template() : AoflElementTemplate {
+    return (ctx: Home, html: htmlType) => html`
+      <p>My template file</p>
+    `;
+  }
+}
 ```

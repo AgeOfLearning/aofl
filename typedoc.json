@@ -1,0 +1,18 @@
+{
+  "out": "./docs/v4.x/api-docs",
+  "entryPoints": [
+    "./aofl-js-packages/object-utils",
+    "./aofl-js-packages/element"
+  ],
+  "entryPointStrategy": "packages",
+  "exclude": "**/*+(index|.spec|.e2e).ts",
+  "includes": "./aofl-js-packages",
+  "excludeInternal": true,
+  "name": "Age of Learning JavaScript SDK",
+  "includeVersion": true,
+  "githubPages": true,
+  "cleanOutputDir": true,
+  "markedOptions": {
+    "mangle": false
+  }
+}

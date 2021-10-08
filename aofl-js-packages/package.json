@@ -1,6 +1,6 @@
 {
-  "name": "aofl-js-packages",
-  "version": "3.0.0",
+  "name": "aofl-js",
+  "version": "4.0.0",
   "description": "",
   "main": "index.js",
   "private": true,

@@ -1,262 +1,52 @@
-<!DOCTYPE html>
-
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>Age Of Learning JavaScript SDK Index</title>
-
-	<!--[if lt IE 9]>
-	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
-
-	<link type="text/css" rel="stylesheet" href="styles/site.paper.css">
-
-</head>
-
-<body>
-
-<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
-<div class="container">
-	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Age Of Learning JavaScript SDK</a>
-		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-        </button>
-	</div>
-	<div class="navbar-collapse collapse" id="topNavigation">
-		<ul class="nav navbar-nav">
-			
-			<li class="dropdown">
-				<a href="modules.list.html" class="dropdown-toggle" data-toggle="dropdown">Modules<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="module-@aofl_api-request.html">@aofl/api-request</a></li><li><a href="module-@aofl_cache-manager.html">@aofl/cache-manager</a></li><li><a href="module-@aofl_component-utils.html">@aofl/component-utils</a></li><li><a href="module-@aofl_drawer.html">@aofl/drawer</a></li><li><a href="module-@aofl_element.html">@aofl/element</a></li><li><a href="module-@aofl_form-validate.html">@aofl/form-validate</a></li><li><a href="module-@aofl_i18n.html">@aofl/i18n</a></li><li><a href="module-@aofl_i18n-mixin.html">@aofl/i18n-mixin</a></li><li><a href="module-@aofl_map-state-properties-mixin.html">@aofl/map-state-properties-mixin</a></li><li><a href="module-@aofl_middleware.html">@aofl/middleware</a></li><li><a href="module-@aofl_object-utils.html">@aofl/object-utils</a></li><li><a href="module-@aofl_picture.html">@aofl/picture</a></li><li><a href="module-@aofl_polyfill-service.html">@aofl/polyfill-service</a></li><li><a href="module-@aofl_register-callback.html">@aofl/register-callback</a></li><li><a href="module-@aofl_resource-enumerate.html">@aofl/resource-enumerate</a></li><li><a href="module-@aofl_rotations.html">@aofl/rotations</a></li><li><a href="module-@aofl_router.html">@aofl/router</a></li><li><a href="module-@aofl_select.html">@aofl/select</a></li><li><a href="module-@aofl_server-environment.html">@aofl/server-environment</a></li><li><a href="module-@aofl_store.html">@aofl/store</a></li><li><a href="module-@aofl_store_legacy.html">@aofl/store/legacy</a></li><li><a href="module-@aofl_uuid.html">@aofl/uuid</a></li>
-				</ul>
-			</li>
-			
-			<li class="dropdown">
-				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
-				<ul class="dropdown-menu ">
-					<li><a href="FormatterManager.html">FormatterManager</a></li><li><a href="module-@aofl_api-request.ApiRequest.html">@aofl/api-request.ApiRequest</a></li><li><a href="module-@aofl_cache-manager.CacheManager.html">@aofl/cache-manager.CacheManager</a></li><li><a href="module-@aofl_cache-manager.MemoryStorage.html">@aofl/cache-manager.MemoryStorage</a></li><li><a href="module-@aofl_component-utils.IsInViewportMixinClass.html">@aofl/component-utils.IsInViewportMixinClass</a></li><li><a href="module-@aofl_drawer.AoflDrawer.html">@aofl/drawer.AoflDrawer</a></li><li><a href="module-@aofl_element.AoflElement.html">@aofl/element.AoflElement</a></li><li><a href="module-@aofl_form-validate.ValidationFunction.html">@aofl/form-validate.ValidationFunction</a></li><li><a href="module-@aofl_form-validate.ValidationMixin.html">@aofl/form-validate.ValidationMixin</a></li><li><a href="module-@aofl_form-validate.ValidationProperty.html">@aofl/form-validate.ValidationProperty</a></li><li><a href="module-@aofl_i18n.I18n.html">@aofl/i18n.I18n</a></li><li><a href="module-@aofl_i18n-mixin.I18nMixin.html">@aofl/i18n-mixin.I18nMixin</a></li><li><a href="module-@aofl_map-state-properties-mixin.MapStatePropertiesMixin.html">@aofl/map-state-properties-mixin.MapStatePropertiesMixin</a></li><li><a href="module-@aofl_middleware.Middleware.html">@aofl/middleware.Middleware</a></li><li><a href="module-@aofl_picture.AoflImg.html">@aofl/picture.AoflImg</a></li><li><a href="module-@aofl_picture.AoflPicture.html">@aofl/picture.AoflPicture</a></li><li><a href="module-@aofl_picture.AoflSource.html">@aofl/picture.AoflSource</a></li><li><a href="module-@aofl_polyfill-service.Polyfill.html">@aofl/polyfill-service.Polyfill</a></li><li><a href="module-@aofl_register-callback.RegisterCallback.html">@aofl/register-callback.RegisterCallback</a></li><li><a href="module-@aofl_resource-enumerate.ResourceEnumerate.html">@aofl/resource-enumerate.ResourceEnumerate</a></li><li><a href="module-@aofl_rotations.Rotations.html">@aofl/rotations.Rotations</a></li><li><a href="module-@aofl_router.PathUtils.html">@aofl/router.PathUtils</a></li><li><a href="module-@aofl_router.Router.html">@aofl/router.Router</a></li><li><a href="module-@aofl_select.AoflListOption.html">@aofl/select.AoflListOption</a></li><li><a href="module-@aofl_select.AoflMultiselectList.html">@aofl/select.AoflMultiselectList</a></li><li><a href="module-@aofl_select.AoflSelectList.html">@aofl/select.AoflSelectList</a></li><li><a href="module-@aofl_store.Sdo.html">@aofl/store.Sdo</a></li><li><a href="module-@aofl_store.Store.html">@aofl/store.Store</a></li><li><a href="module-@aofl_store_legacy.Store.html">@aofl/store/legacy.Store</a></li>
-				</ul>
-			</li>
-			
-		</ul>
-        
-            <div class="col-sm-3 col-md-3">
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        
-	</div>
-
-</div>
-</div>
-
-
-<div class="container" id="toc-content">
-<div class="row">
-
-	
-	<div class="col-md-8">
-	
-		<div id="main">
-			
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
-
-
-
-
-    <section class="readme-section">
-        <article><h1>Introduction</h1>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Age of Learning JavaScript SDK - v4.0.0</title><meta name="description" content="Documentation for Age of Learning JavaScript SDK - v4.0.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Age of Learning JavaScript SDK - v4.0.0</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> Age of Learning JavaScript SDK - v4.0.0</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
+  <h1>Introduction</h1>
+</a>
 <blockquote>
 <p>TL;DR</p>
-<p>AofL JS defines standards and conventions for developing web applications. It's built on top of Web Components and comes with a set of components, services, and development tools to make life easier.
+<p>AofL JS defines standards and conventions for developing web applications. It&#39;s built on top of Web Components and comes with a set of components, services, and development tools to make life easier.
 v3.x focuses on developer experience and fast development builds.</p>
 </blockquote>
 <p>AofL JS is different from other frameworks in that it really is just a set of standards and conventions based on our approach to web application development. We believe in utilizing the ecosystem to its fullest potential and we encourage developers to learn web technologies (JavaScript, HTML, and CSS), as the browser manufactures intended. It goes without saying that no one framework/technique will cover all your use cases and you should use the right tool for the right job.</p>
 <p>AofL JS comes with a set of essential JavaScript libraries (router, data store, ...), awesome build tools and in its core uses Web Components to create user interfaces. We prefer you to use the services and components we provide in the aofl repo and contribute to this project and help us improve our system. However, we try not to make any assumptions about your application and you can replace any of the available components with other libraries if your application will benefit from doing so.</p>
 <p>A lot of the components found in the aofl repo have been part of our production code in one way or another for quite some time (4-5 years in some cases.) For inclusion in AofL JS, we have taken these components, boiled them down to their purest form and extracted all business logic out of them. For example, the router is composed of an instance of the middleware class, a few built-in middleware functions (e.g. match-route) and a &quot;navigate&quot; function. The app developer is expected to define middleware functions to handle the 404 page, and protected pages, in addition to any redirect logic.</p>
-<p>AofL JS comes with a CLI tool to bootstrap a new application, scaffold components, it also provides a workflow to update npm modules :bowtie:, and generate the i18n manifest. It uses babel/webpack for transpiling/bundling and supports all modern browsers and IE 11. The initial setup of an AofL JS app contains web-component support, normalize.css, a basic app template and routing for ~20kb gz. That's 20kb for the JS, CSS, and HTML combined :smiley:</p>
-<p>Here's more detail about our fundamental requirements and how we achieved them...</p>
-<h2>Small download size</h2>
+<p>AofL JS comes with a CLI tool to bootstrap a new application, scaffold components, it also provides a workflow to update npm modules :bowtie:, and generate the i18n manifest. It uses babel/webpack for transpiling/bundling and supports all modern browsers and IE 11. The initial setup of an AofL JS app contains web-component support, normalize.css, a basic app template and routing for ~20kb gz. That&#39;s 20kb for the JS, CSS, and HTML combined :smiley:</p>
+<p>Here&#39;s more detail about our fundamental requirements and how we achieved them...</p>
+
+<a href="#small-download-size" id="small-download-size" style="color: inherit; text-decoration: none;">
+  <h2>Small download size</h2>
+</a>
 <p>The AofL JS architecture philosophy is meeting complex requirements through the composition of simple building blocks. A building block is the purest set of functionality a feature can be reduced to. We can create many complex components by composing just a few simple ones. Consider aofl-drawer, we defined a drawer as a content box that has 2 states visible and hidden. Moreover, it can be programmed to animate when opening or closing. With this component, we can create side-panels, popups, dropdowns, accordions,...</p>
-<p>We believe in using the right tool for the right job. We use a mixture of OOP and FP. Composition is preferred but sometimes inheritance is a better solution to the problem we're solving. Check out the <a href="#/v2.x/aofl-js-concepts/architecture-notes">Some notes on architecture</a> section for more details.</p>
+<p>We believe in using the right tool for the right job. We use a mixture of OOP and FP. Composition is preferred but sometimes inheritance is a better solution to the problem we&#39;re solving. Check out the <a href="#/v2.x/aofl-js-concepts/architecture-notes">Some notes on architecture</a> section for more details.</p>
 <p>We also try to utilize the ecosystem as much as possible and polyfill, for really just IE11, when necessary. We definitely prefer built-in methods over utility libraries. More on this later.</p>
-<h2>Small number of HTTP requests</h2>
+
+<a href="#small-number-of-http-requests" id="small-number-of-http-requests" style="color: inherit; text-decoration: none;">
+  <h2>Small number of HTTP requests</h2>
+</a>
 <p>This is mostly achieved through webpack config, our templating plugin, routes-loader, and webcomponents-css-loader.</p>
-<h2>Low memory usage and fast render/repaint</h2>
+
+<a href="#low-memory-usage-and-fast-renderrepaint" id="low-memory-usage-and-fast-renderrepaint" style="color: inherit; text-decoration: none;">
+  <h2>Low memory usage and fast render/repaint</h2>
+</a>
 <p>We prioritize using built-in features of the browser over utility libraries. We also recommend using faster performing features of the language. E.g. for loops over <code>Array.prototype.forEach</code> method.</p>
 <p>AoflElement extends lit-element as it checked all our requirements for template rendering and variable binding.</p>
-<h2>Maintainable</h2>
+
+<a href="#maintainable" id="maintainable" style="color: inherit; text-decoration: none;">
+  <h2>Maintainable</h2>
+</a>
 <p>Maintainability of a project really depends on the development team. Our goal for this sections is to give you the right tools and set you on the right path from the beginning.</p>
 <p><strong>Coding Standards</strong></p>
 <p>Adhering to specific guidelines will lead to authoring code in a consistent manner regardless of who wrote it. Consistency across the many projects and codebases written in AofL JS will result in an easy to read codebase and consequently reduce the amount of time to debug, add features, and get assistance from others.</p>
 <p><strong>Modular</strong></p>
 <p>Web Components and es-6 classes make it easy to create modular components and create more complex components through composition and mixin patterns.</p>
-<h2>Easy to Learn</h2>
-<p>With AofL JS we want the developers to really focus on learning and becoming experts in web technologies instead of another framework. This is why we opt'ed for <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">Web Components</a> standards, and rely on the built-in functionality of the browser as much as possible.</p>
-<h2>Unopinionated</h2>
-<p>We know how absurd it is to say a framework is unopinionated. What we mean by this is that when developing in AofL JS you will not find yourself wrestling the framework to implement features the way you want instead of how the framework expects you to.</p></article>
-    </section>
 
+<a href="#easy-to-learn" id="easy-to-learn" style="color: inherit; text-decoration: none;">
+  <h2>Easy to Learn</h2>
+</a>
+<p>With AofL JS we want the developers to really focus on learning and becoming experts in web technologies instead of another framework. This is why we opt&#39;ed for <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components">Web Components</a> standards, and rely on the built-in functionality of the browser as much as possible.</p>
 
-
-
-
-
-
-		</div>
-	</div>
-
-	<div class="clearfix"></div>
-
-	
-		<div class="col-md-3">
-			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
-		</div>
-	
-
-</div>
-</div>
-
-
-    <div class="modal fade" id="searchResults">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Search results</h4>
-          </div>
-          <div class="modal-body"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div>
-
-
-<footer>
-
-
-<span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
-	
-		on 2021-02-02T12:13:05-08:00
-	
-	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
-</span>
-</footer>
-
-<script src="scripts/docstrap.lib.js"></script>
-<script src="scripts/toc.js"></script>
-
-    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
-
-
-<script>
-$( function () {
-	$( "[id*='$']" ).each( function () {
-		var $this = $( this );
-
-		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
-	} );
-
-	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
-		var $this = $( this );
-
-		var example = $this.find( "code" );
-		exampleText = example.html();
-		var lang = /{@lang (.*?)}/.exec( exampleText );
-		if ( lang && lang[1] ) {
-			exampleText = exampleText.replace( lang[0], "" );
-			example.html( exampleText );
-			lang = lang[1];
-		} else {
-			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
-			lang = langClassMatch ? langClassMatch[1] : "javascript";
-		}
-
-		if ( lang ) {
-
-			$this
-			.addClass( "sunlight-highlight-" + lang )
-			.addClass( "linenums" )
-			.html( example.html() );
-
-		}
-	} );
-
-	Sunlight.highlightAll( {
-		lineNumbers : true,
-		showMenu : true,
-		enableDoclinks : true
-	} );
-
-	$.catchAnchorLinks( {
-        navbarOffset: 10
-	} );
-	$( "#toc" ).toc( {
-		anchorName  : function ( i, heading, prefix ) {
-			return $( heading ).attr( "id" ) || ( prefix + i );
-		},
-		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
-		showAndHide : false,
-		smoothScrolling: true
-	} );
-
-	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
-	$( '.dropdown-toggle' ).dropdown();
-
-    $( "table" ).each( function () {
-      var $this = $( this );
-      $this.addClass('table');
-    } );
-
-} );
-</script>
-
-
-
-<!--Navigation and Symbol Display-->
-
-
-<!--Google Analytics-->
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            SearcherDisplay.init();
-        });
-    </script>
-
-
-</body>
-</html>
+<a href="#unopinionated" id="unopinionated" style="color: inherit; text-decoration: none;">
+  <h2>Unopinionated</h2>
+</a>
+<p>We know how absurd it is to say a framework is unopinionated. What we mean by this is that when developing in AofL JS you will not find yourself wrestling the framework to implement features the way you want instead of how the framework expects you to.</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/_aofl_element.html">@aofl/element</a></li><li class=" tsd-kind-module"><a href="modules/_aofl_object_utils.html">@aofl/object-<wbr/>utils</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

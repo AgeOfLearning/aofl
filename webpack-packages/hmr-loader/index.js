@@ -137,7 +137,6 @@ module.exports = async function(source) {
                   }
 
                   for (const name in descriptorsI) {
-                    console.log('di', name);
                     Object.defineProperty(node, name, descriptorsI[name]);
                   }
 

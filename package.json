@@ -37,6 +37,7 @@
     "docsify-cli": "^4.4.2",
     "eslint": "^7.19.0",
     "eslint-config-aofl": "^1.0.0-alpha.1",
-    "lerna": "^3.22.1"
+    "lerna": "^3.22.1",
+    "typedoc": "^0.22.5"
   }
 }
