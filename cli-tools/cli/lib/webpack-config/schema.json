@@ -439,6 +439,21 @@
         "templating": {
           "type": "object"
         },
+        "hmr": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "cache": {
+              "type": "boolean"
+            },
+            "decorators": {
+              "type": "array"
+            },
+            "baseClasses": {
+              "type": "array"
+            }
+          }
+        },
         "serviceworker": {
           "type": ["object", "null"]
         },

@@ -147,6 +147,11 @@ module.exports = (root) => {
           cache: false
         },
       },
+      hmr: {
+        cache: true,
+        decorators: ['customElement'],
+        baseClasses: ['AoflElement', 'LitElement']
+      },
       serviceworker: {
         swSrc: path.join(resources.WEBPACK_CONFIG, 'sw.js'),
         swDest: 'sw.js',

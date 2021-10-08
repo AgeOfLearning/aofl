@@ -56,7 +56,9 @@ class ServeProject {
     if (this.options.hot) {
       this.config.webpack.module.rules.push({
         test: /\.(js|ts)$/i,
+        enforce: 'pre',
         include: path.join(this.config.root, 'src'),
+        exclude: this.config.build.templating.loaderOptions.path,
         loader: '@aofl/hmr-loader'
       });
     }

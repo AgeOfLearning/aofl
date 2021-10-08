@@ -8,7 +8,7 @@ type htmlType = typeof html;
 class A extends AoflElement {
 
   get template() : AoflElementTemplate {
-    return (ctx: typeof A, html: htmlType) : TemplateResult => html``;
+    return (ctx: A, html: htmlType) : TemplateResult => html``;
   }
 
   other() {
