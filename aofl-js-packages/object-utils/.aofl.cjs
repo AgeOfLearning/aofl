@@ -20,11 +20,6 @@ module.exports = {
         path.join(__dirname, 'lib')
       ]
     },
-    ts: {
-      include: [
-        path.join(__dirname, 'modules')
-      ]
-    },
     extend() {
       return {
         output: {

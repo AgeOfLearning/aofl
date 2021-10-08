@@ -2,7 +2,8 @@
   "out": "./docs/v4.x/api-docs",
   "entryPoints": [
     "./aofl-js-packages/object-utils",
-    "./aofl-js-packages/element"
+    "./aofl-js-packages/element",
+    "./aofl-js-packages/register-callback"
   ],
   "entryPointStrategy": "packages",
   "exclude": "**/*+(index|.spec|.e2e).ts",

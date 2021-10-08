@@ -2,13 +2,13 @@ const path = require('path');
 
 module.exports = {
   name: '@aofl/register-callback',
-  mode: 'stand-alone',
+  mode: 'standalone',
   build: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
     devtool: 'source-map',
     entryReplace: {
-      'index': path.join(__dirname, 'index.js')
+      'index': path.join(__dirname, 'lib', 'index.js')
     },
     eslint: {
       options: {
@@ -17,7 +17,7 @@ module.exports = {
     },
     js: {
       include: [
-        path.join(__dirname, 'modules')
+        path.join(__dirname, 'lib')
       ]
     },
     extend() {
@@ -29,14 +29,7 @@ module.exports = {
           runtimeChunk: false
         },
         externals: [
-          {
-            'lit-element': {
-              commonjs2: 'lit-element',
-              commonjs: 'lit-element',
-              amd: 'lit-element',
-            }
-          },
-          function({context, request}, callback) {
+         function({context, request}, callback) {
             if (/^core-js\//.test(request) || /^@babel\//.test(request) || /^regenerator-runtime\/runtime$/.test(request)){
               return callback(null, 'commonjs ' + request);
             }

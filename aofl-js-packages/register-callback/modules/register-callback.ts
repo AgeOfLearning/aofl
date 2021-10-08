@@ -1,35 +1,35 @@
 /**
  * @summary register-callback
- * @version 3.0.0
- * @since 1.0.0
  * @author Arian Khosravi <arian.khosravi@aofl.com>
+ * @version 4.0.0
+ * @since 1.0.0
  */
 
+type UnsubscribeFunction = {
+  executed: boolean;
+  (): void
+};
 
+type CallbackFunction = (err: Error|null, ...args: any) => void;
 /**
  * RegisterCallback class. It allows callback functions to be registered and called in
  * series when registerCallbackinstance.next is called.
- *
- * @memberof module:@aofl/register-callback
  */
 class RegisterCallback {
   /**
-   * Creates an instance of RegisterCallback.
+   * array of registered callbacks
    */
-  constructor() {
-    this.callbacks = [];
-  }
-
+  private callbacks : CallbackFunction[] = [];
   /**
    * When register() is invoked, it adds next and error functions to the callbacks list.
    *
    * @param {Function} cb The callback function is invoked when registerCallbackInstance.next is called.
    * @return {Function}
    */
-  register(cb) {
+  register(cb: CallbackFunction) {
     this.callbacks.push(cb);
 
-    const unsubscribe = () => {
+    const unsubscribe : UnsubscribeFunction = () => {
       if (unsubscribe.executed) { return; }
       Object.defineProperty(unsubscribe, 'executed', {
         value: true
@@ -41,6 +41,7 @@ class RegisterCallback {
         this.callbacks.splice(index, 1);
       }
     };
+    unsubscribe.executed = false;
 
     return unsubscribe;
   }
@@ -52,7 +53,7 @@ class RegisterCallback {
    * @param {Error} [err=null]
    * @param {*} args
    */
-  next(err = null, ...args) {
+  next(err : Error|null = null, ...args: any[]) {
     for (let i = 0; i < this.callbacks.length; i++) {
       this.callbacks[i].call(null, err, ...args);
     }
@@ -60,5 +61,7 @@ class RegisterCallback {
 }
 
 export {
-  RegisterCallback
+  RegisterCallback,
+  CallbackFunction,
+  UnsubscribeFunction
 };
