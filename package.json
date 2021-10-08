@@ -10,7 +10,7 @@
   "scripts": {
     "build-all": "lerna run --stream build-ci",
     "watch": "lerna run --stream watch",
-    "docs-all": "lerna run --stream docs",
+    "docs-all": "typedoc",
     "docsify": "docsify serve docs",
     "install-all": "lerna exec --stream -- npm install",
     "lint": "eslint .",

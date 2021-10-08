@@ -31,9 +31,7 @@ class RegisterCallback {
 
     const unsubscribe : UnsubscribeFunction = () => {
       if (unsubscribe.executed) { return; }
-      Object.defineProperty(unsubscribe, 'executed', {
-        value: true
-      });
+      unsubscribe.executed = true;
 
       const index = this.callbacks.indexOf(cb);
       /* istanbul ignore else */

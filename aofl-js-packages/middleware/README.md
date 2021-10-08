@@ -1,22 +1,15 @@
 # @aofl/middleware
 
-Simple base middleware class.
+Simple middleware class.
 
-[Api Documentation](https://ageoflearning.github.io/aofl/v3.x/api-docs/module-@aofl_middleware.html)
+#
+
+[Api Documentation](https://ageoflearning.github.io/aofl/v4.x/api-docs/modules/_aofl_middleware.html)
 
 ## Installation
 ```bash
 npm i -S @aofl/middleware
 ```
-
-## Methods
-
-| Name              | Arguments                                       | Description                                                                          |
-|-------------------|-------------------------------------------------|--------------------------------------------------------------------------------------|
-| constructor       | ...[String]                                     | Define any number of middleware hooks. E.g. `new Middleware('before', 'after', ...)` |
-| use               | cb[Function], hook[String]                      | Register a middleware                                                                |
-| iterateMiddleware | request[Object], hook[String], response[Object] | Iterate middleware for a given hook                                                  |
-
 
 ## Example
 
@@ -24,30 +17,27 @@ npm i -S @aofl/middleware
 const matchRoutes = (request, response, next) => {
   // match route logic based on request and response
 
-  next(response, [err || null]); // next should be called to process the next middleware function in the queue. Otherwise, the operation stops.
+  next(response, [err | void]); // next should be called to process the next middleware function in the queue. Otherwise, the operation stops.
 };
 
 class Router {
   constructor() {
-    // other initialization logic
     this.middleware = new Middleware('before', 'after');
     this.before(matchRoutes); // register matchRoutes middleware
     this.after(updateView); // register updateView Middleware
   }
 
   before(fn) {
-    this.middleware.use(fn, 'before');
+    this.middleware.use('before', fn);
   }
 
   after(fn) {
-    this.middleware.use(fn, 'after');
+    this.middleware.use('after', fn);
   }
 
   async navigate(request) {
-    const beforeResponse = await this.middleware.iterateMiddleware(request, 'before', Object.assign({}, request)); // middleware functions expect request, and optional response
-    await this.middleware.iterateMiddleware(request, 'after', beforeResponse);
+    const beforeResponse = await this.middleware.iterateMiddleware('before', request, Object.assign({}, request)); // middleware functions expect request, and optional response
+    await this.middleware.iterateMiddleware('before', request, beforeResponse);
   }
-
-  // ... other Router logic
 }
 ```
