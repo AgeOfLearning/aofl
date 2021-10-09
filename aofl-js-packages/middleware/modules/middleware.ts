@@ -1,15 +1,8 @@
-/**
- * @summary middleware
- * @version 3.0.0
- * @since 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
-
-type MiddlewareFunction = (request: any, response: any, next: any, interrupt?: any) => void;
+type MiddlewareFunction = (request: any, response: any, next: any) => void;
 type InterruptFunction = (request: any, response: any) => boolean;
 
 type UnsubscribeFunction = {
+  /** @internal */
   executed: boolean;
   (): void
 };

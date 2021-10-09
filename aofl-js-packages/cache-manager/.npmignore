@@ -1,7 +1,8 @@
-examples
 test
 .aofl.js
 .browserslistrc
 .gitignore
-.jsdocrc.json
+package-lock.json
 README.md
+tsconfig.json
+modules

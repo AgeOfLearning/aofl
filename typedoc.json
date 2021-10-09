@@ -5,7 +5,8 @@
     "./aofl-js-packages/element",
     "./aofl-js-packages/register-callback",
     "./aofl-js-packages/middleware",
-    "./aofl-js-packages/uuid"
+    "./aofl-js-packages/uuid",
+    "./aofl-js-packages/cache-manager"
   ],
   "entryPointStrategy": "packages",
   "exclude": "**/*+(index|.spec|.e2e).ts",

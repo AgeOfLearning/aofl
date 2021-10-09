@@ -2,10 +2,6 @@
   "name": "@aofl/cache-manager",
   "version": "4.0.0-alpha.21",
   "description": "Provides a unified class for storing objects in Storage-like Objects",
-  "main": "index.js",
-  "browser": "dist/index.js",
-  "module": "index.js",
-  "typings": "types.d.ts",
   "keywords": [
     "aofljs",
     "@aofl/cache-manager",
@@ -13,8 +9,24 @@
     "caching",
     "storage"
   ],
+  "type": "module",
+  "main": "lib/index.js",
+  "browser": "dist/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf dist lib",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "cross-env NODE_ENV=production tsc -p tsconfig.json",
+    "build-ci": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --debug --config .aofl.cjs",
+    "build": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --config .aofl.cjs",
+    "build:dev": "npm run tsc && cross-env NODE_ENV=development aofl build --config .aofl.cjs",
+    "prepublishOnly": "npm run build-ci"
   },
   "repository": {
     "type": "git",
@@ -29,9 +41,7 @@
   "devDependencies": {
     "@aofl/cli": "^4.0.0-alpha.21",
     "cross-env": "^7.0.3",
-    "jsdoc": "^3.6.6",
-    "tiny-js-md5": "1.1.2",
-    "tsd-jsdoc": "^2.5.0"
+    "tiny-js-md5": "1.1.2"
   },
   "peerDependencies": {
     "tiny-js-md5": "^1.1.2"
