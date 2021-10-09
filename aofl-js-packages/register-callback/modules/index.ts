@@ -1,7 +1,6 @@
 /**
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  * @module @aofl/register-callback
- * @version 4.0.0
  * @since 1.0.0
  * [[include:register-callback/README.md]]
  */

@@ -1,7 +1,6 @@
 /**
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  * @module @aofl/object-utils
- * @version 3.0.0
  * @since 1.0.0
  * [[include:object-utils/README.md]]
  */

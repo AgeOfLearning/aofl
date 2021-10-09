@@ -4,7 +4,8 @@
     "./aofl-js-packages/object-utils",
     "./aofl-js-packages/element",
     "./aofl-js-packages/register-callback",
-    "./aofl-js-packages/middleware"
+    "./aofl-js-packages/middleware",
+    "./aofl-js-packages/uuid"
   ],
   "entryPointStrategy": "packages",
   "exclude": "**/*+(index|.spec|.e2e).ts",
