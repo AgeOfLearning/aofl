@@ -21,12 +21,10 @@
   "dependencies": {
     "@aofl/cli-lib": "^4.0.0-alpha.22",
     "@aofl/hmr-loader": "^4.0.0-alpha.22",
-    "@aofl/html-webpack-purify-internal-css-plugin": "^4.0.0-alpha.22",
     "@aofl/i18n-loader": "^2.0.0",
     "@aofl/polyfill-service": "^4.0.0-alpha.22",
+    "@aofl/purgecss-loader": "^4.0.0-alpha.22",
     "@aofl/templating-plugin": "^4.0.0-alpha.22",
-    "@aofl/unit-testing-plugin": "^4.0.0-alpha.22",
-    "@aofl/webcomponent-css-loader": "^4.0.0-alpha.22",
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-proposal-class-properties": "^7.14.5",

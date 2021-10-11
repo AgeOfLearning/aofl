@@ -35,11 +35,16 @@ module.exports = (root) => {
           path.join(root, 'node_modules', '@aofl', 'cli', 'commands', 'test-project')
         ],
         exclude: [],
-        global: {
-          level: process.env.NODE_ENV === 'development'? 'none': 'auto',
-          purgeCss: {
-            safelist: ['route-view', 'loaded', '.loaded'],
+        purgeCssLoader: {
+          cache: true,
+          settings: {
+            fontFace: true,
+            keyframes: true,
+            variables: true,
+            safelist: [':host'],
+            blocklist: [],
           },
+          files: {}
         },
         cssLoader: {}, // options
         postCssLoader: {

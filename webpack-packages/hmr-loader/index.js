@@ -26,7 +26,6 @@ module.exports = async function(source) {
     baseClasses: []
   }, getOptions(this));
 
-
   validate(schema, options, {name: 'Aofl HMR Loader'});
 
   if (options.cache === false) {
@@ -68,7 +67,7 @@ module.exports = async function(source) {
       }
     }
 
-    const ctors = `[${classInfo.map((item) => item.className).join(', ')}]`;
+    const ctors = `[${patch.map((item) => item.className).join(', ')}]`;
 
     const tmpSource = `
         ${importAdoptStyles? `import {adoptStyles} from 'lit';`: ''};
@@ -91,7 +90,6 @@ module.exports = async function(source) {
 
 
           const ctors = ${ctors};
-
           const supportsAdoptingStyleSheets = (window.ShadowRoot) &&
             (window.ShadyCSS === undefined || window.ShadyCSS.nativeShadow) &&
             ('adoptedStyleSheets' in Document.prototype) &&
@@ -126,7 +124,7 @@ module.exports = async function(source) {
               };
 
               walk(document.body, (node) => {
-                if (node.localName && Ctor.tagName && node.localName.toLowerCase() === Ctor.tagName.toLowerCase()) {
+                if (node instanceof Ctor) {
                   const descriptorsS = Object.getOwnPropertyDescriptors(Ctor);
                   const descriptorsI = Object.getOwnPropertyDescriptors(Ctor.prototype);
 

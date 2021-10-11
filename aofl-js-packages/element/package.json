@@ -13,9 +13,6 @@
   "exports": {
     ".": {
       "default": "./lib/index.js"
-    },
-    "./lib/decorators": {
-      "default": "./lib/decorators.js"
     }
   },
   "scripts": {

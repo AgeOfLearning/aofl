@@ -1,7 +1,6 @@
 const {environments} = require('@aofl/cli-lib');
 const webpack = require('webpack');
 const AofLTemplatingPlugin = require('@aofl/templating-plugin');
-const HtmlWebpackPurifycssPlugin = require('@aofl/html-webpack-purify-internal-css-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
@@ -68,9 +67,10 @@ const getCssRules = (build, defaultBuild) => {
         }
       },
       {
-        loader: '@aofl/webcomponent-css-loader',
+        loader: '@aofl/purgecss-loader',
         options: {
-          cache: build.cache
+          cache: build.cache,
+          ...build.css.purgeCssLoader
         }
       },
       {
@@ -316,8 +316,6 @@ const getConfig = (root, configObject, defaultOptions) => {
       config.plugins.push(new AofLTemplatingPlugin(
         getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
       );
-
-      config.plugins.push(new HtmlWebpackPurifycssPlugin(configObject.build.css.global));
 
       config.plugins.push(new ImageMinimizerPlugin(configObject.build.assets.options));
 
