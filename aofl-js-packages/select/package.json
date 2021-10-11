@@ -29,7 +29,6 @@
     "@aofl/element": "^4.0.0-alpha.9"
   },
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.21",
     "@aofl/component-utils": "^4.0.0-alpha.21",
     "@aofl/element": "^4.0.0-alpha.21",
     "cross-env": "^7.0.3",

@@ -1,48 +1,14 @@
-/**
- * @summary path-utilities
- * @version 3.0.0
- * @since 1.0.0
- * @author Arian Khosravi <arian.khosravi@aofl.com>
- */
-
-/**
- * @memberof module:@aofl/router
- * @private
- * @type {RegExp}
- */
 const DYNAMIC_PATH_REGEX = /:([^/\s]*)(\/?)/ig;
-/**
- * @memberof module:@aofl/router
- * @private
- * @type {RegExp}
- */
 const CLEAN_PATH_REGEX = /[#?].*/i;
-/**
- * @memberof module:@aofl/router
- * @private
- * @type {RegExp}
- */
 const TRAILING_SLASH_REGEX = /\/$/i;
-/**
- * @memberof module:@aofl/router
- * @private
- * @type {RegExp}
- */
 const LEADING_SLASH_REGEX = /^\//i;
-/**
- * PathUtils implementation
- * @memberof module:@aofl/router
- */
+
 class PathUtils {
-  /**
-   * @param {String} _path
-   * @return {Object}
-   */
-  static getRegex(_path) {
+  static getRegex(_path: string) {
     const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
     let regexStr = '';
     let matches = DYNAMIC_PATH_REGEX.exec(path);
-    const keys = [];
+    const keys: Array<string> = [];
     if (matches === null) {
       regexStr = path;
     } else {
@@ -60,12 +26,14 @@ class PathUtils {
     const regex = new RegExp('^' + regexStr + '\\/?$');
     return {
       regex,
-      parse(p) {
+      parse(p: string) {
         if (keys.length === 0) return {};
         const cleanPath = PathUtils.removeTrailingSlash(PathUtils.cleanPath(p));
         const pathMatches = regex.exec(cleanPath);
-        return keys.reduce((acc, key, index) => {
-          acc[key] = pathMatches[index + 1];
+        return keys.reduce((acc: any, key, index) => {
+          if (pathMatches !== null) {
+            acc[key] = pathMatches[index + 1];
+          }
           return acc;
         }, {});
       }
@@ -73,64 +41,38 @@ class PathUtils {
   }
 
 
-  /**
-   * @param {*} path
-   * @return {String}
-   * @throws {Error}
-   */
-  static cleanPath(path) {
+  static cleanPath(path: string): string {
     return path.replace(CLEAN_PATH_REGEX, '');
   }
 
-
-  /**
-   * @param {String} str
-   * @return {String}
-   */
-  static removeTrailingSlash(str) {
+  static removeTrailingSlash(str: string): string {
     if (str === '/') return str;
     return str && str.replace(TRAILING_SLASH_REGEX, '');
   }
 
-  /**
-   * @param {String} str
-   * @return {String}
-   */
-  static removeLeadingSlash(str) {
+  static removeLeadingSlash(str: string): string {
     if (str === '/') return str;
     return str && str.replace(LEADING_SLASH_REGEX, '');
   }
 
-
   /**
    * Creates an array of url path segments from a url string
-   *
-   * @param {String} path
-   * @return {Array}
    */
-  static getPathSegments(path) {
+  static getPathSegments(path: string): Array<string> {
     return path.split('/').filter((item) => item);
   }
 
 
   /**
    * Evaluates whether the given segment is dynamic
-   *
-   * @param {String} segment
-   * @return {Boolean}
    */
-  static isDynamicSegment(segment) {
+  static isDynamicSegment(segment: string): boolean {
     return segment.indexOf(':') > -1;
   }
-
-
   /**
    * Enumerates the number of matching segments in the given arrays of strings
-   * @param {Array} segmentsA
-   * @param {Array} segmentsB
-   * @return {Number}
    */
-  static matchingSegmentsCount(segmentsA, segmentsB) {
+  static matchingSegmentsCount(segmentsA: Array<string>, segmentsB: Array<string>): number {
     let matches = 0;
     for (let i = 0; i < segmentsA.length && i < segmentsB.length; i++) {
       /* istanbul ignore else */
@@ -145,8 +87,49 @@ class PathUtils {
     }
     return matches;
   }
+
+  /**
+  * Evaluates and returns the best matching route for the given path
+  */
+  static matchBestPath(_path : string, routes: Array<any>) {
+    const path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(_path));
+    const stack = [];
+    for (let i = 0; i < routes.length; i++) {
+      const route = routes[i];
+      route.path = PathUtils.removeTrailingSlash(PathUtils.cleanPath(route.path));
+      if (path === route.path) { // exact match
+        stack.shift();
+        stack.push(route);
+        break;
+      }
+      const matches = route.regex.exec(path);
+      if (matches !== null) {
+        if (stack.length === 0) {
+          stack.push(route);
+        } else {
+          const pathSegments = PathUtils.getPathSegments(path);
+          const routeSegments = PathUtils.getPathSegments(route.path);
+          const lastSegments = PathUtils.getPathSegments(stack[0].path);
+          const routeSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, routeSegments);
+          const lastSegmentMatchesCount = PathUtils.matchingSegmentsCount(pathSegments, lastSegments);
+          if (routeSegmentMatchesCount > lastSegmentMatchesCount) {
+            stack.shift();
+            stack.push(route);
+          }
+        }
+      }
+    }
+
+    const match = stack.shift();
+    if (!match) { return null; }
+    return Object.assign({}, match);
+  }
 }
 
 export {
-  PathUtils
+  PathUtils,
+  LEADING_SLASH_REGEX,
+  TRAILING_SLASH_REGEX,
+  CLEAN_PATH_REGEX,
+  DYNAMIC_PATH_REGEX
 };

@@ -33,7 +33,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.21",
     "@aofl/object-utils": "^4.0.0-alpha.21",
     "cross-env": "^7.0.3",
     "jsdoc": "^3.6.6",

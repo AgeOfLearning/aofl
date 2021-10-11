@@ -6,7 +6,6 @@
   "browser": "dist/index.js",
   "module": "index.js",
   "typings": "types.d.ts",
-  "scripts": {},
   "keywords": [
     "aofljs",
     "@aofl/resource-enumerate",
@@ -24,19 +23,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/api-request": "^4.0.0-alpha.21",
-    "@aofl/cache-manager": "^4.0.0-alpha.21",
-    "@aofl/cli": "^4.0.0-alpha.21",
-    "@aofl/middleware": "^4.0.0-alpha.21",
-    "@aofl/server-environment": "^4.0.0-alpha.21",
-    "cross-env": "^7.0.3",
-    "jsdoc": "^3.6.6",
-    "tsd-jsdoc": "^2.5.0"
-  },
-  "peerDependencies": {
-    "@aofl/api-request": "^4.0.0-alpha.9",
-    "@aofl/cache-manager": "^4.0.0-alpha.9",
-    "@aofl/middleware": "^4.0.0-alpha.9",
-    "@aofl/server-environment": "^4.0.0-alpha.9"
-  }
+		"cross-env": "^7.0.3",
+		"jsdoc": "^3.6.6",
+		"tsd-jsdoc": "^2.5.0"
+	},
+	"peerDependencies": {
+		"@aofl/api-request": "^4.0.0-alpha.9",
+		"@aofl/cache-manager": "^4.0.0-alpha.9",
+		"@aofl/middleware": "^4.0.0-alpha.9",
+		"@aofl/server-environment": "^4.0.0-alpha.9"
+	}
 }

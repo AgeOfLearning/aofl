@@ -7,6 +7,7 @@
  * @author Arian Khosravi <arian.khosravi@aofl.com>
  */
 
-export * from './modules/Router';
-export * from './modules/router-instance';
-export * from './modules/path-utils';
+ export * from './Router.js';
+ export * from './router-instance.js';
+ export * from './path-utils.js';
+ export * from './update-url-middleware.js';

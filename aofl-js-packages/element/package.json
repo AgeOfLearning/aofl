@@ -44,8 +44,8 @@
   },
   "homepage": "https://ageoflearning.github.io/aofl/",
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.21",
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "lit": "^2.0.0"
   },
   "peerDependencies": {
     "lit": "^2.0.0"

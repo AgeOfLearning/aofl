@@ -17,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "cross-env NODE_ENV=production tsc -p tsconfig.json",
     "build-ci": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --debug --config .aofl.cjs",
-    "build": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --config .aofl.cjs",
+    "build": "cross-env NODE_ENV=production aofl build --config .aofl.cjs",
     "build:dev": "npm run tsc && cross-env NODE_ENV=development aofl build --config .aofl.cjs",
     "prepublishOnly": "npm run build-ci"
   },
@@ -37,7 +37,6 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "@aofl/cli": "^4.0.0-alpha.21",
     "cross-env": "^7.0.3"
   }
 }

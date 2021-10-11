@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
+    "@aofl/cli-lib": "^4.0.0-alpha.21",
+    "html-webpack-plugin": "^5.3.2",
     "parse5": "^6.0.1",
     "purgecss": "^4.0.3"
   }
