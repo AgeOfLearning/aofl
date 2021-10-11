@@ -8,7 +8,7 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     devtool: 'source-map',
     entryReplace: {
-      'index': path.join(__dirname, 'index.js')
+      'index': path.join(__dirname, 'lib', 'index.js')
     },
     eslint: {
       options: {
@@ -17,7 +17,7 @@ module.exports = {
     },
     js: {
       include: [
-        path.join(__dirname, 'modules')
+        path.join(__dirname, 'lib')
       ]
     },
     extend() {
@@ -36,10 +36,10 @@ module.exports = {
               commonjs: '@aofl/object-utils',
               amd: '@aofl/object-utils'
             },
-            '@aofl/register-callback': {
-              commonjs2: '@aofl/register-callback',
-              commonjs: '@aofl/register-callback',
-              amd: '@aofl/register-callback'
+            '@aofl/middleware': {
+              commonjs2: '@aofl/middleware',
+              commonjs: '@aofl/middleware',
+              amd: '@aofl/middleware'
             },
           },
           function({context, request}, callback) {

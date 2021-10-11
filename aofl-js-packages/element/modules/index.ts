@@ -5,4 +5,3 @@
  * [[include:element/README.md]]
  */
 export * from './aofl-element.js';
-export * from './decorators.js';

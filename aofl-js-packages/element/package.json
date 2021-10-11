@@ -49,5 +49,8 @@
   },
   "peerDependencies": {
     "lit": "^2.0.0"
+  },
+  "dependencies": {
+    "@aofl/object-utils": "^4.0.0-alpha.21"
   }
 }

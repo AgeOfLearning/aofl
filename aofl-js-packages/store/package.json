@@ -2,11 +2,25 @@
   "name": "@aofl/store",
   "version": "4.0.0-alpha.21",
   "description": "Centralized state management for aofljs applications",
-  "main": "index.js",
+  "type": "module",
+  "main": "lib/index.js",
   "browser": "dist/index.js",
-  "module": "index.js",
-  "typings": "types.d.ts",
-  "scripts": {},
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf dist lib",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "cross-env NODE_ENV=production tsc -p tsconfig.json",
+    "build-ci": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --debug --config .aofl.cjs",
+    "build": "npm run clean && npm run tsc && cross-env NODE_ENV=production aofl build --config .aofl.cjs",
+    "build:dev": "npm run tsc && cross-env NODE_ENV=development aofl build --config .aofl.cjs",
+    "prepublishOnly": "npm run build-ci"
+  },
   "keywords": [
     "aofljs",
     "@aofl/store",
@@ -31,14 +45,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@aofl/element": "^4.0.0-alpha.21",
+    "@aofl/middleware": "^4.0.0-alpha.21",
     "@aofl/object-utils": "^4.0.0-alpha.21",
-    "@aofl/register-callback": "^4.0.0-alpha.21",
-    "cross-env": "^7.0.3",
-    "jsdoc": "^3.6.6",
-    "tsd-jsdoc": "^2.5.0"
+    "cross-env": "^7.0.3"
   },
   "peerDependencies": {
-    "@aofl/object-utils": "^4.0.0-alpha.9",
-    "@aofl/register-callback": "^4.0.0-alpha.9"
+    "@aofl/element": "^4.0.0-alpha.21",
+    "@aofl/middleware": "^4.0.0-alpha.9",
+    "@aofl/object-utils": "^4.0.0-alpha.9"
   }
 }
