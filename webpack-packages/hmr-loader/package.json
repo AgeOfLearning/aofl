@@ -1,6 +1,6 @@
 {
   "name": "@aofl/hmr-loader",
-  "version": "4.0.0-alpha.22",
+  "version": "4.0.0-alpha.24",
   "description": "Hot Module replacement (HMR) Webpack Loader ",
   "main": "index.js",
   "scripts": {

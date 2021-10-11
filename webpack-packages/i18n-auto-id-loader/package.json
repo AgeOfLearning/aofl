@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n-auto-id-loader",
-  "version": "4.0.0-alpha.22",
+  "version": "4.0.0-alpha.24",
   "description": "Generates tt-tags and inserts them as the 1st argument to  __, _c fucntion calls",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "@aofl/cli": "^4.0.0-alpha.22",
+    "@aofl/cli": "^4.0.0-alpha.24",
     "loader-utils": "^2.0.0",
     "schema-utils": "^3.0.0"
   }

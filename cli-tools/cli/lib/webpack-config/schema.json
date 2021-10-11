@@ -79,23 +79,19 @@
             "enforce": {
               "type": "string"
             },
-            "global": {
+            "purgeCssLoader": {
               "type": "object",
               "properties": {
-                "level": {
-                  "type": "string",
-                  "allowedValues": ["all", "none", "auto"]
+                "cache": {
+                  "type": "boolean"
                 },
-                "purgeCss": {
+                "settings": {
                   "type": "object",
                   "properties": {
                     "fontFace": {
                       "type": "boolean"
                     },
                     "keyframes": {
-                      "type": "boolean"
-                    },
-                    "rejected": {
                       "type": "boolean"
                     },
                     "variables": {
@@ -106,6 +102,38 @@
                     },
                     "blocklist": {
                       "type": "array"
+                    }
+                  }
+                },
+                "files": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "patternProperties": {
+                    "^.*$": {
+                      "type": "object",
+                      "properties": {
+                        "fontFace": {
+                          "type": "boolean"
+                        },
+                        "keyframes": {
+                          "type": "boolean"
+                        },
+                        "variables": {
+                          "type": "boolean"
+                        },
+                        "safelist": {
+                          "type": "array"
+                        },
+                        "blocklist": {
+                          "type": "array"
+                        },
+                        "content": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
                   }
                 }

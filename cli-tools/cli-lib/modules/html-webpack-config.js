@@ -1,7 +1,23 @@
+const path = require('path');
 const jsStringEscape = require('js-string-escape');
 const {environments} = require('./constants-enumerate');
+const glob = require('fast-glob');
 
-module.exports = (environment = environments.DEVELOPMENT) => {
+module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
+  let dlls = {};
+  if (typeof dllDir !== 'undefined') {
+    const dllFiles = glob.sync('dll/*.js', {cwd: path.resolve(dllDir)});
+    dlls = dllFiles.reduce((acc, item) => {
+      const name = item.split('-')[0].replace('dll/', '');
+      acc[name] = {
+        url: item,
+        source: '',
+        sourceStr: ''
+      };
+      return acc;
+    }, {});
+  }
+
   return {
     inject: false,
     minify: {
@@ -12,7 +28,7 @@ module.exports = (environment = environments.DEVELOPMENT) => {
     },
     cache: true,
     alwaysWriteToDisk: true,
-    templateParameters(compilation, assets, options) {
+    templateParameters(compilation, assets, assetTags, options) {
       const assetsMap = {};
 
       compilation.chunks.forEach((chunk) => {
@@ -30,15 +46,32 @@ module.exports = (environment = environments.DEVELOPMENT) => {
         }
       });
 
-      // console.log(Object.keys(assetsMap));
+      for (const key in dlls) {
+        if (!Object.prototype.hasOwnProperty.call(dlls, key)) continue;
+        assetsMap[key] = {
+          ...dlls[key],
+          url: assets.publicPath + dlls[key].url,
+        };
+      }
+      const tags = {
+        ...assetTags,
+        headTags: [
+          ...assetTags.headTags.reduce((acc, tag) => {
+            if (tag.tagName === 'meta') {
+              acc.push(tag);
+            }
+            return acc;
+          }, [])
+        ]
+      };
 
       return {
         compilation,
-        webpack: compilation.getStats().toJson(),
         webpackConfig: compilation.options,
         htmlWebpackPlugin: {
           files: assets,
-          options
+          options,
+          tags
         },
         assetsMap,
         mode: compilation.compiler.options.mode
