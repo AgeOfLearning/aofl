@@ -59,9 +59,9 @@ class BuildProject {
 
     const routes = new Routes(
       this.config.root,
-      this.config.templating.routes.pattern,
-      this.config.templating.routes.ignore,
-      this.config.templating.routes.output
+      this.config.build.templating.routes.pattern,
+      this.config.build.templating.routes.ignore,
+      this.config.build.templating.routes.output
     );
     routes.run();
 

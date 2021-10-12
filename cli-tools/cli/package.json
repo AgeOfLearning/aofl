@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cli",
-  "version": "4.0.0-alpha.24",
+  "version": "4.0.0-alpha.25",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,11 +19,11 @@
     "aofl": "./bin/aofl.js"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.24",
-    "@aofl/hmr-loader": "^4.0.0-alpha.24",
+    "@aofl/cli-lib": "^4.0.0-alpha.25",
+    "@aofl/hmr-loader": "^4.0.0-alpha.25",
     "@aofl/i18n-loader": "^2.0.0",
-    "@aofl/polyfill-service": "^4.0.0-alpha.24",
-    "@aofl/purgecss-loader": "^4.0.0-alpha.24",
+    "@aofl/polyfill-service": "^4.0.0-alpha.25",
+    "@aofl/purgecss-loader": "^4.0.0-alpha.25",
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-proposal-class-properties": "^7.14.5",

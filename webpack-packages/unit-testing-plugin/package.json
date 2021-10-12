@@ -1,6 +1,6 @@
 {
   "name": "@aofl/unit-testing-plugin",
-  "version": "4.0.0-alpha.24",
+  "version": "4.0.0-alpha.25",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.24",
+    "@aofl/cli-lib": "^4.0.0-alpha.25",
     "@wdio/cli": "^6.12.1",
     "@wdio/local-runner": "^6.12.1",
     "@wdio/mocha-framework": "^6.11.0",

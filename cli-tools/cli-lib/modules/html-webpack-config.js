@@ -6,7 +6,7 @@ const glob = require('fast-glob');
 module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
   let dlls = {};
   if (typeof dllDir !== 'undefined') {
-    const dllFiles = glob.sync('dll/*.js', {cwd: path.resolve(dllDir)});
+    const dllFiles = glob.sync('*.js', {cwd: path.resolve(dllDir)});
     dlls = dllFiles.reduce((acc, item) => {
       const name = item.split('-')[0].replace('dll/', '');
       acc[name] = {
