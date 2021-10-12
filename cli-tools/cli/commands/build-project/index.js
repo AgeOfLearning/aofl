@@ -5,7 +5,7 @@ const WebpackBar = require('webpackbar');
 const chalk = require('chalk');
 const {loadConfig} = require('../../lib/webpack-config');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const {Routes} = require('../routes');
 /**
  *
  *
@@ -56,6 +56,15 @@ class BuildProject {
    */
   init() {
     let compiler = null;
+
+    const routes = new Routes(
+      this.config.root,
+      this.config.templating.routes.pattern,
+      this.config.templating.routes.ignore,
+      this.config.templating.routes.output
+    );
+    routes.run();
+
     try {
       compiler = webpack(this.config.webpack);
     } catch (err) {

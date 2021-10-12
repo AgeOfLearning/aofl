@@ -1,5 +1,5 @@
 const path = require('path');
-const {environments, resources, htmlWebpackConfig} = require('@aofl/cli-lib');
+const {environments, resources} = require('@aofl/cli-lib');
 
 const postCssPlugins = ['autoprefixer'];
 
@@ -136,21 +136,15 @@ module.exports = (root) => {
         }
       },
       templating: {
-        template: {
-          name: 'main',
-          template: path.resolve(root, 'src', 'template', 'template.ejs'),
-          filename: path.join('template', 'template.html'),
-          ...htmlWebpackConfig(process.env.NODE_ENV),
+        template: path.resolve(root, 'src', 'template', 'template.ejs'),
+        metaTags: {
+          'viewport': 'width=device-width, initial-scale=1'
         },
         routes: {
-          mainRoutes: path.join(root, 'src', 'routes'),
-          pattern: [path.join('src', 'routes', '**', 'route.js')],
+          pattern: [path.join('src', 'routes', '**', 'route.ts')],
           ignore: ['**/__build/**/*', '**/node_modules/**/*'],
-        },
-        loaderOptions: {
-          path: path.join(root, 'src', 'modules', '__config', 'routes.js'),
-          cache: false
-        },
+          output: path.join(root, 'src', 'routes.ts')
+        }
       },
       hmr: {
         cache: true,

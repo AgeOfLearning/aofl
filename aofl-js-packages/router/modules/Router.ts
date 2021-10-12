@@ -20,9 +20,10 @@ type Route = {
   middleware?: RouteMiddleware,
   props?: any,
   options?: any,
-  resolve: () => Promise<typeof HTMLElement>,
+  resolve: () => any,
   regex?: RegExp,
-  parse?: any
+  parse?: any,
+  rotation?: string
 }
 
 type Request = {

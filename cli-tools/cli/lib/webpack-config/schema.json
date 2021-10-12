@@ -465,7 +465,34 @@
           }
         },
         "templating": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "template": {
+              "type": "object"
+            },
+            "metaTags": {
+              "type": "object",
+              "patternProperties": {
+                "^.*$": {
+                  "type": "string"
+                }
+              }
+            },
+            "routes": {
+              "type": "object",
+              "properties": {
+                "pattern": {
+                  "type": "array"
+                },
+                "ignore": {
+                  "type": "array"
+                },
+                "output": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         },
         "hmr": {
           "type": "object",

@@ -24,7 +24,6 @@
     "@aofl/i18n-loader": "^2.0.0",
     "@aofl/polyfill-service": "^4.0.0-alpha.24",
     "@aofl/purgecss-loader": "^4.0.0-alpha.24",
-    "@aofl/templating-plugin": "^4.0.0-alpha.24",
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
     "@babel/plugin-proposal-class-properties": "^7.14.5",

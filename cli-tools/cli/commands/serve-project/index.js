@@ -4,6 +4,8 @@ const WebpackDevServer = require('webpack-dev-server');
 const WebpackBar = require('webpackbar');
 const {DebugReporter} = require('@aofl/cli-lib');
 const {loadConfig} = require('../../lib/webpack-config');
+const {Routes} = require('../routes');
+
 /**
  *
  *
@@ -74,6 +76,14 @@ class ServeProject {
    *
    */
   init() {
+    const routes = new Routes(
+      this.config.root,
+      this.config.templating.routes.pattern,
+      this.config.templating.routes.ignore,
+      this.config.templating.routes.output
+    );
+    routes.run();
+
     const compiler = webpack(this.config.webpack);
     const server = new WebpackDevServer(this.options, compiler);
     server.start();

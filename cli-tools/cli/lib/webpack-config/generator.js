@@ -1,6 +1,6 @@
-const {environments} = require('@aofl/cli-lib');
+const fs = require('fs');
+const {environments, htmlWebpackConfig} = require('@aofl/cli-lib');
 const webpack = require('webpack');
-const AofLTemplatingPlugin = require('@aofl/templating-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
@@ -9,6 +9,9 @@ const {merge} = require('webpack-merge');
 const path = require('path');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const {Routes} = require('../../commands/routes');
+const {transpileModule, ModuleKind} = require('typescript');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const getOutput = (config) => {
   if (process.env.NODE_ENV === environments.TEST) {
@@ -179,12 +182,48 @@ const getFontsRules = (build, defaultBuild) => {
   ];
 };
 
-const getTemplatingPluginOptions = (config, cache) => {
-  config.loaderOptions = {
-    ...config.loaderOptions
-  };
+const getTemplates = (config, root) => {
+  const routes = new Routes(
+    root,
+    config.templating.routes.pattern,
+    config.templating.routes.ignore,
+    config.templating.routes.output
+  );
+  const routeFiles = routes.getFiles();
+  const processed = [];
+  const plugins = [];
 
-  return config;
+  for (let i = 0; i < routeFiles.length; i++) {
+    const routeFile = routeFiles[i];
+    const source = fs.readFileSync(routeFile, 'utf8');
+    const route = transpileModule(source, {
+      compilerOptions: {
+        module: ModuleKind.CommonJS
+      }
+    });
+    const tmpRoutes = eval(route.outputText); // eslint-disable-line
+
+    for (let j = 0; j < tmpRoutes.length; j++) {
+      const r = Object.assign({}, tmpRoutes[j]);
+      if (r.path.indexOf(':') > -1) continue; // skip routes with dynamic segments
+      if (processed.indexOf(r.path) > -1) continue; // skip already processed routes
+      r.filename = r.path.replace(/^\//, ''); // remove leading slash
+      r.meta = {
+        ...config.templating.metaTags,
+        ...r.meta
+      };
+
+      plugins.push(new HtmlWebpackPlugin({
+        template: config.templating.template,
+        ...htmlWebpackConfig(process.env.NODE_ENV, config.dll.source),
+        filename: path.join(r.filename, 'index.html'),
+        title: r.title,
+        meta: r.meta
+      }));
+      processed.push(r.path);
+    }
+  }
+  return plugins;
 };
 
 const getConfig = (root, configObject, defaultOptions) => {
@@ -313,9 +352,7 @@ const getConfig = (root, configObject, defaultOptions) => {
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.ids.DeterministicModuleIdsPlugin());
     if (configObject.mode === 'app') {
-      config.plugins.push(new AofLTemplatingPlugin(
-        getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
-      );
+      config.plugins.push(...getTemplates(configObject.build, root));
 
       config.plugins.push(new ImageMinimizerPlugin(configObject.build.assets.options));
 
@@ -336,9 +373,7 @@ const getConfig = (root, configObject, defaultOptions) => {
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
     if (configObject.mode === 'app') {
-      config.plugins.push(new AofLTemplatingPlugin(
-        getTemplatingPluginOptions(configObject.build.templating), configObject.build.cache)
-      );
+      config.plugins.push(...getTemplates(configObject.build, root));
     }
 
     delete config.optimization;

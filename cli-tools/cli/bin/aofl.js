@@ -22,6 +22,7 @@ aofl source
   .command('dom-scope [path]', 'validate generated dom-scope')
   .command('build', 'Builds your AofL JS project.')
   .command('test', 'Runs unit tests')
+  .command('routes', 'Generates route config file')
   .command('serve', 'Builds and servers your AofL JS project.')
   .command('upgrade <path>', 'Upgrade your AofL JS project to the next version.');
 
