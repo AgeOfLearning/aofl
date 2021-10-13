@@ -55,10 +55,10 @@ module.exports = async function(source, sourceMap, meta) {
   try {
     const sourceStr = source.toString();
 
-    // if (process.env.NODE_ENV === 'development') {
-    //   callback(null, source);
-    //   return;
-    // }
+    if (process.env.NODE_ENV === 'development') {
+      callback(null, source);
+      return;
+    }
 
     const scssREGEX = /\.scss$/;
     const addDependencies = (messages) => {

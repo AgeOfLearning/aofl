@@ -2,6 +2,7 @@ const path = require('path');
 const jsStringEscape = require('js-string-escape');
 const {environments} = require('./constants-enumerate');
 const glob = require('fast-glob');
+const {HtmlTagArray} = require('html-webpack-plugin/lib/html-tags');
 
 module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
   let dlls = {};
@@ -53,16 +54,24 @@ module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
           url: assets.publicPath + dlls[key].url,
         };
       }
+
+      const bodyTags = [];
       const tags = {
         ...assetTags,
-        headTags: [
+        headTags: HtmlTagArray.from([
           ...assetTags.headTags.reduce((acc, tag) => {
             if (tag.tagName === 'meta') {
               acc.push(tag);
+            } else {
+              bodyTags.push(tag);
             }
             return acc;
           }, [])
-        ]
+        ]),
+        bodyTags: HtmlTagArray.from([
+          ...bodyTags,
+          ...assetTags.bodyTags
+        ])
       };
 
       return {

@@ -23,7 +23,8 @@ type Route = {
   resolve: () => any,
   regex?: RegExp,
   parse?: any,
-  rotation?: string
+  rotation?: string,
+  prerender?: boolean
 }
 
 type Request = {
@@ -51,6 +52,7 @@ type NavigateOptions = {
 class Router {
   removeUpdateUrl : UnsubscribeFunction;
   removeListener = () => {};
+  publicPath = '/';
 
   private beforeMiddleware = new Middleware();
   private afterMiddleware = new Middleware();
@@ -61,14 +63,18 @@ class Router {
     routes: []
   };
 
-  constructor() {
+  constructor(publicPath: string = '/') {
     this.removeUpdateUrl = this.after(updateUrlMiddleware);
     this.removeListener = this.listen();
+    this.publicPath = publicPath;
   }
   /**
    * Loads rotes config
    */
-  init(config: Array<any>) {
+  init(config: Array<any>, publicPath: string) {
+    if (typeof publicPath !== 'undefined') {
+      this.publicPath = publicPath;
+    }
     this.config = {
       routes: this.addRegexRoutes(config)
     };
@@ -162,8 +168,10 @@ class Router {
    */
   private addRegexRoutes(routes: Array<any> = []) {
     for (let i = 0; i < routes.length; i++) {
-      const {regex, parse} = PathUtils.getRegex(routes[i].path);
+      const path = (this.publicPath + routes[i].path).replace(/\/\//g, '/');
+      const {regex, parse} = PathUtils.getRegex(path);
       routes[i] = Object.assign({}, routes[i], {
+        path,
         regex,
         parse
       });
@@ -192,6 +200,10 @@ class Router {
    */
   async navigate(path: string, options: NavigateOptions = {poppedState: false, replaceState: false}) {
     const _options = Object.assign({poppedState: false, replaceState: false}, options);
+
+    if (path.indexOf(this.publicPath) !== 0) {
+      path = (this.publicPath + path).replace(/\/\//g, '/');
+    }
 
     const request = {
       to: path,

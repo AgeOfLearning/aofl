@@ -45,8 +45,13 @@ class ServeProject {
 
     this.config = loadConfig(this.configPath);
     this.options = this.config.webpack.devServer;
-    delete this.config.webpack.devServer;
+    if (this.options.historyApiFallback === true) {
+      this.options.historyApiFallback = {
+        index: this.config.build.publicPath
+      };
+    }
 
+    delete this.config.webpack.devServer;
     if (this.hot) {
       this.options.hot = true;
     }
@@ -60,8 +65,15 @@ class ServeProject {
         test: /\.(js|ts)$/i,
         enforce: 'pre',
         include: path.join(this.config.root, 'src'),
-        exclude: this.config.build.templating.loaderOptions.path,
-        loader: '@aofl/hmr-loader'
+        exclude: this.config.build.templating.routes.output,
+        use: [
+          {
+            loader: '@aofl/hmr-loader',
+            options: {
+              ...this.config.build.hmr
+            }
+          }
+        ]
       });
     }
 

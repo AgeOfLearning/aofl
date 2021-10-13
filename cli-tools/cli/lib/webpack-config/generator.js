@@ -10,7 +10,6 @@ const path = require('path');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const {Routes} = require('../../commands/routes');
-const {transpileModule, ModuleKind} = require('typescript');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const getOutput = (config) => {
@@ -189,38 +188,49 @@ const getTemplates = (config, root) => {
     config.templating.routes.ignore,
     config.templating.routes.output
   );
+
   const routeFiles = routes.getFiles();
   const processed = [];
   const plugins = [];
 
+  const pathRegex = /path:\s*['"](.*)['"]/ig;
+  const titleRegex = /title:\s*['"](.*)['"]/ig;
+
   for (let i = 0; i < routeFiles.length; i++) {
     const routeFile = routeFiles[i];
     const source = fs.readFileSync(routeFile, 'utf8');
-    const route = transpileModule(source, {
-      compilerOptions: {
-        module: ModuleKind.CommonJS
-      }
-    });
-    const tmpRoutes = eval(route.outputText); // eslint-disable-line
 
-    for (let j = 0; j < tmpRoutes.length; j++) {
-      const r = Object.assign({}, tmpRoutes[j]);
-      if (r.path.indexOf(':') > -1) continue; // skip routes with dynamic segments
-      if (processed.indexOf(r.path) > -1) continue; // skip already processed routes
-      r.filename = r.path.replace(/^\//, ''); // remove leading slash
-      r.meta = {
+    const paths = [];
+    const titles = [];
+    let match = null;
+
+    while ((match = pathRegex.exec(source)) !== null) {
+      paths.push(match[1]);
+    }
+    while ((match = titleRegex.exec(source)) !== null) {
+      titles.push(match[1]);
+    }
+
+    for (let j = 0; j < paths.length; j++) {
+      const p = paths[j];
+      if (p.indexOf(':') > -1) continue; // skip routes with dynamic segments
+      if (processed.indexOf(p) > -1) continue; // skip already processed routes
+      const filename = path.join(p.replace(/^\//, ''), 'index.html'); // remove leading slash
+      const title = titles[j] || '';
+      const meta = {
         ...config.templating.metaTags,
-        ...r.meta
+        ...(config.templating.routes.metaTags[p] || {})
       };
 
       plugins.push(new HtmlWebpackPlugin({
         template: config.templating.template,
         ...htmlWebpackConfig(process.env.NODE_ENV, config.dll.source),
-        filename: path.join(r.filename, 'index.html'),
-        title: r.title,
-        meta: r.meta
+        filename,
+        title,
+        meta,
+        inject: false,
       }));
-      processed.push(r.path);
+      processed.push(p);
     }
   }
   return plugins;

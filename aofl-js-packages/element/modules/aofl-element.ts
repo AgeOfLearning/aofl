@@ -24,6 +24,9 @@ class AoflElement extends LitElement {
     super();
   }
 
+  hmrConnected() {}
+  hmrDisconnected() {}
+
   _mapStateProperties = new Map<string, any>();
   _mapStateUnsubscribe = new Map<string, any>();
 
@@ -44,12 +47,15 @@ class AoflElement extends LitElement {
       const unsubscribe = value.store.subscribe(updateValue);
       this._mapStateUnsubscribe.set(key, unsubscribe);
     });
+
+    this.hmrConnected();
   }
 
   disconnectedCallback() {
     this._mapStateProperties.forEach((unsubscribe) => {
       unsubscribe();
     });
+    this.hmrDisconnected();
     super.disconnectedCallback();
   }
 }

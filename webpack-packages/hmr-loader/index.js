@@ -1,3 +1,4 @@
+const path = require('path');
 const {parse, init} = require('es-module-lexer');
 const {getOptions} = require('loader-utils');
 const {validate} = require('schema-utils');
@@ -69,96 +70,33 @@ module.exports = async function(source) {
 
     const ctors = `[${patch.map((item) => item.className).join(', ')}]`;
 
-    const tmpSource = `
-        ${importAdoptStyles? `import {adoptStyles} from 'lit';`: ''};
-        ${source}
-        const walk = function walk(root, call) {
-          call(root);
-          if (root.shadowRoot) {
-            walk(root.shadowRoot, call);
-          }
+    const hmrRuntimePath = path.relative(path.dirname(this.resourcePath), path.join(__dirname, 'src', 'wcHmrRuntime.js'));
 
-          Array.from(root.children).forEach((child) => {
-            walk(child, call);
-          });
+    if (patch.length === 0) {
+      callback(null, source);
+      return;
+    }
+    const tmpSource = `
+        import {register as hmrRegister} from '${hmrRuntimePath}';
+        ${source}
+
+        const ctors = ${ctors};
+        for (let i = 0; i < ctors.length; i++) {
+          const Ctor = ctors[i];
+          hmrRegister(import.meta.url, Ctor.name, Ctor);
         }
 
-        const hmr = function hmr() {
-          if (!module.hot) {
-            return;
+        module.hot.accept([${importPaths.join(', ')}], function (deps) {
+          for (let i = 0; i < ctors.length; i++) {
+            const Ctor = ctors[i];
+            hmrRegister(import.meta.url, Ctor.name, Ctor);
           }
+        });
 
+        module.hot.accept((err, {moduleId, module}) => {
+          console.log('self error', err);
+        });
 
-          const ctors = ${ctors};
-          const supportsAdoptingStyleSheets = (window.ShadowRoot) &&
-            (window.ShadyCSS === undefined || window.ShadyCSS.nativeShadow) &&
-            ('adoptedStyleSheets' in Document.prototype) &&
-            ('replace' in CSSStyleSheet.prototype);
-
-          const patch = () => {
-            for (let i = 0; i < ctors.length; i++) {
-              const Ctor = ctors[i];
-
-              // static callback
-              Ctor.hotReplacedCallback = function hotReplacedCallback() {
-                this.finalize();
-              };
-              // instance callback
-              Ctor.prototype.hotReplacedCallback = function hotReplacedCallback() {
-                if (!supportsAdoptingStyleSheets) {
-                  const nodes = Array.from(this.renderRoot.children);
-                  for (const node of nodes) {
-                    if (node.tagName.toLowerCase() === 'style') {
-                      node.remove();
-                    }
-                  }
-                }
-                this.constructor.finalizeStyles();
-                if (window.ShadowRoot && this.renderRoot instanceof window.ShadowRoot) {
-                  adoptStyles(
-                    this.renderRoot,
-                    this.constructor.styles
-                  );
-                }
-                this.requestUpdate();
-              };
-
-              walk(document.body, (node) => {
-                if (node instanceof Ctor) {
-                  const descriptorsS = Object.getOwnPropertyDescriptors(Ctor);
-                  const descriptorsI = Object.getOwnPropertyDescriptors(Ctor.prototype);
-
-                  for (const name in descriptorsS) {
-                    if (name !== 'length' && name !== 'name' && name !== 'prototype') {
-                      Object.defineProperty(node.constructor, name, descriptorsS[name]);
-                    }
-                  }
-
-                  for (const name in descriptorsI) {
-                    Object.defineProperty(node, name, descriptorsI[name]);
-                  }
-
-                  if (node.hotReplacedCallback) {
-                    node.constructor.hotReplacedCallback();
-                    node.hotReplacedCallback();
-                  }
-                }
-              });
-            }
-          };
-
-          if (ctors.length > 0) {
-            patch();
-            module.hot.accept([${importPaths.join(', ')}], function (deps) {
-              patch();
-            });
-            module.hot.accept((err, {moduleId, module}) => {
-              console.log('self error', err);
-            });
-          }
-        };
-
-        hmr();
     `;
 
     source = tmpSource;
