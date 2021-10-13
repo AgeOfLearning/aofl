@@ -1,6 +1,6 @@
 {
   "name": "@aofl/router",
-  "version": "4.0.0-alpha.27",
+  "version": "4.0.0-alpha.28",
   "description": "AOFL Router is a simple client side router",
   "type": "module",
   "main": "lib/index.js",
@@ -38,7 +38,7 @@
     "url": "git@github.com:AgeOfLearning/aofl.git"
   },
   "devDependencies": {
-    "@aofl/middleware": "^4.0.0-alpha.27",
+    "@aofl/middleware": "^4.0.0-alpha.28",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
