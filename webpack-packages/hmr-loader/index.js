@@ -15,6 +15,9 @@ const schema = {
     },
     'baseClasses': {
       type: 'array'
+    },
+    'patch': {
+      type: 'object'
     }
   }
 };
@@ -24,7 +27,8 @@ module.exports = async function(source) {
   const options = Object.assign({
     cache: true,
     decorators: [],
-    baseClasses: []
+    baseClasses: [],
+    patch: {}
   }, getOptions(this));
 
   validate(schema, options, {name: 'Aofl HMR Loader'});
@@ -37,6 +41,7 @@ module.exports = async function(source) {
     callback(null, source);
     return;
   }
+  const additionalPatch = options.patch[this.resourcePath] || '';
   const classInfo = parseClass(source, this.resourcePath);
   const patch = [];
 
@@ -51,7 +56,6 @@ module.exports = async function(source) {
 
   await init;
   const [imports] = parse(source);
-  let importAdoptStyles = true;
 
   if (imports.length > 0) {
     const importPaths = [];
@@ -60,11 +64,6 @@ module.exports = async function(source) {
       const importPath = '\'' + res.n + '\'';
       if (importPaths.indexOf(importPath)) {
         importPaths.push(importPath);
-      }
-
-      const importStatement = source.substring(res.ss, res.se);
-      if (importStatement.indexOf('adoptStyles') > -1) {
-        importAdoptStyles = false;
       }
     }
 
@@ -79,6 +78,8 @@ module.exports = async function(source) {
     const tmpSource = `
         import {register as hmrRegister} from '${hmrRuntimePath}';
         ${source}
+
+        ${additionalPatch}
 
         const ctors = ${ctors};
         for (let i = 0; i < ctors.length; i++) {

@@ -184,9 +184,9 @@ const getFontsRules = (build, defaultBuild) => {
 const getTemplates = (config, root) => {
   const routes = new Routes(
     root,
-    config.templating.routes.pattern,
-    config.templating.routes.ignore,
-    config.templating.routes.output
+    config.build.templating.routes.pattern,
+    config.build.templating.routes.ignore,
+    config.build.templating.routes.output
   );
 
   const routeFiles = routes.getFiles();
@@ -217,14 +217,26 @@ const getTemplates = (config, root) => {
       if (processed.indexOf(p) > -1) continue; // skip already processed routes
       const filename = path.join(p.replace(/^\//, ''), 'index.html'); // remove leading slash
       const title = titles[j] || '';
-      const meta = {
-        ...config.templating.metaTags,
-        ...(config.templating.routes.metaTags[p] || {})
+      const routeOptions = config.build.templating.routes.options[p];
+      let meta = config.build.templating.options.metaTags || {};
+      let locale = config.build.templating.options.locale;
+
+      if (routeOptions) {
+        meta = {
+          ...meta,
+          ...(routeOptions.metaTags || {})
+        };
+
+        locale = routeOptions.locale || locale;
+      }
+
+      const options = {
+        locale
       };
 
       plugins.push(new HtmlWebpackPlugin({
-        template: config.templating.template,
-        ...htmlWebpackConfig(process.env.NODE_ENV, config.dll.source),
+        template: config.build.templating.template,
+        ...htmlWebpackConfig(process.env.NODE_ENV, options, config),
         filename,
         title,
         meta,
@@ -362,7 +374,7 @@ const getConfig = (root, configObject, defaultOptions) => {
   if (process.env.NODE_ENV === environments.PRODUCTION) {
     config.plugins.push(new webpack.ids.DeterministicModuleIdsPlugin());
     if (configObject.mode === 'app') {
-      config.plugins.push(...getTemplates(configObject.build, root));
+      config.plugins.push(...getTemplates(configObject, root));
 
       config.plugins.push(new ImageMinimizerPlugin(configObject.build.assets.options));
 
@@ -383,7 +395,7 @@ const getConfig = (root, configObject, defaultOptions) => {
     config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
     if (configObject.mode === 'app') {
-      config.plugins.push(...getTemplates(configObject.build, root));
+      config.plugins.push(...getTemplates(configObject, root));
     }
 
     delete config.optimization;

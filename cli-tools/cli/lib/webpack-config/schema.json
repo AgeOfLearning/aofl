@@ -470,10 +470,18 @@
             "template": {
               "type": "string"
             },
-            "metaTags": {
+            "options": {
               "type": "object",
-              "patternProperties": {
-                "^.*$": {
+              "properties": {
+                "metaTags": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^.*$": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "locale": {
                   "type": "string"
                 }
               }
@@ -506,6 +514,9 @@
             },
             "baseClasses": {
               "type": "array"
+            },
+            "patch": {
+              "type": "object"
             }
           }
         },

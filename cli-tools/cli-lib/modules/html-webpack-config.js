@@ -4,14 +4,15 @@ const {environments} = require('./constants-enumerate');
 const glob = require('fast-glob');
 const {HtmlTagArray} = require('html-webpack-plugin/lib/html-tags');
 
-module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
+module.exports = (environment = environments.DEVELOPMENT, extraOptions = {}, config = {}) => {
   let dlls = {};
-  if (typeof dllDir !== 'undefined') {
-    const dllFiles = glob.sync('*.js', {cwd: path.resolve(dllDir)});
+  if (config !== void 0 && config.build !== void 0
+    && config.build.dll !== void 0 && config.build.dll.source !== void 0) {
+    const dllFiles = glob.sync('*.js', {cwd: path.resolve(config.build.dll.source)});
     dlls = dllFiles.reduce((acc, item) => {
-      const name = item.split('-')[0].replace('dll/', '');
+      const name = item.split(/[._-]/)[0].replace(/^\//, '');
       acc[name] = {
-        url: item,
+        url: path.join('dll', item),
         source: '',
         sourceStr: ''
       };
@@ -55,24 +56,16 @@ module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
         };
       }
 
-      const bodyTags = [];
-      const tags = {
-        ...assetTags,
-        headTags: HtmlTagArray.from([
-          ...assetTags.headTags.reduce((acc, tag) => {
-            if (tag.tagName === 'meta') {
-              acc.push(tag);
-            } else {
-              bodyTags.push(tag);
-            }
-            return acc;
-          }, [])
-        ]),
-        bodyTags: HtmlTagArray.from([
-          ...bodyTags,
-          ...assetTags.bodyTags
-        ])
-      };
+      options.tags = HtmlTagArray.from([
+        ...assetTags.headTags.reduce((acc, tag) => {
+          if (tag.tagName === 'meta') {
+            acc.push(tag);
+          }
+          return acc;
+        }, [])
+      ]);
+
+      options.locale = extraOptions.locale;
 
       return {
         compilation,
@@ -80,7 +73,7 @@ module.exports = (environment = environments.DEVELOPMENT, dllDir) => {
         htmlWebpackPlugin: {
           files: assets,
           options,
-          tags
+          tags: assetTags
         },
         assetsMap,
         mode: compilation.compiler.options.mode

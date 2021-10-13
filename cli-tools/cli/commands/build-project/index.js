@@ -114,11 +114,6 @@ class BuildProject {
           compiler.close((err2) => {
             if (err || err2) {
               errorHandler(err || err2, stats);
-            } else {
-              process.stdout.write(stats.toString({
-                // Add console colors
-                colors: true,
-              }) + '\n');
             }
           });
         } else if (err) {

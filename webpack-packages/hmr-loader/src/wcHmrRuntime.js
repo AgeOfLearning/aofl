@@ -7,12 +7,10 @@ const supportsAdoptingStyleSheets = (window.ShadowRoot) &&
   ('replace' in CSSStyleSheet.prototype);
 // static callback
 LitElement.hotReplacedCallback = function hotReplacedCallback() {
-  console.log('constrctor.hotreplacedcalledback');
   this.finalize();
 };
 // instance callback
 LitElement.prototype.hotReplacedCallback = function hotReplacedCallback() {
-  console.log('prototype.hotreplacedcalledback');
   if (!supportsAdoptingStyleSheets) {
     const nodes = Array.from(this.renderRoot.children);
     for (const node of nodes) {
@@ -37,9 +35,6 @@ LitElement.prototype.hotReplacedCallback = function hotReplacedCallback() {
 // override global define to allow double registrations
 const originalDefine = window.customElements.define;
 window.customElements.define = (name, clazz, ...rest) => {
-  console.log('define', name, ...rest);
-  console.log(clazz);
-  console.log(clazz.prototype.connectedCallback);
   if (!window.customElements.get(name)) {
     originalDefine.call(window.customElements, name, clazz, ...rest);
   }
@@ -55,7 +50,6 @@ function trackConnectedElements(hmrClass) {
 
   hmrClass.prototype.hmrConnected = function hmrConnected(...args) {
     connectedElements.add(this);
-    connectedElements.forEach(console.log);
   };
 
   hmrClass.prototype.hmrDisconnected = function hmrDisconnected(...args) {
@@ -132,8 +126,6 @@ export class WebComponentHmr extends HTMLElement {
     replacePrototypesWithProxies(this);
   }
 }
-
-window.WebComponentHmr = WebComponentHmr;
 
 /**
  * Injects the WebComponentHmr class into the inheritance chain

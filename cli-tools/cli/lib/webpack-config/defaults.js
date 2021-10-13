@@ -137,8 +137,10 @@ module.exports = (root) => {
       },
       templating: {
         template: path.resolve(root, 'src', 'template', 'template.ejs'),
-        metaTags: {
-          'viewport': 'width=device-width, initial-scale=1'
+        options: {
+          metaTags: {
+            'viewport': 'width=device-width, initial-scale=1'
+          },
         },
         routes: {
           pattern: [path.join('src', 'routes', '**', 'route.ts')],
@@ -149,7 +151,8 @@ module.exports = (root) => {
       hmr: {
         cache: true,
         decorators: ['customElement'],
-        baseClasses: ['AoflElement', 'LitElement']
+        baseClasses: ['AoflElement', 'LitElement'],
+        patch: {}
       },
       serviceworker: {
         swSrc: path.join(resources.WEBPACK_CONFIG, 'sw.js'),
