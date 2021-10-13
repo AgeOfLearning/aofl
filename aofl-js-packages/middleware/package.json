@@ -1,6 +1,6 @@
 {
   "name": "@aofl/middleware",
-  "version": "4.0.0-alpha.26",
+  "version": "4.0.0-alpha.27",
   "description": "Simple base middleware class",
   "type": "module",
   "main": "lib/index.js",
