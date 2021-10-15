@@ -1,10 +1,10 @@
-const fs = require('fs');
+// const fs = require('fs');
 const {environments, htmlWebpackConfig} = require('@aofl/cli-lib');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
+// const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
 const {merge} = require('webpack-merge');
 const path = require('path');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
@@ -193,42 +193,21 @@ const getTemplates = (config, root) => {
   const processed = [];
   const plugins = [];
 
-  const pathRegex = /path:\s*['"](.*)['"]/ig;
-  const titleRegex = /title:\s*['"](.*)['"]/ig;
-
   for (let i = 0; i < routeFiles.length; i++) {
-    const routeFile = routeFiles[i];
-    const source = fs.readFileSync(routeFile, 'utf8');
+    const routes = require(routeFiles[i]);
 
-    const paths = [];
-    const titles = [];
-    let match = null;
+    for (let j = 0; j < routes.length; j++) {
+      const route = routes[j];
 
-    while ((match = pathRegex.exec(source)) !== null) {
-      paths.push(match[1]);
-    }
-    while ((match = titleRegex.exec(source)) !== null) {
-      titles.push(match[1]);
-    }
-
-    for (let j = 0; j < paths.length; j++) {
-      const p = paths[j];
-      if (p.indexOf(':') > -1) continue; // skip routes with dynamic segments
-      if (processed.indexOf(p) > -1) continue; // skip already processed routes
-      const filename = path.join(p.replace(/^\//, ''), 'index.html'); // remove leading slash
-      const title = titles[j] || '';
-      const routeOptions = config.build.templating.routes.options[p];
-      let meta = config.build.templating.options.metaTags || {};
-      let locale = config.build.templating.options.locale;
-
-      if (routeOptions) {
-        meta = {
-          ...meta,
-          ...(routeOptions.metaTags || {})
-        };
-
-        locale = routeOptions.locale || locale;
-      }
+      if (route.path.indexOf(':') > -1) continue; // skip routes with dynamic segments
+      if (processed.indexOf(route.path) > -1) continue; // skip already processed routes
+      const filename = path.join(route.path.replace(/^\//, ''), 'index.html'); // remove leading slash
+      const title = route.title || '';
+      const meta = {
+        ...(config.build.templating.options.metaTags || {}),
+        ...(route.metaTags || {})
+      };
+      const locale = route.locale || config.build.templating.options.locale || '';
 
       const options = {
         locale
@@ -242,7 +221,7 @@ const getTemplates = (config, root) => {
         meta,
         inject: false,
       }));
-      processed.push(p);
+      processed.push(route.path);
     }
   }
   return plugins;
@@ -384,15 +363,15 @@ const getConfig = (root, configObject, defaultOptions) => {
         }));
       }
 
-      if (configObject.build.pwaManifest) {
-        config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
-      }
+      // if (configObject.build.pwaManifest) {
+      //   config.plugins.push(new WebpackPwaManifest(configObject.build.pwaManifest));
+      // }
 
       if (configObject.build.serviceworker) {
         config.plugins.push(new InjectManifest(configObject.build.serviceworker));
       }
     }
-    config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
+    // config.optimization.minimizer = [new TerserPlugin(configObject.build.terser)];
   } else if (process.env.NODE_ENV === environments.DEVELOPMENT) {
     if (configObject.mode === 'app') {
       config.plugins.push(...getTemplates(configObject, root));

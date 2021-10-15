@@ -48,7 +48,7 @@ export class Store {
     }
 
     this._sdos[sdo.constructor.namespace] = sdo;
-    this.commit(sdo.constructor.namespace, state);
+    this.commit(sdo.constructor.namespace, {...state});
   }
 
   commit(namespace: string, subState: State) {
