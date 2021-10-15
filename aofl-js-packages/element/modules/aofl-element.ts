@@ -46,6 +46,9 @@ class AoflElement extends LitElement {
 
         updateValue();
         const unsubscribe = value.store.subscribe(updateValue);
+        if (typeof (this as any)._mapStateUnsubscribe === 'undefined') {
+          (this as any)._mapStateUnsubscribe = new Map<string, any>();
+        }
         (this as any)._mapStateUnsubscribe.set(key, unsubscribe);
       });
     }
