@@ -51,6 +51,7 @@ export class Store {
     const state = {
       ...(sdo.constructor as typeof Sdo).initialState,
       ...sdo.initialState,
+      ...(this._sdos[sdo.namespace] || {})
     };
 
     this._sdos[sdo.namespace] = sdo;
