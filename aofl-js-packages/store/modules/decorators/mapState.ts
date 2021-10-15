@@ -9,9 +9,16 @@ export type MapStateOptions = {
 };
 
 const legacyMapState = (options: MapStateOptions, proto: AoflElement, name: string) => {
-  proto._mapStateProperties.set(name, {
+  const map = (proto as any)._mapStateProperties || new Map();
+  map.set(name, {
     store: options.store,
     path: options.path
+  });
+  Object.defineProperty(proto, '_mapStateProperties', {
+    enumerable: false,
+    configurable: false,
+    writable: true,
+    value: map
   });
 }
 

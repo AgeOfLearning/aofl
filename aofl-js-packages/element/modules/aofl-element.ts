@@ -27,34 +27,39 @@ class AoflElement extends LitElement {
   hmrConnected() {}
   hmrDisconnected() {}
 
-  _mapStateProperties = new Map<string, any>();
-  _mapStateUnsubscribe = new Map<string, any>();
+  // _mapStateProperties = new Map<string, any>();
+  // _mapStateUnsubscribe = new Map<string, any>();
 
   connectedCallback() {
     super.connectedCallback();
 
-    this._mapStateProperties.forEach((value, key) => {
-      const updateValue = () => {
-        const state = value.store.state;
-        if (has(state, value.path)) {
-          (this as any)[key] = get(state, value.path);
-        } else {
-          (this as any)[key] = get(value.store, value.path);
-        }
-      };
+    if (typeof (this as any)._mapStateProperties !== 'undefined') {
+      (this as any)._mapStateProperties.forEach((value: any, key: string) => {
+        const updateValue = () => {
+          const state = value.store.state;
+          if (has(state, value.path)) {
+            (this as any)[key] = get(state, value.path);
+          } else {
+            (this as any)[key] = get(value.store, value.path);
+          }
+        };
 
-      updateValue();
-      const unsubscribe = value.store.subscribe(updateValue);
-      this._mapStateUnsubscribe.set(key, unsubscribe);
-    });
+        updateValue();
+        const unsubscribe = value.store.subscribe(updateValue);
+        (this as any)._mapStateUnsubscribe.set(key, unsubscribe);
+      });
+    }
 
     this.hmrConnected();
   }
 
   disconnectedCallback() {
-    this._mapStateProperties.forEach((unsubscribe) => {
-      unsubscribe();
-    });
+    if (typeof (this as any)._mapStateUnsubscribe !== 'undefined') {
+      (this as any)._mapStateUnsubscribe.forEach((unsubscribe: any) => {
+        unsubscribe();
+      });
+      (this as any)._mapStateUnsubscribe.clear();
+    }
     this.hmrDisconnected();
     super.disconnectedCallback();
   }
