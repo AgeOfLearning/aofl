@@ -33,10 +33,12 @@ const standardMapState = (options: MapStateOptions, descriptor: ClassElement) =>
         init();
       }
       if (typeof key === 'string') {
-        (this as any)._mapStateProperties.set(key, {
+        const map = (this as any)._mapStateProperties || new Map();
+        map.set(key, {
          store: options.store,
          path: options.path
        });
+       (this as any)._mapStateProperties = map;
       }
     }
   }
