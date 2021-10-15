@@ -44,7 +44,7 @@ export class Store {
   }
 
   addSdo(sdo: Sdo<any>) {
-    if (typeof this._sdos[sdo.namespace] !== 'undefined' && (module as any)?.hot === void 0) {
+    if (typeof this._sdos[sdo.namespace] !== 'undefined' && !aofljsConfig?.hot) {
       throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.namespace}`);
     }
 
