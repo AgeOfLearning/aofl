@@ -143,7 +143,7 @@ class Router {
     try {
       const matchedRoute = PathUtils.matchBestPath(request.to, this.config.routes);
       if (matchedRoute !== null) {
-        matchedRoute.props = matchedRoute.props || {};
+        matchedRoute.props = matchedRoute.parse(request.to);
       }
       this._route = matchedRoute;
 
