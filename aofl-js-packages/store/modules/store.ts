@@ -11,7 +11,7 @@ type Sdos = {
 }
 
 export class Store {
-  private mode = process.env.NODE_ENV;
+  private mode = aofljsConfig.mode || 'production';
   private _tick : ReturnType<typeof setTimeout>|null= null;
   private _microtask = () => {
     for (const mw of this._middleware) {
@@ -51,7 +51,7 @@ export class Store {
     const state = {
       ...(sdo.constructor as typeof Sdo).initialState,
       ...sdo.initialState,
-      ...(this._sdos[sdo.namespace] || {})
+      ...(this._sdos[sdo.namespace]?.state || {})
     };
 
     this._sdos[sdo.namespace] = sdo;
@@ -71,17 +71,18 @@ export class Store {
     if (this.mode === 'development') {
       this._state = deepFreeze(this._state);
     }
+
     this.dispatch();
   }
 
   flushState() {
     const state : State = {};
     for (const key in this._sdos) {
-      if (!Object.prototype.hasOwnProperty.call(this._sdos, key)) {
-        continue;
-      }
+      if (!Object.prototype.hasOwnProperty.call(this._sdos, key)) continue;
       const sdo = this._sdos[key];
-      state[sdo.constructor.namespace] = sdo.state;
+      state[sdo.constructor.namespace] = {
+        ...sdo.constructor.initialState
+      };
     }
 
     this.replaceState(state);
