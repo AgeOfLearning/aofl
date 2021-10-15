@@ -1,6 +1,6 @@
 {
   "name": "@aofl/uuid",
-  "version": "4.0.0-alpha.28",
+  "version": "4.0.0-alpha.29",
   "description": "An ultra-light (192b gzip) uuid like random value generator",
   "keywords": [
     "aofljs",

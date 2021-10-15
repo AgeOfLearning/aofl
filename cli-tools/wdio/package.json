@@ -1,6 +1,6 @@
 {
   "name": "@aofl/wdio",
-  "version": "4.0.0-alpha.28",
+  "version": "4.0.0-alpha.29",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "aoflwdio": "./bin/aoflwdio.js"
   },
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.28",
+    "@aofl/cli-lib": "^4.0.0-alpha.29",
     "@wdio/cli": "^7.7.3",
     "@wdio/crossbrowsertesting-service": "^7.0.2",
     "@wdio/local-runner": "^7.7.3",
