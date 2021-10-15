@@ -1,6 +1,6 @@
 {
   "name": "@aofl/html-webpack-purify-internal-css-plugin",
-  "version": "4.0.0-alpha.36",
+  "version": "4.0.0-alpha.37",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/AgeOfLearning/aofl#readme",
   "dependencies": {
-    "@aofl/cli-lib": "^4.0.0-alpha.36",
+    "@aofl/cli-lib": "^4.0.0-alpha.37",
     "html-webpack-plugin": "^5.3.2",
     "parse5": "^6.0.1",
     "purgecss": "^4.0.3"
