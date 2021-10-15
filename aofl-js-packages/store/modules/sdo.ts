@@ -27,7 +27,7 @@ export abstract class Sdo<S> {
       throw new Error('Sdo.namespace is not defined');
     }
     this.namespace = (this.constructor as typeof Sdo).namespace;
-    this.initialState = {...initialState};
+    this.initialState = initialState;
     this.store = store;
 
     this.decorators = ({} as Decorators<S>);

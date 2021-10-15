@@ -43,7 +43,7 @@ export class Store {
   }
 
   addSdo(sdo: any, state: State = {}) {
-    if (typeof this._sdos[sdo.constructor.namespace] !== 'undefined' && (module as any).hot === void 0) {
+    if (typeof this._sdos[sdo.constructor.namespace] !== 'undefined' && (module as any)?.hot === void 0) {
       throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.constructor.namespace}`);
     }
 
