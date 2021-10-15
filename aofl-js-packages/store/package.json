@@ -1,6 +1,6 @@
 {
   "name": "@aofl/store",
-  "version": "4.0.0-alpha.38",
+  "version": "4.0.0-alpha.39",
   "description": "Centralized state management for aofljs applications",
   "type": "module",
   "main": "lib/index.js",
@@ -45,9 +45,9 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/element": "^4.0.0-alpha.38",
-    "@aofl/middleware": "^4.0.0-alpha.38",
-    "@aofl/object-utils": "^4.0.0-alpha.38",
+    "@aofl/element": "^4.0.0-alpha.39",
+    "@aofl/middleware": "^4.0.0-alpha.39",
+    "@aofl/object-utils": "^4.0.0-alpha.39",
     "cross-env": "^7.0.3"
   },
   "peerDependencies": {
