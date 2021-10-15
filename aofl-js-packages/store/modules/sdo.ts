@@ -32,6 +32,7 @@ export abstract class Sdo<S> {
 
     this.decorators = ({} as Decorators<S>);
     this.createStateDecorators();
+    console.log('sdo#initialState', initialState || (this.constructor as typeof Sdo).initialState);
     store.addSdo(this, initialState || (this.constructor as typeof Sdo).initialState);
   }
 

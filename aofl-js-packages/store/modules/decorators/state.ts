@@ -8,6 +8,7 @@ const legacyState = (proto: Sdo<any>, name: string) => {
     },
     set(value) {
       if (typeof this.constructor.initialState[name] === 'undefined') {
+        console.log('state', name, value, this.constructor.initialState);
         this.constructor.initialState[name] = value;
       } else {
         this.commit({
