@@ -22,7 +22,7 @@ export abstract class Sdo<S> {
   store: Store;
   decorators : Decorators<S>;
 
-  constructor(store: Store, initialState?: State) {
+  constructor(store: Store, initialState: State = {}) {
     if (typeof (this.constructor as typeof Sdo).namespace === 'undefined') {
       throw new Error('Sdo.namespace is not defined');
     }
@@ -32,8 +32,6 @@ export abstract class Sdo<S> {
 
     this.decorators = ({} as Decorators<S>);
     this.createStateDecorators();
-    console.log('sdo#initialState', initialState || (this.constructor as typeof Sdo).initialState);
-    store.addSdo(this, initialState || (this.constructor as typeof Sdo).initialState);
   }
 
   get state() : Decorators<S> {

@@ -1,5 +1,6 @@
 import {Middleware} from '@aofl/middleware';
 import {deepFreeze} from '@aofl/object-utils';
+import {Sdo} from './sdo.js';
 
 export type SubscribeFn = () => void;
 export type State = {
@@ -42,13 +43,18 @@ export class Store {
     return this._state;
   }
 
-  addSdo(sdo: any, state: State = {}) {
-    if (typeof this._sdos[sdo.constructor.namespace] !== 'undefined' && (module as any)?.hot === void 0) {
-      throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.constructor.namespace}`);
+  addSdo(sdo: Sdo<any>) {
+    if (typeof this._sdos[sdo.namespace] !== 'undefined' && (module as any)?.hot === void 0) {
+      throw new Error(`${this.constructor.name}: Cannot redefine existing namespace ${sdo.namespace}`);
     }
 
-    this._sdos[sdo.constructor.namespace] = sdo;
-    this.commit(sdo.constructor.namespace, {...state});
+    const state = {
+      ...(sdo.constructor as typeof Sdo).initialState,
+      ...sdo.initialState,
+    };
+
+    this._sdos[sdo.namespace] = sdo;
+    this.commit(sdo.namespace, {...state});
   }
 
   commit(namespace: string, subState: State) {
