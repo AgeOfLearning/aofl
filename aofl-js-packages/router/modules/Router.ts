@@ -3,7 +3,7 @@ import {Middleware, MiddlewareFunction, UnsubscribeFunction} from '@aofl/middlew
 import {updateUrlMiddleware} from './update-url-middleware.js';
 
 type Meta = {
-  [key: string]: string;
+  [key: string]: any;
 }
 
 type RouteMiddleware = {
@@ -16,6 +16,7 @@ type Route = {
   path: string;
   title: string,
   meta?: Meta,
+  locale?: string,
   tagName: string,
   middleware?: RouteMiddleware,
   props?: any,
@@ -23,8 +24,7 @@ type Route = {
   resolve: () => any,
   regex?: RegExp,
   parse?: any,
-  rotation?: string,
-  prerender?: boolean
+  rotation?: string
 }
 
 type Request = {
