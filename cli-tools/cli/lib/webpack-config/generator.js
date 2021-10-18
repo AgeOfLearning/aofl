@@ -143,6 +143,14 @@ const getTsRules = (build, defaultBuild) => {
       enforce: build.js.enforce,
       use: [
         {
+          loader: 'babel-loader',
+          options: {
+            cacheCompression: build.js.babel.cacheCompression,
+            cacheDirectory: build.cache,
+            ...build.js.babel
+          }
+        },
+        {
           loader: 'ts-loader',
           options: {
             transpileOnly: true,
