@@ -6,14 +6,14 @@ module.exports = (rootPath, config = {
   schema: 'http',
   host: 'localhost',
   port: 3000,
-  externalServer: false,
+  external: false,
 }) => {
   let url = `${config.schema}://${config.host}:${config.port}`;
   if (config.port === 80) {
     url = `${config.schema}://${config.host}`;
   }
 
-  if (config.externalServer) {
+  if (config.external) {
     return Promise.resolve({
       url,
       close: () => {}
