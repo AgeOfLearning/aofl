@@ -1,6 +1,6 @@
 {
   "name": "@aofl/cache-manager",
-  "version": "4.0.0-alpha.42",
+  "version": "4.0.0-alpha.43",
   "description": "Provides a unified class for storing objects in Storage-like Objects",
   "keywords": [
     "aofljs",
