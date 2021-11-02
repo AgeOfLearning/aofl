@@ -13,7 +13,7 @@ program
   .action(() => {
     const options = program.opts();
 
-    const i18NModule = new I18NModule(options.args[0], options.pattern, options.exclude, options.excludePattern);
+    const i18NModule = new I18NModule(program.args[0], options.pattern, options.exclude, options.excludePattern);
     i18NModule.init();
   })
   .parse(process.argv);
