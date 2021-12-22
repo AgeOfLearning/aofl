@@ -19,6 +19,7 @@ The AofL JS team primarily codes on VS Code. If you would like to include setup 
 // Overwrite settings by placing them into your settings file.
 {
   "files.trimTrailingWhitespace": true,
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": true },
   "editor.tabSize": 2,
   "editor.rulers": [100, 120],
   "editor.wordWrapColumn": 120,
@@ -30,7 +31,6 @@ The AofL JS team primarily codes on VS Code. If you would like to include setup 
   "[typescript]": {
     "editor.formatOnSave": false
   },
-  "eslint.autoFixOnSave": true,
   "eslint.alwaysShowStatus": true,
   "docthis.inferTypesFromNames": true,
   "docthis.includeMemberOfOnClassMembers": false,
