@@ -4,10 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.13.1...development) - Date
+## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.14.0...development) - Date
 
 ### [Added]
-### [Changed]
+### [Deprecated]
+### [Removed]
+### [Fixed]
+### [Security]
+
+---
+## [v3.14.0](https://github.com/AgeOfLearning/aofl/compare/v3.13.1...v3.14.0) - 2022-03-17
+
+### [Added]
+  - @aofl/wdio - adding waitForNotExist command
+  - @aofl/wdio - updated waitForExist + waitForNavigation commands to output more verbose error messages
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
