@@ -244,18 +244,28 @@ class Element {
    *
    * @return {Object}
    */
-  waitForExist(ms, reverse, error) {
+  waitForExist(ms, error) {
     ms = ms || browser.config.waitforTimeout;
-    reverse = reverse || false;
-    error = error || `expected element to render after ${ms}ms.`;
+    error = error || `Expected element to render after ${ms}ms.\nElement: ${this.queryCmd}\nPage: ${browser.getUrl()}`;
 
     browser.waitUntil(() => {
       const el = browser.execute(`try { return ${this.queryCmd}; } catch(e) { return null; }`);
-      if (reverse) {
-        return el === null;
-      }
       return el !== null;
-    }, ms, error);
+    }, {timeout: ms, timeoutMsg: error, interval: browser.config.waitforInterval});
+    return this;
+  }
+  /**
+   *
+   * @return {Object}
+   */
+  waitForNotExist(ms, error) {
+    ms = ms || browser.config.waitforTimeout;
+    error = error || `Expected element to not exist after ${ms}ms.\nElement: ${this.queryCmd}\nPage: ${browser.getUrl()}`;
+
+    browser.waitUntil(() => {
+      const el = browser.execute(`try { return ${this.queryCmd}; } catch(e) { return null; }`);
+      return el === null;
+    }, {timeout: ms, timeoutMsg: error, interval: browser.config.waitforInterval});
     return this;
   }
   /**

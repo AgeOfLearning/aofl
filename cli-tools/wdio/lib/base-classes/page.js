@@ -27,10 +27,16 @@ class Page {
    *
    * @return {Object}
    */
-  waitForNavigation() {
+   waitForNavigation() {
+    const error = `Page did not navigate after ${browser.config.waitforTimeout}ms.\nCurrent Page: ${browser.getUrl()}`;
+
     browser.waitUntil(() => {
       return browser.getUrl() !== browser.config.baseUrl + this.url;
-    }, browser.config.waitforTimeout, 'Page didn\'t navigate in time', browser.config.waitforInterval);
+    }, {
+      timeout: browser.config.waitforTimeout, 
+      timeoutMsg: error, 
+      interval: browser.config.waitforInterval
+    });
     return this;
   }
   /**

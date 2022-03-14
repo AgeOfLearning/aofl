@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased](https://github.com/AgeOfLearning/aofl/compare/v3.13.1...development) - Date
 
 ### [Added]
-### [Changed]
+  - @aofl/wdio - adding waitForNotExist command
+  - @aofl/wdio - updated waitForExist + waitForNavigation commands to output more verbose error messages
 ### [Deprecated]
 ### [Removed]
 ### [Fixed]
