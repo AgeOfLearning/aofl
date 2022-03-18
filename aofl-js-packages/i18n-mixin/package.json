@@ -1,6 +1,6 @@
 {
   "name": "@aofl/i18n-mixin",
-  "version": "3.13.1",
+  "version": "3.14.0",
   "description": "Adds i18n support to elements",
   "main": "index.js",
   "browser": "dist/index.js",
@@ -34,10 +34,10 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@aofl/cli": "^3.13.1",
-    "@aofl/cli-lib": "^3.13.1",
-    "@aofl/element": "^3.13.1",
-    "@aofl/i18n": "^3.13.1",
+    "@aofl/cli": "^3.14.0",
+    "@aofl/cli-lib": "^3.14.0",
+    "@aofl/element": "^3.14.0",
+    "@aofl/i18n": "^3.14.0",
     "core-js": "^3.2.1",
     "cross-env": "^6.0.3",
     "jsdoc": "^3.6.3",
