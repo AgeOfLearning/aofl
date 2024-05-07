@@ -217,6 +217,23 @@ build: {
   extend: () => {} // can be used to modify webpack config
 }
 ```
+---
+If you want to load env files to your code depend on the environment, you could take advantage of the extend config here. Under `build.extend`, you can add your own plugins by doing something like this    
+```
+extend: {
+      plugins: [
+        new webpack.DefinePlugin({
+          'process.env': JSON.stringify(envVars)
+        })
+      ]
+    }
+```
+You can grab the envVars dynamically from the file depends on the `NODE_ENV`. For example, if you are using dotenv package:
+```
+const nodeEnv = process.env.NODE_ENV || 'development';
+const dotenv = require('dotenv')
+const envVars = dotenv.parse(fs.readFileSync(`.env.${env}`));
+```
 
 ---
 ## devServer
