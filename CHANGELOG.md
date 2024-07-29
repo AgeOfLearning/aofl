@@ -13,6 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [Security]
 
 ---
+## [v3.14.2](https://github.com/AgeOfLearning/aofl/compare/v3.14.1...v3.14.2) - 2024-07-29
+
+### [Added]
+### [Changed]
+  - @aofl/form-validate - allow zero value in isRequired
+### [Deprecated]
+### [Removed]
+### [Fixed]
+### [Security]
+
+---
+## [v3.14.1](https://github.com/AgeOfLearning/aofl/compare/v3.14.0...v3.14.1) - 2022-03-17
+
+### [Added]
+### [Changed]
+  - @aofl/unit-testing-plugin - update wdio dependencies
+### [Deprecated]
+### [Removed]
+### [Fixed]
+### [Security]
+
+---
 ## [v3.14.0](https://github.com/AgeOfLearning/aofl/compare/v3.13.1...v3.14.0) - 2022-03-17
 
 ### [Added]

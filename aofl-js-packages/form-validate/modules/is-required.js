@@ -15,7 +15,7 @@
  * @return {Boolean}
  */
 function isRequired(value) {
-  return Boolean(value && String(value) !== '');
+  return Boolean((value && String(value) !== '') || (typeof value === 'number' && value === 0));
 }
 
 export {
